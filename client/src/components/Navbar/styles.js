@@ -1,0 +1,1 @@
+export const appbarContainerStyle = {backgroundColor: "white"}

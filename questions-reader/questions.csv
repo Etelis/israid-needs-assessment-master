@@ -1,0 +1,326 @@
+code,Category,Sub Category,Order,Question,Answer Type,Options,hint text,Influence by question,Expected Answer
+1,Health,Moratlity,,What are the cause- specific mortality rates?,Text,,,,
+2,Health,Moratlity,,What is the main cause of death?,Multiselection,"phyisical injury, drowning, malnutrition, violence, poor hygiene, diseases",,,
+3,Health,Moratlity,,Which age group is most affected?,Multiselection,,,,
+4,Health,Moratlity,,Is there a designated burial area? How are they happening?,Yes or No,,,,
+5,Health,Nutrition,,Do you have staff trained/specialized on nutrition? ,Yes or No,,,,
+6,Health,Nutrition,,Where do you refer to severe cases of malnutrition?,Multiselection,"hospital, local medical center, local doctor",,,
+7,Health,Nutrition,,Is there any education given to mothers on healthy nutrition?,Yes or No,,,,
+8,Health,Nutrition,,Are there any populations/groups with higher rates of malnutrition than others?,Yes or No,,,,
+9,Health,Nutrition,,How many cases of acute malnutrition are known at the moment?,Text,,,,
+10,Health,Nutrition,, How many cases of acute malnutrition are referred to the patient feeding programme?,Text,,,,
+11,Education,General,1,Are the schools operating?,Yes or No,,,,
+260,Education,General,4,Are students attending school?,Yes or No,,,,
+12,Education,General,8,Is there any alternative education available?,Yes or No,"informal education programs, afternoon activities",,11,No
+13,Education,General,2,Is participation at school dependent on Age?,Yes or No,,,11,Yes
+14,Education,General,3,Is participation at school dependent on Gender?,Yes or No,,,11,Yes
+15,Education,General,6,Are the schools physically accessible?,Yes or No,,,11,No
+16,Education,General,9,What do local authorities do about the education status?,Multiselection,"Establish temporary learning centers, Provide educational materials and supplies, Arrange for remote/virtual learning options, Collaborate with NGOs for education support, Lack significant intervention for education, Implement teacher training programs",,11,No
+17,Education,General,10,Who are the actors working in education in the area?,Multiselection,"NGOs, community groups, religious groups, private tutors",,11,No
+18,Education,General,11,What specific services is the organization providing and in what setting? ,Multiselection,"Formal education in schools,Non-formal education in community centers,Vocational training in specialized training centers,Online courses and digital learning platforms,Adult education programs in local facilities,Early childhood education in preschools or kindergartens,Literacy programs for disadvantaged groups
+h,Tutoring and academic support services, Educational workshops and seminars",,,
+19,Education,General,12, Who provides non-formal educational activities?,Multiselection,"Local community organizations, International NGOs, Local government agencies, Religious institutions, Informal volunteer groups, No organized non-formal education available",,30,Yes
+20,Education,General,13, Are learning materials available?,Yes or No,,,,
+22,Education,General,15, How is the quality of the online education?,Multiselection,"poor,average,great",,21,Yes
+24,Education,General,7, What condition are the schools in?,Multiselection,"Destroyed, partialy accessible, mostly accessible, unchanged",,,
+25,Education,General,5, What are the reasons why children don’t attend schools/learning centers?,Multiselection,"Unreachable, discrimination, safety rules, joining the work force",,260,No
+26,Education,General,,Is there any existing support accessible for the community? ,Yes or No,,,11,No
+27,Education,General,,What existing support is accessible for the community? ,Multiselection,"volunteer teachers, afternoon educational activities, informal education programmes",,26,Yes
+28,Education,General,, Are there high risk populations among the students?,Yes or No,,,,
+29,Education,General,,What specific services is the organization providing and in what setting? ,Multiselection," Formal education in schools,Non-formal education in community centers
+,Vocational training in specialized training centers,Online courses and digital learning platforms,Adult education programs in local facilities,Early childhood education in preschools or kindergartens,Literacy programs for disadvantaged groups,Tutoring and academic support services
+i) Educational workshops and seminars",,,
+30,Education,General,,Does non-formal education exist?,Yes or No,,,,
+21,Education,General,13, Is online learning offered? ,Yes or No,,,11,No
+32,Education,General,, How is the quality of  in person education?,Multiselection,"poor,average,great",,15,Yes
+23,Education,General,, Are the schools being used as shelters?,Yes or No,,,11,No
+34,Education,Refugees/IDPs/Migrants,, Are there language barriers? ,Yes or No,,,194,Yes
+35,Education,Refugees/IDPs/Migrants,,Is there a need for translation?,Yes or No,,,34,Yes
+36,Education,Refugees/IDPs/Migrants,, How can we identify partners for dealing with language barriers? ,Multiselection,"Limited vocabulary,different languages, language complexity, regional accents and pronunciation challenges ",,34,Yes
+37,Education,Refugees/IDPs/Migrants,, Are there refugees that were teachers before?,Yes or No,,,194,Yes
+38,Education,Refugees/IDPs/Migrants,,How can they be supported and integrated? Are there specific training requirements? ,Multiselection," Financial support for resources and infrastructure,Technical assistance and expertise
+,Strengthening community engagement and participation, Integration into existing programs and initiatives, Collaboration with relevant stakeholders and organizations,Training in specific skills and knowledge, Capacity-building workshops for community members,Customized training based on identified needs,Ongoing monitoring and evaluation",,37,Yes
+39,Education,Refugees/IDPs/Migrants,, What possible collaborations exist for dealing education for Refugees/IDPs/Migrants?,Multiselection,"Partnerships with international NGOs, coordination with UN agencies, Collaboration with local schools and universities, Involvement of community-based organizations, Joint efforts with host country's education authorities, Engagement of private sector for funding and resources, Limited collaborative efforts for education provision",,,
+40,Education,Refugees/IDPs/Migrants,, Are any extracurricular activities offered? (refer to MHPSS),Yes or No,,,,
+41,Protection - MHPSS - CFS,vulnerable populations,,Are there any vulnerable populations in your community?,Yes or No,,,,
+42,Protection - MHPSS - CFS,Community,,What are the existing support services in your community? ,Multiselection,"NGOs, CBOs, shelters, government services, education institutions, spiritual institutions, health services",,,
+43,Protection - MHPSS - CFS,Community,,What do community members normally do to overcome difficulties/deal with distress? ,Multiselection,"Mutual support and solidarity. Seeking help from local leaders, Relying on traditional healing practices, Forming self-help groups, Engaging in religious or spiritual practices, Collaborating with external aid organizations, No distinct strategies observed",,,
+44,Protection - MHPSS - CFS,vulnerable populations,,Do vulnerable populations have access to shelters or safe spaces?,Yes or No,,,41,Yes
+45,Protection - MHPSS - CFS,vulnerable populations,,"Are you aware of any risks to vulnerable populations in your community? (e.g. CP risks, GBV)",Yes or No,,,41,Yes
+47,Protection - MHPSS - CFS,Community,,Since the emergency what changes have you noticed in yourself? ,Multiselection,"different stress responses: emotional behavior, appetite, physical responses",,,
+48,Protection - MHPSS - CFS,Community,,What are the existing referral pathways (local and national),Multiselection,"Referral to local health clinics or hospitals, Direct communication with local community leaders, Coordination with regional government agencies, Collaboration with national humanitarian organizations, Referral to specialized mental health services, Utilization of local community networks, No clearly established referral pathways",,,
+49,Protection - MHPSS - CFS,Community,, If it’s a host community - what is the relationship between the host community and the IDP community,Multiselection,"Supportive and collaborative relationship, Strained due to resource competition, Limited interaction or isolation, Mutually beneficial cooperation, Hostility and tension, Positive exchange of cultural practices, Varies depending on the specific context",,194,Yes
+50,Protection - MHPSS - CFS,Community,, Are there specific locations within the community that are unsafe?,Yes or No,,,,
+51,Protection - MHPSS - CFS,Community,, What organizations are currently involved within the community?,Text,,,,
+52,Protection - MHPSS - CFS,Community,, What gaps are there within the community in terms of access to information and services (including referral pathways),Multiselection,"a) Limited access to healthcare information
+b) Insufficient awareness of available services
+c) Lack of access to clean water and sanitation information
+d) Inadequate knowledge of referral options
+e) Challenges in reaching medical facilities
+f) Limited access to emergency response information
+g) Incomplete understanding of hygiene practices
+h) No specific gaps in access identified",,,
+53,WASH,Hygiene,,"What water, sanitation and hygiene practices were the population accustomed to before the crisis?",Multiselection,"Limited awareness of available services, Inadequate communication channels, Lack of knowledge about referral options,  Absence of translated materials for diverse groups, Insufficient engagement with local authorities, Challenges in accessing health-related information, No significant gaps observed",,,
+224,WASH,Hygiene,,What existing practices are harmful to health?,Multiselection,"Improper waste disposal, Open defecation. Unsafe cooking methods, Limited hand hygiene. Overconsumption of sugary foods. Lack of vaccination awareness, No significantly harmful practices observed",,,
+54,WASH,Hygiene,,Who practices these and why?,Text,,,,
+55,WASH,Hygiene,,Is there a need for any type of hygiene items or other NFIs?,Yes or No,,,,
+56,WASH,Hygiene,,Is there an understanding of the relationship between water/sanitation/shelter and disease?,Yes or No,,,,
+57,WASH,Hygiene,,What are the common hygiene practices among the affected population. ? ,Multiselection,"Washing hands after defecation, disposal of children's faeces, use of soap, storage and covering of water, cooked food)",,,
+58,WASH,Hygiene,,Does the community have access to facilities important for maintaining hygiene covered water containers /cooking utensils/ mosquito nets/soap/sanitary protection etc?,Yes or No,,,,
+59,WASH,Hygiene,,"Are there any hygiene promotion activities? If yes, are they linked with water and sanitation and/or health services? ",Yes or No,,,,
+60,WASH,Hygiene,,What would motivate the community to practice positive hygiene behavior?,Multiselection,"Access to clean water and sanitation facilities, Health education and awareness campaigns. Incentives or rewards for practicing hygiene, Local community leaders' endorsement, Availability of hygiene supplies and products, Reduction in illness and disease transmission, Cultural and religious beliefs promoting hygiene, No clear motivating factors identified",,,
+61,WASH,Hygiene,,What are the advantages and disadvantages of any proposed changes in practice?,Text,,,,
+62,WASH,Hygiene,, What type of outreach system would work in this context for both immediate and medium-term mobilization?,Multiselection," community hygiene volunteers, workers or promoters, school health clubs, WASH committees",,,
+63,WASH,Hygiene,, What are the learning needs of hygiene promotion staff and community outreach workers?,Multiselection,"Effective communication techniques, Disease transmission and prevention knowledge, Cultural sensitivity and understanding, Behavior change communication strategies, Training in using hygiene promotion materials, Monitoring and evaluation skills, Crisis response and emergency preparedness, No specific learning needs identified",,59,Yes
+225,WASH,Hygiene,, What non-food items are available?,Multiselection,"a) Shelter materials (tents, tarps, etc.) b) Clothing and blankets c) Hygiene kits (soap, toothbrushes, etc.) d) Cooking utensils and stoves e) Bedding and sleeping mats f) Basic medical supplies g) Educational materials and books h) No non-food items available",,,
+64,WASH,Hygiene,,What are the most urgently needed based on preferences and needs?,Multiselection,"a) Shelter materials (tents, tarps, etc.) b) Clothing and blankets c) Hygiene kits (soap, toothbrushes, etc.) d) Cooking utensils and stoves e) Bedding and sleeping mats f) Basic medical supplies g) Educational materials and books h) None are needed",,,
+65,WASH,Hygiene,," Has the place where people access markets to buy their essential hygiene items (cost, diversity, quality) changed since the crisis? Where is it now?",Yes or No,,,,
+226,WASH,Hygiene,, How do households access their essential hygiene items?,Multiselection,a) Distribution points by aid agencies b) Purchasing from local markets c) Donations from community members d) Provided by local government authorities e) Shared resources within the community f) No clear method for accessing items,,,
+66,WASH,Hygiene,, Who makes the decisions regarding which items to buy and prioritize?,Multiselection,a) Local community leaders or elders b) Household heads or caregivers c) Community-based organizations d) Humanitarian aid agencies e) Local government authorities f) External relief organizations g) Decisions are not clearly defined,,,
+67,WASH,Hygiene,, How effective are hygiene practices in healthcare settings (particularly important in epidemic situations)?,Multiselection,"Not effective, partly effective, effective, highly effective ",,,
+68,WASH,Hygiene,, What are the needs and preferences of women and girls for menstrual hygiene practices?,Multiselection,a) Access to sanitary pads or menstrual products b) Availability of clean and private sanitation facilities c) Disposal options for used menstrual materials d) Access to pain relief and hygiene education e) Cultural and religious sensitivities f) Supportive community networks for menstruation g) No specific needs or preferences identified,,,
+69,WASH,Hygiene,, What are the needs and preferences of people living with incontinence?,Multiselection,"a) Access to incontinence products (adult diapers, pads, etc.) b) Availability of clean and accessible restroom facilities c) Disposal options for used incontinence products d) Access to medical advice and assistance e) Privacy and dignity in managing incontinence f) Supportive understanding from their community g) No specific needs or preferences identified",,,
+70,WASH,Water supply and access,,Is water accessible to all community members?,Yes Or No,,,,
+71,WASH,Water supply and access,,Is the water clean and portable?,Yes Or No,,,,
+72,WASH,Water supply and access,,What is the main water source?,Multiselection,"b) Protected well or borehole
+c) Unprotected well or spring
+d) Rainwater harvesting
+e) River or stream
+f) Tanker truck delivery
+g) No specific main water source identified
+
+",,,
+73,WASH,Water supply and access,,Was the drinking water affected by the situation? ,Yes or No,,,,
+227,WASH,Water supply and access,, How was the drinking water affected by the situation? ?,Multiselection,a) Contaminated water sources b) Damage to water treatment facilities c) Disruption of water distribution systems d) Reduced availability of clean water e) No significant impact on drinking water ,,73,Yes
+74,WASH,Water supply and access,,How much water is available per person per day?,Multiselection,a) Less than 5 liters b) 5 to 10 liters c) 10 to 20 liters d) 20 to 30 liters e) More than 30 liters f) Water availability varies widely g) Not enough data to determine,,,
+75,WASH,Water supply and access,," do all groups (e.g. men, women, caste’s, etc.) have equitable access to water?",Yes Or No,,,,
+76,WASH,Water supply and access,,Is the water available at the source enough for short term and longer term needs?,Yes Or No,,,,
+77,WASH,Water supply and access,,Do people have enough water containers of the right size and type? ,Yes Or No,,,,
+128,WASH,Sanitation Excreta disposal,, What is the slope of the terrain?,Multiselection,"steep,moderate,gentle, flat,rolling hills",,,
+79,WASH,Water supply and access,,What treatment is necessary? ,Multiselection,"Filtration, Disnfecting, Boiling ",,71,No
+80,WASH,Water supply and access,, Are there alternative water sources nearby? ,Yes Or No,,,,
+81,WASH,Water supply and access,, Is it possible to tanker water if water sources are inadequate? ,Yes Or No,,,,
+82,WASH,Water supply and access,, What are the key hygiene issues related to water supply? ,Multiselection,a) Contamination of water sources b) Insufficient water quantity for hygiene c) Lack of proper water treatment d) Inadequate sanitation facilities e) Difficulty in water access for hygiene f) Limited awareness about water hygiene g) No significant hygiene issues identified,,71,No
+83,WASH,Water supply and access,, Do people have the means to use water hygienically in this situation?,Yes Or No,,,,
+84,WASH,Water supply and access,, What is the daily and weekly frequency of the water supply availability?,Multiselection,a) Daily supply (24/7) b) Daily supply with interruptions c) Every other day d) Few times a week e) Once a week f) Irregular schedule g) No consistent water supply,,,
+85,WASH,Water supply and access,, Are water collection points close enough (less than 500m away) to where people live?,Yes Or No,,,,
+86,WASH,Water supply and access,,Are the collection points safe and secure?,Yes Or No,,,,
+137,WASH,Vector-borne disease,,"If vector borne risks are high, do people have access to individual protection? ",Yes Or No,,,136,Yes
+88,WASH,Water supply and access,,Does the community have problems with water palatability and acceptance associated with chlorine taste and smell?,Yes Or No,,,71,No
+89,WASH,Water supply and access,," What traditional beliefs and practices relate to the collection, storage and use of water?",Multiselection,a) Rituals before drawing water b) Water conservation taboos c) Spiritual purification of water sources d) Offering water to ancestors or deities e) Seasonal water use patterns f) Folklore about water quality g) No distinct traditional beliefs or practices,,,
+92,WASH,Water supply and access,,"Has this access (the cost, quality, regularity of delivery) changed?",Yes Or No,,,,
+261,Protection - MHPSS - CFS,vulnerable populations,,What vulnerable populations in your community?,Multiselection,"women and girls, children, lactating mothers, unaccompanied minors, elderly, PWD, none, other:",,41,Yes
+93,WASH,Water supply and access,, Are waterpoints and laundry and bathing areas well drained?,Yes Or No,,,,
+94,WASH,Water supply and access,, Are soil conditions suitable for on-site or off-site management of problem water from water points and laundry and bathing areas? ,Yes Or No,,,,
+95,WASH,Water supply and access,,Has a soil percolation test been carried out?,Yes Or No,,,,
+96,WASH,Water supply and access,, What is the usual source of water for livestock?,Multiselection,"a) Natural water bodies (rivers, ponds, lakes) b) Wells or boreholes c) Community water supply systems d) Rainwater harvesting e) Irrigation channels f) No specific water source for livestock",,,
+97,WASH,Water supply and access,," Will there be any environmental effects due to possible water supply intervention, abstraction and use of water sources?",Yes Or No,,,,
+98,WASH,Water supply and access,," Is there a risk of conflict if the sources are utilised for new populations? If so, what other users are currently using the water sources for? ",Yes Or No,,,,
+99,WASH,Water supply and access,," Are the users involved in the management and maintenance of water sources and latrines? If not, are there other people/organizations?",Yes Or No,,,,
+100,WASH,Water supply and access,, What opportunities are there to collaborate with the private and/or public sector in water provision? ,Multiselection,a) Public-private partnerships for water infrastructure b) Private sector investment in water treatment c) Government funding for community water projects d) Private sector sponsorship of water supply initiatives e) Public health agencies' involvement in water quality testing f) Collaboration with local water utilities g) No significant opportunities identified,,,
+229,WASH,Water supply and access,,What bottlenecks exist that could inform the response analysis and recommendations?,Multiselection,a) Limited funding for water infrastructure b) Insufficient local workforce for water projects c) Community's willingness to adopt new practices d) Availability of technical expertise for water solutions e) Potential for technology-driven water solutions f) Legal and regulatory hurdles for water projects g) Political support for water provision initiatives h) No significant bottlenecks,,,
+228,WASH,Water supply and access,,What opportunities exist that could inform the response analysis and recommendations?,Multiselection,a) Limited funding for water infrastructure b) Insufficient local workforce for water projects c) Community's willingness to adopt new practices d) Availability of technical expertise for water solutions e) Potential for technology-driven water solutions f) Legal and regulatory hurdles for water projects g) Political support for water provision initiatives h) No significant opportunities identified,,,
+230,WASH,Water supply and access,, What operation and maintenance duties are necessary? ,Multiselection,a) Regular cleaning of water storage tanks b) Routine inspection of water distribution systems c) Repairing damaged water infrastructure d) Monitoring water quality and treatment e) Preventing contamination of water sources f) Educating the community about water conservation g) Training local staff for system maintenance h) No specific operation or maintenance duties identified,,,
+231,WASH,Water supply and access,,Who shall be accountable for them?,Text,,,,
+101,WASH,Water supply and access,,What capacity is there to fulfill them in the short and long term? ,Multiselection," Strong capacity with adequate resources and expertise,Limited capacity due to resource constraints,High capacity in the short term, but challenges in the long term,Adequate capacity, but requires external support,Capacity varies based on specific factors,Capacity has been improving steadily,Capacity has been declining steadily",,,
+102,WASH,Water supply and access,, Is there an existing or potential finance mechanism or system that can recover the operation and maintenance costs?,Yes Or No,,,,
+103,WASH,Water supply and access,, How does the host population access water and ensure that its water is safe at the point of use?,Multiselection,a) Drawing water from communal wells b) Using household water filters or purifiers c) Boiling water before consumption d) Purchasing bottled water e) Collecting rainwater for consumption f) Treating water with chlorine or other disinfectants g) No specific practices observed for water safety,,,
+104,WASH,Water supply and access,, Is there access to local markets? ,Yes Or No,,,,
+105,WASH,Water supply and access,,What key WASH goods and services were accessible in the market before the crisis and are accessible during the crisis?,Multiselection,a) Soap and hygiene products b) Water storage containers c) Water purification tablets d) Sanitary pads and menstrual products e) Hygiene promotion materials f) Portable toilets and sanitation facilities g) Water treatment equipment h) No significant WASH goods or services available,,,
+106,WASH,Water supply and access,," Who are the local partners in the geographical area, such as civil society groups that have similar capacity in WASH and community engagement?",Text,,,,
+107,WASH,Sanitation Excreta disposal,,What is the current defecation practice?,Multiselection,a) Open defecation in fields or open areas b) Use of communal or shared latrines c) Use of household pit latrines d) Utilization of public restroom facilities e) No specific defecation practice identified,,,
+108,WASH,Sanitation Excreta disposal,,"Are there any existing facilities which operates successfully? If so, are they used? are they sufficient? Can they be extended or adapted? ",Yes Or No,,,,
+109,WASH,Sanitation Excreta disposal,,"Are people familiar with the design, construction and use of toilets?",Yes Or No,,,,
+110,WASH,Sanitation Excreta disposal,,"Are people prepared to use latrines, defecation fields, trenches etc? (e.g. is it safe for women after dark, and are they safe/user friendly for children) ",Yes Or No,,,,
+232,WASH,Sanitation Excreta disposal,,Is there a designated area for public defecation?,Yes or No,,,107,open defication
+111,WASH,Sanitation Excreta disposal,,What are current beliefs and practices concerning excreta disposal?,Multiselection,a) Men and women use the same latrine b) Different family members use separate latrines c) Children's excreta is considered harmless d) Children's excreta is treated as hazardous e) Cultural norms influence latrine usage f) No specific beliefs or practices identified,,,
+112,WASH,Sanitation Excreta disposal,,"Is there sufficient space for defecation fields, pit latrines etc? ",Yes Or No,,,,
+113,WASH,Sanitation Excreta disposal,,What local materials are available for constructing toilets? ,Multiselection,"glazed cast iron, steel,  stainless steel,  porcelain, vitreous",,,
+114,WASH,Sanitation Excreta disposal,,Do current excreta disposal arrangements encourage vectors? ,Yes Or No,,,,
+115,WASH,Sanitation Excreta disposal,,Do people have access to water and soap for washing hands after defecation? ,Yes Or No,,,,
+116,WASH,Sanitation Excreta disposal,, Are there materials or water available for anal cleansing? ,Yes Or No,,,,
+117,WASH,Sanitation Excreta disposal,,"Are the facilities safe and dignified: lighted, equipped with locks, privacy screens? ",Yes Or No,,,109,Yes
+118,WASH,Sanitation Excreta disposal,,"Can people access the toilet facilities during the day and night? If not at night, what are the alternatives?",Yes Or No,,,109,Yes
+119,WASH,Sanitation Excreta disposal,,Are the latrines or toilets cleaned and maintained so that they are hygienic and safe for all users?,Yes Or No,,,109,Yes
+120,WASH,Sanitation Excreta disposal,,Are the users involved in the management and maintenance of latrines?,Yes Or No,,,109,Yes
+121,WASH,Sanitation Excreta disposal,,What excreta management practices does the community practice?,Multiselection,"Open defecation, Flush toilets, Pit latrines, Composting toilets,  Sewage systems, None of the above",,,
+122,WASH,Sanitation Excreta disposal,,What is the level of the groundwater table? ,Multiselection,"a) High, close to the surface b) Moderately high c) Moderate, at a reasonable depth d) Moderately low e) Low, significantly below the surface f) Not known or measured",,,
+123,WASH,Sanitation Excreta disposal,,Are soil conditions suitable for on-site excreta disposal? ,Yes Or No,,,,
+124,WASH,Sanitation Excreta disposal,,Are there any social – cultural norms to consider in the design of the toilet?,Yes Or No,,,108,Yes
+125,WASH,Sanitation Excreta disposal,,What are the cultural norms to consider in the design of the toilet?,Multiselection,a) Gender-segregated facilities b) Privacy and modesty features c) Separate facilities for different age groups d) Accessibility for people with disabilities e) Availability of water for cleansing f) Religious considerations for hygiene practices g) No distinct cultural norms identified,,124,Yes
+126,WASH,Sanitation Excreta disposal,, Is there an existing acceptance of and practice for composting?,Yes Or No,,,,
+127,WASH,Sanitation Excreta disposal,, From what age do children start to use the toilet?,Multiselection,"0-1, 2-3, 3-5, later",,109,Yes
+129,WASH,Sanitation Excreta disposal,, How do women and girls manage menstruation? Are there appropriate materials or facilities available for this?,Multiselection," Using commercial sanitary pads, Using reusable cloth pads
+, Menstrual cups, Improvised materials, Access to clean water and soap for washing, Adequate restroom facilities with proper disposal options,
+Lack of appropriate materials and facilitie",,,
+130,WASH,Sanitation Excreta disposal,," Are there any specific facilities or equipment available for making sanitation accessible for persons with disabilities, people living with HIV, people living with incontinence or people immobile in medical facilities?",Yes Or No,,,,
+131,WASH,Sanitation Excreta disposal,," Have environmental considerations been assessed? (for example, the extraction of raw materials such as sand and gravel for construction purposes, and the protection of the environment from fecal matter)",Yes Or No,,,,
+132,WASH,Sanitation Excreta disposal,," Are there skilled workers in the community, such as masons or carpenters and unskilled laborers?",Yes Or No,,,,
+133,WASH,Sanitation Excreta disposal,," Are there available pit emptiers or desludging trucks? If so, is the collected fecal waste disposed of appropriately and safely?",Yes Or No,,,,
+134,WASH,Sanitation Excreta disposal,, What is the appropriate strategy for management of excreta?,Multiselection,"containment, emptying, treatment and disposal",,,
+135,WASH,Vector-borne disease,,Are there any diseases/symptoms that are WASH-related?,Yes Or No,,,,
+136,WASH,Vector-borne disease,,"Is there a high risk for vector-borne disease? How serious are they? (i.e. Any obvious problems with flies, mosquitoes, rodents, cockroaches, fleas, lice or bed bugs?) ",Yes Or No,,,,
+138,WASH,Vector-borne disease,,"Is the affected population used to dealing with these risks? If so, how do they normally protect themselves? ",Yes Or No,,,135,Yes
+139,WASH,Vector-borne disease,,Has the affected population traveled through an area infected with certain insect vectors?,Yes Or No,,,135,Yes
+141,WASH,Vector-borne disease,,Any evidence of overcrowding? ( Do people have previous experience of communal living?),Yes Or No,,,,
+270,WASH,Water supply and access,,Where do they buy water?,Multiselection,"a) Local water vendors
+b) Water distribution points
+c) Water kiosks or stations
+d) Nearby towns or markets
+e) No specific water purchasing locations identified
+",,91,Yes
+271,WASH,Water supply and access,,Why are they buying water?,Multiselection,"a) Insufficient or unreliable water supply
+b) Lack of access to clean water sources
+c) Contaminated local water sources
+d) Convenience and time-saving
+e) Improved water quality
+f) Meeting higher water demand
+",,91,Yes
+142,WASH,Vector-borne disease,,"Do people have any livestock? If so, where do they live / defecate and what are the types?",Yes Or No,,,,
+272,WASH,Water supply and access,,What is the ratio of average water price to average income?,text,,,92,Yes
+143,WASH,Vector-borne disease,, Is there any evidence of vector breeding sites – stagnant water/ uncovered pit latrines/water containers etc.,Yes Or No,,,,
+144,WASH,Vector-borne disease,, What is known about the characteristics of the vector?,Text,," mosquito species, breeding, biting, resting habits",143,Yes
+145,WASH,Vector-borne disease,, Is it possible to make changes to the local environment (by drainage/ scrub clearance/excreta disposal/refuse disposal) to discourage vector breeding?,Yes Or No,,,,
+146,WASH,Vector-borne disease,," Is it necessary to control vectors by chemical means? If so, What programmes, regulations and resources for vector control and use of chemicals are there?",Yes Or No,,,143,Yes
+147,WASH,Vector-borne disease,, Is there a National Public Health/Roll Back Malaria/Vector Control Programme?,Yes Or No,,,,
+148,WASH,Vector-borne disease,," Are people familiar with using ITN’s or bednets? In general, what are their sleeping practices?",Multiselection,"a) Sleeping indoors
+b) Sleeping outdoors
+c) Sleeping on mattresses or beds
+d) Sleeping on the ground or floor
+e) Using mosquito nets while sleeping
+f) No specific sleeping practices identified
+
+",,,
+149,WASH,Vector-borne disease,," What daily or seasonal patterns do local vectors follow in relation to reproduction, resting and feeding?",Multiselection,a) Nighttime feeding habits b) Daytime resting in shaded areas c) Breeding during rainy seasons d) Resting in indoor spaces during daylight e) Increased activity after sunset f) Feeding on humans during outdoor activities g) Reproduction in stagnant water sources h) No clear patterns identified,,,
+150,WASH,Vector-borne disease,," Are there traditional beliefs and practices (for example, the belief that dirty water causes malaria) that relate to vectors and vector-borne disease? Are any of these beliefs or practices either useful or harmful?",Yes Or No,"a) Belief that dirty water causes malaria
+b) Hanging certain herbs to repel mosquitoes
+c) Using specific amulets for protection
+d) Avoiding certain foods to prevent disease
+e) Belief in local remedies for mosquito bites
+f) Traditional practices for preventing mosquito breeding
+g) No specific traditional beliefs or practices identified
+
+",,,
+151,WASH,Vector-borne disease,, What information and safety precautions need to be provided to households?,Multiselection,a) Proper use of insecticide-treated bed nets b) Emptying and covering stagnant water sources c) Recognizing vector-borne disease symptoms d) Use of insect repellents e) Avoiding outdoor activities during peak vector activity times f) Seeking medical attention for suspected vector diseases g) Clearing vegetation around living areas h) No specific information or precautions identified,,,
+152,WASH,Solid waste disposal,,Is solid waste a problem?,Yes Or No,,,,
+153,WASH,Solid waste disposal,,How do people dispose of their waste?,Multiselection,"Preventing or Reducing Waste, Generation,
+Recycling,
+Incineration,
+Composting,
+Sanitary Landfill,
+Disposal in Ocean/Sea,
+Plasma Gasification",,152,Yes
+154,WASH,Solid waste disposal,,What type  of solid waste is produced?,Multiselection,"a) Organic waste (food scraps, plant material) b) Non-recyclable plastics and packaging c) Glass and metal waste d) Hazardous waste (batteries, chemicals) e) Textile and clothing waste f) E-waste (electronic devices) g) Minimal solid waste production h) No specific waste type or quantity identified",,152,Yes
+235,WASH,Solid waste disposal,,In what quantity?,Text,,,152,Yes
+155,WASH,Solid waste disposal,,Can solid waste be disposed of on site?,Yes Or No,,,,
+156,WASH,Solid waste disposal,,What is the normal solid waste disposal practice for affected people ?,Multiselection,a) Open dumping or burning of waste b) Use of communal waste collection points c) Utilization of local waste disposal services d) Household waste separation for recycling e) compost f) No specific solid waste disposal practice identified,,,
+157,WASH,Solid waste disposal,,Are there medical facilities and activities producing waste? How is it disposed of? Who is responsible?,Yes Or No,,,,
+236,WASH,Solid waste disposal,,Where are disposable sanitary materials disposed of ?,Multiselection,a) Household waste bins b) Communal waste disposal sites c) Public restroom trash bins d) Dedicated sanitary waste bins e) Buried in open areas f) Flushed down toilets g) No specific disposal method identified,"children’s nappies, menstruation hygiene materials and incontinence materials)?",,
+158,WASH,Solid waste disposal,, Is their disposal discreet and effective?,Yes or No,,,,
+159,WASH,Solid waste disposal,, What is the effect of the current solid waste disposal on the environment?,Multiselection,a) Soil contamination from improper disposal b) Air pollution due to burning of waste c) Water pollution from leachate runoff d) Habitat disruption and wildlife impact e) Spread of vector-borne diseases f) Negative impact on local ecosystems g) No significant environmental effects observed,,Is solid waste a problem?,
+160,WASH,Solid waste disposal,, What solid waste management capacity do the private and public sectors have?,Multiselection,a) Adequate waste collection services b) Proper waste disposal facilities c) Efficient waste transportation systems d) Effective recycling and separation programs e) Public awareness campaigns on waste management f) Collaboration with local communities for waste reduction g) Limited capacity for solid waste management h) No specific solid waste management capacity identified,,,
+161,WASH,Drinage,,"Is there a drainage problem? (flooding shelters and latrines, vector breeding sites, polluted water contaminating living areas or water supplies)",Yes Or No,,,,
+162,WASH,Drinage,,Do people have the means to protect their shelters and latrines from local flooding?,Yes Or No,,,,
+163,Health,,,What health care provision is available to the population and who is providing it?,Multiselection,a) Government-run health clinics b) Local non-governmental organizations (NGOs) c) International humanitarian agencies d) Mobile medical units e) Community health workers f) Private medical practitioners g) No significant health care provision identified,,,
+164,Health,,,"Do people have access to essential medicines? If yes, how? If not, why?",Yes Or No,,,,
+165,Health,,,Are medical services available?,Yes Or No,,,,
+166,Health,,,Are medical services physically accessible?,Yes Or No,,,,
+167,Health,,,"Are medical services functioning on the same level as before the emergency? (lacking basic medicine, medical equipment, staff, basic infrastructure etc.)",Yes Or No,,,,
+168,Health,Services Quality,,Where are the clinics located?,Text,,,,
+169,Health,Services Quality,,"What services are available (curative, MCH, private, immunization ETC)",Multiselection,"a) Curative health services
+b) Maternal and Child Health (MCH) services
+c) Private medical clinics
+d) Immunization services
+e) Preventive health services
+f) Mental health and psychosocial support
+g) Dental services
+h) No specific services identified
+",,,
+170,Health,Services Quality,,Are the services accessible to and sufficient for the target population?,Yes Or No,,,,
+171,Health,Services Quality,,Is the access to health services gender-dependent? ,Yes Or No,,,,
+172,Health,Services Quality,,"What is the situation in terms of health care personnel- level of training, ratio to health facility, outreach or volunteer workers?",Multiselection,a) Well-trained medical professionals b) Shortage of trained health personnel c) Adequate ratio of personnel to health facilities d) Insufficient health personnel per facility e) Active community outreach workers f) Utilization of volunteer health workers g) No specific health care personnel situation identified,,,
+173,Health,Health Information System,,What is the status of the existing health information system? Does an electronic system exist? Is it destroyed? ,Multiselection,a) Well-functioning health information system b) Limited functionality of health information system c) Non-existent electronic health system d) Existing electronic health system e) Electronic system partially destroyed f) Complete destruction of electronic system g) No specific status of health information system identified,,,
+174,Health,Health Information System,, Is there a standardized health information system for collecting data?,Yes Or No,,,,
+175,Health,Health Information System,, How is data collected and analyzed?,Multiselection,a) Paper-based data collection forms b) Mobile data collection applications c) Interviews with community members d) Surveys and questionnaires e) Health facility records f) Data entered into electronic databases g) Data analysis through software tools h) No specific data collection and analysis methods identified,,,
+176,Health,Health Information System,, Is there a need to replace the former health information system? ,Yes Or No,,,,
+177,Health,Health Information System,, Is there a need for a temporary paper system until an electronic system is restored/sponsored?,Yes Or No,,,,
+178,Health,Problems,, What medical support is needed?,Multiselection,"a) Medical supplies (medications, equipment) b) Skilled medical professionals (doctors, nurses) c) Emergency medical services d) Specialist medical care (surgery, obstetrics) e) Diagnostic equipment (X-ray, lab) f) Mental health and psychosocial support g) Disease prevention and vaccination campaigns h) No specific medical support needs identified",,,
+179,Health,Problems,, What are the current or likely water and sanitation and vector borne diseases? (see WASH section),Multiselection,"a) Diarrheal diseases (cholera, gastroenteritis) b) Malaria c) Dengue fever d) Typhoid e) Zika virus f) Chikungunya g) Leptospirosis h) No specific water, sanitation, or vector-borne diseases identified",,,
+180,Health,Problems,, What are the primary health problems in the area affected by the emergency?,Multiselection,a) Acute respiratory infections b) Diarrheal diseases c) Malnutrition d) Vector-borne diseases e) Maternal and child health concerns f) Mental health and psychosocial issues g) Limited access to medical care h) No specific primary health problems identified,,,
+181,Health,Problems,, What are the most frequent communicable diseases?,Multiselection,a) Influenza b) Diarrheal diseases c) Respiratory infections d) Skin infections e) Waterborne diseases f) Vector-borne diseases g) Sexually transmitted infections h) No specific frequent communicable diseases identified,,,
+182,Health,Problems,, What are the primary health problems in the country of origin (if displaced people are involved)?,Multiselection,a) Infectious diseases b) Chronic diseases c) Maternal and child health concerns d) Malnutrition e) Lack of access to medical care f) Limited sanitation and hygiene facilities g) Mental health challenges h) No specific primary health problems identified,,194,Yes
+183,Health,Problems,, Any evidence of acute malnutrition? How is this monitored? (Please refer to the Food and Nutrition Section),Yes Or No,,,,
+184,Health,Problems,," Are there specific health problems for women (e.g. high birth rate, anaemia, sexually transmitted diseases, sexual violence/rape, and abortion)?",Multiselection,,,,
+238,Health,Immunizations,, What is immunization coverage? ,Multiselection,a) High immunization coverage b) Moderate immunization coverage c) Low immunization coverage d) Immunization coverage data not available e) No specific immunization coverage identified,,,
+239,Health,Immunizations,,When did the last immunization occur?,Multiselection,a) Within the last 6 months b) Within the last year c) Within the last 2 years d) Within the last 5 years ,,,
+237,Health,Immunizations,,Which vaccines given?,Multiselection,a) Measles vaccine b) Polio vaccine c) Diphtheria-tetanus-pertussis (DTP) vaccine d) Hepatitis B vaccine e) Influenza vaccine f) Pneumococcal vaccine g) Meningococcal vaccine h) No specific vaccines identified,,,
+185,Health,Immunizations,,Where did the last immunization occur?,Multiselection,e) Immunization location: Government health facility f) Immunization location: NGO-operated clinic g) Immunization location: Mobile health unit h) Immunization location: School-based program i) Immunization location: Not sure or not received,,,
+186,Health,Problems,,"are there victims of trauma, injury, or shot wounds (see MHPSS section).",Yes Or No,,,,
+187,General,4 Ws,,Are there other organizations in the area?,Yes Or No,,,,
+188,General,4 Ws,,What support/services do they offer?,Multiselection,"a) Providing health education and awareness
+b) Distributing relief supplies
+c) Facilitating community meetings and discussions
+d) Offering psychosocial support and counseling
+e) Advocating for community needs to external organizations
+f) Organizing vocational training and workshops
+g) Mobilizing resources for emergency response
+h) No specific support or services identified
+
+",,187,Yes
+189,General,4 Ws,,volunteer-based or hired,Yes Or No,,,187,Yes
+190,General,4 Ws,,Is there a manager,Yes Or No,,,187,Yes
+191,General,4 Ws,,What methodologies do they use to implement their interventions? ,multiselection,a) Participatory workshops and training b) Information campaigns and awareness raising c) Mobile clinics and medical camps d) Door-to-door surveys and assessments e) Collaborative community meetings f) Skill-building sessions and demonstrations g) Capacity-building through education h) No specific methodologies identified,,187,yes
+192,General,4 Ws,,What is the vision and mission of the organization in “normal” times and now?,Text,,,187,Yes
+140,WASH,Vector-borne disease,,Which groups of the population are most affected?,Multiselection,"Children, older people, disabled, adults ",,135,Yes
+194,General,Demographics and Community Structure,,Are there any refugees or internally displaced people?,Yes or No,,,,
+195,General,Infrastracture and Services,,Does the community have safe access to electricity?,Yes or No,,,,
+196,General,Infrastracture and Services,,Is there  access to the Internet in the community?,Yes or No,,,,
+91,WASH,Water supply and access,, Do people buy water?,Yes Or No,,,,
+198,General,Infrastracture and Services,,What immediate emergency relief is currently provided?,Multiselection,a) Emergency healthcare services b) Food and non-food item distributions c) Child-Friendly Spaces (CFS) d) Water and sanitation interventions e) Shelter and housing support f) Psychological and psychosocial support g) Education and school support h) No specific immediate emergency relief identified,,,
+199,General,Infrastracture and Services,,"Do vulnerable populations (children, women, people with disabilities, etc.) have access to shelters or safe spaces and other services?",Yes or No,,,,
+200,General,Psychosocial,,What tools does the community usually use to cope with crises/How does the community usually cope? ,Multiselection,a) Social support networks among community members b) Relying on traditional healing practices c) Community-based organizations and committees d) Accessing local religious or spiritual resources e) Self-help groups for mutual assistance f) Engaging in income-generating activities g) Sharing resources within extended families h) No specific coping tools or strategies identified,,,
+201,General,Demographics and Community Structure,,"Are you aware of any increased risks to vulnerable populations in the community as a result of the emergency? (e.g. CP risks, GBV)",Yes or No,,"For Example: CP risks, GBV",,
+202,General,Psychosocial,,"Are people experiencing stress symptoms (cognitive, behavioral, physical, emotional)? (e.g. different behavior, social withdrawal, grief, anxiety, deteriorating health, headaches, etc.)",Yes or No,,,,
+203,General,Demographics and Community Structure,,What are your general impressions of the community?,Multiselection,"Strong sense of community unity and cooperation, Limited access to basic services and amenities,Rich cultural diversity and traditions, Well-developed infrastructure and facilities
+,High level of social engagement and activism ,Economic challenges and disparities,Safe and secure environment, Environmental consciousness and sustainability practices",,,
+46,Protection - MHPSS - CFS,Community,,Are people experiencing stress symptoms?,Yes or No,,You can follow the resilience kit pamphlet for examples,,
+205,General,Demographics and Community Structure,,"How many people are affected by the emergency and where are they? Disaggregate the data by sex, age, disability and so on",Text,,,,
+206,General,Demographics and Community Structure,,"General information regarding the entire local population - number of families, number of children/elderly/PWD?",Text,,,,
+207,General,Demographics and Community Structure,,What are the main community social structures?,Multiselection,"a) Volunteer groups
+b) Self-care groups or committees
+c) Community educators or trainers
+d) Women's empowerment groups
+e) Youth associations
+f) Religious organizations
+g) Health promoters or advocates
+h) No specific main community social structures identified
+",,,
+208,General,Demographics and Community Structure,, What are people’s likely movements? What are the security factors for the affected people and for potential relief responses?,Multiselection,"Internal displacement within the region,Migration to neighboring areas or countries
+,Seeking refuge in temporary shelters or camps,, Relocating to urban centers
+, Returning to their homes after the situation stabilizes,Staying with relatives or host families
+,Evacuating to designated safe zones, Unpredictable movements due to changing circumstances, Security concerns for affected people due to conflict or violence, Security concerns for relief efforts due to logistical challenges, Security concerns for relief efforts due to lack of access, Coordination challenges among relief organizations
+",,,
+209,General,Demographics and Community Structure,, Who are the key people to consult or contact in the community?,Text,,,,
+210,General,Infrastracture and Services,," Is there equal access for all to existing facilities, including at public places, health centers and schools?",Yes or No,,,,
+211,General,Demographics and Community Structure,," What are the formal and informal power structures (for example, community leaders, elders, women’s groups)?",Multiselection,a) Community leaders and elders b) Local government officials c) Religious leaders d) Women's groups or organizations e) Youth groups or associations f) Traditional councils or bodies g) Non-governmental organizations (NGOs) h) No specific power structures identified,,,
+212,General,Cultural and Social Factors,, What are the accepted beliefs and practices among the affected population?,Multiselection,"a) Religious beliefs and rituals
+b) Cultural traditions and ceremonies
+c) Social norms and customs
+d) Traditional healing and medical practices
+e) Dietary and food-related practices
+f) Community governance and decision-making processes
+g) Environmental conservation practices
+h) Gender roles and responsibilities
+i) Education and learning traditions
+j) Communication and information-sharing methods",,,
+213,General,Cultural and Social Factors,, Are there cultural sensitivities or taboo subjects?,Yes or No,,,,
+214,General,Cultural and Social Factors,, How are decisions made in households and in the community?,Multiselection," Patriarchal structure with male head making most decisions, Matriarchal structure with female head making most decisions,Joint decision-making involving multiple family members,Decision-making based on age and seniority,Democratic process involving all family/community members,Influence of community leaders and elders, Decisions made by elected representatives or councils, Decisions based on traditional or cultural norms",,,
+215,General,Economic Factors,,Do people have access to cash and/or credit?,Yes or No,,,,
+216,General,Economic Factors,,"Are there seasonal variations to be aware of that may restrict access or increase demands on labor? (for example, during harvesting time)",Yes or No,,,,
+217,General,Coordination and Collaboration,,Who are the key authorities to liaise and collaborate with?,Multiselection,a) Local government officials b) National government agencies c) Non-governmental organizations (NGOs) d) International humanitarian organizations e) Religious leaders or institutions f) Community leaders or elders g) Health professionals and facilities h) No specific key authorities identified,,,
+218,General,Coordination and Collaboration,,"What access to the mass media is there in the area (for example, radio, television, video, newspapers)?",Multiselection,,,,
+219,General,Coordination and Collaboration,,What local media organizations and/or non-governmental organisations (NGOs) are there?,Text,,,,
+220,WASH,Hygiene,,"Which segments of the population can and should be targeted (for example, mothers, children, community leaders, religious leaders)?",Multiselection,,,,
+221,General,Coordination and Collaboration,,"Which segments of the population can and should be targeted (for example, mothers, children, community leaders, religious leaders)?",Multiselection,,,,
+222,General,Cultural and Social Factors,,"What are the accepted beliefs and practices or taboos among the affected population towards water, sanitation and hygiene?",Multiselection,a) Using running water for baptisms b) Avoiding certain foods during menstruation c) Bathing at specific times of the day d) Using traditional cleansing practices e) Wearing specific clothing for hygiene purposes f) Avoiding water conservation efforts g) No specific beliefs or practices identified,,,
+223,General,Coordination and Collaboration,,What are the existing formal and informal channels of communication and outreach? For both immediate and medium-term mobilization,Multiselection,"Government-run information centers, community health workers,community hygiene volunteers, traditional birth attendants or healers, workers or promoters, school health clubs, WASH committees, cooperatives, churches and mosques, local radio",,,

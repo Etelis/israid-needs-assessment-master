@@ -1,0 +1,44 @@
+{
+  // Static Information
+  "category": {
+    "id": "objectid",
+    "name": "string",
+    "description": "string",
+    "iconSrc": "base64"
+  },
+  "subCategory": {
+    "id": "objectid",
+    "name": "string",
+    "categoryId": "objectid"
+  },
+  "question": {
+    "title": "string",
+    "hintText": "nullable string",
+    "subCatergoryId": "objectid",
+    "type": "yes-no|text|multi-select",
+    "options": [], // If multi-select,
+    "dependencies": {
+      "questionId": "objectid",
+      "expectedAnswer": "boolean|select-option"
+    }
+  },
+
+  // Dynamic Information
+  "rna": {
+    "id": "objectid",
+    "status": "",
+    "communityName": "string",
+    "communityType": "nullable string",
+    "lastUpdateDate": "nullable date",
+    "creationDate": "date",
+    "location": "nullable array"
+  },
+  "answer": {
+    "id": "objectid",
+    "questionId": "objectid",
+    "rnaId": "objectid",
+    "value": "boolean|string|[string]",
+    "photo": "base64",
+    "otherText": "string"
+  }
+}

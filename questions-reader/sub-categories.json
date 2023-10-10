@@ -1,0 +1,122 @@
+[
+  {
+    "id": "1",
+    "name": "Moratlity",
+    "categoryId": "1"
+  },
+  {
+    "id": "2",
+    "name": "Nutrition",
+    "categoryId": "1"
+  },
+  {
+    "id": "3",
+    "name": "General",
+    "categoryId": "2"
+  },
+  {
+    "id": "4",
+    "name": "Refugees/IDPs/Migrants",
+    "categoryId": "2"
+  },
+  {
+    "id": "5",
+    "name": "vulnerable populations",
+    "categoryId": "3"
+  },
+  {
+    "id": "6",
+    "name": "Community",
+    "categoryId": "4"
+  },
+  {
+    "id": "7",
+    "name": "Hygiene",
+    "categoryId": "5"
+  },
+  {
+    "id": "8",
+    "name": "Water supply and access",
+    "categoryId": "5"
+  },
+  {
+    "id": "9",
+    "name": "Sanitation Excreta disposal",
+    "categoryId": "5"
+  },
+  {
+    "id": "10",
+    "name": "Vector-borne disease",
+    "categoryId": "5"
+  },
+  {
+    "id": "11",
+    "name": "Solid waste disposal",
+    "categoryId": "5"
+  },
+  {
+    "id": "12",
+    "name": "Drinage",
+    "categoryId": "5"
+  },
+  {
+    "id": "13",
+    "name": "Healthcare Provision and Access",
+    "categoryId": "1"
+  },
+  {
+    "id": "14",
+    "name": "Services Quality",
+    "categoryId": "1"
+  },
+  {
+    "id": "15",
+    "name": "Health Information System",
+    "categoryId": "1"
+  },
+  {
+    "id": "16",
+    "name": "Problems",
+    "categoryId": "1"
+  },
+  {
+    "id": "17",
+    "name": "Immunizations",
+    "categoryId": "1"
+  },
+  {
+    "id": "18",
+    "name": "4 Ws",
+    "categoryId": "3"
+  },
+  {
+    "id": "19",
+    "name": "Infrastracture and Services",
+    "categoryId": "3"
+  },
+  {
+    "id": "20",
+    "name": "Psychosocial",
+    "categoryId": "3"
+  },
+  {
+    "id": "21",
+    "name": "Demographics and Community Structure",
+    "categoryId": "3"
+  },
+  {
+    "id": "22",
+    "name": "Cultural and Social Factors",
+    "categoryId": "3"
+  },
+  {
+    "id": "23",
+    "name": "Economic Factors",
+    "categoryId": "3"
+  },
+  {
+    "id": "24",
+    "name": "Coordination and Collaboration",
+    "categoryId": "3"
+  }
+]

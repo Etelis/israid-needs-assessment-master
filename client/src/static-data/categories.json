@@ -1,0 +1,32 @@
+[
+  {
+    "id": "3",
+    "name": "General",
+    "description": "4Ws, coordination, Demographics and more",
+    "iconSrc": "/General.jpg"
+  },
+  {
+    "id": "1",
+    "name": "Health",
+    "description": "Services, Nutrition and more",
+    "iconSrc": "/Health.png"
+  },
+  {
+    "id": "2",
+    "name": "Education",
+    "description": "Water, Sanitation, Hygiene",
+    "iconSrc": "/Education.png"
+  },
+  {
+    "id": "4",
+    "name": "Protection - MHPSS - CFS",
+    "description": "Water, Sanitation, Hygiene",
+    "iconSrc": "/Protection.png"
+  },
+  {
+    "id": "5",
+    "name": "WASH",
+    "description": "Water, Sanitation, Hygiene",
+    "iconSrc": "/Wash.png"
+  }
+]

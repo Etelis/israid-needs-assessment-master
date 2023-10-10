@@ -1,0 +1,2114 @@
+[
+ {
+  "code": 1,
+  "Category": "Health",
+  "Sub Category": "Moratlity",
+  "Order": 2,
+  "Question": "What are the cause- specific mortality rates?",
+  "Answer Type": "Text"
+ },
+ {
+  "code": 2,
+  "Category": "Health",
+  "Sub Category": "Moratlity",
+  "Order": 1,
+  "Question": "What is the main cause of death?",
+  "Answer Type": "Multiselection",
+  "Options": "phyisical injury, drowning, malnutrition, violence, poor hygiene, diseases"
+ },
+ {
+  "code": 3,
+  "Category": "Health",
+  "Sub Category": "Moratlity",
+  "Order": 3,
+  "Question": "Which age group is most affected?",
+  "Answer Type": "Multiselection",
+  "Options": " Infants (0-1 year),Children (1-14 years),Adolescents (15-19 years),Young adults (20-39 years)\n,Adults (40-59 years),Older adults (60+ years),All age groups are equally affected"
+ },
+ {
+  "code": 4,
+  "Category": "Health",
+  "Sub Category": "Moratlity",
+  "Order": 5,
+  "Question": "Is there a designated burial area? How are they happening?",
+  "Answer Type": "Yes or No"
+ },
+ {
+  "code": 5,
+  "Category": "Health",
+  "Sub Category": "Nutrition",
+  "Order": 2,
+  "Question": "Do you have staff trained\/specialized on nutrition? ",
+  "Answer Type": "Yes or No",
+  "Dependent on question": 301,
+  "Expected Answer": "Yes"
+ },
+ {
+  "code": 6,
+  "Category": "Health",
+  "Sub Category": "Nutrition",
+  "Order": 3,
+  "Question": "Where do you refer to severe cases of malnutrition?",
+  "Answer Type": "Multiselection",
+  "Options": "hospital, local medical center, local doctor",
+  "Dependent on question": 301,
+  "Expected Answer": "Yes"
+ },
+ {
+  "code": 7,
+  "Category": "Health",
+  "Sub Category": "Nutrition",
+  "Order": 4,
+  "Question": "Is there any education given to mothers on healthy nutrition?",
+  "Answer Type": "Yes or No",
+  "Dependent on question": 301,
+  "Expected Answer": "Yes"
+ },
+ {
+  "code": 8,
+  "Category": "Health",
+  "Sub Category": "Nutrition",
+  "Order": 5,
+  "Question": "Are there any populations\/groups with higher rates of malnutrition than others?",
+  "Answer Type": "Yes or No",
+  "Dependent on question": 301,
+  "Expected Answer": "Yes"
+ },
+ {
+  "code": 9,
+  "Category": "Health",
+  "Sub Category": "Nutrition",
+  "Order": 6,
+  "Question": "How many cases of acute malnutrition are known at the moment?",
+  "Answer Type": "Text",
+  "Dependent on question": 301,
+  "Expected Answer": "Yes"
+ },
+ {
+  "code": 10,
+  "Category": "Health",
+  "Sub Category": "Nutrition",
+  "Order": 7,
+  "Question": "How many cases of acute malnutrition are referred to the patient feeding programme?",
+  "Answer Type": "Text",
+  "Dependent on question": 301,
+  "Expected Answer": "Yes"
+ },
+ {
+  "code": 11,
+  "Category": "Education",
+  "Sub Category": "General",
+  "Order": 1,
+  "Question": "Are the schools operating?",
+  "Answer Type": "Yes or No"
+ },
+ {
+  "code": 260,
+  "Category": "Education",
+  "Sub Category": "General",
+  "Order": 17,
+  "Question": "Are students attending school?",
+  "Answer Type": "Yes or No"
+ },
+ {
+  "code": 12,
+  "Category": "Education",
+  "Sub Category": "General",
+  "Order": 2,
+  "Question": "Is there any alternative education available?",
+  "Answer Type": "Yes or No",
+  "Options": "informal education programs, afternoon activities",
+  "Dependent on question": 11,
+  "Expected Answer": "No"
+ },
+ {
+  "code": 13,
+  "Category": "Education",
+  "Sub Category": "General",
+  "Order": 18,
+  "Question": "Is participation at school dependent on Age?",
+  "Answer Type": "Yes or No",
+  "Dependent on question": 11,
+  "Expected Answer": "Yes"
+ },
+ {
+  "code": 14,
+  "Category": "Education",
+  "Sub Category": "General",
+  "Order": 19,
+  "Question": "Is participation at school dependent on Gender?",
+  "Answer Type": "Yes or No",
+  "Dependent on question": 11,
+  "Expected Answer": "Yes"
+ },
+ {
+  "code": 15,
+  "Category": "Education",
+  "Sub Category": "General",
+  "Order": 3,
+  "Question": "Are the schools physically accessible?",
+  "Answer Type": "Yes or No",
+  "Dependent on question": 11,
+  "Expected Answer": "No"
+ },
+ {
+  "code": 16,
+  "Category": "Education",
+  "Sub Category": "General",
+  "Order": 4,
+  "Question": "What do local authorities do about the education status?",
+  "Answer Type": "Multiselection",
+  "Options": "Establish temporary learning centers, Provide educational materials and supplies, Arrange for remote\/virtual learning options, Collaborate with NGOs for education support, Lack significant intervention for education, Implement teacher training programs",
+  "Dependent on question": 11,
+  "Expected Answer": "No"
+ },
+ {
+  "code": 18,
+  "Category": "Education",
+  "Sub Category": "General",
+  "Order": 7,
+  "Question": "What specific services is the organization providing and in what setting? ",
+  "Answer Type": "Multiselection",
+  "Options": "Formal education in schools,Non-formal education in community centers,Vocational training in specialized training centers,Online courses and digital learning platforms,Adult education programs in local facilities,Early childhood education in preschools or kindergartens,Literacy programs for disadvantaged groups\nh,Tutoring and academic support services, Educational workshops and seminars",
+  "Dependent on question": 11,
+  "Expected Answer": "No"
+ },
+ {
+  "code": 19,
+  "Category": "Education",
+  "Sub Category": "General",
+  "Order": 9,
+  "Question": "Who provides non-formal educational activities?",
+  "Answer Type": "Multiselection",
+  "Options": "Local community organizations, International NGOs, Local government agencies, Religious institutions, Informal volunteer groups, No organized non-formal education available",
+  "Dependent on question": 30,
+  "Expected Answer": "Yes"
+ },
+ {
+  "code": 20,
+  "Category": "Education",
+  "Sub Category": "General",
+  "Order": 10,
+  "Question": "Are learning materials available?",
+  "Answer Type": "Yes or No"
+ },
+ {
+  "code": 22,
+  "Category": "Education",
+  "Sub Category": "General",
+  "Order": 13,
+  "Question": "How is the quality of the online education?",
+  "Answer Type": "Multiselection",
+  "Options": "poor,average,great",
+  "Dependent on question": 21,
+  "Expected Answer": "Yes"
+ },
+ {
+  "code": 24,
+  "Category": "Education",
+  "Sub Category": "General",
+  "Order": 15,
+  "Question": "What condition are the schools in?",
+  "Answer Type": "Multiselection",
+  "Options": "Destroyed, partialy accessible, mostly accessible, unchanged"
+ },
+ {
+  "code": 25,
+  "Category": "Education",
+  "Sub Category": "General",
+  "Order": 20,
+  "Question": "What are the reasons why children don’t attend schools\/learning centers?",
+  "Answer Type": "Multiselection",
+  "Options": "Unreachable, discrimination, safety rules, joining the work force",
+  "Dependent on question": 260,
+  "Expected Answer": "No"
+ },
+ {
+  "code": 26,
+  "Category": "Education",
+  "Sub Category": "General",
+  "Order": 6,
+  "Question": "Is there any existing support accessible for the community?",
+  "Answer Type": "Yes or No",
+  "Dependent on question": 11,
+  "Expected Answer": "No"
+ },
+ {
+  "code": 27,
+  "Category": "Education",
+  "Sub Category": "General",
+  "Order": 8,
+  "Question": "What existing support is accessible for the community?",
+  "Answer Type": "Multiselection",
+  "Options": "volunteer teachers, afternoon educational activities, informal education programmes",
+  "Dependent on question": 26,
+  "Expected Answer": "Yes"
+ },
+ {
+  "code": 28,
+  "Category": "Education",
+  "Sub Category": "General",
+  "Order": 21,
+  "Question": "Are there high risk populations among the students?",
+  "Answer Type": "Yes or No"
+ },
+ {
+  "code": 17,
+  "Category": "Education",
+  "Sub Category": "General",
+  "Order": 5,
+  "Question": "Who are the actors working in education in the area?",
+  "Answer Type": "Multiselection",
+  "Options": "NGOs, community groups, religious groups, private tutors",
+  "Dependent on question": 11,
+  "Expected Answer": "No"
+ },
+ {
+  "code": 30,
+  "Category": "Education",
+  "Sub Category": "General",
+  "Order": 11,
+  "Question": "Does non-formal education exist?",
+  "Answer Type": "Yes or No"
+ },
+ {
+  "code": 21,
+  "Category": "Education",
+  "Sub Category": "General",
+  "Order": 12,
+  "Question": "Is online learning offered? ",
+  "Answer Type": "Yes or No",
+  "Dependent on question": 11,
+  "Expected Answer": "No"
+ },
+ {
+  "code": 32,
+  "Category": "Education",
+  "Sub Category": "General",
+  "Order": 14,
+  "Question": "How is the quality of in person education?",
+  "Answer Type": "Multiselection",
+  "Options": "poor,average,great",
+  "Dependent on question": 15,
+  "Expected Answer": "Yes"
+ },
+ {
+  "code": 23,
+  "Category": "Education",
+  "Sub Category": "General",
+  "Order": 16,
+  "Question": "Are the schools being used as shelters?",
+  "Answer Type": "Yes or No",
+  "Dependent on question": 11,
+  "Expected Answer": "No"
+ },
+ {
+  "code": 34,
+  "Category": "Education",
+  "Sub Category": "Refugees\/IDPs\/Migrants",
+  "Order": 1,
+  "Question": "Are there language barriers? ",
+  "Answer Type": "Yes or No",
+  "Dependent on question": 194,
+  "Expected Answer": "Yes"
+ },
+ {
+  "code": 35,
+  "Category": "Education",
+  "Sub Category": "Refugees\/IDPs\/Migrants",
+  "Order": 2,
+  "Question": "Is there a need for translation?",
+  "Answer Type": "Yes or No",
+  "Dependent on question": 34,
+  "Expected Answer": "Yes"
+ },
+ {
+  "code": 36,
+  "Category": "Education",
+  "Sub Category": "Refugees\/IDPs\/Migrants",
+  "Order": 3,
+  "Question": "How can we identify partners for dealing with language barriers? ",
+  "Answer Type": "Multiselection",
+  "Options": "Limited vocabulary,different languages, language complexity, regional accents and pronunciation challenges",
+  "Dependent on question": 34,
+  "Expected Answer": "Yes"
+ },
+ {
+  "code": 37,
+  "Category": "Education",
+  "Sub Category": "Refugees\/IDPs\/Migrants",
+  "Order": 4,
+  "Question": "Are there refugees that were teachers before?",
+  "Answer Type": "Yes or No",
+  "Dependent on question": 194,
+  "Expected Answer": "Yes"
+ },
+ {
+  "code": 38,
+  "Category": "Education",
+  "Sub Category": "Refugees\/IDPs\/Migrants",
+  "Order": 5,
+  "Question": "How can they be supported and integrated? Are there specific training requirements? ",
+  "Answer Type": "Multiselection",
+  "Options": "Financial support for resources and infrastructure,Technical assistance and expertise\n,Strengthening community engagement and participation, Integration into existing programs and initiatives, Collaboration with relevant stakeholders and organizations,Training in specific skills and knowledge, Capacity-building workshops for community members,Customized training based on identified needs,Ongoing monitoring and evaluation",
+  "Dependent on question": 37,
+  "Expected Answer": "Yes"
+ },
+ {
+  "code": 39,
+  "Category": "Education",
+  "Sub Category": "Refugees\/IDPs\/Migrants",
+  "Order": 6,
+  "Question": "What possible collaborations exist for dealing education for Refugees\/IDPs\/Migrants?",
+  "Answer Type": "Multiselection",
+  "Options": "Partnerships with international NGOs, coordination with UN agencies, Collaboration with local schools and universities, Involvement of community-based organizations, Joint efforts with host country's education authorities, Engagement of private sector for funding and resources, Limited collaborative efforts for education provision"
+ },
+ {
+  "code": 40,
+  "Category": "Education",
+  "Sub Category": "Refugees\/IDPs\/Migrants",
+  "Order": 7,
+  "Question": "Are any extracurricular activities offered? (refer to MHPSS)",
+  "Answer Type": "Yes or No"
+ },
+ {
+  "code": 41,
+  "Category": "General",
+  "Sub Category": "vulnerable populations",
+  "Order": 1,
+  "Question": "Are there any vulnerable populations in your community?",
+  "Answer Type": "Yes or No"
+ },
+ {
+  "code": 42,
+  "Category": "Protection - MHPSS - CFS",
+  "Sub Category": "Community",
+  "Order": 4,
+  "Question": "What are the existing support services in your community?",
+  "Answer Type": "Multiselection",
+  "Options": "NGOs, CBOs, shelters, government services, education institutions, spiritual institutions, health services"
+ },
+ {
+  "code": 43,
+  "Category": "Protection - MHPSS - CFS",
+  "Sub Category": "Community",
+  "Order": 3,
+  "Question": "What do community members normally do to overcome difficulties\/deal with distress? ",
+  "Answer Type": "Multiselection",
+  "Options": "Mutual support and solidarity. Seeking help from local leaders, Relying on traditional healing practices, Forming self-help groups, Engaging in religious or spiritual practices, Collaborating with external aid organizations, No distinct strategies observed"
+ },
+ {
+  "code": 44,
+  "Category": "Protection - MHPSS - CFS",
+  "Sub Category": "vulnerable populations",
+  "Order": 4,
+  "Question": "Do vulnerable populations have access to shelters or safe spaces?",
+  "Answer Type": "Yes or No",
+  "Dependent on question": 41,
+  "Expected Answer": "Yes"
+ },
+ {
+  "code": 45,
+  "Category": "Protection - MHPSS - CFS",
+  "Sub Category": "vulnerable populations",
+  "Order": 3,
+  "Question": "Are you aware of any risks to vulnerable populations in your community? (e.g. CP risks, GBV)",
+  "Answer Type": "Yes or No",
+  "Dependent on question": 41,
+  "Expected Answer": "Yes"
+ },
+ {
+  "code": 47,
+  "Category": "Protection - MHPSS - CFS",
+  "Sub Category": "Community",
+  "Order": 1,
+  "Question": "Since the emergency what changes have you noticed in yourself?",
+  "Answer Type": "Multiselection",
+  "Options": "different stress responses: emotional behavior, appetite, physical responses"
+ },
+ {
+  "code": 48,
+  "Category": "Protection - MHPSS - CFS",
+  "Sub Category": "Community",
+  "Order": 5,
+  "Question": "What are the existing referral pathways (local and national)",
+  "Answer Type": "Multiselection",
+  "Options": "Referral to local health clinics or hospitals, Direct communication with local community leaders, Coordination with regional government agencies, Collaboration with national humanitarian organizations, Referral to specialized mental health services, Utilization of local community networks, No clearly established referral pathways"
+ },
+ {
+  "code": 49,
+  "Category": "Protection - MHPSS - CFS",
+  "Sub Category": "Community",
+  "Order": 9,
+  "Question": "If it’s a host community - what is the relationship between the host community and the IDP community",
+  "Answer Type": "Multiselection",
+  "Options": "Supportive and collaborative relationship, Strained due to resource competition, Limited interaction or isolation, Mutually beneficial cooperation, Hostility and tension, Positive exchange of cultural practices, Varies depending on the specific context",
+  "Dependent on question": 194,
+  "Expected Answer": "Yes"
+ },
+ {
+  "code": 50,
+  "Category": "Protection - MHPSS - CFS",
+  "Sub Category": "Community",
+  "Order": 6,
+  "Question": "Are there specific locations within the community that are unsafe?",
+  "Answer Type": "Yes or No"
+ },
+ {
+  "code": 51,
+  "Category": "Protection - MHPSS - CFS",
+  "Sub Category": "Community",
+  "Order": 7,
+  "Question": "What organizations are currently involved within the community?",
+  "Answer Type": "Text"
+ },
+ {
+  "code": 52,
+  "Category": "Protection - MHPSS - CFS",
+  "Sub Category": "Community",
+  "Order": 8,
+  "Question": "What gaps are there within the community in terms of access to information and services (including referral pathways)",
+  "Answer Type": "Multiselection",
+  "Options": "Limited access to healthcare information\r, Insufficient awareness of available services\r, Lack of access to clean water and sanitation information\r, Inadequate knowledge of referral options\r, Challenges in reaching medical facilities\r, Limited access to emergency response information\r, Incomplete understanding of hygiene practices\r, No specific gaps in access identified"
+ },
+ {
+  "code": 53,
+  "Category": "WASH",
+  "Sub Category": "Hygiene",
+  "Order": 1,
+  "Question": "What water, sanitation and hygiene practices were the population accustomed to before the crisis?",
+  "Answer Type": "Multiselection",
+  "Options": "Limited awareness of available services, Inadequate communication channels, Lack of knowledge about referral options, Absence of translated materials for diverse groups, Insufficient engagement with local authorities, Challenges in accessing health-related information, No significant gaps observed"
+ },
+ {
+  "code": 224,
+  "Category": "WASH",
+  "Sub Category": "Hygiene",
+  "Order": 3,
+  "Question": "What existing practices are harmful to health?",
+  "Answer Type": "Multiselection",
+  "Options": "Improper waste disposal, Open defecation. Unsafe cooking methods, Limited hand hygiene. Overconsumption of sugary foods. Lack of vaccination awareness, No significantly harmful practices observed",
+  "Dependent on question": 303,
+  "Expected Answer": "Yes"
+ },
+ {
+  "code": 54,
+  "Category": "WASH",
+  "Sub Category": "Hygiene",
+  "Order": 4,
+  "Question": "Who practices these and why?",
+  "Answer Type": "Text",
+  "Dependent on question": 303,
+  "Expected Answer": "Yes"
+ },
+ {
+  "code": 55,
+  "Category": "WASH",
+  "Sub Category": "Hygiene",
+  "Order": 7,
+  "Question": "Is there a need for any type of hygiene items or other NFIs?",
+  "Answer Type": "Yes or No"
+ },
+ {
+  "code": 56,
+  "Category": "WASH",
+  "Sub Category": "Hygiene",
+  "Order": 5,
+  "Question": "Is there an understanding of the relationship between water\/sanitation\/shelter and disease?",
+  "Answer Type": "Yes or No"
+ },
+ {
+  "code": 57,
+  "Category": "WASH",
+  "Sub Category": "Hygiene",
+  "Order": 6,
+  "Question": "What are the common hygiene practices among the affected population. ?",
+  "Answer Type": "Multiselection",
+  "Options": "Washing hands after defecation, disposal of children's faeces, use of soap, storage and covering of water, cooked food)"
+ },
+ {
+  "code": 58,
+  "Category": "WASH",
+  "Sub Category": "Hygiene",
+  "Order": 8,
+  "Question": "Does the community have access to facilities important for maintaining hygiene?",
+  "Answer Type": "Yes or No",
+  "hint text": "covered water containers \/cooking utensils\/ mosquito nets\/soap\/sanitary protection"
+ },
+ {
+  "code": 59,
+  "Category": "WASH",
+  "Sub Category": "Hygiene",
+  "Order": 10,
+  "Question": "Are there any hygiene promotion activities linked with water and sanitation and\/or health services?",
+  "Answer Type": "Yes or No"
+ },
+ {
+  "code": 60,
+  "Category": "WASH",
+  "Sub Category": "Hygiene",
+  "Order": 9,
+  "Question": "What would motivate the community to practice positive hygiene behavior?",
+  "Answer Type": "Multiselection",
+  "Options": "Access to clean water and sanitation facilities, Health education and awareness campaigns. Incentives or rewards for practicing hygiene, Local community leaders' endorsement, Availability of hygiene supplies and products, Reduction in illness and disease transmission, Cultural and religious beliefs promoting hygiene, No clear motivating factors identified"
+ },
+ {
+  "code": 300,
+  "Category": "Health",
+  "Sub Category": "Moratlity",
+  "Order": 4,
+  "Question": "Is there any specific problem regarding the mortality rates?",
+  "Answer Type": "Yes or No"
+ },
+ {
+  "code": 61,
+  "Category": "WASH",
+  "Sub Category": "Hygiene",
+  "Order": 13,
+  "Question": "What are the advantages and disadvantages of any proposed changes in practice?",
+  "Answer Type": "Text"
+ },
+ {
+  "code": 62,
+  "Category": "WASH",
+  "Sub Category": "Hygiene",
+  "Order": 12,
+  "Question": "What type of outreach system would work in this context for both immediate and medium-term mobilization?",
+  "Answer Type": "Multiselection",
+  "Options": "community hygiene volunteers, workers or promoters, school health clubs, WASH committees"
+ },
+ {
+  "code": 63,
+  "Category": "WASH",
+  "Sub Category": "Hygiene",
+  "Order": 11,
+  "Question": "What are the learning needs of hygiene promotion staff and community outreach workers?",
+  "Answer Type": "Multiselection",
+  "Options": "Effective communication techniques, Disease transmission and prevention knowledge, Cultural sensitivity and understanding, Behavior change communication strategies, Training in using hygiene promotion materials, Monitoring and evaluation skills, Crisis response and emergency preparedness, No specific learning needs identified",
+  "Dependent on question": 59,
+  "Expected Answer": "Yes"
+ },
+ {
+  "code": 225,
+  "Category": "WASH",
+  "Sub Category": "Hygiene",
+  "Order": 14,
+  "Question": "What non-food items are available?",
+  "Answer Type": "Multiselection",
+  "Options": "Shelter materials (tents, tarps, etc.) , Clothing and blankets , Hygiene kits (soap, toothbrushes, etc.) , Cooking utensils and stoves , Bedding and sleeping mats , Basic medical supplies , Educational materials and books , No non-food items available"
+ },
+ {
+  "code": 301,
+  "Category": "Health",
+  "Sub Category": "Nutrition",
+  "Order": 1,
+  "Question": "Is there any specific problem regarding nutrition?",
+  "Answer Type": "Yes or No"
+ },
+ {
+  "code": 64,
+  "Category": "WASH",
+  "Sub Category": "Hygiene",
+  "Order": 15,
+  "Question": "What are the most urgently needed based on preferences and needs?",
+  "Answer Type": "Multiselection",
+  "Options": "Shelter materials (tents, tarps, etc.) , Clothing and blankets , Hygiene kits (soap, toothbrushes, etc.) , Cooking utensils and stoves , Bedding and sleeping mats , Basic medical supplies , Educational materials and books , None are needed"
+ },
+ {
+  "code": 65,
+  "Category": "WASH",
+  "Sub Category": "Hygiene",
+  "Order": 16,
+  "Question": "Has the place where people access markets to buy their essential hygiene items (cost, diversity, quality) changed since the crisis? Where is it now?",
+  "Answer Type": "Yes or No"
+ },
+ {
+  "code": 226,
+  "Category": "WASH",
+  "Sub Category": "Hygiene",
+  "Order": 17,
+  "Question": "How do households access their essential hygiene items?",
+  "Answer Type": "Multiselection",
+  "Options": "Distribution points by aid agencies , Purchasing from local markets , Donations from community members , Provided by local government authorities , Shared resources within the community , No clear method for accessing items"
+ },
+ {
+  "code": 66,
+  "Category": "WASH",
+  "Sub Category": "Hygiene",
+  "Order": 18,
+  "Question": "Who makes the decisions regarding which items to buy and prioritize?",
+  "Answer Type": "Multiselection",
+  "Options": "Local community leaders or elders , Household heads or caregivers , Community-based organizations , Humanitarian aid agencies , Local government authorities , External relief organizations , Decisions are not clearly defined"
+ },
+ {
+  "code": 67,
+  "Category": "WASH",
+  "Sub Category": "Hygiene",
+  "Order": 19,
+  "Question": "How effective are hygiene practices in healthcare settings (particularly important in epidemic situations)?",
+  "Answer Type": "Multiselection",
+  "Options": "Not effective, partly effective, effective, highly effective"
+ },
+ {
+  "code": 68,
+  "Category": "WASH",
+  "Sub Category": "Hygiene",
+  "Order": 20,
+  "Question": "What are the needs and preferences of women and girls for menstrual hygiene practices?",
+  "Answer Type": "Multiselection",
+  "Options": "Access to sanitary pads or menstrual products , Availability of clean and private sanitation facilities , Disposal options for used menstrual materials , Access to pain relief and hygiene education , Cultural and religious sensitivities , Supportive community networks for menstruation , No specific needs or preferences identified"
+ },
+ {
+  "code": 69,
+  "Category": "WASH",
+  "Sub Category": "Hygiene",
+  "Order": 21,
+  "Question": "What are the needs and preferences of people living with incontinence?",
+  "Answer Type": "Multiselection",
+  "Options": "Access to incontinence products (adult diapers, pads, etc.) , Availability of clean and accessible restroom facilities , Disposal options for used incontinence products , Access to medical advice and assistance , Privacy and dignity in managing incontinence , Supportive understanding from their community , No specific needs or preferences identified"
+ },
+ {
+  "code": 70,
+  "Category": "WASH",
+  "Sub Category": "Water supply and access",
+  "Order": 6,
+  "Question": "Is water accessible to all community members?",
+  "Answer Type": "Yes Or No"
+ },
+ {
+  "code": 71,
+  "Category": "WASH",
+  "Sub Category": "Water supply and access",
+  "Order": 1,
+  "Question": "Is the water clean and portable?",
+  "Answer Type": "Yes Or No"
+ },
+ {
+  "code": 72,
+  "Category": "WASH",
+  "Sub Category": "Water supply and access",
+  "Order": 7,
+  "Question": "What is the main water source?",
+  "Answer Type": "Multiselection",
+  "Options": ", Protected well or borehole\r, Unprotected well or spring\r, Rainwater harvesting\r, River or stream\r, Tanker truck delivery\r, No specific main water source identified"
+ },
+ {
+  "code": 73,
+  "Category": "WASH",
+  "Sub Category": "Water supply and access",
+  "Order": 8,
+  "Question": "Was the drinking water affected by the situation? ",
+  "Answer Type": "Yes or No"
+ },
+ {
+  "code": 227,
+  "Category": "WASH",
+  "Sub Category": "Water supply and access",
+  "Order": 6,
+  "Question": " How was the drinking water affected by the situation? ?",
+  "Answer Type": "Multiselection",
+  "Options": "Contaminated water sources , Damage to water treatment facilities , Disruption of water distribution systems , Reduced availability of clean water , No significant impact on drinking water",
+  "Dependent on question": 73,
+  "Expected Answer": "Yes"
+ },
+ {
+  "code": 74,
+  "Category": "WASH",
+  "Sub Category": "Water supply and access",
+  "Order": 10,
+  "Question": "How much water is available per person per day?",
+  "Answer Type": "Multiselection",
+  "Options": "Less than 5 liters , 5 to 10 liters , 10 to 20 liters , 20 to 30 liters , More than 30 liters , Water availability varies widely , Not enough data to determine"
+ },
+ {
+  "code": 75,
+  "Category": "WASH",
+  "Sub Category": "Water supply and access",
+  "Order": 14,
+  "Question": "do all groups (e.g. men, women, caste’s, etc.) have equitable access to water?",
+  "Answer Type": "Yes Or No"
+ },
+ {
+  "code": 76,
+  "Category": "WASH",
+  "Sub Category": "Water supply and access",
+  "Order": 12,
+  "Question": "Is the water available at the source enough for short term and longer term needs?",
+  "Answer Type": "Yes Or No"
+ },
+ {
+  "code": 77,
+  "Category": "WASH",
+  "Sub Category": "Water supply and access",
+  "Order": 13,
+  "Question": "Do people have enough water containers of the right size and type? ",
+  "Answer Type": "Yes Or No"
+ },
+ {
+  "code": 128,
+  "Category": "WASH",
+  "Sub Category": "Sanitation Excreta disposal",
+  "Order": 29,
+  "Question": "What is the slope of the terrain?",
+  "Answer Type": "Multiselection",
+  "Options": "steep,moderate,gentle, flat,rolling hills"
+ },
+ {
+  "code": 79,
+  "Category": "WASH",
+  "Sub Category": "Water supply and access",
+  "Order": 2,
+  "Question": "What treatment is necessary? ",
+  "Answer Type": "Multiselection",
+  "Options": "Filtration, Disnfecting, Boiling",
+  "Dependent on question": 71,
+  "Expected Answer": "No"
+ },
+ {
+  "code": 80,
+  "Category": "WASH",
+  "Sub Category": "Water supply and access",
+  "Order": 3,
+  "Question": "Are there alternative water sources nearby? ",
+  "Answer Type": "Yes Or No"
+ },
+ {
+  "code": 81,
+  "Category": "WASH",
+  "Sub Category": "Water supply and access",
+  "Order": 4,
+  "Question": "Is it possible to tanker water if water sources are inadequate? ",
+  "Answer Type": "Yes Or No"
+ },
+ {
+  "code": 82,
+  "Category": "WASH",
+  "Sub Category": "Water supply and access",
+  "Order": 5,
+  "Question": "What are the key hygiene issues related to water supply? ",
+  "Answer Type": "Multiselection",
+  "Options": "Contamination of water sources , Insufficient water quantity for hygiene , Lack of proper water treatment , Inadequate sanitation facilities , Difficulty in water access for hygiene , Limited awareness about water hygiene , No significant hygiene issues identified",
+  "Dependent on question": 71,
+  "Expected Answer": "No"
+ },
+ {
+  "code": 83,
+  "Category": "WASH",
+  "Sub Category": "Water supply and access",
+  "Order": 9,
+  "Question": "Do people have the means to use water hygienically in this situation?",
+  "Answer Type": "Yes Or No"
+ },
+ {
+  "code": 84,
+  "Category": "WASH",
+  "Sub Category": "Water supply and access",
+  "Order": 11,
+  "Question": "What is the daily and weekly frequency of the water supply availability?",
+  "Answer Type": "Multiselection",
+  "Options": "Daily supply (24\/7) , Daily supply with interruptions , Every other day , Few times a week , Once a week , Irregular schedule , No consistent water supply"
+ },
+ {
+  "code": 85,
+  "Category": "WASH",
+  "Sub Category": "Water supply and access",
+  "Order": 15,
+  "Question": "Are water collection points close enough (less than 500m away) to where people live?",
+  "Answer Type": "Yes Or No"
+ },
+ {
+  "code": 86,
+  "Category": "WASH",
+  "Sub Category": "Water supply and access",
+  "Order": 16,
+  "Question": "Are the collection points safe and secure?",
+  "Answer Type": "Yes Or No"
+ },
+ {
+  "code": 137,
+  "Category": "WASH",
+  "Sub Category": "Vector-borne disease",
+  "Order": 3,
+  "Question": "If vector borne risks are high, do people have access to individual protection? ",
+  "Answer Type": "Yes Or No",
+  "Dependent on question": 136,
+  "Expected Answer": "Yes"
+ },
+ {
+  "code": 88,
+  "Category": "WASH",
+  "Sub Category": "Water supply and access",
+  "Order": 17,
+  "Question": "Does the community have problems with water palatability and acceptance associated with chlorine taste and smell?",
+  "Answer Type": "Yes Or No",
+  "Dependent on question": 71,
+  "Expected Answer": "No"
+ },
+ {
+  "code": 89,
+  "Category": "WASH",
+  "Sub Category": "Water supply and access",
+  "Order": 18,
+  "Question": "What traditional beliefs and practices relate to the collection, storage and use of water?",
+  "Answer Type": "Multiselection",
+  "Options": "Rituals before drawing water , Water conservation taboos , Spiritual purification of water sources , Offering water to ancestors or deities , Seasonal water use patterns , Folklore about water quality , No distinct traditional beliefs or practices"
+ },
+ {
+  "code": 92,
+  "Category": "WASH",
+  "Sub Category": "Water supply and access",
+  "Order": 19,
+  "Question": "Has this access (the cost, quality, regularity of delivery) changed?",
+  "Answer Type": "Yes Or No"
+ },
+ {
+  "code": 261,
+  "Category": "Protection - MHPSS - CFS",
+  "Sub Category": "vulnerable populations",
+  "Order": 2,
+  "Question": "What vulnerable populations in your community?",
+  "Answer Type": "Multiselection",
+  "Options": "women and girls, children, lactating mothers, unaccompanied minors, elderly, PWD, none, other:",
+  "Dependent on question": 41,
+  "Expected Answer": "Yes"
+ },
+ {
+  "code": 93,
+  "Category": "WASH",
+  "Sub Category": "Water supply and access",
+  "Order": 20,
+  "Question": "Are waterpoints and laundry and bathing areas well drained?",
+  "Answer Type": "Yes Or No"
+ },
+ {
+  "code": 94,
+  "Category": "WASH",
+  "Sub Category": "Water supply and access",
+  "Order": 21,
+  "Question": "Are soil conditions suitable for on-site or off-site management of problem water from water points and laundry and bathing areas?",
+  "Answer Type": "Yes Or No"
+ },
+ {
+  "code": 95,
+  "Category": "WASH",
+  "Sub Category": "Water supply and access",
+  "Order": 22,
+  "Question": "Has a soil percolation test been carried out?",
+  "Answer Type": "Yes Or No"
+ },
+ {
+  "code": 96,
+  "Category": "WASH",
+  "Sub Category": "Water supply and access",
+  "Order": 23,
+  "Question": "What is the usual source of water for livestock?",
+  "Answer Type": "Multiselection",
+  "Options": "Natural water bodies (rivers, ponds, lakes) , Wells or boreholes , Community water supply systems , Rainwater harvesting , Irrigation channels , No specific water source for livestock"
+ },
+ {
+  "code": 97,
+  "Category": "WASH",
+  "Sub Category": "Water supply and access",
+  "Order": 24,
+  "Question": "Will there be any environmental effects due to possible water supply intervention, abstraction and use of water sources?",
+  "Answer Type": "Yes Or No"
+ },
+ {
+  "code": 98,
+  "Category": "WASH",
+  "Sub Category": "Water supply and access",
+  "Order": 25,
+  "Question": "Is there a risk of conflict if the sources are utilised for new populations? If so, what other users are currently using the water sources for?",
+  "Answer Type": "Yes Or No"
+ },
+ {
+  "code": 99,
+  "Category": "WASH",
+  "Sub Category": "Water supply and access",
+  "Order": 26,
+  "Question": "Are the users involved in the management and maintenance of water sources and latrines? If not, are there other people\/organizations?",
+  "Answer Type": "Yes Or No"
+ },
+ {
+  "code": 100,
+  "Category": "WASH",
+  "Sub Category": "Water supply and access",
+  "Order": 27,
+  "Question": "What opportunities are there to collaborate with the private and\/or public sector in water provision?",
+  "Answer Type": "Multiselection",
+  "Options": "Public-private partnerships for water infrastructure , Private sector investment in water treatment , Government funding for community water projects , Private sector sponsorship of water supply initiatives , Public health agencies' involvement in water quality testing , Collaboration with local water utilities , No significant opportunities identified"
+ },
+ {
+  "code": 229,
+  "Category": "WASH",
+  "Sub Category": "Water supply and access",
+  "Order": 28,
+  "Question": "What bottlenecks exist that could inform the response analysis and recommendations?",
+  "Answer Type": "Multiselection",
+  "Options": "Limited funding for water infrastructure , Insufficient local workforce for water projects , Community's willingness to adopt new practices , Availability of technical expertise for water solutions , Potential for technology-driven water solutions , Legal and regulatory hurdles for water projects , Political support for water provision initiatives , No significant bottlenecks"
+ },
+ {
+  "code": 228,
+  "Category": "WASH",
+  "Sub Category": "Water supply and access",
+  "Order": 29,
+  "Question": "What opportunities exist that could inform the response analysis and recommendations?",
+  "Answer Type": "Multiselection",
+  "Options": "Limited funding for water infrastructure , Insufficient local workforce for water projects , Community's willingness to adopt new practices , Availability of technical expertise for water solutions , Potential for technology-driven water solutions , Legal and regulatory hurdles for water projects , Political support for water provision initiatives , No significant opportunities identified"
+ },
+ {
+  "code": 230,
+  "Category": "WASH",
+  "Sub Category": "Water supply and access",
+  "Order": 30,
+  "Question": "What operation and maintenance duties are necessary?",
+  "Answer Type": "Multiselection",
+  "Options": "Regular cleaning of water storage tanks , Routine inspection of water distribution systems , Repairing damaged water infrastructure , Monitoring water quality and treatment , Preventing contamination of water sources , Educating the community about water conservation , Training local staff for system maintenance , No specific operation or maintenance duties identified"
+ },
+ {
+  "code": 231,
+  "Category": "WASH",
+  "Sub Category": "Water supply and access",
+  "Order": 31,
+  "Question": "Who shall be accountable for them?",
+  "Answer Type": "Text",
+  "Dependent on question": 230,
+  "Expected Answer": "Yes"
+ },
+ {
+  "code": 303,
+  "Category": "WASH",
+  "Sub Category": "Hygiene",
+  "Order": 2,
+  "Question": "Are there any existing practices harmful to health?",
+  "Answer Type": "Yes Or No"
+ },
+ {
+  "code": 101,
+  "Category": "WASH",
+  "Sub Category": "Water supply and access",
+  "Order": 32,
+  "Question": "What capacity is there to fulfill them in the short and long term?",
+  "Answer Type": "Multiselection",
+  "Options": "Strong capacity with adequate resources and expertise,Limited capacity due to resource constraints,High capacity in the short term, but challenges in the long term,Adequate capacity, but requires external support,Capacity varies based on specific factors,Capacity has been improving steadily,Capacity has been declining steadily"
+ },
+ {
+  "code": 102,
+  "Category": "WASH",
+  "Sub Category": "Water supply and access",
+  "Order": 33,
+  "Question": "Is there an existing or potential finance mechanism or system that can recover the operation and maintenance costs?",
+  "Answer Type": "Yes Or No"
+ },
+ {
+  "code": 103,
+  "Category": "WASH",
+  "Sub Category": "Water supply and access",
+  "Order": 34,
+  "Question": "How does the host population access water and ensure that its water is safe at the point of use?",
+  "Answer Type": "Multiselection",
+  "Options": "Drawing water from communal wells , Using household water filters or purifiers , Boiling water before consumption , Purchasing bottled water , Collecting rainwater for consumption , Treating water with chlorine or other disinfectants , No specific practices observed for water safety"
+ },
+ {
+  "code": 104,
+  "Category": "WASH",
+  "Sub Category": "Water supply and access",
+  "Order": 35,
+  "Question": "Is there access to local markets?",
+  "Answer Type": "Yes Or No"
+ },
+ {
+  "code": 105,
+  "Category": "WASH",
+  "Sub Category": "Water supply and access",
+  "Order": 36,
+  "Question": "What key WASH goods and services were accessible in the market before the crisis and are accessible during the crisis?",
+  "Answer Type": "Multiselection",
+  "Options": "Soap and hygiene products , Water storage containers , Water purification tablets , Sanitary pads and menstrual products , Hygiene promotion materials , Portable toilets and sanitation facilities , Water treatment equipment , No significant WASH goods or services available"
+ },
+ {
+  "code": 106,
+  "Category": "WASH",
+  "Sub Category": "Water supply and access",
+  "Order": 37,
+  "Question": "Who are the local partners in the geographical area, such as civil society groups that have similar capacity in WASH and community engagement?",
+  "Answer Type": "Text"
+ },
+ {
+  "code": 107,
+  "Category": "WASH",
+  "Sub Category": "Sanitation Excreta disposal",
+  "Order": 1,
+  "Question": "What is the current defecation practice?",
+  "Answer Type": "Multiselection",
+  "Options": "Open defecation in fields or open areas , Use of communal or shared latrines , Use of household pit latrines , Utilization of public restroom facilities , No specific defecation practice identified"
+ },
+ {
+  "code": 108,
+  "Category": "WASH",
+  "Sub Category": "Sanitation Excreta disposal",
+  "Order": 2,
+  "Question": "Are there any existing facilities which operates successfully? If so, are they used? are they sufficient? Can they be extended or adapted? ",
+  "Answer Type": "Yes Or No"
+ },
+ {
+  "code": 109,
+  "Category": "WASH",
+  "Sub Category": "Sanitation Excreta disposal",
+  "Order": 4,
+  "Question": "Are people familiar with the design, construction and use of toilets?",
+  "Answer Type": "Yes Or No"
+ },
+ {
+  "code": 110,
+  "Category": "WASH",
+  "Sub Category": "Sanitation Excreta disposal",
+  "Order": 7,
+  "Question": "Are people prepared to use latrines, defecation fields, trenches etc? (e.g. is it safe for women after dark, and are they safe\/user friendly for children) ",
+  "Answer Type": "Yes Or No"
+ },
+ {
+  "code": 232,
+  "Category": "WASH",
+  "Sub Category": "Sanitation Excreta disposal",
+  "Order": 11,
+  "Question": "Is there a designated area for public defecation?",
+  "Answer Type": "Yes or No",
+  "Dependent on question": 107,
+  "Expected Answer": "open defication"
+ },
+ {
+  "code": 111,
+  "Category": "WASH",
+  "Sub Category": "Sanitation Excreta disposal",
+  "Order": 22,
+  "Question": "What are current beliefs and practices concerning excreta disposal?",
+  "Answer Type": "Multiselection",
+  "Options": "Men and women use the same latrine , Different family members use separate latrines , Children's excreta is considered harmless , Children's excreta is treated as hazardous , Cultural norms influence latrine usage , No specific beliefs or practices identified"
+ },
+ {
+  "code": 112,
+  "Category": "WASH",
+  "Sub Category": "Sanitation Excreta disposal",
+  "Order": 12,
+  "Question": "Is there sufficient space for defecation fields, pit latrines etc? ",
+  "Answer Type": "Yes Or No"
+ },
+ {
+  "code": 113,
+  "Category": "WASH",
+  "Sub Category": "Sanitation Excreta disposal",
+  "Order": 21,
+  "Question": "What local materials are available for constructing toilets? ",
+  "Answer Type": "Multiselection",
+  "Options": "glazed cast iron, steel, stainless steel, porcelain, vitreous"
+ },
+ {
+  "code": 114,
+  "Category": "WASH",
+  "Sub Category": "Sanitation Excreta disposal",
+  "Order": 13,
+  "Question": "Do current excreta disposal arrangements encourage vectors? ",
+  "Answer Type": "Yes Or No"
+ },
+ {
+  "code": 115,
+  "Category": "WASH",
+  "Sub Category": "Sanitation Excreta disposal",
+  "Order": 14,
+  "Question": "Do people have access to water and soap for washing hands after defecation? ",
+  "Answer Type": "Yes Or No"
+ },
+ {
+  "code": 116,
+  "Category": "WASH",
+  "Sub Category": "Sanitation Excreta disposal",
+  "Order": 15,
+  "Question": "Are there materials or water available for anal cleansing?",
+  "Answer Type": "Yes Or No"
+ },
+ {
+  "code": 117,
+  "Category": "WASH",
+  "Sub Category": "Sanitation Excreta disposal",
+  "Order": 3,
+  "Question": "Are the facilities safe and dignified: lighted, equipped with locks, privacy screens?",
+  "Answer Type": "Yes Or No",
+  "Dependent on question": 109,
+  "Expected Answer": "Yes"
+ },
+ {
+  "code": 118,
+  "Category": "WASH",
+  "Sub Category": "Sanitation Excreta disposal",
+  "Order": 5,
+  "Question": "Can people access the toilet facilities during the day and night? If not at night, what are the alternatives?",
+  "Answer Type": "Yes Or No",
+  "Dependent on question": 109,
+  "Expected Answer": "Yes"
+ },
+ {
+  "code": 119,
+  "Category": "WASH",
+  "Sub Category": "Sanitation Excreta disposal",
+  "Order": 6,
+  "Question": "Are the latrines or toilets cleaned and maintained so that they are hygienic and safe for all users?",
+  "Answer Type": "Yes Or No",
+  "Dependent on question": 109,
+  "Expected Answer": "Yes"
+ },
+ {
+  "code": 120,
+  "Category": "WASH",
+  "Sub Category": "Sanitation Excreta disposal",
+  "Order": 8,
+  "Question": "Are the users involved in the management and maintenance of latrines?",
+  "Answer Type": "Yes Or No",
+  "Dependent on question": 109,
+  "Expected Answer": "Yes"
+ },
+ {
+  "code": 121,
+  "Category": "WASH",
+  "Sub Category": "Sanitation Excreta disposal",
+  "Order": 18,
+  "Question": "What excreta management practices does the community practice?",
+  "Answer Type": "Multiselection",
+  "Options": "Open defecation, Flush toilets, Pit latrines, Composting toilets, Sewage systems, None of the above"
+ },
+ {
+  "code": 122,
+  "Category": "WASH",
+  "Sub Category": "Sanitation Excreta disposal",
+  "Order": 24,
+  "Question": "What is the level of the groundwater table? ",
+  "Answer Type": "Multiselection",
+  "Options": "High, close to the surface , Moderately high , Moderate, at a reasonable depth , Moderately low , Low, significantly below the surface , Not known or measured"
+ },
+ {
+  "code": 123,
+  "Category": "WASH",
+  "Sub Category": "Sanitation Excreta disposal",
+  "Order": 23,
+  "Question": "Are soil conditions suitable for on-site excreta disposal? ",
+  "Answer Type": "Yes Or No"
+ },
+ {
+  "code": 124,
+  "Category": "WASH",
+  "Sub Category": "Sanitation Excreta disposal",
+  "Order": 9,
+  "Question": "Are there any social – cultural norms to consider in the design of the toilet?",
+  "Answer Type": "Yes Or No",
+  "Dependent on question": 108,
+  "Expected Answer": "Yes"
+ },
+ {
+  "code": 125,
+  "Category": "WASH",
+  "Sub Category": "Sanitation Excreta disposal",
+  "Order": 10,
+  "Question": "What are the cultural norms to consider in the design of the toilet?",
+  "Answer Type": "Multiselection",
+  "Options": "Gender-segregated facilities , Privacy and modesty features , Separate facilities for different age groups , Accessibility for people with disabilities , Availability of water for cleansing , Religious considerations for hygiene practices , No distinct cultural norms identified",
+  "Dependent on question": 124,
+  "Expected Answer": "Yes"
+ },
+ {
+  "code": 126,
+  "Category": "WASH",
+  "Sub Category": "Sanitation Excreta disposal",
+  "Order": 28,
+  "Question": "Is there an existing acceptance of and practice for composting?",
+  "Answer Type": "Yes Or No"
+ },
+ {
+  "code": 127,
+  "Category": "WASH",
+  "Sub Category": "Sanitation Excreta disposal",
+  "Order": 20,
+  "Question": "From what age do children start to use the toilet?",
+  "Answer Type": "Multiselection",
+  "Options": "0-1, 2-3, 3-5, later",
+  "Dependent on question": 109,
+  "Expected Answer": "Yes"
+ },
+ {
+  "code": 129,
+  "Category": "WASH",
+  "Sub Category": "Sanitation Excreta disposal",
+  "Order": 19,
+  "Question": "How do women and girls manage menstruation? Are there appropriate materials or facilities available for this?",
+  "Answer Type": "Multiselection",
+  "Options": "Using commercial sanitary pads, Using reusable cloth pads\r, Menstrual cups, Improvised materials, Access to clean water and soap for washing, Adequate restroom facilities with proper disposal options,\rLack of appropriate materials and facilitie"
+ },
+ {
+  "code": 130,
+  "Category": "WASH",
+  "Sub Category": "Sanitation Excreta disposal",
+  "Order": 16,
+  "Question": "Are there any specific facilities or equipment available for making sanitation accessible for persons with disabilities, people living with HIV, people living with incontinence or people immobile in medical facilities?",
+  "Answer Type": "Yes Or No"
+ },
+ {
+  "code": 131,
+  "Category": "WASH",
+  "Sub Category": "Sanitation Excreta disposal",
+  "Order": 25,
+  "Question": "Have environmental considerations been assessed? (for example, the extraction of raw materials such as sand and gravel for construction purposes, and the protection of the environment from fecal matter)",
+  "Answer Type": "Yes Or No"
+ },
+ {
+  "code": 132,
+  "Category": "WASH",
+  "Sub Category": "Sanitation Excreta disposal",
+  "Order": 26,
+  "Question": "Are there skilled workers in the community, such as masons or carpenters and unskilled laborers?",
+  "Answer Type": "Yes Or No"
+ },
+ {
+  "code": 133,
+  "Category": "WASH",
+  "Sub Category": "Sanitation Excreta disposal",
+  "Order": 27,
+  "Question": "Are there available pit emptiers or desludging trucks? If so, is the collected fecal waste disposed of appropriately and safely?",
+  "Answer Type": "Yes Or No"
+ },
+ {
+  "code": 134,
+  "Category": "WASH",
+  "Sub Category": "Sanitation Excreta disposal",
+  "Order": 17,
+  "Question": "What is the appropriate strategy for management of excreta?",
+  "Answer Type": "Multiselection",
+  "Options": "containment, emptying, treatment and disposal"
+ },
+ {
+  "code": 135,
+  "Category": "WASH",
+  "Sub Category": "Vector-borne disease",
+  "Order": 1,
+  "Question": "Are there any diseases\/symptoms that are WASH-related?",
+  "Answer Type": "Yes Or No"
+ },
+ {
+  "code": 136,
+  "Category": "WASH",
+  "Sub Category": "Vector-borne disease",
+  "Order": 2,
+  "Question": "Is there a high risk for vector-borne disease? How serious are they? (i.e. Any obvious problems with flies, mosquitoes, rodents, cockroaches, fleas, lice or bed bugs?) ",
+  "Answer Type": "Yes Or No"
+ },
+ {
+  "code": 138,
+  "Category": "WASH",
+  "Sub Category": "Vector-borne disease",
+  "Order": 4,
+  "Question": "Is the affected population used to dealing with these risks? If so, how do they normally protect themselves? ",
+  "Answer Type": "Yes Or No",
+  "Dependent on question": 135,
+  "Expected Answer": "Yes"
+ },
+ {
+  "code": 139,
+  "Category": "WASH",
+  "Sub Category": "Vector-borne disease",
+  "Order": 5,
+  "Question": "Has the affected population traveled through an area infected with certain insect vectors?",
+  "Answer Type": "Yes Or No",
+  "Dependent on question": 135,
+  "Expected Answer": "Yes"
+ },
+ {
+  "code": 141,
+  "Category": "WASH",
+  "Sub Category": "Vector-borne disease",
+  "Order": 6,
+  "Question": "Any evidence of overcrowding? ( Do people have previous experience of communal living?)",
+  "Answer Type": "Yes Or No"
+ },
+ {
+  "code": 270,
+  "Category": "WASH",
+  "Sub Category": "Water supply and access",
+  "Order": 39,
+  "Question": "Where do they buy water?",
+  "Answer Type": "Multiselection",
+  "Options": "Local water vendors\r, Water distribution points\r, Water kiosks or stations\r, Nearby towns or markets\r, No specific water purchasing locations identified",
+  "Dependent on question": 91,
+  "Expected Answer": "Yes"
+ },
+ {
+  "code": 271,
+  "Category": "WASH",
+  "Sub Category": "Water supply and access",
+  "Order": 40,
+  "Question": "Why are they buying water?",
+  "Answer Type": "Multiselection",
+  "Options": "Insufficient or unreliable water supply\r, Lack of access to clean water sources\r, Contaminated local water sources\r, Convenience and time-saving\r, Improved water quality\r, Meeting higher water demand",
+  "Dependent on question": 91,
+  "Expected Answer": "Yes"
+ },
+ {
+  "code": 142,
+  "Category": "WASH",
+  "Sub Category": "Vector-borne disease",
+  "Order": 7,
+  "Question": "Do people have any livestock? If so, where do they live \/ defecate and what are the types?",
+  "Answer Type": "Yes Or No"
+ },
+ {
+  "code": 272,
+  "Category": "WASH",
+  "Sub Category": "Water supply and access",
+  "Order": 41,
+  "Question": "What is the ratio of average water price to average income?",
+  "Answer Type": "text",
+  "Dependent on question": 92,
+  "Expected Answer": "Yes"
+ },
+ {
+  "code": 143,
+  "Category": "WASH",
+  "Sub Category": "Vector-borne disease",
+  "Order": 8,
+  "Question": "Is there any evidence of vector breeding sites – stagnant water\/ uncovered pit latrines\/water containers etc.",
+  "Answer Type": "Yes Or No"
+ },
+ {
+  "code": 144,
+  "Category": "WASH",
+  "Sub Category": "Vector-borne disease",
+  "Order": 9,
+  "Question": "What is known about the characteristics of the vector?",
+  "Answer Type": "Text",
+  "hint text": " mosquito species, breeding, biting, resting habits",
+  "Dependent on question": 143,
+  "Expected Answer": "Yes"
+ },
+ {
+  "code": 145,
+  "Category": "WASH",
+  "Sub Category": "Vector-borne disease",
+  "Order": 10,
+  "Question": "Is it possible to make changes to the local environment (by drainage\/ scrub clearance\/excreta disposal\/refuse disposal) to discourage vector breeding?",
+  "Answer Type": "Yes Or No"
+ },
+ {
+  "code": 146,
+  "Category": "WASH",
+  "Sub Category": "Vector-borne disease",
+  "Order": 11,
+  "Question": "Is it necessary to control vectors by chemical means? If so, What programmes, regulations and resources for vector control and use of chemicals are there?",
+  "Answer Type": "Yes Or No",
+  "Dependent on question": 143,
+  "Expected Answer": "Yes"
+ },
+ {
+  "code": 147,
+  "Category": "WASH",
+  "Sub Category": "Vector-borne disease",
+  "Order": 12,
+  "Question": "Is there a National Public Health\/Roll Back Malaria\/Vector Control Programme?",
+  "Answer Type": "Yes Or No"
+ },
+ {
+  "code": 148,
+  "Category": "WASH",
+  "Sub Category": "Vector-borne disease",
+  "Order": 13,
+  "Question": "Are people familiar with using ITN’s or bednets? In general, what are their sleeping practices?",
+  "Answer Type": "Multiselection",
+  "Options": "Sleeping indoors\n, Sleeping outdoors\n, Sleeping on mattresses or beds\n, Sleeping on the ground or floor\n, Using mosquito nets while sleeping\n, No specific sleeping practices identified"
+ },
+ {
+  "code": 149,
+  "Category": "WASH",
+  "Sub Category": "Vector-borne disease",
+  "Order": 14,
+  "Question": "What daily or seasonal patterns do local vectors follow in relation to reproduction, resting and feeding?",
+  "Answer Type": "Multiselection",
+  "Options": "Nighttime feeding habits , Daytime resting in shaded areas , Breeding during rainy seasons , Resting in indoor spaces during daylight , Increased activity after sunset , Feeding on humans during outdoor activities , Reproduction in stagnant water sources , No clear patterns identified"
+ },
+ {
+  "code": 150,
+  "Category": "WASH",
+  "Sub Category": "Vector-borne disease",
+  "Order": 15,
+  "Question": "Are there traditional beliefs and practices (for example, the belief that dirty water causes malarithat relate to vectors and vector-borne disease? Are any of these beliefs or practices either useful or harmful?",
+  "Answer Type": "Yes Or No",
+  "Options": "Belief that dirty water causes malaria\r, Hanging certain herbs to repel mosquitoes\r, Using specific amulets for protection\r, Avoiding certain foods to prevent disease\r, Belief in local remedies for mosquito bites\r, Traditional practices for preventing mosquito breeding\r, No specific traditional beliefs or practices identified"
+ },
+ {
+  "code": 151,
+  "Category": "WASH",
+  "Sub Category": "Vector-borne disease",
+  "Order": 16,
+  "Question": "What information and safety precautions need to be provided to households?",
+  "Answer Type": "Multiselection",
+  "Options": "Proper use of insecticide-treated bed nets , Emptying and covering stagnant water sources , Recognizing vector-borne disease symptoms , Use of insect repellents , Avoiding outdoor activities during peak vector activity times , Seeking medical attention for suspected vector diseases , Clearing vegetation around living areas , No specific information or precautions identified"
+ },
+ {
+  "code": 152,
+  "Category": "WASH",
+  "Sub Category": "Solid waste disposal",
+  "Order": 1,
+  "Question": "Is solid waste a problem?",
+  "Answer Type": "Yes Or No"
+ },
+ {
+  "code": 153,
+  "Category": "WASH",
+  "Sub Category": "Solid waste disposal",
+  "Order": 4,
+  "Question": "How do people dispose of their waste?",
+  "Answer Type": "Multiselection",
+  "Options": "Preventing or Reducing Waste, Generation,\nRecycling,\nIncineration,\nComposting,\nSanitary Landfill,\nDisposal in Ocean\/Sea,\nPlasma Gasification",
+  "Dependent on question": 152,
+  "Expected Answer": "Yes"
+ },
+ {
+  "code": 154,
+  "Category": "WASH",
+  "Sub Category": "Solid waste disposal",
+  "Order": 2,
+  "Question": "What type of solid waste is produced?",
+  "Answer Type": "Multiselection",
+  "Options": "Organic waste (food scraps, plant material) , Non-recyclable plastics and packaging , Glass and metal waste , Hazardous waste (batteries, chemicals) , Textile and clothing waste , E-waste (electronic devices) , Minimal solid waste production , No specific waste type or quantity identified",
+  "Dependent on question": 152,
+  "Expected Answer": "Yes"
+ },
+ {
+  "code": 235,
+  "Category": "WASH",
+  "Sub Category": "Solid waste disposal",
+  "Order": 3,
+  "Question": "In what quantity?",
+  "Answer Type": "Text",
+  "Dependent on question": 152,
+  "Expected Answer": "Yes"
+ },
+ {
+  "code": 155,
+  "Category": "WASH",
+  "Sub Category": "Solid waste disposal",
+  "Question": "Can solid waste be disposed of on site?",
+  "Answer Type": "Yes Or No"
+ },
+ {
+  "code": 156,
+  "Category": "WASH",
+  "Sub Category": "Solid waste disposal",
+  "Question": "What is the normal solid waste disposal practice for affected people ?",
+  "Answer Type": "Multiselection",
+  "Options": "Open dumping or burning of waste , Use of communal waste collection points , Utilization of local waste disposal services , Household waste separation for recycling , compost , No specific solid waste disposal practice identified"
+ },
+ {
+  "code": 157,
+  "Category": "WASH",
+  "Sub Category": "Solid waste disposal",
+  "Question": "Are there medical facilities and activities producing waste? How is it disposed of? Who is responsible?",
+  "Answer Type": "Yes Or No"
+ },
+ {
+  "code": 236,
+  "Category": "WASH",
+  "Sub Category": "Solid waste disposal",
+  "Question": "Where are disposable sanitary materials disposed of ?",
+  "Answer Type": "Multiselection",
+  "Options": "Household waste bins , Communal waste disposal sites , Public restroom trash bins , Dedicated sanitary waste bins , Buried in open areas , Flushed down toilets , No specific disposal method identified",
+  "hint text": "children’s nappies, menstruation hygiene materials and incontinence materials)?"
+ },
+ {
+  "code": 158,
+  "Category": "WASH",
+  "Sub Category": "Solid waste disposal",
+  "Question": "Is their disposal discreet and effective?",
+  "Answer Type": "Yes or No"
+ },
+ {
+  "code": 159,
+  "Category": "WASH",
+  "Sub Category": "Solid waste disposal",
+  "Question": "What is the effect of the current solid waste disposal on the environment?",
+  "Answer Type": "Multiselection",
+  "Options": "Soil contamination from improper disposal , Air pollution due to burning of waste , Water pollution from leachate runoff , Habitat disruption and wildlife impact , Spread of vector-borne diseases , Negative impact on local ecosystems , No significant environmental effects observed",
+  "Dependent on question": 152,
+  "Expected Answer": "Yes"
+ },
+ {
+  "code": 160,
+  "Category": "WASH",
+  "Sub Category": "Solid waste disposal",
+  "Question": "What solid waste management capacity do the private and public sectors have?",
+  "Answer Type": "Multiselection",
+  "Options": "Adequate waste collection services , Proper waste disposal facilities , Efficient waste transportation systems , Effective recycling and separation programs , Public awareness campaigns on waste management , Collaboration with local communities for waste reduction , Limited capacity for solid waste management , No specific solid waste management capacity identified"
+ },
+ {
+  "code": 161,
+  "Category": "WASH",
+  "Sub Category": "Drinage",
+  "Question": "Is there a drainage problem? (flooding shelters and latrines, vector breeding sites, polluted water contaminating living areas or water supplies)",
+  "Answer Type": "Yes Or No"
+ },
+ {
+  "code": 162,
+  "Category": "WASH",
+  "Sub Category": "Drinage",
+  "Question": "Do people have the means to protect their shelters and latrines from local flooding?",
+  "Answer Type": "Yes Or No"
+ },
+ {
+  "code": 163,
+  "Category": "Health",
+  "Sub Category": "Healthcare Provision and Access",
+  "Order": 1,
+  "Question": "What health care provision is available to the population and who is providing it?",
+  "Answer Type": "Multiselection",
+  "Options": "Government-run health clinics , Local non-governmental organizations (NGOs) , International humanitarian agencies , Mobile medical units , Community health workers , Private medical practitioners , No significant health care provision identified"
+ },
+ {
+  "code": 164,
+  "Category": "Health",
+  "Sub Category": "Healthcare Provision and Access",
+  "Order": 2,
+  "Question": "Do people have access to essential medicines? If yes, how? If not, why?",
+  "Answer Type": "Yes Or No"
+ },
+ {
+  "code": 165,
+  "Category": "Health",
+  "Sub Category": "Healthcare Provision and Access",
+  "Order": 3,
+  "Question": "Are medical services available?",
+  "Answer Type": "Yes Or No"
+ },
+ {
+  "code": 166,
+  "Category": "Health",
+  "Sub Category": "Healthcare Provision and Access",
+  "Question": "Are medical services physically accessible?",
+  "Answer Type": "Yes Or No"
+ },
+ {
+  "code": 167,
+  "Category": "Health",
+  "Sub Category": "Healthcare Provision and Access",
+  "Question": "Are medical services functioning on the same level as before the emergency? (lacking basic medicine, medical equipment, staff, basic infrastructure etc.)",
+  "Answer Type": "Yes Or No"
+ },
+ {
+  "code": 168,
+  "Category": "Health",
+  "Sub Category": "Services Quality",
+  "Order": 4,
+  "Question": "Where are the clinics located?",
+  "Answer Type": "Text"
+ },
+ {
+  "code": 169,
+  "Category": "Health",
+  "Sub Category": "Services Quality",
+  "Order": 1,
+  "Question": "What services are available (curative, MCH, private, immunization ETC)",
+  "Answer Type": "Multiselection",
+  "Options": "Curative health services\r, Maternal and Child Health (MC, services\r, Private medical clinics\r, Immunization services\r, Preventive health services\r, Mental health and psychosocial support\r, Dental services\r, No specific services identified"
+ },
+ {
+  "code": 170,
+  "Category": "Health",
+  "Sub Category": "Services Quality",
+  "Order": 2,
+  "Question": "Are the services accessible to and sufficient for the target population?",
+  "Answer Type": "Yes Or No"
+ },
+ {
+  "code": 171,
+  "Category": "Health",
+  "Sub Category": "Services Quality",
+  "Order": 3,
+  "Question": "Is the access to health services gender-dependent? ",
+  "Answer Type": "Yes Or No"
+ },
+ {
+  "code": 172,
+  "Category": "Health",
+  "Sub Category": "Services Quality",
+  "Order": 5,
+  "Question": "What is the situation in terms of health care personnel- level of training, ratio to health facility, outreach or volunteer workers?",
+  "Answer Type": "Multiselection",
+  "Options": "Well-trained medical professionals , Shortage of trained health personnel , Adequate ratio of personnel to health facilities , Insufficient health personnel per facility , Active community outreach workers , Utilization of volunteer health workers , No specific health care personnel situation identified"
+ },
+ {
+  "code": 173,
+  "Category": "Health",
+  "Sub Category": "Health Information System",
+  "Order": 1,
+  "Question": "What is the status of the existing health information system?",
+  "Answer Type": "Multiselection",
+  "Options": "Well-functioning health information system , Limited functionality of health information system , Non-existent electronic health system , Existing electronic health system , Electronic system partially destroyed , Complete destruction of electronic system , No specific status of health information system identified",
+  "Dependent on question": 173,
+  "Expected Answer": "Yes"
+ },
+ {
+  "code": 174,
+  "Category": "Health",
+  "Sub Category": "Health Information System",
+  "Order": 2,
+  "Question": "Is there a standardized health information system for collecting data?",
+  "Answer Type": "Yes Or No"
+ },
+ {
+  "code": 175,
+  "Category": "Health",
+  "Sub Category": "Health Information System",
+  "Order": 3,
+  "Question": "How is data collected and analyzed?",
+  "Answer Type": "Multiselection",
+  "Options": "Paper-based data collection forms , Mobile data collection applications , Interviews with community members , Surveys and questionnaires , Health facility records , Data entered into electronic databases , Data analysis through software tools , No specific data collection and analysis methods identified",
+  "Dependent on question": 174,
+  "Expected Answer": "No"
+ },
+ {
+  "code": 176,
+  "Category": "Health",
+  "Sub Category": "Health Information System",
+  "Order": 4,
+  "Question": "Is there a need to replace the former health information system? ",
+  "Answer Type": "Yes Or No"
+ },
+ {
+  "code": 177,
+  "Category": "Health",
+  "Sub Category": "Health Information System",
+  "Order": 5,
+  "Question": "Is there a need for a temporary paper system until an electronic system is restored\/sponsored?",
+  "Answer Type": "Yes Or No"
+ },
+ {
+  "code": 178,
+  "Category": "Health",
+  "Sub Category": "Problems",
+  "Order": 1,
+  "Question": "What medical support is needed?",
+  "Answer Type": "Multiselection",
+  "Options": "Medical supplies (medications, equipment) , Skilled medical professionals (doctors, nurses) , Emergency medical services , Specialist medical care (surgery, obstetrics) , Diagnostic equipment (X-ray, la, , Mental health and psychosocial support , Disease prevention and vaccination campaigns , No specific medical support needs identified"
+ },
+ {
+  "code": 179,
+  "Category": "Health",
+  "Sub Category": "Problems",
+  "Order": 2,
+  "Question": "What are the current or likely water and sanitation and vector borne diseases? (see WASH section)",
+  "Answer Type": "Multiselection",
+  "Options": "Diarrheal diseases (cholera, gastroenteritis) , Malaria , Dengue fever , Typhoid , Zika virus , Chikungunya , Leptospirosis , No specific water, sanitation, or vector-borne diseases identified"
+ },
+ {
+  "code": 180,
+  "Category": "Health",
+  "Sub Category": "Problems",
+  "Order": 3,
+  "Question": "What are the primary health problems in the area affected by the emergency?",
+  "Answer Type": "Multiselection",
+  "Options": "Acute respiratory infections , Diarrheal diseases , Malnutrition , Vector-borne diseases , Maternal and child health concerns , Mental health and psychosocial issues , Limited access to medical care , No specific primary health problems identified"
+ },
+ {
+  "code": 181,
+  "Category": "Health",
+  "Sub Category": "Problems",
+  "Order": 4,
+  "Question": "What are the most frequent communicable diseases?",
+  "Answer Type": "Multiselection",
+  "Options": "Influenza , Diarrheal diseases , Respiratory infections , Skin infections , Waterborne diseases , Vector-borne diseases , Sexually transmitted infections , No specific frequent communicable diseases identified"
+ },
+ {
+  "code": 182,
+  "Category": "Health",
+  "Sub Category": "Problems",
+  "Order": 5,
+  "Question": "What are the primary health problems in the country of origin (if displaced people are involved)?",
+  "Answer Type": "Multiselection",
+  "Options": "Infectious diseases , Chronic diseases , Maternal and child health concerns , Malnutrition , Lack of access to medical care , Limited sanitation and hygiene facilities , Mental health challenges , No specific primary health problems identified",
+  "Dependent on question": 194,
+  "Expected Answer": "Yes"
+ },
+ {
+  "code": 183,
+  "Category": "Health",
+  "Sub Category": "Problems",
+  "Order": 6,
+  "Question": "Any evidence of acute malnutrition? How is this monitored? (Please refer to the Food and Nutrition Section)",
+  "Answer Type": "Yes Or No"
+ },
+ {
+  "code": 184,
+  "Category": "Health",
+  "Sub Category": "Problems",
+  "Order": 7,
+  "Question": "Are there specific health problems for women?",
+  "Answer Type": "Multiselection",
+  "Options": "high birth rate, anaemia, sexually transmitted diseases, sexual violence\/rape, abortion"
+ },
+ {
+  "code": 238,
+  "Category": "Health",
+  "Sub Category": "Immunizations",
+  "Order": 1,
+  "Question": "What is immunization coverage?",
+  "Answer Type": "Multiselection",
+  "Options": "High immunization coverage , Moderate immunization coverage , Low immunization coverage , Immunization coverage data not available , No specific immunization coverage identified"
+ },
+ {
+  "code": 239,
+  "Category": "Health",
+  "Sub Category": "Immunizations",
+  "Order": 2,
+  "Question": "When did the last immunization occur?",
+  "Answer Type": "Multiselection",
+  "Options": "Within the last 6 months , Within the last year , Within the last 2 years , Within the last 5 years"
+ },
+ {
+  "code": 237,
+  "Category": "Health",
+  "Sub Category": "Immunizations",
+  "Order": 4,
+  "Question": "Which vaccines given?",
+  "Answer Type": "Multiselection",
+  "Options": "Measles vaccine , Polio vaccine , Diphtheria-tetanus-pertussis (DTP) vaccine , Hepatitis B vaccine , Influenza vaccine , Pneumococcal vaccine , Meningococcal vaccine , No specific vaccines identified"
+ },
+ {
+  "code": 185,
+  "Category": "Health",
+  "Sub Category": "Immunizations",
+  "Order": 3,
+  "Question": "Where did the last immunization occur?",
+  "Answer Type": "Multiselection",
+  "Options": ", Immunization location: Government health facility , Immunization location: NGO-operated clinic , Immunization location: Mobile health unit , Immunization location: School-based program , Immunization location: Not sure or not received"
+ },
+ {
+  "code": 186,
+  "Category": "Health",
+  "Sub Category": "Problems",
+  "Order": 8,
+  "Question": "are there victims of trauma, injury, or shot wounds (see MHPSS section).",
+  "Answer Type": "Yes Or No"
+ },
+ {
+  "code": 187,
+  "Category": "General",
+  "Sub Category": "4 Ws",
+  "Order": 1,
+  "Question": "Are there other organizations in the area?",
+  "Answer Type": "Yes Or No"
+ },
+ {
+  "code": 188,
+  "Category": "General",
+  "Sub Category": "4 Ws",
+  "Order": 2,
+  "Question": "What support\/services do they offer?",
+  "Answer Type": "Multiselection",
+  "Options": "Providing health education and awareness\n, Distributing relief supplies\n, Facilitating community meetings and discussions\n, Offering psychosocial support and counseling\n, Advocating for community needs to external organizations\n, Organizing vocational training and workshops\n, Mobilizing resources for emergency response\n, No specific support or services identified",
+  "Dependent on question": 187,
+  "Expected Answer": "Yes"
+ },
+ {
+  "code": 189,
+  "Category": "General",
+  "Sub Category": "4 Ws",
+  "Order": 3,
+  "Question": "volunteer-based or hired",
+  "Answer Type": "Yes Or No",
+  "Dependent on question": 187,
+  "Expected Answer": "Yes"
+ },
+ {
+  "code": 190,
+  "Category": "General",
+  "Sub Category": "4 Ws",
+  "Order": 4,
+  "Question": "Is there a manager",
+  "Answer Type": "Yes Or No",
+  "Dependent on question": 187,
+  "Expected Answer": "Yes"
+ },
+ {
+  "code": 191,
+  "Category": "General",
+  "Sub Category": "4 Ws",
+  "Order": 5,
+  "Question": "What methodologies do they use to implement their interventions? ",
+  "Answer Type": "multiselection",
+  "Options": "Participatory workshops and training , Information campaigns and awareness raising , Mobile clinics and medical camps , Door-to-door surveys and assessments , Collaborative community meetings , Skill-building sessions and demonstrations , Capacity-building through education , No specific methodologies identified",
+  "Dependent on question": 187,
+  "Expected Answer": "yes"
+ },
+ {
+  "code": 192,
+  "Category": "General",
+  "Sub Category": "4 Ws",
+  "Order": 6,
+  "Question": "What is the vision and mission of the organization in “normal” times and now?",
+  "Answer Type": "Text",
+  "Dependent on question": 187,
+  "Expected Answer": "Yes"
+ },
+ {
+  "code": 140,
+  "Category": "WASH",
+  "Sub Category": "Vector-borne disease",
+  "Order": 5,
+  "Question": "Which groups of the population are most affected?",
+  "Answer Type": "Multiselection",
+  "Options": "Children, older people, disabled, adults",
+  "Dependent on question": 135,
+  "Expected Answer": "Yes"
+ },
+ {
+  "code": 194,
+  "Category": "General",
+  "Sub Category": "Refugees\/IDPs\/Migrants",
+  "Order": 1,
+  "Question": "Are there any refugees or internally displaced people?",
+  "Answer Type": "Yes or No"
+ },
+ {
+  "code": 195,
+  "Category": "General",
+  "Sub Category": "Infrastracture and Services",
+  "Order": 1,
+  "Question": "Does the community have safe access to electricity?",
+  "Answer Type": "Yes or No"
+ },
+ {
+  "code": 196,
+  "Category": "General",
+  "Sub Category": "Infrastracture and Services",
+  "Order": 2,
+  "Question": "Is there  access to the Internet in the community?",
+  "Answer Type": "Yes or No"
+ },
+ {
+  "code": 91,
+  "Category": "WASH",
+  "Sub Category": "Water supply and access",
+  "Order": 38,
+  "Question": "Do people buy water?",
+  "Answer Type": "Yes Or No"
+ },
+ {
+  "code": 198,
+  "Category": "General",
+  "Sub Category": "Infrastracture and Services",
+  "Order": 3,
+  "Question": "What immediate emergency relief is currently provided?",
+  "Answer Type": "Multiselection",
+  "Options": "Emergency healthcare services , Food and non-food item distributions , Child-Friendly Spaces (CFS) , Water and sanitation interventions , Shelter and housing support , Psychological and psychosocial support , Education and school support , No specific immediate emergency relief identified"
+ },
+ {
+  "code": 199,
+  "Category": "General",
+  "Sub Category": "Infrastracture and Services",
+  "Order": 4,
+  "Question": "Do vulnerable populations (children, women, people with disabilities, etc.) have access to shelters or safe spaces and other services?",
+  "Answer Type": "Yes or No",
+  "Dependent on question": 41,
+  "Expected Answer": "Yes"
+ },
+ {
+  "code": 200,
+  "Category": "General",
+  "Sub Category": "Psychosocial",
+  "Order": 2,
+  "Question": "What tools does the community usually use to cope with crises\/How does the community usually cope? ",
+  "Answer Type": "Multiselection",
+  "Options": "Social support networks among community members , Relying on traditional healing practices , Community-based organizations and committees , Accessing local religious or spiritual resources , Self-help groups for mutual assistance , Engaging in income-generating activities , Sharing resources within extended families , No specific coping tools or strategies identified"
+ },
+ {
+  "code": 201,
+  "Category": "General",
+  "Sub Category": "Demographics and Community Structure",
+  "Order": 1,
+  "Question": "Are you aware of any increased risks to vulnerable populations in the community as a result of the emergency? (e.g. CP risks, GBV)",
+  "Answer Type": "Yes or No",
+  "hint text": "For Example: CP risks, GBV"
+ },
+ {
+  "code": 202,
+  "Category": "General",
+  "Sub Category": "Psychosocial",
+  "Order": 1,
+  "Question": "Are people experiencing stress symptoms (cognitive, behavioral, physical, emotional)? (e.g. different behavior, social withdrawal, grief, anxiety, deteriorating health, headaches, etc.)",
+  "Answer Type": "Yes or No"
+ },
+ {
+  "code": 203,
+  "Category": "General",
+  "Sub Category": "Demographics and Community Structure",
+  "Order": 5,
+  "Question": "What are your general impressions of the community?",
+  "Answer Type": "Multiselection",
+  "Options": "Strong sense of community unity and cooperation, Limited access to basic services and amenities,Rich cultural diversity and traditions, Well-developed infrastructure and facilities\r,High level of social engagement and activism ,Economic challenges and disparities,Safe and secure environment, Environmental consciousness and sustainability practices"
+ },
+ {
+  "code": 46,
+  "Category": "Protection - MHPSS - CFS",
+  "Sub Category": "Community",
+  "Order": 2,
+  "Question": "Are people experiencing stress symptoms?",
+  "Answer Type": "Yes or No",
+  "hint text": "You can follow the resilience kit pamphlet for examples"
+ },
+ {
+  "code": 205,
+  "Category": "General",
+  "Sub Category": "Demographics and Community Structure",
+  "Order": 2,
+  "Question": "How many people are affected by the emergency and where are they? Disaggregate the data by sex, age, disability and so on",
+  "Answer Type": "Text"
+ },
+ {
+  "code": 206,
+  "Category": "General",
+  "Sub Category": "Demographics and Community Structure",
+  "Order": 3,
+  "Question": "General information regarding the entire local population - number of families, number of children\/elderly\/PWD?",
+  "Answer Type": "Text"
+ },
+ {
+  "code": 207,
+  "Category": "General",
+  "Sub Category": "Demographics and Community Structure",
+  "Order": 5,
+  "Question": "What are the main community social structures?",
+  "Answer Type": "Multiselection",
+  "Options": "Volunteer groups\r, Self-care groups or committees\r, Community educators or trainers\r, Women's empowerment groups\r, Youth associations\r, Religious organizations\r, Health promoters or advocates\r, No specific main community social structures identified"
+ },
+ {
+  "code": 208,
+  "Category": "General",
+  "Sub Category": "Demographics and Community Structure",
+  "Order": 4,
+  "Question": "What are people’s likely movements? What are the security factors for the affected people and for potential relief responses?",
+  "Answer Type": "Multiselection",
+  "Options": "Internal displacement within the region,Migration to neighboring areas or countries\n,Seeking refuge in temporary shelters or camps,, Relocating to urban centers\n, Returning to their homes after the situation stabilizes,Staying with relatives or host families\n,Evacuating to designated safe zones, Unpredictable movements due to changing circumstances, Security concerns for affected people due to conflict or violence, Security concerns for relief efforts due to logistical challenges, Security concerns for relief efforts due to lack of access, Coordination challenges among relief organizations"
+ },
+ {
+  "code": 209,
+  "Category": "General",
+  "Sub Category": "Demographics and Community Structure",
+  "Order": 7,
+  "Question": "Who are the key people to consult or contact in the community?",
+  "Answer Type": "Text"
+ },
+ {
+  "code": 210,
+  "Category": "General",
+  "Sub Category": "Infrastracture and Services",
+  "Order": 5,
+  "Question": "Is there equal access for all to existing facilities, including at public places, health centers and schools?",
+  "Answer Type": "Yes or No"
+ },
+ {
+  "code": 211,
+  "Category": "General",
+  "Sub Category": "Demographics and Community Structure",
+  "Order": 6,
+  "Question": "What are the formal and informal power structures (for example, community leaders, elders, women’s groups)?",
+  "Answer Type": "Multiselection",
+  "Options": "Community leaders and elders , Local government officials , Religious leaders , Women's groups or organizations , Youth groups or associations , Traditional councils or bodies , Non-governmental organizations (NGOs) , No specific power structures identified"
+ },
+ {
+  "code": 212,
+  "Category": "General",
+  "Sub Category": "Cultural and Social Factors",
+  "Order": 2,
+  "Question": "What are the accepted beliefs and practices among the affected population?",
+  "Answer Type": "Multiselection",
+  "Options": "Religious beliefs and rituals\r, Cultural traditions and ceremonies\r, Social norms and customs\r, Traditional healing and medical practices\r, Dietary and food-related practices\r, Community governance and decision-making processes\r, Environmental conservation practices\r, Gender roles and responsibilities\r, Education and learning traditions\rj) Communication and information-sharing methods"
+ },
+ {
+  "code": 213,
+  "Category": "General",
+  "Sub Category": "Cultural and Social Factors",
+  "Order": 3,
+  "Question": "Are there cultural sensitivities or taboo subjects?",
+  "Answer Type": "Yes or No"
+ },
+ {
+  "code": 214,
+  "Category": "General",
+  "Sub Category": "Cultural and Social Factors",
+  "Order": 1,
+  "Question": "How are decisions made in households and in the community?",
+  "Answer Type": "Multiselection",
+  "Options": "Patriarchal structure with male head making most decisions, Matriarchal structure with female head making most decisions,Joint decision-making involving multiple family members,Decision-making based on age and seniority,Democratic process involving all family\/community members,Influence of community leaders and elders, Decisions made by elected representatives or councils, Decisions based on traditional or cultural norms"
+ },
+ {
+  "code": 215,
+  "Category": "General",
+  "Sub Category": "Economic Factors",
+  "Order": 1,
+  "Question": "Do people have access to cash and\/or credit?",
+  "Answer Type": "Yes or No"
+ },
+ {
+  "code": 216,
+  "Category": "General",
+  "Sub Category": "Economic Factors",
+  "Order": 2,
+  "Question": "Are there seasonal variations to be aware of that may restrict access or increase demands on labor? (for example, during harvesting time)",
+  "Answer Type": "Yes or No"
+ },
+ {
+  "code": 217,
+  "Category": "General",
+  "Sub Category": "Coordination and Collaboration",
+  "Order": 3,
+  "Question": "Who are the key authorities to liaise and collaborate with?",
+  "Answer Type": "Multiselection",
+  "Options": "Local government officials , National government agencies , Non-governmental organizations (NGOs) , International humanitarian organizations , Religious leaders or institutions , Community leaders or elders , Health professionals and facilities , No specific key authorities identified"
+ },
+ {
+  "code": 218,
+  "Category": "General",
+  "Sub Category": "Coordination and Collaboration",
+  "Order": 4,
+  "Question": "What access to the mass media is there in the area (for example, radio, television, video, newspapers)?",
+  "Answer Type": "Multiselection"
+ },
+ {
+  "code": 219,
+  "Category": "General",
+  "Sub Category": "Coordination and Collaboration",
+  "Order": 5,
+  "Question": "What local media organizations and\/or non-governmental organisations (NGOs) are there?",
+  "Answer Type": "Text"
+ },
+ {
+  "code": 221,
+  "Category": "General",
+  "Sub Category": "Coordination and Collaboration",
+  "Order": 2,
+  "Question": "Which segments of the population can and should be targeted (for example, mothers, children, community leaders, religious leaders)?",
+  "Answer Type": "Multiselection"
+ },
+ {
+  "code": 222,
+  "Category": "General",
+  "Sub Category": "Cultural and Social Factors",
+  "Order": 4,
+  "Question": "What are the accepted beliefs and practices or taboos among the affected population towards water, sanitation and hygiene?",
+  "Answer Type": "Multiselection",
+  "Options": "Using running water for baptisms , Avoiding certain foods during menstruation , Bathing at specific times of the day , Using traditional cleansing practices , Wearing specific clothing for hygiene purposes , Avoiding water conservation efforts , No specific beliefs or practices identified"
+ },
+ {
+  "code": 223,
+  "Category": "General",
+  "Sub Category": "Coordination and Collaboration",
+  "Order": 1,
+  "Question": "What are the existing formal and informal channels of communication and outreach? For both immediate and medium-term mobilization",
+  "Answer Type": "Multiselection",
+  "Options": "Government-run information centers, community health workers,community hygiene volunteers, traditional birth attendants or healers, workers or promoters, school health clubs, WASH committees, cooperatives, churches and mosques, local radio"
+ }
+]

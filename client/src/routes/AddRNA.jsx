@@ -1,7 +1,9 @@
-import { Stack } from '@mui/material';
-import { useForm } from 'react-hook-form';
-import { ContinueButton } from '../components/ContinueButton';
-import InputField from '../components/input-field/InputField';
+import { Stack } from "@mui/material";
+import { useForm } from "react-hook-form";
+import { ContinueButton } from "../components/ContinueButton";
+import InputField from "../components/input-field/InputField";
+import { useMutation } from "@tanstack/react-query";
+import { api } from "../utils/axios";
 
 const AddEvent = () => {
   const {
@@ -10,43 +12,51 @@ const AddEvent = () => {
     formState: { errors },
   } = useForm();
 
+  const {
+    mutate: addRna,
+    isLoading,
+    isError,
+  } = useMutation(async (formData) => await api.post("/rnas", formData));
+
   const onSubmit = (data) => {
-    //TODO: call api to add new RNA
+    addRna(data);
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Stack spacing={2} margin={2}>
         <InputField
-          name='communityName'
+          name="communityName"
           register={register}
-          validationSchema={{ required: 'Community Name is Required' }}
+          validationSchema={{ required: "Community Name is Required" }}
           errors={errors}
-          type='text'
-          label='Community Name'
-          placeholder='Where are you?'
+          type="text"
+          label="Community Name"
+          placeholder="Where are you?"
         />
 
         <InputField
-          name='type'
+          name="communityType"
           register={register}
-          validationSchema={{ required: 'Type is Required' }}
-          type='text'
-          label='Type'
+          validationSchema={{ required: "Type is Required" }}
+          type="text"
+          label="Type"
           errors={errors}
-          placeholder='School, Hospital, Community Center, etc...'
+          placeholder="School, Hospital, Community Center, etc..."
         />
 
         <InputField
-          name='location'
+          name="location"
           register={register}
-          type='text'
+          type="text"
           errors={errors}
-          label='Location (optional)'
-          placeholder='Precise coordination'
+          label="Location (optional)"
+          placeholder="Precise coordination"
         />
 
-        <ContinueButton type='submit'>Add RNA</ContinueButton>
+        <ContinueButton type="submit" disabled={isLoading}>
+          {isLoading ? "Adding RNA..." : "Add RNA"}
+        </ContinueButton>
       </Stack>
     </form>
   );

@@ -1,15 +1,11 @@
-import { useNavigate } from 'react-router-dom';
-import { Stack, Button, Typography, List } from "@mui/material";
+import { Stack, Typography, List } from "@mui/material";
 import { ContinueButton } from "../../components/ContinueButton";
 import ProgressOverview from "../../components/ProgressOverview";
 import { ProgressCard } from "./ProgressCard";
-import EastOutlinedIcon from '@mui/icons-material/EastOutlined';
 import { useQuery } from '@tanstack/react-query'
 import { api } from '../../utils/axios';
 
 export const RNAs = () => {
-  const navigate = useNavigate();
-
   const { data: rnas = [], isLoading } =
     useQuery(["rnas"], async () => (await api.get('/rnas')).data, { refetchOnWindowFocus: false });
 
@@ -21,7 +17,7 @@ export const RNAs = () => {
         {!isLoading && rnas.map(({ id, lastSyncDate, creationDate, communityName }) =>
           <ProgressCard
             sx={{ width: "100%", marginY: "1vh" }}
-            value={Math.floor(Math.random() * 101)}
+            value={Math.floor(Math.random() * 101)} // TODO: evaluate % based on number of questions answered
             key={id}
             lastSyncDate={new Date(lastSyncDate ?? creationDate).toLocaleDateString("en-US")}
             communityName={communityName}
@@ -33,10 +29,6 @@ export const RNAs = () => {
           New RNA
         </Typography>
       </ContinueButton>
-      {/* <Button variant="contained" endIcon={<EastOutlinedIcon />}
-        onClick={() => navigate('/RNAs/add')}>
-          New RNA
-      </Button> */}
     </Stack>
   )
 }

@@ -25,10 +25,6 @@ const Routes = () => {
     {
       path: 'RNAs/:id',
       element: <CategoriesList />
-    },
-    {
-      path: '/questions',
-      element: <QuestionPage/>
     }
   ]);
 };

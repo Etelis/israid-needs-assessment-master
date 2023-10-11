@@ -17,6 +17,7 @@ jobs:
     name: build and deploy lambda
     needs: get-folders
     strategy:
+      fail-fast: false
       matrix:
         node-version: [12.x]
         manifest: ${{ fromJson(needs.get-folders.outputs.matrix) }}

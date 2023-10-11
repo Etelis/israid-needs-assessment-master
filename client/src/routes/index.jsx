@@ -1,5 +1,5 @@
 import { Navigate, useRoutes } from 'react-router-dom';
-import { QuestionPage } from '../components/questions/QuestionPage';
+import QuestionPage from '../components/questions/QuestionPage';
 import AddRNA from './AddRNA';
 import CategoriesList from './CategoriesList';
 import { RNAs } from './RNAs';
@@ -15,7 +15,7 @@ const Routes = () => {
       element: <RNAs />
     },
     {
-      path: 'Rnas/:rnaId/:categoryId/:subCategoryId',
+      path: 'RNAs/:rnaId/:categoryId/:subCategoryId',
       element: <QuestionPage/>
     },
     {
@@ -23,12 +23,8 @@ const Routes = () => {
       element: <AddRNA />,
     },
     {
-      path: 'RNAs/:id',
+      path: 'RNAs/:rnaId',
       element: <CategoriesList />
-    },
-    {
-      path: '/questions',
-      element: <QuestionPage/>
     }
   ]);
 };

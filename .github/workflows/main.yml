@@ -5,14 +5,14 @@ jobs:
     name: Get the lambda folders
     runs-on: ubuntu-latest
     outputs:
-      matrix: ${{ steps.test.outputs.bdika }}
+      matrix: ${{ steps.folder-fetcher.outputs.folders }}
     steps:
       - uses: actions/checkout@v1
       - name: get all folders
-        id: test
+        id: folder-fetcher
         run: |
-          test=$(find test -maxdepth 1 -type d -exec basename {} \; | jq -R -s -c 'split("\n")[:-1]')
-          echo "bdika=$test" >> "$GITHUB_OUTPUT"
+          var1=$(find test -maxdepth 1 -type d -exec basename {} \; | jq -R -s -c 'split("\n")[:-1]')
+          echo "folders=$var1" >> "$GITHUB_OUTPUT"
   deploy_source:
     name: build and deploy lambda
     needs: get-folders
@@ -44,5 +44,5 @@ jobs:
           aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws_region: eu-north-1
-          function_name: my-function
+          function_name: ${{matrix.manifest}}
           zip_file: bundle.zip

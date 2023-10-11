@@ -16,7 +16,7 @@ jobs:
       - name: get all folders
         id: test
         run: |
-          ls -l test/*
+          find test -maxdepth 1 -type d
       - name: npm install and build
         run: |
           cd ${{steps.run_tests.outputs.output1}}

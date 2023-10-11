@@ -16,10 +16,10 @@ jobs:
       - name: get all folders
         id: test
         run: |
-          find test -maxdepth 1 -type d -exec basename {} \;
+          echo "::set-output name=FILELIST::$(find test -maxdepth 1 -type d -exec basename {} \;
       - name: npm install and build
         run: |
-          cd ${{steps.test.outputs.output1}}
+          cd ${{steps.test.outputs.FILELIST}}
           npm install
           npm run build --if-present
         env:

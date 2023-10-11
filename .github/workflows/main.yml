@@ -4,6 +4,8 @@ jobs:
   get-folders:
     name: Get the lambda folders
     runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.test.outputs.bdika }}
     steps:
       - name: get all folders
         id: test
@@ -16,7 +18,7 @@ jobs:
     strategy:
       matrix:
         node-version: [12.x]
-        manifest: ${{ fromJson(needs.get-folders.outputs.bdika) }}
+        manifest: ${{ fromJson(needs.get-folders.outputs.matrix) }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1

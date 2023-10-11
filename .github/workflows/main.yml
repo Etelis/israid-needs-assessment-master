@@ -1,11 +1,22 @@
 name: deploy to lambda
 on: [push]
 jobs:
+  get-folders:
+    name: Get the lambda folders
+    runs-on: ubuntu-latest
+    steps:
+      - name: get all folders
+        id: test
+        run: |
+          test=$(find test -maxdepth 1 -type d -exec basename {} \; | jq -R -s -c 'split("\n")[:-1]')
+          echo "bdika=$test" >> "$GITHUB_OUTPUT"
   deploy_source:
     name: build and deploy lambda
+    needs: get-folders
     strategy:
       matrix:
         node-version: [12.x]
+        manifest: ${{ fromJson(needs.get-folders.outputs.bdika) }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -13,14 +24,9 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - name: get all folders
-        id: test
-        run: |
-          test=$(find test -maxdepth 1 -type d -exec basename {} \; | jq -R -s -c 'split("\n")[:-1]')
-          echo "bdika=$test" >> "$GITHUB_OUTPUT"
       - name: npm install and build
         run: |
-          cd ${{steps.test.outputs.bdika}}
+          cd ${{matrix.manifest}}
           npm install
           npm run build --if-present
         env:

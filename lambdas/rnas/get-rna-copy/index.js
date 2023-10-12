@@ -1,4 +1,7 @@
-import { RNA } from '/opt/schema-layer/rna-schema'; 
+// import { RNA } from '/opt/schema-layer/rna-schema.js'; 
+
+import pkg from '/opt/schema-layer/rna-schema.js';
+const { RNA } = pkg;
 
 export async function handler() {
     try {

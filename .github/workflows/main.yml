@@ -24,27 +24,33 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node-version }}
-      - name: npm install and build
-        run: |
-          cd lambdas/${{matrix.manifest}}
-          npm install
-          npm run build --if-present
-        env:
-          CI: true
-      - uses: vimtor/action-zip@v1
-        with:
-          files: lambdas/${{matrix.manifest}}/
-          recursive: true
-          dest: bundle.zip
+
       - name: get properties
         id: json_properties
         uses: ActionsTools/read-json-action@main
         with:
           file_path: "lambdas/${{matrix.manifest}}/config.json"
+          
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        if: ${{ startsWith(steps.json_properties.outputs.runtime, 'Node') }}
+        with:
+          node-version: ${{ matrix.node-version }}
+          
+      - name: npm install and build
+        run: |
+          cd lambdas/${{matrix.manifest}}
+          npm install
+          npm run build --if-present
+        if: ${{ startsWith(steps.json_properties.outputs.runtime, 'Node') }}
+        env:
+          CI: true
+          
+      - uses: vimtor/action-zip@v1
+        with:
+          files: lambdas/${{matrix.manifest}}/
+          recursive: true
+          dest: bundle.zip
 
       - name: default deploy
         uses: appleboy/lambda-action@master

@@ -117,9 +117,7 @@ jobs:
           mkdir -p $function_name-deps/python
 
           python -m pip install \
-            --implementation cp \
-            --only-binary=:all: \
-            --upgrade \
+            --platform manylinux_2_12_x86_64 \
             --target ./$function_name-deps/python \
             -r $dir/requirements.txt \
             --no-user

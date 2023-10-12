@@ -84,7 +84,7 @@ jobs:
 
       - name: Loop through directories and create or update Lambdas
         run: |
-          function_name=${basename ${{matrix.manifest}}}
+          function_name=$(basename ${{ matrix.manifest }})
 
           # Check if the function exists
           if aws lambda get-function --function-name $function_name &> /dev/null; then

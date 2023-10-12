@@ -1,18 +1,22 @@
-import Card from '@mui/material/Card';
-import { CardActionArea, CardContent, Grid, Stack, Typography } from '@mui/material';
+import { CardActionArea, CardContent, Card, Stack,Typography,} from '@mui/material';
 import { CircularProgressLabel } from '../../../components/CircularProgressLabel/CircularProgressLabel';
 import { Link } from 'react-router-dom';
+import styles from './styles';
 
-export const ProgressCard = ({ value, lastSyncDate, communityName, route, sx = {}, ...props }) => (
-  <Card variant="outlined" sx={{ width: "100%", borderRadius: 'px', ...sx }} {...props}>
+const ProgressCard = ({value,  lastSyncDate,  communityName,  route,sx = {},  ...props}) => (
+  <Card
+    variant='outlined'
+    sx={{ ...styles.defaultProgressCard, ...sx }}
+    {...props}
+  >
     <CardActionArea component={Link} to={route}>
-      <CardContent sx={{ "&:last-child": { paddingBottom: "16px" } }}>
+      <CardContent sx={styles.progressCardContent}>
         <Stack direction='row' justifyContent='space-between'>
           <Stack>
-            <Typography fontSize="x-large" fontWeight="bold">
+            <Typography fontSize='x-large' fontWeight='bold'>
               {communityName}
             </Typography>
-            <Typography variant="caption" sx={{ color: 'Grey' }}>
+            <Typography variant='caption' sx={styles.lastUpdatedText}>
               {`Last updated: ${lastSyncDate}`}
             </Typography>
           </Stack>
@@ -20,5 +24,7 @@ export const ProgressCard = ({ value, lastSyncDate, communityName, route, sx = {
         </Stack>
       </CardContent>
     </CardActionArea>
-  </Card >
-)
+  </Card>
+);
+
+export default ProgressCard;

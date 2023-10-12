@@ -1,16 +1,8 @@
 import { Box } from '@mui/material';
+import styles from './styles';
 
 const Question = ({ question }) => (
-  <Box
-    sx={{
-      margin: '15px 8px',
-      textAlign: 'center',
-      borderRadius: '5px',
-      border: '1px solid gray',
-    }}
-  >
-    {question}
-  </Box>
+  <Box sx={styles.questionBox}>{question}</Box>
 );
 
 export default Question;

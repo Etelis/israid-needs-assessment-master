@@ -16,6 +16,15 @@ const nextButton = (theme, isDisabled) => ({
     fontSize: '22px !important',
   },
 });
-const styles = { actionButton, nextButton };
+
+const defaultSkipButton = {
+  py: 2,
+  px: 4,
+  backgroundColor: 'white',
+  color: 'black',
+  border: 'solid 1px lightgrey'
+};
+
+const styles = { actionButton, nextButton, defaultSkipButton };
 
 export default styles;

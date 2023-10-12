@@ -1,1 +1,1 @@
-export { ProgressCard } from "./ProgressCard";
+export {default as ProgressCard} from "./ProgressCard";

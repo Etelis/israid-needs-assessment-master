@@ -8,6 +8,7 @@ import AnswerInput from './Answers/AnswerInput';
 import PhotoManager from './Answers/PhotoManager';
 import Controls from './Controls/Controls';
 import Question from './Question';
+import styles from './styles';
 
 const isAnswerAsExpected = (answer, question) => {
   const expectedAnswer = question.dependencies.expectedAnswer;
@@ -17,36 +18,36 @@ const isAnswerAsExpected = (answer, question) => {
   }
 
   return answer.value === expectedAnswer;
-}
+};
 
-const isQuestionRelevant = (question, answersByQuestionId) =>
+const isQuestionReduntent = (question, rnaAnswers) =>
   !question.dependencies || (
-    answersByQuestionId[question.dependencies.questionId] &&
-    isAnswerAsExpected(answersByQuestionId[question.dependencies.questionId], question)
+    rnaAnswers[question.dependencies.questionId] &&
+    isAnswerAsExpected(rnaAnswers[question.dependencies.questionId], question)
   );
 
-export const QuestionPage = () => {
+const QuestionPage = () => {
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [attachedPhotos, setAttachedPhotos] = useState([]);
+  const [notes, setNotes] = useState();
+
+  const [rnaAnswers, setRnaAnswers] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
+  
   const subCategoryId = useParams().subCategoryId;
   const rnaId = useParams().rnaId;
 
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [attachedPhotos, setAttachedPhotos] = useState([]);
-  const [additionalDetails, setAdditionalDetails] = useState();
-
-  const [rnaAnswersByQuestionId, setRnaAnswersByQuestionId] = useState({});
-  const [isLoading, setIsLoading] = useState(true);
-
   const subCategoryQuestions = questions.filter(x => x.subCategoryId === subCategoryId);
-  const viewQuestions = subCategoryQuestions.filter(x => isQuestionRelevant(x, rnaAnswersByQuestionId));
+  const viewQuestions = subCategoryQuestions.filter(x => isQuestionReduntent(x, rnaAnswers));
 
   useEffect(() => {
     get(rnaId)
-      .then(rnaAnswers => {
-        if (!rnaAnswers) {
+      .then(currentRnaAnswers => {
+        if (!currentRnaAnswers) {
           return;
         }
 
-        setRnaAnswersByQuestionId(rnaAnswers);
+        setRnaAnswers(currentRnaAnswers);
       }).finally(() => setIsLoading(false))
   }, []);
 
@@ -59,17 +60,16 @@ export const QuestionPage = () => {
   }
 
   const currentQuestion = viewQuestions[currentQuestionIndex];
-  const currentAnswer = rnaAnswersByQuestionId[currentQuestion.id] ?? {};
+  const currentAnswer = rnaAnswers[currentQuestion.id] ?? {};
 
-  const setCurrentAnswer = (value) => {
-    console.log(value);
-    setRnaAnswersByQuestionId(oldAnswers => ({
+  const setCurrentAnswer = value => {
+    setRnaAnswers(oldAnswers => ({
       ...oldAnswers,
       [currentQuestion.id]: {
         questionId: currentQuestion.id,
         value,
         photos: attachedPhotos.map(x => x.data),
-        notes: additionalDetails
+        notes: notes
       }
     }));
   }
@@ -83,7 +83,7 @@ export const QuestionPage = () => {
   }
 
   const persistAnswers = async () => {
-    await set(rnaId, rnaAnswersByQuestionId);
+    await set(rnaId, rnaAnswers);
     
     setCurrentQuestionIndex(currentQuestionIndex + 1);
   }
@@ -114,15 +114,9 @@ export const QuestionPage = () => {
           fullWidth
           multiline
           rows='2'
-          sx={{
-            padding: 2,
-            '& label': {
-              py: 2,
-              px: '21px',
-            },
-          }}
-          value={additionalDetails}
-          onChange={(e) => setAdditionalDetails(e.target.value)}
+          sx={styles.notesBox}
+          value={notes}
+          onChange={(e) => setNotes(e.target.value)}
         />
 
         <Controls
@@ -135,3 +129,5 @@ export const QuestionPage = () => {
     </Box>
   );
 };
+
+export default QuestionPage;

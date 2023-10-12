@@ -18,7 +18,7 @@ const AddEvent = () => {
     isError,
   } = useMutation(async (formData) => await api.post("/rnas", formData));
 
-  const onSubmit = (data) => {
+  const onSubmit = data => {
     addRna(data);
   };
 
@@ -38,9 +38,9 @@ const AddEvent = () => {
         <InputField
           name="communityType"
           register={register}
-          validationSchema={{ required: "Type is Required" }}
+          validationSchema={{ required: "Community Type is Required" }}
           type="text"
-          label="Type"
+          label="Community Type"
           errors={errors}
           placeholder="School, Hospital, Community Center, etc..."
         />

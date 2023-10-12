@@ -2,7 +2,7 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardOutlinedIcon from '@mui/icons-material/ArrowForwardOutlined';
 import { Button, Stack } from '@mui/material';
 import React from 'react';
-import { SkipButton } from '../../SkipButton/SkipButton';
+import SkipButton from './SkipButton';
 import styles from './styles';
 
 const Controls = ({ onPrev, canGoPrev, canGoNext, onSkip }) => {
@@ -13,7 +13,7 @@ const Controls = ({ onPrev, canGoPrev, canGoNext, onSkip }) => {
         disabled={!canGoNext}
         type='submit'
         endIcon={<ArrowForwardOutlinedIcon />}
-        sx={(theme) => styles.nextButton(theme, !canGoNext)}
+        sx={theme => styles.nextButton(theme, !canGoNext)}
       >
         Next
       </Button>

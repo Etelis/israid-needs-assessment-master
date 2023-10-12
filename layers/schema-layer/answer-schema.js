@@ -1,5 +1,5 @@
 import { Entity, Table } from 'dynamodb-toolbox';
-import { dynamoDB } from '../aws-dynamo-connector'; 
+import { dynamoDB } from '/opt/aws-dynamo-connector'; 
 
 const AnswerTable = new Table({
     name: 'Answers', 

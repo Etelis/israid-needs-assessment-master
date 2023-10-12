@@ -1,5 +1,5 @@
 import { Table, Entity } from 'dynamodb-toolbox';
-import { dynamoDB } from '../aws-dynamo-connector';
+import { dynamoDB } from '/opt/aws-dynamo-connector';
 
 const RnaTable = new Table({
     name: "Rnas",

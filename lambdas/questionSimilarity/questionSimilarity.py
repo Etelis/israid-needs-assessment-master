@@ -14,7 +14,7 @@ headers = {"Authorization": "Bearer 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"}
 def query(payload):
     try:
         response = requests.post(API_URL, headers=headers, json=payload)
-        response.raise_for_status()  # Check if the request was successful
+        response.raise_for_status()
         return response.json()
     except requests.RequestException as e:
         logger.error(f"Request failed: {e}")
@@ -36,7 +36,6 @@ def compute_similarity(docs, others):
 
 def lambda_handler(event, context):
     try:
-        # Assume the body is a JSON object containing 'docs' and 'others' lists
         body = json.loads(event['body'])
         docs = body['docs']
         others = body['others']

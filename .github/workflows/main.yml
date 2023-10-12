@@ -116,7 +116,7 @@ jobs:
           function_name=$(basename $dir)
           mkdir -p $function_name-deps/python
 
-          python -m pip install --target ./$function_name-deps/python -r $dir/requirements.txt --no-user
+          python -m pip install --platform manylinux2014_x86_64 --only-binary=:all: --upgrade --target ./$function_name-deps/python -r $dir/requirements.txt --no-user
 
           # Create a zip file containing the layer content
           cd $function_name-deps

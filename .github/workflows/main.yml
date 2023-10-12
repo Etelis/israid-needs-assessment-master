@@ -97,6 +97,6 @@ jobs:
             --handler $handler \
             --zip-file fileb://bundle.zip
         env:
-          dir: ${{matrix.manifest}}
+          dir: ${{ matrix.manifest }}
           handler: ${{steps.json_properties.outputs.handler}}
           runtime: ${{steps.json_properties.outputs.runtime}}

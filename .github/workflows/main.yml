@@ -78,7 +78,8 @@ jobs:
           python -m pip install --target ./$function_name-deps/python -r $dir/requirements.txt --no-user
 
           # Create a zip file containing the layer content
-          zip -r layer.zip ./$function_name-deps/
+          cd $function_name-deps
+          zip -r layer.zip .
 
           # Publish the layer to AWS Lambda
           aws lambda publish-layer-version \

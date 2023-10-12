@@ -39,6 +39,7 @@ jobs:
           sudo ./aws/install
           aws --version
         shell: bash
+        if: ${{ 1 == 2}}
 
       - name: Set up AWS credentials
         run: |

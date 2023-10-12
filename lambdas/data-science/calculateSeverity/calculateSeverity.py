@@ -1,46 +1,39 @@
 import json
 import logging
-import requests
 import boto3
 from botocore.exceptions import ClientError
-from scipy.special import softmax
+from textblob import TextBlob
 
 # Configure logging
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
-API_URL = "https://api-inference.huggingface.co/models/cardiffnlp/twitter-roberta-base-sentiment-latest"
-headers = {"Authorization": "Bearer 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"}
 
-def query(payload):
-    try:
-        response = requests.post(API_URL, headers=headers, json=payload)
-        response.raise_for_status()
-        return response.json()
-    except requests.RequestException as e:
-        logger.error(f"Request failed: {e}")
-        raise
+def severity(text):
+    """
+    Calculate severity metric on some text segment
 
-def analyze_sentiment(text):
-    try:
-        output = query({"inputs": text})
-        scores = output['scores'] 
-        neg_score, neu_score, pos_score = softmax(scores)
-        return neg_score
-    except Exception as e:
-        logger.error(f"Failed to analyze sentiment: {e}")
-        raise
+    :param text: text to gauge severity on
+    :returns: Severity score: 0.8*[normalized polarity] + 0.2*[1-subjectivity]
+    """
+    testimonial = TextBlob(text)
+    sentiment = testimonial.sentiment
+    # Normalize Polarity and weigh in objectivity to create a 0-1 scale measure
+    # Higher score = a more severe, objective report
+    sev = 0.8 * (-1 * sentiment.polarity - (-1) / (1 - (-1))) + 0.2 * (1 - sentiment.subjectivity)
+    return sev
+
 
 def lambda_handler(event, context):
     try:
         body = json.loads(event['body'])
         text = body['answer']['otherText']
-        
-        neg_score = analyze_sentiment(text)
-        
+
+        sev = severity(text)
+
         return {
             'statusCode': 200,
-            'body': json.dumps({'negative_score': str(neg_score)})
+            'body': json.dumps({'negative_score': str(sev)})
         }
     except ClientError as e:
         logger.error(f"Client error: {e}")

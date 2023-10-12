@@ -3,13 +3,16 @@ import json
 import logging
 import boto3
 from botocore.exceptions import ClientError
+from sentence_transformers import util
 
 # Configure logging
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
-API_URL = "https://api-inference.huggingface.co/models/sentence-transformers/all-MiniLM-L6-v2"
+THRESHOLD = 0.7
+API_URL = "https://api-inference.huggingface.co/models/sentence-transformers/all-mpnet-base-v2'"
 headers = {"Authorization": "Bearer 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"}
+
 
 def query(payload):
     try:
@@ -20,28 +23,48 @@ def query(payload):
         logger.error(f"Request failed: {e}")
         raise
 
-def compute_similarity(docs, others):
+
+def compute_similarity(question_list, new_question):
+    """
+    Compute similarity between each sentence in docs list and others list
+    Using model: https://huggingface.co/sentence-transformers/all-mpnet-base-v2'
+
+    :param question_list:
+    A list of previous, existing questions
+
+    :param new_question:
+    A new question about to be submitted
+
+    Returns: list of historic questions similar enough (meeting or exceeding similarity threshold) to the new question.
+    """
     try:
-        output_docs = query({"inputs": {"source_sentence": "", "sentences": docs}})
-        output_others = query({"inputs": {"source_sentence": "", "sentences": others}})
-        
-        origin_embedding = output_docs['outputs']
-        other_embedding = output_others['outputs']
-        
-        sim = util.pytorch_cos_sim(origin_embedding, other_embedding).tolist()
-        return sim
+        output_docs = query({"inputs": {"source_sentence": "", "sentences": question_list}})
+        output_others = query({"inputs": {"source_sentence": "", "sentences": new_question}})
+
+        historic_emb = output_docs['outputs']
+        new_emb = output_others['outputs']
+
+        similarities = util.pytorch_cos_sim(new_emb, historic_emb)
+        similarities = similarities.squeeze()
+        # print(similarities.shape)
+        relevant_indices = [i for i in range(len(similarities)) if similarities[i] >= THRESHOLD]
+        rel_len = len(relevant_indices)
+        result = f"This Question is similar to {rel_len} question{'s' if rel_len > 1 else ''}: \n" + question_list[
+            relevant_indices].to_string(index=False) if rel_len > 0 else ''
+        return result
     except Exception as e:
         logger.error(f"Failed to compute similarity: {e}")
         raise
+
 
 def lambda_handler(event, context):
     try:
         body = json.loads(event['body'])
         docs = body['docs']
         others = body['others']
-        
+
         similarity_scores = compute_similarity(docs, others)
-        
+
         return {
             'statusCode': 200,
             'body': json.dumps({'similarity_scores': similarity_scores})

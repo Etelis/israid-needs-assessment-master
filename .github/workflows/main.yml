@@ -35,10 +35,17 @@ jobs:
           npm run build --if-present
         env:
           CI: true
-      - name: zip
-        uses: montudor/action-zip@v1
+      - uses: vimtor/action-zip@v1
         with:
-          args: cd lambdas/${{matrix.manifest}}; zip -qq -r ../../bundle.zip *
+          files: lambdas/${{matrix.manifest}}/
+          recursive: true
+          dest: bundle.zip
+      - name: get properties
+        id: json_properties
+        uses: ActionsTools/read-json-action@main
+        with:
+          file_path: "lambdas/${{matrix.manifest}}/config.json"
+
       - name: default deploy
         uses: appleboy/lambda-action@master
         with:
@@ -46,4 +53,6 @@ jobs:
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws_region: eu-north-1
           function_name: ${{matrix.manifest}}
+          handler: ${{steps.json_properties.outputs.handler}}
+          runtime: ${{steps.json_properties.outputs.runtime}}
           zip_file: bundle.zip

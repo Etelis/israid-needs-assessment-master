@@ -1,0 +1,10 @@
+{
+    "Handler": "lambdas/update-rna-answers/index.handler",
+    "Runtime": "nodejs18.x",
+    "MemorySize": 128,
+    "Timeout": 15,
+    "Layers": [
+        "arn:aws:lambda:your-region:your-account-id:layer:aws-sdk-layer:1",
+        "arn:aws:lambda:your-region:your-account-id:layer:schema-layer:1"
+    ]
+}

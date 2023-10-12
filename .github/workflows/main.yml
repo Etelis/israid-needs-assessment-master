@@ -117,7 +117,7 @@ jobs:
           mkdir -p $function_name-deps/python
 
           python -m pip install \
-            --platform manylinux2010_x86_64 \
+            # --platform manylinux2010_x86_64 \
             --implementation cp \
             --only-binary=:all: \
             --upgrade \

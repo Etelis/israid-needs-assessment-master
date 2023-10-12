@@ -178,7 +178,7 @@ jobs:
           function_name=$(basename $dir)
 
           # Read layer names and loop through each layer
-          for LAYER_NAME in $(jq -r '.Layers[]' ${{matrix.manifest}}/config.json); do
+          for LAYER_NAME in $(jq -r '.Layers[]' $dir/config.json); do
               # Get the ARN of the latest version of the Lambda layer
               LAYER_ARN=$(aws lambda list-layer-versions \
                 --layer-name $LAYER_NAME \

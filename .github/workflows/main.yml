@@ -73,7 +73,7 @@ jobs:
       - name: Create dependencies layer for python
         run: |
           function_name=$(basename $dir)
-          mkdir $function_name-deps/python
+          mkdir -p $function_name-deps/python
 
           python -m pip install --target ./$function_name-deps/python -r $dir/requirements.txt --no-user
 

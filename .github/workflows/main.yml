@@ -174,12 +174,12 @@ jobs:
           handler: ${{steps.json_properties.outputs.handler}}
           runtime: ${{steps.json_properties.outputs.runtime}}
 
-      - name: LDynamically attach layers
+      - name: Dynamically attach layers
         run: |
           function_name=$(basename $dir)
 
           # Read layer names and loop through each layer
-          for LAYER_NAME in $(jq -r '.layers[]' ${{matrix.manifest}}/config.json); do
+          for LAYER_NAME in $(jq -r '.Layers[]' ${{matrix.manifest}}/config.json); do
               # Get the ARN of the latest version of the Lambda layer
               LAYER_ARN=$(aws lambda list-layer-versions \
                 --layer-name $LAYER_NAME \

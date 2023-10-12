@@ -4,5 +4,6 @@
     "MemorySize": 128,
     "Timeout": 250,
     "Layers": [
+        "PYTHON-DEP-questionSimilarity"
     ]
 }

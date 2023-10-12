@@ -1,7 +1,48 @@
 name: deploy to lambda
 on: [push]
 jobs:
-  get-folders:
+  get-layers-folders:
+    name: Get the layers folders
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.folder-fetcher.outputs.folders }}
+    steps:
+      - uses: actions/checkout@v1
+      - name: get all folders
+        id: folder-fetcher
+        run: |
+          var1=$(find layers -mindepth 1 -maxdepth 1 -type d | jq -R -s -c 'split("\n")[:-1]')
+          echo "folders=$var1" >> "$GITHUB_OUTPUT"
+  
+  deploy_layers:
+    name: build and deploy layers
+    needs: get-layers-folders
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version: [12.x]
+        manifest: ${{ fromJson(needs.get-layers-folders.outputs.matrix) }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Create layer
+        run: |
+          layer_name=$(basename $dir)
+          cd layers
+
+          # Create a zip file containing the layer content
+          zip -r layer.zip $layer_name
+
+          # Publish the layer to AWS Lambda
+          aws lambda publish-layer-version \
+            --layer-name $layer_name \
+            --description "Github layer for $dir" \
+            --zip-file fileb://layer.zip
+        env:
+          dir: ${{ matrix.manifest }}
+  
+  get-lambda-folders:
     name: Get the lambda folders
     runs-on: ubuntu-latest
     outputs:
@@ -13,14 +54,15 @@ jobs:
         run: |
           var1=$(find lambdas -mindepth 2 -maxdepth 2 -type d | jq -R -s -c 'split("\n")[:-1]')
           echo "folders=$var1" >> "$GITHUB_OUTPUT"
-  deploy_source:
+  
+  deploy_lambdas:
     name: build and deploy lambda
-    needs: get-folders
+    needs: get-lambda-folders
     strategy:
       fail-fast: false
       matrix:
         node-version: [12.x]
-        manifest: ${{ fromJson(needs.get-folders.outputs.matrix) }}
+        manifest: ${{ fromJson(needs.get-lambda-folders.outputs.matrix) }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -85,12 +127,10 @@ jobs:
           aws lambda publish-layer-version \
             --layer-name PYTHON-DEP-${function_name} \
             --description "Python dependencies for $dir" \
-            --zip-file fileb://layer.zip \
-            --compatible-runtimes $runtime
+            --zip-file fileb://layer.zip
         if: ${{ startsWith(steps.json_properties.outputs.runtime, 'python') }}
         env:
           dir: ${{ matrix.manifest }}
-          runtime: ${{steps.json_properties.outputs.runtime}}
 
       - uses: vimtor/action-zip@v1
         with:
@@ -98,7 +138,7 @@ jobs:
           recursive: true
           dest: bundle.zip
 
-      - name: Loop through directories and create or update Lambdas
+      - name: Dynamically create Lambdas
         run: |
           function_name=$(basename $dir)
 
@@ -133,3 +173,22 @@ jobs:
           dir: ${{ matrix.manifest }}
           handler: ${{steps.json_properties.outputs.handler}}
           runtime: ${{steps.json_properties.outputs.runtime}}
+
+      - name: LDynamically attach layers
+        run: |
+          function_name=$(basename $dir)
+
+          # Read layer names and loop through each layer
+          for LAYER_NAME in $(jq -r '.layers[]' ${{matrix.manifest}}/config.json); do
+              # Get the ARN of the latest version of the Lambda layer
+              LAYER_ARN=$(aws lambda list-layer-versions \
+                --layer-name $LAYER_NAME \
+                --query 'LayerVersions[0].LayerVersionArn' --output text)
+
+              # Attach the layer to the Lambda function
+              aws lambda update-function-configuration \
+                --function-name $function_name \
+                --layers $LAYER_ARN
+          done
+        env:
+          dir: ${{ matrix.manifest }}

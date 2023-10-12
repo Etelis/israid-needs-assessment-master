@@ -1,4 +1,4 @@
-import { Answer } from '../../../../layers/schema-layer/answer-schema'; 
+import { Answer } from '/opt/schema-layer/answer-schema'; 
 
 export async function handler(event) {
     try {

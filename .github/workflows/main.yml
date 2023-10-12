@@ -124,7 +124,6 @@ jobs:
           rm -rf python/lxml*
 
           python -m pip install \
-          --platform manylinux2010_x86_64 \
           --only-binary=:all: \
           --target ./$function_name-deps/python \
           --no-user \

@@ -36,6 +36,11 @@ jobs:
         if: ${{ startsWith(steps.json_properties.outputs.runtime, 'Node') }}
         with:
           node-version: ${{ matrix.node-version }}
+      
+      - uses: actions/setup-python@v4
+        if: ${{ startsWith(steps.json_properties.outputs.runtime, 'python') }}
+        with:
+          python-version: '3.11' 
           
       - name: npm install and build
         run: |
@@ -45,6 +50,12 @@ jobs:
         if: ${{ startsWith(steps.json_properties.outputs.runtime, 'Node') }}
         env:
           CI: true
+
+      - name: python install and build
+        run: |
+          cd lambdas/${{matrix.manifest}}
+          python -m pip install --target ./package -r ./requirements.txt --no-user
+        if: ${{ startsWith(steps.json_properties.outputs.runtime, 'python') }}
           
       - uses: vimtor/action-zip@v1
         with:

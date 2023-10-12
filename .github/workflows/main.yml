@@ -90,14 +90,14 @@ jobs:
           if aws lambda get-function --function-name $function_name &> /dev/null; then
             aws lambda update-function-code \
               --function-name $function_name \
-              --zip-file fileb://bundle.zip
+              --zip-file fileb://bundle.zip \
             /
           else
             aws lambda create-function \
               --function-name $function_name \
               --runtime $runtime \
               --handler $handler \
-              --zip-file fileb://bundle.zip
+              --zip-file fileb://bundle.zip \
             /
         env:
           dir: ${{ matrix.manifest }}

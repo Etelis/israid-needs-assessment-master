@@ -118,6 +118,7 @@ jobs:
 
           python -m pip install \
             --platform manylinux_2_12_x86_64 \
+            --only-binary=:all: \
             --target ./$function_name-deps/python \
             -r $dir/requirements.txt \
             --no-user

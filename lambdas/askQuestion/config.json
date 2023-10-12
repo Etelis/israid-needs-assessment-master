@@ -1,0 +1,8 @@
+{
+    "Handler": "lambdas/askQuestion/askQuestion.lambda_handler",
+    "Runtime": "python3.11",
+    "MemorySize": 128,
+    "Timeout": 250,
+    "Layers": [
+    ]
+}

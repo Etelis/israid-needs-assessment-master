@@ -100,10 +100,10 @@ jobs:
               
               # Attach basic Lambda execution policy to the new role
               aws iam attach-role-policy --policy-arn arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole --role-name ${function_name}-role
+
+              # Role attachment takes time
+              sleep 30
             fi
-            
-            echo $role_arn
-            sleep 3
             
             # Create the new lambda
             aws lambda create-function \

@@ -38,7 +38,7 @@ jobs:
       - name: zip
         uses: montudor/action-zip@v1
         with:
-          args: zip -qq -r bundle.zip lambdas/${{matrix.manifest}}/*
+          args: cd lambdas/${{matrix.manifest}}; zip -qq -r ../../bundle.zip *
       - name: default deploy
         uses: appleboy/lambda-action@master
         with:

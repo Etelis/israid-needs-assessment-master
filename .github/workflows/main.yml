@@ -116,7 +116,7 @@ jobs:
           function_name=$(basename $dir)
           mkdir -p $function_name-deps/python
 
-          docker run -v $(pwd):/app -w /app amazonlinux:2 python -m pip install \
+          docker run -v $(pwd):/app -w /app amazonlinux:2 yum install python-pip && python -m pip install \
             --target ./$function_name-deps/python \
             -r $dir/requirements.txt \
             --no-user

@@ -73,9 +73,9 @@ jobs:
       - name: Create dependencies layer for python
         run: |
           function_name=$(basename $dir)
-          mkdir $function_name-deps
+          mkdir $function_name-deps/python
 
-          python -m pip install --target ./$function_name-deps -r $dir/requirements.txt --no-user
+          python -m pip install --target ./$function_name-deps/python -r $dir/requirements.txt --no-user
 
           # Create a zip file containing the layer content
           zip -r layer.zip ./$function_name-deps/

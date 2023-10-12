@@ -11,7 +11,7 @@ jobs:
       - name: get all folders
         id: folder-fetcher
         run: |
-          var1=$(find lambdas -mindepth 1 -maxdepth 1 -type d -exec basename {} \; | jq -R -s -c 'split("\n")[:-1]')
+          var1=$(find lambdas -mindepth 2 -maxdepth 2 -type d | jq -R -s -c 'split("\n")[:-1]')
           echo "folders=$var1" >> "$GITHUB_OUTPUT"
   deploy_source:
     name: build and deploy lambda
@@ -29,22 +29,40 @@ jobs:
         id: json_properties
         uses: ActionsTools/read-json-action@main
         with:
-          file_path: "lambdas/${{matrix.manifest}}/config.json"
-          
+          file_path: "${{matrix.manifest}}/config.json"
+
+      - name: Install AWS CLI
+        run: |
+          sudo apt-get install -y unzip
+          curl "https://d1vvhvl2y92vvt.cloudfront.net/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+          unzip awscliv2.zip
+          sudo ./aws/install
+          aws --version
+        shell: bash
+
+      - name: Set up AWS credentials
+        run: |
+          aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws configure set region eu-north-1
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         if: ${{ startsWith(steps.json_properties.outputs.runtime, 'Node') }}
         with:
           node-version: ${{ matrix.node-version }}
-      
+
       - uses: actions/setup-python@v4
         if: ${{ startsWith(steps.json_properties.outputs.runtime, 'python') }}
         with:
-          python-version: '3.11' 
-          
+          python-version: "3.11"
+
       - name: npm install and build
         run: |
-          cd lambdas/${{matrix.manifest}}
+          cd ${{matrix.manifest}}
           npm install
           npm run build --if-present
         if: ${{ startsWith(steps.json_properties.outputs.runtime, 'Node') }}
@@ -53,23 +71,32 @@ jobs:
 
       - name: python install and build
         run: |
-          cd lambdas/${{matrix.manifest}}
+          cd ${{matrix.manifest}}
           python -m pip install --target ./package -r ./requirements.txt --no-user
         if: ${{ startsWith(steps.json_properties.outputs.runtime, 'python') }}
-          
+
       - uses: vimtor/action-zip@v1
         with:
-          files: lambdas/${{matrix.manifest}}/
+          files: ${{matrix.manifest}}/
           recursive: true
           dest: bundle.zip
 
-      - name: default deploy
-        uses: appleboy/lambda-action@master
-        with:
-          aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws_region: eu-north-1
-          function_name: ${{matrix.manifest}}
+      - name: Loop through directories and create or update Lambdas
+        run: |
+          function_name=${basename ${{matrix.manifest}}}
+
+          # Check if the function exists
+          if aws lambda get-function --function-name $function_name &> /dev/null; then
+            aws lambda update-function-code \
+            --function-name $function_name \
+            --zip-file fileb://bundle.zip
+          else
+            aws lambda create-function \
+            --function-name $function_name \
+            --runtime $runtime \
+            --handler $handler \
+            --zip-file fileb://bundle.zip
+        env:
+          dir: ${{matrix.manifest}}
           handler: ${{steps.json_properties.outputs.handler}}
           runtime: ${{steps.json_properties.outputs.runtime}}
-          zip_file: bundle.zip

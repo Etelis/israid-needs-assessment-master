@@ -1,8 +1,0 @@
-{
-    "Handler": "index.handler",
-    "Runtime": "nodejs18.x",
-    "MemorySize": 128,
-    "Timeout": 250,
-    "Layers": [
-    ]
-}

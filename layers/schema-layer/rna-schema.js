@@ -1,6 +1,8 @@
 import { Table, Entity } from 'dynamodb-toolbox';
 import { dynamoDB } from '/opt/aws-dynamo-connector/index.js';
 
+console.log(dynamoDB)
+
 const RnaTable = new Table({
     name: "Rnas",
     partitionKey: 'id',

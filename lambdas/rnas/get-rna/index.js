@@ -1,4 +1,4 @@
-import { RNA } from '/opt/schema-layer/rna-schema.json'; 
+import { RNA } from '/opt/schema-layer/rna-schema.js'; 
 
 export async function handler() {
     try {

@@ -14,7 +14,7 @@ exports.handler = async function (event, context) {
         await RNA.put(rnaItem);
         return {
             statusCode: 200,
-            body: JSON.stringify(rnaItem)
+            body: rnaItem
         };
     } catch (error) {
         console.error(error);

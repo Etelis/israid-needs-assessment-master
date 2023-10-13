@@ -248,7 +248,7 @@ jobs:
               # Get the ARN of the latest version of the Lambda layer
               LAYER_ARN=$(aws lambda list-layer-versions \
                 --layer-name $LAYER_NAME \
-                --query 'LayerVersions[-1].LayerVersionArn' --output text)
+                --query 'LayerVersions[0].LayerVersionArn' --output text)
               echo $LAYER_ARN
               combined_layers="$combined_layers $LAYER_ARN"
           done

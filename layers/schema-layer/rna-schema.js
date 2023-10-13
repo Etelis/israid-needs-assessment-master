@@ -17,7 +17,7 @@ const RNA = new Entity({
         communityName: 'string',
         communityType: 'string',
         location: 'string',
-        creationDate: { type: 'string', default: () => new Date().toISOString() }
+        creationDate: { type: 'string', sortKey: true, default: () => new Date().toISOString() }
     }
 });
 

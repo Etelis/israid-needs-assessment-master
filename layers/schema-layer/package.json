@@ -1,5 +1,5 @@
 {
     "dependencies": {
-        "dynamodb-toolbox": "0.8.5"
+        "dynamodb-toolbox": "^0.8.5"
     }
 }

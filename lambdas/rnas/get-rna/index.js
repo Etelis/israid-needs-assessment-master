@@ -2,7 +2,7 @@ const { RNA } = require('/opt/schema-layer/rna-schema.js');
 
 exports.handler = async function () {
     try {
-        const rnas = await RNA.scan().exec();
+        const rnas = await RNA.scan();
 
         const formattedRnas = rnas.Items.map((rna) => {
             const { id, communityName, communityType, location, status, creationDate } = rna;

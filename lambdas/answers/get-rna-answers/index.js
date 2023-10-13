@@ -1,4 +1,4 @@
-import { Answer } from '/opt/schema-layer/answer-schema'; 
+const { Answer } = require('/opt/schema-layer/answer-schema.js');
 
 export async function handler(event) {
     try {

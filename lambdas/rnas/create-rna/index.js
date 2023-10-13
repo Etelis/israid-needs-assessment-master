@@ -1,9 +1,17 @@
 const { RNA } = require('/opt/schema-layer/rna-schema.js');
+const { v4: uuidv4 } = require('uuid');
 
-exports.handler = async function (event) {
-    const { communityName, communityType, location } = JSON.parse(event.body);
 
+
+
+exports.handler = async function (event, context) {
+    console.log(event.communityName)
+    const { communityName, communityType, location } = event;
+    // Generate a unique ID
+    const uniqueId = uuidv4();
+    
     const rnaItem = {
+        id:uniqueId,
         communityName,
         communityType,
         location

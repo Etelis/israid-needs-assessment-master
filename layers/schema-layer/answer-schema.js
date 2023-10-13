@@ -1,5 +1,6 @@
 const { Table, Entity } = require('dynamodb-toolbox');
 const { DocumentClient } = require('/opt/aws-dynamo-connector/index.js');
+const { v4: uuidv4 } = require('uuid');
 
 const AnswerTable = new Table({
     name: 'Answers', 
@@ -11,7 +12,7 @@ const Answer = new Entity({
     name: 'Answer',
     table: AnswerTable,
     attributes: {
-        id: { type: 'string', partitionKey: true }, 
+        id: { type: 'string', partitionKey: true, default: () => uuidv4() }, 
         questionId: 'string',
         rnaId: 'string', 
         value: 'map',

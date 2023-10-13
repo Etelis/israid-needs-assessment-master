@@ -98,7 +98,7 @@ jobs:
   
   deploy_lambdas:
     name: build and deploy lambda
-    needs: [get-lambda-folders,deployy_layers]
+    needs: [get-lambda-folders,deploy_layers]
     strategy:
       fail-fast: false
       matrix:

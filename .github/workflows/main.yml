@@ -201,7 +201,7 @@ jobs:
           function_name=$(basename $dir)
 
 
-          combined_layers = ""
+          combined_layers=""
 
           # Read layer names and loop through each layer
           for LAYER_NAME in $(jq -r '.Layers[]' $dir/config.json); do

@@ -1,11 +1,11 @@
 const { RNA } = require('/opt/schema-layer/rna-schema.js');
 
-export async function handler() {
+exports.handler = async function () {
     try {
         const rnas = await RNA.scan().exec();
 
         const formattedRnas = rnas.Items.map((rna) => {
-            const {id, communityName, communityType, location, status, creationDate } = rna;
+            const { id, communityName, communityType, location, status, creationDate } = rna;
 
             return {
                 id,
@@ -13,7 +13,7 @@ export async function handler() {
                 communityType,
                 location,
                 status,
-                creationDate
+                creationDate,
             };
         });
 
@@ -29,4 +29,4 @@ export async function handler() {
             body: JSON.stringify({ error: 'Internal Server Error' }),
         };
     }
-}
+};

@@ -61,6 +61,29 @@ jobs:
             --zip-file fileb://layer.zip
         env:
           dir: ${{ matrix.manifest }}
+
+      - name: Cleanup old versions of layer
+        run: |
+          LAYER_NAME=$(basename $dir)
+          # Get all versions of the Lambda layer
+          LAYER_VERSIONS=$(aws lambda list-layer-versions \
+            --layer-name $LAYER_NAME \
+            --query 'LayerVersions[*].Version')
+
+          # Sort versions in descending order
+          SORTED_VERSIONS=($(echo $LAYER_VERSIONS | tr -d '[],' | tr ' ' '\n' | sort -nr))
+
+          # Retain the latest 5 versions and delete the rest
+          for version in "${SORTED_VERSIONS[@]:5}"; do
+              echo "Deleting Lambda layer version: $version"
+              aws lambda delete-layer-version \
+                --layer-name $LAYER_NAME \
+                --version-number $version
+          done
+        env:
+          dir: ${{ matrix.manifest }}
+
+
   
   get-lambda-folders:
     name: Get the lambda folders

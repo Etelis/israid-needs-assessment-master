@@ -1,11 +1,11 @@
-import { Entity, Table } from 'dynamodb-toolbox';
-import { dynamoDB } from '/opt/aws-dynamo-connector/index.js'; 
+const { Table, Entity } = require('dynamodb-toolbox');
+const { DocumentClient } = require('/opt/aws-dynamo-connector/index.js');
 
 const AnswerTable = new Table({
     name: 'Answers', 
     partitionKey: 'id', 
     sortKey: 'creationDate', 
-    DocumentClient: dynamoDB, 
+    DocumentClient: DocumentClient, 
 });
 
 const Answer = new Entity({
@@ -22,4 +22,4 @@ const Answer = new Entity({
     }
 });
 
-export default { Answer };
+module.exports = { RNA };

@@ -1,4 +1,4 @@
-import { RNA } from '/opt/schema-layer/rna-schema.js'; 
+const { RNA } = require('/opt/schema-layer/rna-schema.js');
 
 export async function handler() {
     try {

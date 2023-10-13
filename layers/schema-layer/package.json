@@ -1,5 +1,4 @@
 {
-    "type": "module",
     "dependencies": {
         "dynamodb-toolbox": "0.8.5"
     }

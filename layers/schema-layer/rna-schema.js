@@ -1,5 +1,5 @@
-import { Table, Entity } from 'dynamodb-toolbox';
-import { DocumentClient } from '/opt/aws-dynamo-connector/index.js';
+const { Table, Entity } = require('dynamodb-toolbox');
+const { DocumentClient } = require('/opt/aws-dynamo-connector/index.js');
 
 const RnaTable = new Table({
     name: "Rnas",
@@ -21,5 +21,4 @@ const RNA = new Entity({
     }
 });
 
-export { RNA };
-// export default { RNA };
+module.exports = { RNA };

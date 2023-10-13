@@ -5,6 +5,7 @@
     "Timeout": 15,
     "Layers": [
         "aws-sdk-layer",
-        "schema-layer"
+        "schema-layer",
+        "dynamodb-toolbox"
     ]
 }

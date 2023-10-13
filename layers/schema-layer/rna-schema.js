@@ -1,13 +1,11 @@
 import { Table, Entity } from 'dynamodb-toolbox';
-import { dynamoDB } from '/opt/aws-dynamo-connector/index.js';
-
-console.log(dynamoDB)
+import { DocumentClient } from '/opt/aws-dynamo-connector/index.js';
 
 const RnaTable = new Table({
     name: "Rnas",
     partitionKey: 'id',
     sortKey: 'creationDate',
-    DocumentClient: dynamoDB
+    DocumentClient: DocumentClient
 });
 
 const RNA = new Entity({

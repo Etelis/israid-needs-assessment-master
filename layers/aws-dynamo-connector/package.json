@@ -1,6 +1,6 @@
 {
     "type": "module",
     "dependencies": {
-        "aws-sdk": "2.1473.0"
+        "aws-sdk": "^3.0.0"
     }
 }

@@ -212,8 +212,10 @@ jobs:
               
               combined_layers="$combined_layers $LAYER_ARN"
           done
-
           
+          echo $function_name
+          echo $combined_layers
+
           # Attach the layer to the Lambda function
           aws lambda update-function-configuration \
             --function-name $function_name \

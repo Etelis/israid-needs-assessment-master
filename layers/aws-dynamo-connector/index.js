@@ -1,2 +1,2 @@
-import { dynamoDB } from './index.cjs';
-export { dynamoDB };
+import { DocumentClient } from './index.cjs';
+export { DocumentClient };

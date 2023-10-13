@@ -1,6 +1,6 @@
 const { Answer } = require('/opt/schema-layer/answer-schema.js');
 
-export async function handler(event) {
+exports.handler = async function handler(event) {
     try {
         const { rnaId } = event.pathParameters;
 

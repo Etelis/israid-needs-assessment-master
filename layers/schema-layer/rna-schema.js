@@ -12,7 +12,7 @@ const RNA = new Entity({
     name: 'RNA',
     table: RnaTable,
     attributes: {
-        id: 'string', 
+        id: { type: 'string', partitionKey: true }, 
         status: { type: 'number', default: 1 },
         communityName: 'string',
         communityType: 'string',

@@ -9,8 +9,10 @@ const draft_dynamoDBClient = new DynamoDBClient({
         secretAccessKey: process.env.SECRET_ACCESS_KEY
     }
 });
+console.log(draft_dynamoDBClient)
 
 const dynamoDBClient = new DynamoDBClient();
+console.log(dynamoDBClient)
 
 const DocumentClient = DynamoDBDocumentClient.from(dynamoDBClient);
 

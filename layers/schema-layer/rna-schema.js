@@ -22,3 +22,4 @@ const RNA = new Entity({
 });
 
 export { RNA };
+// export default { RNA };

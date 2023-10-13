@@ -199,8 +199,6 @@ jobs:
       - name: Dynamically attach layers
         run: |
           function_name=$(basename $dir)
-
-
           combined_layers=""
 
           # Read layer names and loop through each layer
@@ -215,16 +213,20 @@ jobs:
                   --layer-name $LAYER_NAME \
                   --version-number $LATEST_VERSION \
                   --query 'LayerVersionArn' --output text)
-              
+
+              echo "Layer Name: $LAYER_NAME"
+              echo "Latest Version: $LATEST_VERSION"
+              echo "Layer ARN: $LAYER_ARN"
+
               combined_layers="$combined_layers $LAYER_ARN"
           done
-          
-          echo $function_name
-          echo $combined_layers
 
-          # Attach the layer to the Lambda function
+          echo "Function Name: $function_name"
+          echo "Combined Layers: $combined_layers"
+
+          # Attach the layers to the Lambda function
           aws lambda update-function-configuration \
-            --function-name $function_name \
-            --layers $combined_layers
+              --function-name $function_name \
+              --layers $combined_layers
         env:
           dir: ${{ matrix.manifest }}

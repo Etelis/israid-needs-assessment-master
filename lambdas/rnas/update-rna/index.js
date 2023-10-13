@@ -1,6 +1,6 @@
-import { RNA } from '/opt/schema-layer/rna-schema'; 
+const { RNA } = require('/opt/schema-layer/rna-schema.js');
 
-export async function handler(event) {
+exports.handler = async function (event) {
     try {
         const requestBody = JSON.parse(event.body);
         const { id, status, communityName, communityType, location, creationDate } = requestBody;

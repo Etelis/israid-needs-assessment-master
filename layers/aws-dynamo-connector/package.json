@@ -1,4 +1,5 @@
 {
+    "type": "module",
     "dependencies": {
         "aws-sdk": "2.1473.0"
     }

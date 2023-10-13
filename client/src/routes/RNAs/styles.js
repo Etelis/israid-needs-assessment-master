@@ -18,6 +18,6 @@ const newRnaButton = {
   width: '75%',
 };
 
-const styles = { rnasPage, rnasList, rna, newRnaButton };
+const styles = { rnasPage, rnasList, rna, newRnaButton};
 
 export default styles;

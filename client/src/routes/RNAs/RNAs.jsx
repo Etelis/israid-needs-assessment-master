@@ -1,27 +1,29 @@
-import { Stack, Typography, List } from '@mui/material';
-import { ContinueButton } from '../../components/ContinueButton';
-import ProgressOverview from '../../components/ProgressOverview';
-import { ProgressCard } from './ProgressCard';
-import { useQuery } from '@tanstack/react-query';
-import { api } from '../../utils/axios';
-import styles from './styles';
+import { Stack, Typography, List } from "@mui/material";
+import { ContinueButton } from "../../components/ContinueButton";
+import ProgressOverview from "../../components/ProgressOverview";
+import { ProgressCard } from "./ProgressCard";
+import { useQuery } from "@tanstack/react-query";
+import { api } from "../../utils/axios";
+import styles from "./styles";
+import { FilterActionButtons } from "./FilterActionButtons";
 
 export const RNAs = () => {
   const { data: rnas = [], isLoading } = useQuery(
-    ['rnas'],
-    async () => (await api.get('/rnas')).data,
+    ["rnas"],
+    async () => (await api.get("/rnas")).data,
     { refetchOnWindowFocus: false }
   );
 
   return (
-    <Stack spacing={3} sx={styles.rnasPage} alignItems='center'>
+    <Stack spacing={3} sx={styles.rnasPage} alignItems="center">
       <ProgressOverview
         rightColumnAmount={8512}
-        rightColumnCaption='Questions Answered'
+        rightColumnCaption="Questions Answered"
         leftColumnAmount={3}
-        leftColumnCaption='RNAs Filled'
+        leftColumnCaption="RNAs Filled"
         isLeftColumnInPercentage={false}
       />
+      <FilterActionButtons/>
       <List sx={styles.rnasList}>
         {!isLoading &&
           rnas.map(({ id, lastSyncDate, creationDate, communityName }) => (
@@ -31,13 +33,13 @@ export const RNAs = () => {
               key={id}
               lastSyncDate={new Date(
                 lastSyncDate ?? creationDate
-              ).toLocaleDateString('en-US')}
+              ).toLocaleDateString("en-US")}
               communityName={communityName}
               route={id}
             />
           ))}
       </List>
-      <ContinueButton link='add' sx={styles.newRnaButton}>
+      <ContinueButton link="add" sx={styles.newRnaButton}>
         <Typography>New RNA</Typography>
       </ContinueButton>
     </Stack>

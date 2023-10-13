@@ -12,7 +12,7 @@ const Answer = new Entity({
     name: 'Answer',
     table: AnswerTable,
     attributes: {
-        id: 'string',
+        id: { type: 'string', partitionKey: true }, 
         questionId: 'string',
         rnaId: 'string', 
         value: 'map',

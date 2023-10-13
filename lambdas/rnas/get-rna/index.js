@@ -19,14 +19,14 @@ exports.handler = async function () {
 
         return {
             statusCode: 200,
-            body: JSON.stringify(formattedRnas),
+            body: formattedRnas,
         };
     } catch (error) {
         console.error(error);
 
         return {
             statusCode: 500,
-            body: JSON.stringify({ error: 'Internal Server Error' }),
+            body: 'Internal Server Error',
         };
     }
 };

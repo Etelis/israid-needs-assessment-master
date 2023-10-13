@@ -8,7 +8,7 @@ exports.handler = async function (event) {
         if (!id) {
             return {
                 statusCode: 400,
-                body: JSON.stringify({ error: 'id is required for the update.' }),
+                body: 'id is required for the update.',
             };
         }
 
@@ -17,7 +17,7 @@ exports.handler = async function (event) {
         if (!existingRna) {
             return {
                 statusCode: 404,
-                body: JSON.stringify({ error: 'RNA record not found.' }),
+                body: 'RNA record not found.',
             };
         }
 
@@ -32,14 +32,14 @@ exports.handler = async function (event) {
 
         return {
             statusCode: 200,
-            body: JSON.stringify(updatedRna),
+            body: updatedRna,
         };
     } catch (error) {
         console.error(error);
 
         return {
             statusCode: 500,
-            body: JSON.stringify({ error: 'Internal Server Error' }),
+            body: 'Internal Server Error',
         };
     }
 }

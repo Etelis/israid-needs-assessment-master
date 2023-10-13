@@ -2,10 +2,10 @@ const { Answer } = require('/opt/schema-layer/answer-schema.js');
 
 exports.handler = async function  handler(event) {
     try {
-        const { rnaId } = event.params;
+        const { rnaId } = event.pathParameters;
         const { answers: newAnswers } = JSON.parse(event.body);
         
-        const oldAnswers = await Answer.query('rnaId').eq(rnaId).exec();
+        const { Items: oldAnswers } = await Answer.scan({filters:{attr:"rnaId",eq:rnaId}});
         
         const updatedAnswers = newAnswers.map((newAnswer) => {
             const oldAnswer = oldAnswers.find((x) => x.questionId === newAnswer.questionId);

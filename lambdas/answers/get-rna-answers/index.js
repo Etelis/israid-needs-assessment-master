@@ -8,7 +8,10 @@ exports.handler = async function handler(event) {
 
         return {
             statusCode: 200,
-            body: answers,
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(answers),
         };
     } catch (error) {
         console.error(error);

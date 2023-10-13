@@ -35,10 +35,21 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        if: ${{ startsWith(steps.json_properties.outputs.runtime, 'Node') }}
+        with:
+          node-version: ${{ matrix.node-version }}
+
       - name: Create layer
         run: |
           layer_name=$(basename $dir)
-          cd layers
+          cd layers/$layer_name
+
+          npm install
+          npm run build --if-present
+
+          cd ..
 
           # Create a zip file containing the layer content
           zip -r layer.zip $layer_name

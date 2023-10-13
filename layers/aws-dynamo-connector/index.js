@@ -19,6 +19,6 @@ const dynamoDBClient = new DynamoDBClient({
     }
 });
 
-const documentClient = DynamoDBDocumentClient.from(dynamoDBClient);
+const DocumentClient = DynamoDBDocumentClient.from(dynamoDBClient);
 
 module.exports = { DocumentClient };

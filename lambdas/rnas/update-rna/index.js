@@ -2,8 +2,7 @@ const { RNA } = require('/opt/schema-layer/rna-schema.js');
 
 exports.handler = async function (event) {
     try {
-        const requestBody = JSON.parse(event.body);
-        const { id, status, communityName, communityType, location, creationDate } = requestBody;
+        const { id, status, communityName, communityType, location, creationDate } = event;
 
         if (!id) {
             return {
@@ -20,19 +19,17 @@ exports.handler = async function (event) {
                 body: 'RNA record not found.',
             };
         }
+        const updatedAttributes = event
 
-        const updatedRna = await RNA.update({
-            ...existingRna,
-            status,
-            communityName,
-            communityType,
-            location,
-            creationDate,
-        });
+        for (const [key, value] of Object.entries(updatedAttributes)) {
+            existingRna[key] = value
+        }
+
+        await existingRna.save()
 
         return {
             statusCode: 200,
-            body: updatedRna,
+            body: existingRna,
         };
     } catch (error) {
         console.error(error);

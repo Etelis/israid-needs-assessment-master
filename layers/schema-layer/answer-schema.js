@@ -4,7 +4,6 @@ const { DocumentClient } = require('/opt/aws-dynamo-connector/index.js');
 const AnswerTable = new Table({
     name: 'Answers', 
     partitionKey: 'id', 
-    sortKey: 'creationDate', 
     DocumentClient: DocumentClient, 
 });
 
@@ -22,4 +21,4 @@ const Answer = new Entity({
     }
 });
 
-module.exports = { RNA };
+module.exports = { Answer };

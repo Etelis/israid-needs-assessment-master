@@ -1,7 +1,6 @@
 const { RNA } = require('/opt/schema-layer/rna-schema.js');
 
 exports.handler = async function (event, context) {
-    console.log(event.communityName)
     const { communityName, communityType, location } = event;
    
     const rnaItem = {

@@ -6,7 +6,6 @@ const { v4: uuidv4 } = require('uuid');
 const RnaTable = new Table({
     name: "Rnas",
     partitionKey: 'id',
-    sortKey: 'creationDate',
     DocumentClient: DocumentClient
 });
 
@@ -19,7 +18,7 @@ const RNA = new Entity({
         communityName: 'string',
         communityType: 'string',
         location: 'string',
-        creationDate: { type: 'string', sortKey: true, default: () => new Date().toISOString() }
+        creationDate: { type: 'string', default: () => new Date().toISOString() }
     }
 });
 

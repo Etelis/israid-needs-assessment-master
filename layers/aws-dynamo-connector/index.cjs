@@ -6,6 +6,12 @@ console.log('REGION:', process.env.REGION);
 console.log('ACCESS_KEY_ID:', process.env.ACCESS_KEY_ID);
 console.log('SECRET_ACCESS_KEY:', process.env.SECRET_ACCESS_KEY);
 
+
+
+console.log('AWS REGION:', process.env.AWS_REGION);
+console.log('ACCESS_KEY_ID:', process.env.AWS_ACCESS_KEY_ID);
+console.log('SECRET_ACCESS_KEY:', process.env.AWS_SECRET_ACCESS_KEY);
+
 // Load credentials from environment variables
 const credentials = fromEnv();
 

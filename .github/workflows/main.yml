@@ -148,6 +148,8 @@ jobs:
       - name: Create dependencies layer for python
         run: |
           function_name=$(basename $dir)
+          LAYER_NAME=PYTHON-DEP-${function_name}
+
           mkdir -p $function_name-deps/python
 
           python -m pip install \
@@ -170,9 +172,25 @@ jobs:
 
           # Publish the layer to AWS Lambda
           aws lambda publish-layer-version \
-            --layer-name PYTHON-DEP-${function_name} \
+            --layer-name $LAYER_NAME \
             --description "Python dependencies for $dir" \
             --zip-file fileb://layer.zip
+          
+          # Get all versions of the Lambda layer
+          LAYER_VERSIONS=$(aws lambda list-layer-versions \
+            --layer-name $LAYER_NAME \
+            --query 'LayerVersions[*].Version')
+
+          # Sort versions in descending order
+          SORTED_VERSIONS=($(echo $LAYER_VERSIONS | tr -d '[],' | tr ' ' '\n' | sort -nr))
+
+          # Retain the latest 5 versions and delete the rest
+          for version in "${SORTED_VERSIONS[@]:5}"; do
+              echo "Deleting Lambda layer version: $version"
+              aws lambda delete-layer-version \
+                --layer-name $LAYER_NAME \
+                --version-number $version
+          done
         if: ${{ startsWith(steps.json_properties.outputs.runtime, 'python') }}
         env:
           dir: ${{ matrix.manifest }}
@@ -232,7 +250,7 @@ jobs:
               LAYER_ARN=$(aws lambda list-layer-versions \
                 --layer-name $LAYER_NAME \
                 --query 'LayerVersions[-1].LayerVersionArn' --output text)
-              
+              echo $LAYER_ARN
               combined_layers="$combined_layers $LAYER_ARN"
           done
           

@@ -4,7 +4,7 @@ exports.handler = async function handler(event) {
     try {
         const { rnaId } = event.pathParameters;
 
-        const answers = await Answer.query('rnaId').eq(rnaId).exec();
+        const answers = await Answer.scan({filters:{attr:"rnaId",eq:rnaId}});
 
         return {
             statusCode: 200,

@@ -12,6 +12,6 @@ AWS.config.update({
     }
 });
 
-const dynamoDB = new AWS.DynamoDB.DocumentClient();
+const dynamoDB = new AWS.DynamoDB.DocumentClient({apiVersion: '2012-08-10'});
 
 module.exports = { dynamoDB };

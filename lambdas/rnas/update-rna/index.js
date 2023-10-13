@@ -2,7 +2,7 @@ const { RNA } = require('/opt/schema-layer/rna-schema.js');
 
 exports.handler = async function (event) {
     try {
-        const { id, status, communityName, communityType, location, creationDate } = event;
+        const { id } = event;
 
         if (!id) {
             return {
@@ -10,26 +10,23 @@ exports.handler = async function (event) {
                 body: 'id is required for the update.',
             };
         }
-
-        const existingRna = await RNA.get(id);
+        
+        // Find the item in DynamoDB using the ID
+        const { Item: existingRna }= await RNA.get({"id":id});
 
         if (!existingRna) {
             return {
                 statusCode: 404,
-                body: 'RNA record not found.',
+                body: 'Item not found.',
             };
         }
-        const updatedAttributes = event
-
-        for (const [key, value] of Object.entries(updatedAttributes)) {
-            existingRna[key] = value
-        }
-
-        await existingRna.save()
+        
+        // Perform the update using the dynamodb-toolbox Entity
+        const updatedRna = await RNA.update(event);
 
         return {
             statusCode: 200,
-            body: existingRna,
+            body: updatedRna,
         };
     } catch (error) {
         console.error(error);

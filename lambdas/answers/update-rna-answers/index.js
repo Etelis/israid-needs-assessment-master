@@ -31,14 +31,14 @@ export async function handler(event) {
         
         return {
             statusCode: 200,
-            body: JSON.stringify({ message: 'Answers updated successfully' }),
+            body: 'Answers updated successfully',
         };
     } catch (error) {
         console.error(error);
         
         return {
             statusCode: 500,
-            body: JSON.stringify({ error: 'Internal Server Error' }),
+            body: 'Internal Server Error',
         };
     }
 }

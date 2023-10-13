@@ -8,14 +8,14 @@ export async function handler(event) {
 
         return {
             statusCode: 200,
-            body: JSON.stringify(answers),
+            body: answers,
         };
     } catch (error) {
         console.error(error);
 
         return {
             statusCode: 500,
-            body: JSON.stringify({ error: 'Internal Server Error' }),
+            body: 'Internal Server Error',
         };
     }
 }

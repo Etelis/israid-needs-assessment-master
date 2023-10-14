@@ -153,6 +153,8 @@ jobs:
 
           docker run -v $(pwd):/app -w /app amazonlinux:2 yum install -y python-pip && \
             python3.7 -m pip install \
+            --platform manylinux2014_x86_64 \
+            --only-binary=:all: \
             --target ./$function_name-deps/python \
             -r $dir/requirements.txt \
             --no-user

@@ -27,7 +27,7 @@ runs:
           while true; do
             status=$(aws lambda get-function-configuration --function-name $function_name --query 'State' --output text)
             update=$(aws lambda get-function-configuration --function-name $function_name --query 'LastUpdateStatus' --output text)
-            if [ "$status" == "Active" && "$update" != "InProgress" ]; then
+            if [ "$status" == "Active" -a "$update" != "InProgress" ]; then
                 echo "Lambda function is active and ready."
                 break
             fi
@@ -72,7 +72,7 @@ runs:
           while true; do
             status=$(aws lambda get-function-configuration --function-name $function_name --query 'State' --output text)
             update=$(aws lambda get-function-configuration --function-name $function_name --query 'LastUpdateStatus' --output text)
-            if [ "$status" == "Active" && "$update" != "InProgress" ]; then
+            if [ "$status" == "Active" -a "$update" != "InProgress" ]; then
                 echo "Lambda function is active and ready."
                 break
             fi

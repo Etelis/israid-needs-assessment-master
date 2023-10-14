@@ -1,0 +1,81 @@
+name: 'Configuration Update'
+description: 'Configuration Update'
+inputs:
+  dir:
+    description: 'Directory'
+    required: true
+  function_name:
+    description: 'function_name'
+    required: true
+  handler:
+    description: 'handler'
+    required: true
+  runtime:
+    description: 'runtime'
+    required: true
+  memorysize:
+    description: 'memorysize'
+    required: true
+  timeout:
+    description: 'timeout'
+    required: true
+runs:
+  using: "composite"
+  steps:
+      - name: Dynamically create Lambdas
+        run: |
+          # Use AWS CLI to describe the Lambda function
+          function_description=$(aws lambda get-function --function-name $function_name)
+
+          # Check if the function_description contains "ImageConfigResponse"
+          if [[ $function_description == *"ImageConfigResponse"* ]]; then
+            aws lambda update-function-configuration \
+              --function-name $function_name \
+              --image-config Command=$handler \
+              --memory-size $memorysize \
+              --timeout $timeout
+          else
+            aws lambda update-function-configuration \
+              --function-name $function_name \
+              --handler $handler \
+              --runtime $runtime \
+              --memory-size $memorysize \
+              --timeout $timeout
+          fi
+        env:
+          function_name: ${{ inputs.function_name }}
+          handler: ${{inputs.handler}}
+          runtime: ${{inputs.runtime}}
+          memorysize: ${{inputs.memorysize}}
+          timeout: ${{inputs.timeout}}
+        shell: bash
+
+      - name: Dynamically attach layers
+        run: |
+          combined_layers=""
+
+          # Read layer names and loop through each layer
+          for LAYER_NAME in $(jq -r '.Layers[]' $dir/config.json); do
+              # Get the ARN of the latest version of the Lambda layer
+              LAYER_ARN=$(aws lambda list-layer-versions \
+                --layer-name $LAYER_NAME \
+                --query 'LayerVersions[0].LayerVersionArn' --output text)
+              echo $LAYER_ARN
+              combined_layers="$combined_layers $LAYER_ARN"
+          done
+          
+          echo $function_name
+          echo $combined_layers
+
+          # Sleep before attaching to give time to heal
+          sleep 5
+
+
+          # Attach the layer to the Lambda function
+          aws lambda update-function-configuration \
+            --function-name $function_name \
+            --layers $combined_layers
+        env:
+          dir: ${{ inputs.dir }}
+          function_name: ${{ inputs.function_name }}
+        shell: bash

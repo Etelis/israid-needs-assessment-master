@@ -1,4 +1,4 @@
-name: 'ZIP&Push'
+name: 'Code deploy'
 description: 'ZIP&Push'
 inputs:
   dir:
@@ -65,9 +65,10 @@ runs:
               --runtime $runtime \
               --handler $handler \
               --zip-file fileb://bundle.zip \
-              --memory-size $memorysize \
-              --timeout $timeout \
               --role $role_arn
+            
+            # Sleep after creation
+            sleep 30
           fi
         env:
           function_name: ${{ inputs.function_name }}

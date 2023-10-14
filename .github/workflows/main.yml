@@ -142,15 +142,24 @@ jobs:
  
       - name: Build step for docker based code
         uses: ./.github/actions/docker-build
-        if: ${{ startsWith(steps.json_properties.outputs.runtime, 'Docker') }}
+        if: ${{ startsWith(steps.json_properties.outputs.runtime, 'Docker') && steps.json_properties.outputs.BaseImageRefresh == 'true' }}
         with:
           dir: ${{ matrix.manifest }}
           function_name: ${{ steps.function_name.outputs.function_name }}
           ecr_id: 558964794123
           ecr_repo: "558964794123.dkr.ecr.eu-north-1.amazonaws.com/israaid"
 
-      - name: ZIP code and push to AWS for non docker related
-        uses: ./.github/actions/zip-and-push
+      - name: ZIP code and push to AWS for code based lambdas
+        uses: ./.github/actions/deploy-code
+        with:
+          dir: ${{ matrix.manifest }}
+          function_name: ${{ steps.function_name.outputs.function_name }}
+          handler: ${{steps.json_properties.outputs.handler}}
+          runtime: ${{steps.json_properties.outputs.runtime}}
+        if: ${{ !startsWith(steps.json_properties.outputs.runtime, 'Docker') }}
+
+      - name: Lambda configuration update
+        uses: ./.github/actions/update-configuration
         with:
           dir: ${{ matrix.manifest }}
           function_name: ${{ steps.function_name.outputs.function_name }}
@@ -158,34 +167,3 @@ jobs:
           runtime: ${{steps.json_properties.outputs.runtime}}
           memorysize: ${{steps.json_properties.outputs.memorysize}}
           timeout: ${{steps.json_properties.outputs.timeout}}
-        if: ${{ !startsWith(steps.json_properties.outputs.runtime, 'Docker') }}
-
-      - name: Dynamically attach layers
-        run: |
-          combined_layers=""
-
-          # Read layer names and loop through each layer
-          for LAYER_NAME in $(jq -r '.Layers[]' $dir/config.json); do
-              # Get the ARN of the latest version of the Lambda layer
-              LAYER_ARN=$(aws lambda list-layer-versions \
-                --layer-name $LAYER_NAME \
-                --query 'LayerVersions[0].LayerVersionArn' --output text)
-              echo $LAYER_ARN
-              combined_layers="$combined_layers $LAYER_ARN"
-          done
-          
-          echo $function_name
-          echo $combined_layers
-
-          # Sleep before attaching to give time to heal
-          sleep 5
-
-
-          # Attach the layer to the Lambda function
-          aws lambda update-function-configuration \
-            --function-name $function_name \
-            --layers $combined_layers
-        env:
-          dir: ${{ matrix.manifest }}
-          function_name: ${{ steps.function_name.outputs.function_name }}
-        shell: bash

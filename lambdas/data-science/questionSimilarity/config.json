@@ -1,6 +1,7 @@
 {
     "Handler": "questionSimilarity.lambda_handler",
     "Runtime": "DockerPython",
+    "BaseImageRefresh": true,
     "MemorySize": 128,
     "Timeout": 250,
     "Layers": []

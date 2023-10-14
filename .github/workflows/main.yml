@@ -94,8 +94,8 @@ jobs:
       - name: get all folders
         id: folder-fetcher
         run: |
-            local python_dirs=()
-            local node_dirs=()
+            python_dirs=()
+            node_dirs=()
     
             # Recursively find config.json files with Python runtime
             while IFS= read -r -d '' dir; do

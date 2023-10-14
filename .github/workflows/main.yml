@@ -145,6 +145,7 @@ jobs:
           runtime: ${{steps.json_properties.outputs.runtime}}
           memorysize: ${{steps.json_properties.outputs.memorysize}}
           timeout: ${{steps.json_properties.outputs.timeout}}
+        if: ${{ !startsWith(steps.json_properties.outputs.runtime, 'Docker') }}
 
       - name: Dynamically attach layers
         run: |

@@ -1,6 +1,5 @@
-
-name: 'Hello World'
-description: 'Greet someone'
+name: 'Node build'
+description: 'Node build'
 inputs:
   dir:
     description: 'Directory'

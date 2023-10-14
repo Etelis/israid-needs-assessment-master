@@ -1,6 +1,5 @@
-
-name: 'Hello World'
-description: 'Greet someone'
+name: 'Python build'
+description: 'Python build'
 inputs:
   dir:
     description: 'Directory'

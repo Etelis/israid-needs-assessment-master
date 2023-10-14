@@ -1,21 +1,20 @@
-
-name: 'Hello World'
-description: 'Greet someone'
+name: 'ZIP&Push'
+description: 'ZIP&Push'
 inputs:
   dir:
     description: 'Directory'
     required: true
   handler:
-    description: 'Directory'
+    description: 'handler'
     required: true
   runtime:
-    description: 'Directory'
+    description: 'runtime'
     required: true
   memorysize:
-    description: 'Directory'
+    description: 'memorysize'
     required: true
   timeout:
-    description: 'Directory'
+    description: 'timeout'
     required: true
 runs:
   using: "composite"

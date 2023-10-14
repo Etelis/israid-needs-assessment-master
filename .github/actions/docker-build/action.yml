@@ -1,6 +1,5 @@
-
-name: 'Hello World'
-description: 'Greet someone'
+name: 'Docker build'
+description: 'Docker build'
 inputs:
   dir:
     description: 'Directory'
@@ -25,8 +24,8 @@ runs:
           context: ${{inputs.dir}}
           push: true
           tags: |
-            something:lamba
-            ${{inputs.ecr_repo}}:latest
+            ${{inputs.ecr_repo}}:test:latest
+            ${{inputs.ecr_repo}}:test:${{ github.sha }}
 
       - name: Deploy Lambda function
         run: |

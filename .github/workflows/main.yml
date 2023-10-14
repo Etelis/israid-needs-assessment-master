@@ -138,7 +138,8 @@ jobs:
           ecr_id: 558964794123
           ecr_repo: "558964794123.dkr.ecr.eu-north-1.amazonaws.com"
 
-      - uses: ./.github/actions/zip-and-push
+      - name: ZIP code and push to AWS for non docker related
+        uses: ./.github/actions/zip-and-push
         with:
           dir: ${{ matrix.manifest }}
           handler: ${{steps.json_properties.outputs.handler}}

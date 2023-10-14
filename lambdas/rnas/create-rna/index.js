@@ -1,8 +1,8 @@
-import { RNA } from '/opt/schema-layer/rna-schema'; 
+const { RNA } = require('/opt/schema-layer/rna-schema.js');
 
-export async function handler(event) {
-    const { communityName, communityType, location } = JSON.parse(event.body);
-
+exports.handler = async function (event, context) {
+    const { communityName, communityType, location } = event;
+   
     const rnaItem = {
         communityName,
         communityType,
@@ -13,14 +13,14 @@ export async function handler(event) {
         await RNA.put(rnaItem);
         return {
             statusCode: 200,
-            body: JSON.stringify(rnaItem)
+            body: rnaItem
         };
     } catch (error) {
         console.error(error);
         
         return {
             statusCode: 500,
-            body: JSON.stringify({ error: 'Internal Server Error' })
+            body: 'Internal Server Error',
         };
     }
 }

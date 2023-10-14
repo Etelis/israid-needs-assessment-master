@@ -1,0 +1,60 @@
+name: 'Code deploy'
+description: 'ZIP&Push'
+inputs:
+  dir:
+    description: 'Directory'
+    required: true
+  function_name:
+    description: 'function_name'
+    required: true
+  handler:
+    description: 'handler'
+    required: true
+  runtime:
+    description: 'runtime'
+    required: true
+runs:
+  using: "composite"
+  steps:
+      - uses: vimtor/action-zip@v1
+        with:
+          files: ${{inputs.dir}}/
+          recursive: true
+          dest: bundle.zip
+
+      - name: Dynamically create Lambdas
+        run: |
+          # Check if the function exists
+          if aws lambda get-function --function-name $function_name &> /dev/null; then
+            aws lambda update-function-code \
+              --function-name $function_name \
+              --zip-file fileb://bundle.zip
+            sleep 5
+          else
+            if aws iam get-role --role-name ${function_name}-role &> /dev/null; then
+              role_arn=$(aws iam get-role --role-name ${function_name}-role --query 'Role.Arn' --output text)
+            else
+              # Create a new IAM role for the Lambda function
+              role_arn=$(aws iam create-role --role-name ${function_name}-role --assume-role-policy-document '{"Version": "2012-10-17","Statement": [{"Effect": "Allow","Principal": {"Service": "lambda.amazonaws.com"},"Action": "sts:AssumeRole"}]}' --query 'Role.Arn' --output text)
+              
+              # Attach basic Lambda execution policy to the new role
+              aws iam attach-role-policy --policy-arn arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole --role-name ${function_name}-role
+              aws iam attach-role-policy --policy-arn arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess --role-name ${function_name}-role
+
+              # Role attachment takes time
+              sleep 30
+            fi
+            
+            # Create the new lambda
+            aws lambda create-function \
+              --function-name $function_name \
+              --runtime $runtime \
+              --handler $handler \
+              --zip-file fileb://bundle.zip \
+              --role $role_arn
+          fi
+        env:
+          function_name: ${{ inputs.function_name }}
+          handler: ${{inputs.handler}}
+          runtime: ${{inputs.runtime}}
+        shell: bash

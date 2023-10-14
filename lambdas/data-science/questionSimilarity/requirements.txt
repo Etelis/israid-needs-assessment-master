@@ -1,4 +1,5 @@
-boto3==1.28.62
-botocore==1.31.62
-Requests==2.31.0
-sentence_transformers==2.2.2
+boto3
+botocore
+Requests
+sentence-transformers
+awslambdaric

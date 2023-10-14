@@ -1,13 +1,16 @@
-import { Answer } from '/opt/schema-layer/answer-schema'; 
+const { Answer } = require('/opt/schema-layer/answer-schema.js');
 
-export async function handler(event) {
+exports.handler = async function handler(event) {
     try {
         const { rnaId } = event.pathParameters;
 
-        const answers = await Answer.query('rnaId').eq(rnaId).exec();
+        const { Items: answers } = await Answer.scan({filters:{attr:"rnaId",eq:rnaId}});
 
         return {
             statusCode: 200,
+            headers: {
+                "Content-Type": "application/json"
+            },
             body: JSON.stringify(answers),
         };
     } catch (error) {
@@ -15,7 +18,7 @@ export async function handler(event) {
 
         return {
             statusCode: 500,
-            body: JSON.stringify({ error: 'Internal Server Error' }),
+            body: 'Internal Server Error',
         };
     }
 }

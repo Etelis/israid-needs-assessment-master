@@ -1,45 +1,39 @@
-import { RNA } from '/opt/schema-layer/rna-schema'; 
+const { RNA } = require('/opt/schema-layer/rna-schema.js');
 
-export async function handler(event) {
+exports.handler = async function (event) {
     try {
-        const requestBody = JSON.parse(event.body);
-        const { id, status, communityName, communityType, location, creationDate } = requestBody;
+        const { id } = event;
 
         if (!id) {
             return {
                 statusCode: 400,
-                body: JSON.stringify({ error: 'id is required for the update.' }),
+                body: 'id is required for the update.',
             };
         }
-
-        const existingRna = await RNA.get(id);
+        
+        // Find the item in DynamoDB using the ID
+        const { Item: existingRna }= await RNA.get({"id":id});
 
         if (!existingRna) {
             return {
                 statusCode: 404,
-                body: JSON.stringify({ error: 'RNA record not found.' }),
+                body: 'Item not found.',
             };
         }
-
-        const updatedRna = await RNA.update({
-            ...existingRna,
-            status,
-            communityName,
-            communityType,
-            location,
-            creationDate,
-        });
+        
+        // Perform the update using the dynamodb-toolbox Entity
+        const updatedRna = await RNA.update(event);
 
         return {
             statusCode: 200,
-            body: JSON.stringify(updatedRna),
+            body: updatedRna,
         };
     } catch (error) {
         console.error(error);
 
         return {
             statusCode: 500,
-            body: JSON.stringify({ error: 'Internal Server Error' }),
+            body: 'Internal Server Error',
         };
     }
 }

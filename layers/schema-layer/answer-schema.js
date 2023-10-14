@@ -1,18 +1,18 @@
-import { Entity, Table } from 'dynamodb-toolbox';
-import { dynamoDB } from '/opt/aws-dynamo-connector'; 
+const { Table, Entity } = require('dynamodb-toolbox');
+const { DocumentClient } = require('/opt/aws-dynamo-connector/index.js');
+const { v4: uuidv4 } = require('uuid');
 
 const AnswerTable = new Table({
     name: 'Answers', 
     partitionKey: 'id', 
-    sortKey: 'creationDate', 
-    DocumentClient: dynamoDB, 
+    DocumentClient: DocumentClient, 
 });
 
 const Answer = new Entity({
     name: 'Answer',
     table: AnswerTable,
     attributes: {
-        id: 'string',
+        id: { type: 'string', partitionKey: true, default: () => uuidv4() }, 
         questionId: 'string',
         rnaId: 'string', 
         value: 'map',
@@ -22,4 +22,4 @@ const Answer = new Entity({
     }
 });
 
-export default { Answer };
+module.exports = { Answer };

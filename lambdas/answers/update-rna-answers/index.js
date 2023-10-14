@@ -1,11 +1,11 @@
-import { Answer } from '/opt/schema-layer/answer-schema'; 
+const { Answer } = require('/opt/schema-layer/answer-schema.js');
 
-export async function handler(event) {
+exports.handler = async function  handler(event) {
     try {
-        const { rnaId } = event.params;
+        const { rnaId } = event.pathParameters;
         const { answers: newAnswers } = JSON.parse(event.body);
         
-        const oldAnswers = await Answer.query('rnaId').eq(rnaId).exec();
+        const { Items: oldAnswers } = await Answer.scan({filters:{attr:"rnaId",eq:rnaId}});
         
         const updatedAnswers = newAnswers.map((newAnswer) => {
             const oldAnswer = oldAnswers.find((x) => x.questionId === newAnswer.questionId);
@@ -31,14 +31,14 @@ export async function handler(event) {
         
         return {
             statusCode: 200,
-            body: JSON.stringify({ message: 'Answers updated successfully' }),
+            body: 'Answers updated successfully',
         };
     } catch (error) {
         console.error(error);
         
         return {
             statusCode: 500,
-            body: JSON.stringify({ error: 'Internal Server Error' }),
+            body: 'Internal Server Error',
         };
     }
 }

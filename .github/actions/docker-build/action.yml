@@ -20,21 +20,12 @@ runs:
         with:
           registries: ${{ inputs.ecr_id }}
 
-
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
       - name: Build and push
         uses: docker/build-push-action@v5
         with:
           context: ${{inputs.dir}}
-          platforms: linux/amd64,linux/arm64
           push: true
           tags: |
-            my-lambda-function
             ${{ inputs.ecr_repo }}/my-lambda-function:latest
 
       - name: Deploy Lambda function

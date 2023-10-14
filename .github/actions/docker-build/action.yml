@@ -25,7 +25,7 @@ runs:
           context: ${{inputs.dir}}
           push: true
           tags: |
-            ${{ inputs.ecr_repo }}/my-lambda-function:latest
+            558964794123.dkr.ecr.eu-north-1.amazonaws.com/israaid:latest
 
       - name: Deploy Lambda function
         run: |

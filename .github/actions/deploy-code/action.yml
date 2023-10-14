@@ -13,12 +13,6 @@ inputs:
   runtime:
     description: 'runtime'
     required: true
-  memorysize:
-    description: 'memorysize'
-    required: true
-  timeout:
-    description: 'timeout'
-    required: true
 runs:
   using: "composite"
   steps:
@@ -35,15 +29,7 @@ runs:
             aws lambda update-function-code \
               --function-name $function_name \
               --zip-file fileb://bundle.zip
-
             sleep 5
-
-            aws lambda update-function-configuration \
-              --function-name $function_name \
-              --handler $handler \
-              --runtime $runtime \
-              --memory-size $memorysize \
-              --timeout $timeout
           else
             if aws iam get-role --role-name ${function_name}-role &> /dev/null; then
               role_arn=$(aws iam get-role --role-name ${function_name}-role --query 'Role.Arn' --output text)
@@ -74,6 +60,4 @@ runs:
           function_name: ${{ inputs.function_name }}
           handler: ${{inputs.handler}}
           runtime: ${{inputs.runtime}}
-          memorysize: ${{inputs.memorysize}}
-          timeout: ${{inputs.timeout}}
         shell: bash

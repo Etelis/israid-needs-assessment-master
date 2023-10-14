@@ -145,11 +145,12 @@ jobs:
           dir: ${{ matrix.manifest }}
           function_name: ${{ steps.function_name.outputs.function_name }}
           ecr_id: 558964794123
-          ecr_repo: "558964794123.dkr.ecr.eu-north-1.amazonaws.com"
+          ecr_repo: "558964794123.dkr.ecr.eu-north-1.amazonaws.com/israaid"
 
       - name: ZIP code and push to AWS for non docker related
         uses: ./.github/actions/zip-and-push
         with:
+          dir: ${{ matrix.manifest }}
           function_name: ${{ steps.function_name.outputs.function_name }}
           handler: ${{steps.json_properties.outputs.handler}}
           runtime: ${{steps.json_properties.outputs.runtime}}

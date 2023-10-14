@@ -1,6 +1,9 @@
 name: 'ZIP&Push'
 description: 'ZIP&Push'
 inputs:
+  dir:
+    description: 'Directory'
+    required: true
   function_name:
     description: 'function_name'
     required: true

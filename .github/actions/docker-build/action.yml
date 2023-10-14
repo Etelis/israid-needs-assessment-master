@@ -58,6 +58,10 @@ runs:
                 --code ImageUri=${{inputs.ecr_repo}}:${{inputs.function_name}}_latest \
                 --role $role_arn
           fi
+          
+          # Creation of docker based image is taking time to initialize
+          sleep 60
+
         shell: bash
         env:
           function_name: ${{inputs.function_name}}

@@ -178,7 +178,7 @@ jobs:
           echo $combined_layers
 
           # Sleep before attaching to give time to heal
-          sleep 15
+          sleep 5
 
 
           # Attach the layer to the Lambda function

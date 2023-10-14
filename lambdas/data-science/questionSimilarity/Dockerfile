@@ -10,4 +10,8 @@ COPY . ./
 # Install the required Python modules
 RUN pip install -r requirements.txt
 
-ENTRYPOINT [ "python3", "-m", "questionSimilarity.lambda_handler" ]
+
+# Set runtime interface client as default command for the container runtime
+ENTRYPOINT [ "/usr/local/bin/python", "-m", "awslambdaric" ]
+# Pass the name of the function handler as an argument to the runtime
+CMD [ "questionSimilarity.lambda_handler" ]

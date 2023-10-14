@@ -42,18 +42,6 @@ runs:
           # Use AWS CLI to describe the Lambda function
           function_description=$(aws lambda get-function --function-name $function_name)
 
-          # Exponential backoff logic in Bash
-          max_retries=5
-          retries=0
-
-          while [ $retries -lt $max_retries ]; do
-              # Perform the AWS operation here
-              # If successful, break out of the loop
-              # If unsuccessful, increment the retries counter and wait exponentially longer before retrying
-              sleep $((2 ** retries))
-              ((retries++))
-          done
-
           # Check if the function_description contains "ImageConfigResponse"
           if [[ $function_description == *"ImageConfigResponse"* ]]; then
             aws lambda update-function-configuration \

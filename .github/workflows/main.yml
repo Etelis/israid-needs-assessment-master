@@ -118,15 +118,24 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: eu-north-1
       
-      - uses: ./.github/actions/python-build
+      - name: Build step for python based code
+        uses: ./.github/actions/python-build
         if: ${{ startsWith(steps.json_properties.outputs.runtime, 'python') }}
         with:
           dir: ${{ matrix.manifest }}
 
-      - uses: ./.github/actions/node-build
+      - name: Build step for node based code
+        uses: ./.github/actions/node-build
         if: ${{ startsWith(steps.json_properties.outputs.runtime, 'Node') }}
         with:
           dir: ${{ matrix.manifest }}
+ 
+      - name: Build step for docker based code
+        uses: ./.github/actions/docker-build
+        if: ${{ startsWith(steps.json_properties.outputs.runtime, 'Docker') }}
+        with:
+          dir: ${{ matrix.manifest }}
+          ecr_repo: "558964794123.dkr.ecr.eu-north-1.amazonaws.com/israaid"
 
       - uses: ./.github/actions/zip-and-push
         with:
@@ -135,3 +144,31 @@ jobs:
           runtime: ${{steps.json_properties.outputs.runtime}}
           memorysize: ${{steps.json_properties.outputs.memorysize}}
           timeout: ${{steps.json_properties.outputs.timeout}}
+
+      - name: Dynamically attach layers
+        run: |
+          function_name=$(basename $dir)
+
+
+          combined_layers=""
+
+          # Read layer names and loop through each layer
+          for LAYER_NAME in $(jq -r '.Layers[]' $dir/config.json); do
+              # Get the ARN of the latest version of the Lambda layer
+              LAYER_ARN=$(aws lambda list-layer-versions \
+                --layer-name $LAYER_NAME \
+                --query 'LayerVersions[0].LayerVersionArn' --output text)
+              echo $LAYER_ARN
+              combined_layers="$combined_layers $LAYER_ARN"
+          done
+          
+          echo $function_name
+          echo $combined_layers
+
+          # Attach the layer to the Lambda function
+          aws lambda update-function-configuration \
+            --function-name $function_name \
+            --layers $combined_layers
+        env:
+          dir: ${{ matrix.manifest }}
+        shell: bash

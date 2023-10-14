@@ -76,31 +76,3 @@ runs:
           memorysize: ${{inputs.memorysize}}
           timeout: ${{inputs.timeout}}
         shell: bash
-
-      - name: Dynamically attach layers
-        run: |
-          function_name=$(basename $dir)
-
-
-          combined_layers=""
-
-          # Read layer names and loop through each layer
-          for LAYER_NAME in $(jq -r '.Layers[]' $dir/config.json); do
-              # Get the ARN of the latest version of the Lambda layer
-              LAYER_ARN=$(aws lambda list-layer-versions \
-                --layer-name $LAYER_NAME \
-                --query 'LayerVersions[0].LayerVersionArn' --output text)
-              echo $LAYER_ARN
-              combined_layers="$combined_layers $LAYER_ARN"
-          done
-          
-          echo $function_name
-          echo $combined_layers
-
-          # Attach the layer to the Lambda function
-          aws lambda update-function-configuration \
-            --function-name $function_name \
-            --layers $combined_layers
-        env:
-          dir: ${{ inputs.dir }}
-        shell: bash

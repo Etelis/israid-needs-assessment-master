@@ -13,8 +13,10 @@ runs:
   steps:
           
       - name: Log in to Amazon ECR
-        run: aws ecr get-login-password | docker login --username AWS --password-stdin ${{ inputs.ecr_repo }}
-        shell: bash
+        uses: aws-actions/amazon-ecr-login@v1
+        with:
+          registry: ${{ inputs.ecr_repo }}
+
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3

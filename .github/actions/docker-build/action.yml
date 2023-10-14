@@ -28,7 +28,6 @@ runs:
           push: true
           tags: |
             ${{inputs.ecr_repo}}:${{inputs.function_name}}_latest
-            ${{inputs.ecr_repo}}:${{inputs.function_name}}_${{ github.sha }}
 
       - name: Deploy Lambda function
         run: |

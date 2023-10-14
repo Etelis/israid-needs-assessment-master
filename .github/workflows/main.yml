@@ -93,7 +93,7 @@ jobs:
           echo "folders=$var1" >> "$GITHUB_OUTPUT"
 
   deploy_lambdas:
-    name: build and deploy python lambdas
+    name: build and deploy lambdas
     needs: [get-lambda-folders,deploy_layers]
     strategy:
       fail-fast: false

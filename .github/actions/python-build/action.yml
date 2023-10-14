@@ -53,3 +53,4 @@ runs:
           done
         env:
           dir: ${{ inputs.dir }}
+        shell: bash

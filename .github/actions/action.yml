@@ -75,6 +75,7 @@ runs:
           runtime: ${{inputs.runtime}}
           memorysize: ${{inputs.memorysize}}
           timeout: ${{inputs.timeout}}
+        shell: bash
 
       - name: Dynamically attach layers
         run: |
@@ -102,3 +103,4 @@ runs:
             --layers $combined_layers
         env:
           dir: ${{ inputs.dir }}
+        shell: bash

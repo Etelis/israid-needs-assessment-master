@@ -19,5 +19,6 @@ runs:
           npm install
           npm run build --if-present
         env:
-          CI: true
+          CI: "true"
           dir: ${{ inputs.dir }}
+        shell: bash

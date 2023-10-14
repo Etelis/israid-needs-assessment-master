@@ -11,6 +11,11 @@ inputs:
 runs:
   using: "composite"
   steps:
+          
+      - name: Log in to Amazon ECR
+        run: aws ecr get-login-password | docker login --username AWS --password-stdin ${{ inputs.ecr_repo }}
+        shell: bash
+
       - name: Build Docker image
         run: | 
           cd $dir
@@ -18,11 +23,7 @@ runs:
         env:
           dir: ${{inputs.dir}}
         shell: bash
-        
-      - name: Log in to Amazon ECR
-        run: aws ecr get-login-password | docker login --username AWS --password-stdin ${{ inputs.ecr_repo }}
-        shell: bash
-        
+
       - name: Tag Docker image
         run: docker tag my-lambda-function:latest ${{ inputs.ecr_repo }}/my-lambda-function:latest
         shell: bash

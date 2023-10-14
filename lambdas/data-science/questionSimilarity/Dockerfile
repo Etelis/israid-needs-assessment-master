@@ -1,5 +1,5 @@
 # Use the official AWS Lambda base image for Python 3.11
-FROM pytorch/manylinux-cpu
+FROM huggingface/transformers-pytorch-cpu
 
 # Set the working directory inside the Lambda function container
 WORKDIR /var/task
@@ -8,6 +8,6 @@ WORKDIR /var/task
 COPY . ./
 
 # Install the required Python modules
-RUN python3 -m pip install -r requirements.txt
+RUN pip install -r requirements.txt
 
 ENTRYPOINT [ "python3", "-m", "questionSimilarity.lambda_handler" ]

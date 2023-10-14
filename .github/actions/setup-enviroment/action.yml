@@ -1,5 +1,19 @@
 name: 'Hello World'
 description: 'Greet someone'
+inputs:
+  AWS_ACCESS_KEY_ID:
+    description: 'AWS_ACCESS_KEY_ID'
+    required: true
+  AWS_SECRET_ACCESS_KEY:
+    description: 'AWS_SECRET_ACCESS_KEY'
+    required: true
+  dir:
+    description: 'Directory'
+    required: true
+outputs:
+  json_properties:
+    description: "json_properties"
+    value: ${{ steps.json_properties.outputs }}
 runs:
   using: "composite"
   steps:
@@ -7,11 +21,11 @@ runs:
       id: json_properties
       uses: ActionsTools/read-json-action@main
       with:
-        file_path: "${{matrix.manifest}}/config.json"
+        file_path: "${{inputs.dir}}/config.json"
 
     - name: Set up AWS CLI
       uses: aws-actions/configure-aws-credentials@v1
       with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-access-key-id: ${{ inputs.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ inputs.AWS_SECRET_ACCESS_KEY }}
         aws-region: eu-north-1

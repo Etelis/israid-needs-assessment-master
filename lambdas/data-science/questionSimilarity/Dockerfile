@@ -9,3 +9,5 @@ COPY . ./
 
 # Install the required Python modules
 RUN pip install -r requirements.txt
+
+ENTRYPOINT [ "python3", "-m", "questionSimilarity.lambda_handler" ]

@@ -62,9 +62,3 @@ runs:
         shell: bash
         env:
           function_name: ${{inputs.function_name}}
-        
-      - name: Clean up
-        run: |
-          docker logout ${{ inputs.ecr_repo }}
-          docker rmi my-lambda-function:latest
-        shell: bash

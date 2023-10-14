@@ -1,0 +1,43 @@
+TODO - Data Science:
+
+1: Question similarity comparison:
+
+ASSUMING NEW QUESTIONS ARE ADDED ONLINE
+ - Vectorize question dataset
+ - When the client tries to submit a question check similarities with all other questions
+ - Show the client questions that meet or exceed our chosen similarity threshold
+
+EVALUATION
+ - evaluate on quora question pairs dataset
+ - check decision boundary for each similarity method
+
+CANDIDATES - GRID EVALUATION
+
+vectorizer/similarity -----                 |cosine similarity| more FAISS indexes                
+|  sentence transformer/mpnet-base          
+|  sentence transformer/minilm
+|  more models if necessary?
+|  simple tfidf/count vectorizer?
+
+Benchmark to beat: 70% test accuracy (Kaggle ML benchmark)
+
+
+2: Autocomplete:
+impossible without actual data to fine-tune on
+
+3: Text/Question extraction EDA?
+
+Extract meaningful features and visualizations from given answers :
+- Sentiment analysis: polarity and subjectivity using textblob
+
+4: Common answers 
+Extract common answers to open questions - so we might convert them to multi-choice instead, use question answering for proof-of-concept
+
+5. Q&A model on a pdf report. Assume constant structure.
+
+
+#TODO approach 2 - take a model that is smart enough and just tell it to quote its source.
+    #TODO approach 3- use langchain/faiss similarity search with an llm chatbot for a generative QA experience. harder to quote source tho.
+
+    # docs = ['Bertpaper.pdf', 'doctest.docx', 'TODO - Data Science.txt']
+    # answer_question("which benchmark do we want to beat?", docs)

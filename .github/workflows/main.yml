@@ -101,8 +101,6 @@ jobs:
             while IFS= read -r -d '' dir; do
                 file=$dir/config.json
                 runtime=$(jq -r '.Runtime' < "$file")
-                echo $runtime
-                echo $dir
                 if [[ $runtime == python* ]]; then
                     python_dirs+=("$dir")
                 else
@@ -113,8 +111,8 @@ jobs:
             
             #var1=$(find lambdas -mindepth 2 -maxdepth 2 -type d | jq -R -s -c 'split("\n")[:-1]')
             
-            node_dirs=$(echo "[${node_dirs[*]}]")
-            python_dirs=$(echo "[${python_dirs[*]}]")
+            node_dirs=$(jq --compact-output --null-input '$ARGS.positional' --args -- "${node_dirs[@]}")
+            python_dirs=$(jq --compact-output --null-input '$ARGS.positional' --args -- "${python_dirs[@]}")
 
             echo "python_dirs=$python_dirs" >> "$GITHUB_OUTPUT"
             echo "node_dirs=$node_dirs" >> "$GITHUB_OUTPUT"

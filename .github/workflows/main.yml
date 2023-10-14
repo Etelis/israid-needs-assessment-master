@@ -130,19 +130,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - uses: ./.github/workflows/setup-enviroment.yml
+      - uses: ./.github/actions/setup-enviroment.yml
+
       - uses: actions/setup-python@v4
         if: ${{ startsWith(steps.json_properties.outputs.runtime, 'python') }}
         with:
           python-version: "3.11"
-      - name: npm install and build
-        run: |
-          cd ${{matrix.manifest}}
-          npm install
-          npm run build --if-present
-        if: ${{ startsWith(steps.json_properties.outputs.runtime, 'Node') }}
-        env:
-          CI: true
 
       - name: Create dependencies layer for python
         run: |
@@ -187,62 +180,7 @@ jobs:
         env:
           dir: ${{ matrix.manifest }}
 
-      - uses: vimtor/action-zip@v1
-        with:
-          files: ${{matrix.manifest}}/
-          recursive: true
-          dest: bundle.zip
-
-      - name: Dynamically create Lambdas
-        run: |
-          function_name=$(basename $dir)
-
-          # Check if the function exists
-          if aws lambda get-function --function-name $function_name &> /dev/null; then
-            aws lambda update-function-code \
-              --function-name $function_name \
-              --zip-file fileb://bundle.zip
-
-            sleep 5
-
-            aws lambda update-function-configuration \
-              --function-name $function_name \
-              --handler $handler \
-              --runtime $runtime \
-              --memory-size $memorysize \
-              --timeout $timeout
-          else
-            if aws iam get-role --role-name ${function_name}-role &> /dev/null; then
-              role_arn=$(aws iam get-role --role-name ${function_name}-role --query 'Role.Arn' --output text)
-            else
-              # Create a new IAM role for the Lambda function
-              role_arn=$(aws iam create-role --role-name ${function_name}-role --assume-role-policy-document '{"Version": "2012-10-17","Statement": [{"Effect": "Allow","Principal": {"Service": "lambda.amazonaws.com"},"Action": "sts:AssumeRole"}]}' --query 'Role.Arn' --output text)
-              
-              # Attach basic Lambda execution policy to the new role
-              aws iam attach-role-policy --policy-arn arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole --role-name ${function_name}-role
-              aws iam attach-role-policy --policy-arn arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess --role-name ${function_name}-role
-
-              # Role attachment takes time
-              sleep 30
-            fi
-            
-            # Create the new lambda
-            aws lambda create-function \
-              --function-name $function_name \
-              --runtime $runtime \
-              --handler $handler \
-              --zip-file fileb://bundle.zip \
-              --memory-size $memorysize \
-              --timeout $timeout \
-              --role $role_arn
-          fi
-        env:
-          dir: ${{ matrix.manifest }}
-          handler: ${{steps.json_properties.outputs.handler}}
-          runtime: ${{steps.json_properties.outputs.runtime}}
-          memorysize: ${{steps.json_properties.outputs.memorysize}}
-          timeout: ${{steps.json_properties.outputs.timeout}}
-         
+      - uses: ./.github/actions/zip-and-push.yml
   deploy_lambdas:
     name: build and deploy lambda
     needs: [get-lambda-folders,deploy_layers]

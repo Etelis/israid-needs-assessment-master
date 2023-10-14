@@ -16,7 +16,7 @@ runs:
   steps:
           
       - name: Log in to Amazon ECR
-        uses: aws-actions/amazon-ecr-login@v3
+        uses: aws-actions/amazon-ecr-login@v1
         with:
           registries: ${{ inputs.ecr_id }}
 

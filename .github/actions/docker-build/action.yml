@@ -58,7 +58,6 @@ runs:
                 --code ImageUri=${{inputs.ecr_repo}}:${{inputs.function_name}}_latest \
                 --role $role_arn
           fi
-          sleep 300
         shell: bash
         env:
           function_name: ${{inputs.function_name}}

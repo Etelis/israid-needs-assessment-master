@@ -1,3 +1,6 @@
-boto3==1.28.62
-botocore==1.31.62
-textblob==0.17.1
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch
+torchvision
+boto3
+botocore
+textblob

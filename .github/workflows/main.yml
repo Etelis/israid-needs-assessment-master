@@ -135,6 +135,7 @@ jobs:
         if: ${{ startsWith(steps.json_properties.outputs.runtime, 'Docker') }}
         with:
           dir: ${{ matrix.manifest }}
+          ecr_id: 558964794123
           ecr_repo: "558964794123.dkr.ecr.eu-north-1.amazonaws.com/israaid"
 
       - uses: ./.github/actions/zip-and-push

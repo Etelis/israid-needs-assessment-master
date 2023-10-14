@@ -8,14 +8,17 @@ inputs:
   ecr_repo:
     description: 'ECR Repo URL'
     required: true
+  ecr_id:
+    description: 'ECR Repo ID'
+    required: true
 runs:
   using: "composite"
   steps:
           
       - name: Log in to Amazon ECR
-        uses: aws-actions/amazon-ecr-login@v1
+        uses: aws-actions/amazon-ecr-login@v3
         with:
-          registries: ${{ inputs.ecr_repo }}
+          registries: ${{ inputs.ecr_id }}
 
 
       - name: Set up QEMU

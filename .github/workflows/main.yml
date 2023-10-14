@@ -218,7 +218,7 @@ jobs:
               
               # Attach basic Lambda execution policy to the new role
               aws iam attach-role-policy --policy-arn arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole --role-name ${function_name}-role
-              aws iam attach-role-policy --policy-arn arn:aws:iam::aws:policy/service-role/AmazonDynamoDBFullAccess --role-name ${function_name}-role
+              aws iam attach-role-policy --policy-arn arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess --role-name ${function_name}-role
 
               # Role attachment takes time
               sleep 30

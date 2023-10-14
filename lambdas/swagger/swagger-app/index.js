@@ -26,7 +26,7 @@ module.exports.handler = async (event, context) => {
     delete swaggerJson['paths']['/api-docs/{proxy+}']
     delete swaggerJson['paths']['/api-docs']
 
-    app.use('/', swaggerUI.serve, swaggerUI.setup(swaggerJson))
+    app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerJson))
     const handler = serverless(app)
     const ret = await handler(event, context)
     return ret

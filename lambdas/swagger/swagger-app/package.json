@@ -1,0 +1,8 @@
+{
+    "dependencies": {
+        "aws-sdk": "*",
+        "express": "*",
+        "serverless-http": "*",
+        "swagger-ui-express": "*"
+    }
+}

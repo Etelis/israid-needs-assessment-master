@@ -1,7 +1,8 @@
-const AWS = require('/opt/swagger-layer/aws-sdk')
-const express = require('/opt/swagger-layer/express')
-const serverless = require('/opt/swagger-layer/serverless-http')
-const swaggerUI = require('/opt/swagger-layer/swagger-ui-express')
+///opt/swagger-layer/
+const AWS = require('aws-sdk')
+const express = require('express')
+const serverless = require('serverless-http')
+const swaggerUI = require('swagger-ui-express')
 
 var apigateway = new AWS.APIGateway({apiVersion: '2015-07-09'});
 

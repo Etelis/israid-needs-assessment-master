@@ -136,7 +136,7 @@ jobs:
         with:
           dir: ${{ matrix.manifest }}
           ecr_id: 558964794123
-          ecr_repo: "558964794123.dkr.ecr.eu-north-1.amazonaws.com/israaid"
+          ecr_repo: "558964794123.dkr.ecr.eu-north-1.amazonaws.com"
 
       - uses: ./.github/actions/zip-and-push
         with:

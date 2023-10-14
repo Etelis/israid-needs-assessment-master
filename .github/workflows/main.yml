@@ -1,5 +1,7 @@
 name: deploy to lambda
-on: [push]
+on:
+  push:
+    branches: [main, NodeTesting]
 jobs:
   get-layers-folders:
     name: Get the layers folders

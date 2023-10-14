@@ -1,5 +1,5 @@
 # Use the official AWS Lambda base image for Python 3.11
-FROM huggingface/transformers-pytorch-cpu
+FROM pytorch/manylinux-cpu
 
 # Set the working directory inside the Lambda function container
 WORKDIR /var/task

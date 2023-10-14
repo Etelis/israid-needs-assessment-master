@@ -101,6 +101,8 @@ jobs:
             while IFS= read -r -d '' dir; do
                 file=$dir/config.json
                 runtime=$(jq -r '.Runtime' < "$file")
+                echo $runtime
+                echo $dir
                 if [[ $runtime == python* ]]; then
                     python_dirs+=("$dir")
                 else
@@ -109,11 +111,6 @@ jobs:
 
             done < <(find lambdas -mindepth 2 -maxdepth 2 -type d -print0)
             
-
-            # Output paths to directories containing config.json with Python runtime
-            for file in "${config_files[@]}"; do
-                echo "$(dirname "$file")"
-            done
             #var1=$(find lambdas -mindepth 2 -maxdepth 2 -type d | jq -R -s -c 'split("\n")[:-1]')
             
             node_dirs=$(echo "[${node_dirs[*]}]")

@@ -111,6 +111,13 @@ jobs:
         with:
           file_path: "${{matrix.manifest}}/config.json"
 
+      - name: Set function_name variable all folders
+        id: function_name
+        run: |
+          var1=$(basename ${{matrix.manifest}})
+          echo "function_name=$var1" >> "$GITHUB_OUTPUT"
+
+
       - name: Set up AWS CLI
         uses: aws-actions/configure-aws-credentials@v3
         with:
@@ -123,6 +130,7 @@ jobs:
         if: ${{ startsWith(steps.json_properties.outputs.runtime, 'python') }}
         with:
           dir: ${{ matrix.manifest }}
+          function_name: ${{ steps.function_name.outputs.function_name }}
 
       - name: Build step for node based code
         uses: ./.github/actions/node-build
@@ -135,13 +143,14 @@ jobs:
         if: ${{ startsWith(steps.json_properties.outputs.runtime, 'Docker') }}
         with:
           dir: ${{ matrix.manifest }}
+          function_name: ${{ steps.function_name.outputs.function_name }}
           ecr_id: 558964794123
           ecr_repo: "558964794123.dkr.ecr.eu-north-1.amazonaws.com"
 
       - name: ZIP code and push to AWS for non docker related
         uses: ./.github/actions/zip-and-push
         with:
-          dir: ${{ matrix.manifest }}
+          function_name: ${{ steps.function_name.outputs.function_name }}
           handler: ${{steps.json_properties.outputs.handler}}
           runtime: ${{steps.json_properties.outputs.runtime}}
           memorysize: ${{steps.json_properties.outputs.memorysize}}
@@ -150,9 +159,6 @@ jobs:
 
       - name: Dynamically attach layers
         run: |
-          function_name=$(basename $dir)
-
-
           combined_layers=""
 
           # Read layer names and loop through each layer
@@ -174,4 +180,5 @@ jobs:
             --layers $combined_layers
         env:
           dir: ${{ matrix.manifest }}
+          function_name: ${{ steps.function_name.outputs.function_name }}
         shell: bash

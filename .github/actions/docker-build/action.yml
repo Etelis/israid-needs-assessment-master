@@ -4,6 +4,9 @@ inputs:
   dir:
     description: 'Directory'
     required: true
+  function_name:
+    description: 'function_name'
+    required: true
   ecr_repo:
     description: 'ECR Repo URL'
     required: true
@@ -24,18 +27,17 @@ runs:
           context: ${{inputs.dir}}
           push: true
           tags: |
-            ${{inputs.ecr_repo}}:test:latest
-            ${{inputs.ecr_repo}}:test:${{ github.sha }}
+            ${{inputs.ecr_repo}}:${{inputs.function_name}}_latest
+            ${{inputs.ecr_repo}}:${{inputs.function_name}}_${{ github.sha }}
 
       - name: Deploy Lambda function
         run: |
-          function_name=$(basename $dir)
           # Check if the Lambda function already exists
           if aws lambda get-function --function-name $function_name &> /dev/null; then
               # Function exists, update the function image
               aws lambda update-function-code \
                   --function-name $function_name \
-                  --image-uri "${{ inputs.ecr_repo }}:latest"
+                  --image-uri "${{inputs.ecr_repo}}:${{inputs.function_name}}_latest"
           else
               # Function doesn't exist, create a new one
               if aws iam get-role --role-name ${function_name}-role &> /dev/null; then
@@ -54,12 +56,12 @@ runs:
               aws lambda create-function \
                 --function-name $function_name \
                 --package-type Image \
-                --code ImageUri=${{ inputs.ecr_repo }}:latest \
+                --code ImageUri=${{inputs.ecr_repo}}:${{inputs.function_name}}_latest \
                 --role $role_arn
           fi
         shell: bash
         env:
-          dir: ${{inputs.dir}}
+          function_name: ${{inputs.function_name}}
         
       - name: Clean up
         run: |

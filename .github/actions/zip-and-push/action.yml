@@ -1,8 +1,8 @@
 name: 'ZIP&Push'
 description: 'ZIP&Push'
 inputs:
-  dir:
-    description: 'Directory'
+  function_name:
+    description: 'function_name'
     required: true
   handler:
     description: 'handler'
@@ -27,8 +27,6 @@ runs:
 
       - name: Dynamically create Lambdas
         run: |
-          function_name=$(basename $dir)
-
           # Check if the function exists
           if aws lambda get-function --function-name $function_name &> /dev/null; then
             aws lambda update-function-code \
@@ -69,7 +67,7 @@ runs:
               --role $role_arn
           fi
         env:
-          dir: ${{ inputs.dir }}
+          function_name: ${{ inputs.function_name }}
           handler: ${{inputs.handler}}
           runtime: ${{inputs.runtime}}
           memorysize: ${{inputs.memorysize}}

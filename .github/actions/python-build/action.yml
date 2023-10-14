@@ -4,6 +4,9 @@ inputs:
   dir:
     description: 'Directory'
     required: true
+  function_name:
+    description: 'function_name'
+    required: true
 runs:
   using: "composite"
   steps:
@@ -13,7 +16,6 @@ runs:
 
       - name: Create dependencies layer for python
         run: |
-          function_name=$(basename $dir)
           LAYER_NAME=PYTHON-DEP-${function_name}
 
           mkdir -p $function_name-deps/python
@@ -52,4 +54,5 @@ runs:
           done
         env:
           dir: ${{ inputs.dir }}
+          function_name: ${{ inputs.function_name }}
         shell: bash

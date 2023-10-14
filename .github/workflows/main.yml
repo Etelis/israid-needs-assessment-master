@@ -201,6 +201,10 @@ jobs:
           if aws lambda get-function --function-name $function_name &> /dev/null; then
             aws lambda update-function-code \
               --function-name $function_name \
+              --handler $handler \
+              --runtime $runtime \
+              --memory-size $memorysize \
+              --timeout $timeout \
               --zip-file fileb://bundle.zip
           else
             if aws iam get-role --role-name ${function_name}-role &> /dev/null; then
@@ -223,12 +227,16 @@ jobs:
               --runtime $runtime \
               --handler $handler \
               --zip-file fileb://bundle.zip \
+              --memory-size $memorysize \
+              --timeout $timeout \
               --role $role_arn
           fi
         env:
           dir: ${{ matrix.manifest }}
           handler: ${{steps.json_properties.outputs.handler}}
           runtime: ${{steps.json_properties.outputs.runtime}}
+          memorysize: ${{steps.json_properties.outputs.memorysize}}
+          timeout: ${{steps.json_properties.outputs.timeout}}
 
       - name: Dynamically attach layers
         run: |

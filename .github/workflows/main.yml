@@ -5,7 +5,7 @@ jobs:
     name: Get the layers folders
     runs-on: ubuntu-latest
     outputs:
-      matrix: ${{ steps.folder-fetcher.outputs.folders }}
+      folders: ${{ steps.folder-fetcher.outputs.folders }}
     steps:
       - uses: actions/checkout@v1
       - name: get all folders
@@ -20,26 +20,22 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node-version: [12.x]
-        manifest: ${{ fromJson(needs.get-layers-folders.outputs.matrix) }}
+        manifest: ${{ fromJson(needs.get-layers-folders.outputs.folders) }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
 
-      - name: Set up AWS credentials
-        run: |
-          aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws configure set region eu-north-1
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
-        if: ${{ startsWith(steps.json_properties.outputs.runtime, 'Node') }}
+      - name: Set up AWS CLI
+        uses: aws-actions/configure-aws-credentials@v1
         with:
-          node-version: ${{ matrix.node-version }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-north-1
+
+      - name: Use Node.js 12.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
 
       - name: Create layer
         run: |
@@ -87,125 +83,28 @@ jobs:
     name: Get the lambda folders
     runs-on: ubuntu-latest
     outputs:
-      python_dirs: ${{ steps.folder-fetcher.outputs.python_dirs }}
-      node_dirs: ${{ steps.folder-fetcher.outputs.node_dirs }}
+      folders: ${{ steps.folder-fetcher.outputs.folders }}
     steps:
       - uses: actions/checkout@v1
       - name: get all folders
         id: folder-fetcher
         run: |
-            python_dirs=()
-            node_dirs=()
-    
-            # Recursively find config.json files with Python runtime
-            while IFS= read -r -d '' dir; do
-                file=$dir/config.json
-                runtime=$(jq -r '.Runtime' < "$file")
-                if [[ $runtime == python* ]]; then
-                    python_dirs+=("$dir")
-                else
-                    node_dirs+=("$dir")
-                fi
+          var1=$(find lambdas -mindepth 2 -maxdepth 2 -type d | jq -R -s -c 'split("\n")[:-1]')
+          echo "folders=$var1" >> "$GITHUB_OUTPUT"
 
-            done < <(find lambdas -mindepth 2 -maxdepth 2 -type d -print0)
-            
-            #var1=$(find lambdas -mindepth 2 -maxdepth 2 -type d | jq -R -s -c 'split("\n")[:-1]')
-            
-            node_dirs=$(jq --compact-output --null-input '$ARGS.positional' --args -- "${node_dirs[@]}")
-            python_dirs=$(jq --compact-output --null-input '$ARGS.positional' --args -- "${python_dirs[@]}")
-
-            echo "python_dirs=$python_dirs" >> "$GITHUB_OUTPUT"
-            echo "node_dirs=$node_dirs" >> "$GITHUB_OUTPUT"
-
-  deploy_python_lambdas:
+  deploy_lambdas:
     name: build and deploy python lambdas
     needs: [get-lambda-folders,deploy_layers]
     strategy:
       fail-fast: false
       matrix:
-        manifest: ${{ fromJson(needs.get-lambda-folders.outputs.python_dirs) }}
+        manifest: ${{ fromJson(needs.get-lambda-folders.outputs.folders) }}
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - uses: ./.github/actions/setup-enviroment
-        id: setup
-        with:
-          dir: ${{matrix.manifest}}
-          AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY_ID}}
-          AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_ACCESS_KEY}}
-
-      - uses: actions/setup-python@v4
-        if: ${{ startsWith(steps.setup.outputs.runtime, 'python') }}
-        with:
-          python-version: "3.11"
-
-      - name: Create dependencies layer for python
-        run: |
-          function_name=$(basename $dir)
-          LAYER_NAME=PYTHON-DEP-${function_name}
-
-          mkdir -p $function_name-deps/python
-
-          python -m pip install \
-            --platform manylinux2014_x86_64 \
-            --only-binary=:all: \
-            --target ./$function_name-deps/python \
-            -r $dir/requirements.txt \
-            --no-user
-
-          # Create a zip file containing the layer content
-          cd $function_name-deps
-          zip -r layer.zip .
-
-          # Publish the layer to AWS Lambda
-          aws lambda publish-layer-version \
-            --layer-name $LAYER_NAME \
-            --description "Python dependencies for $dir" \
-            --zip-file fileb://layer.zip
-          
-          # Get all versions of the Lambda layer
-          LAYER_VERSIONS=$(aws lambda list-layer-versions \
-            --layer-name $LAYER_NAME \
-            --query 'LayerVersions[*].Version')
-
-          # Sort versions in descending order
-          SORTED_VERSIONS=($(echo $LAYER_VERSIONS | tr -d '[],' | tr ' ' '\n' | sort -nr))
-
-          # Retain the latest 5 versions and delete the rest
-          for version in "${SORTED_VERSIONS[@]:5}"; do
-              echo "Deleting Lambda layer version: $version"
-              aws lambda delete-layer-version \
-                --layer-name $LAYER_NAME \
-                --version-number $version
-          done
-        if: ${{ startsWith(steps.json_properties.outputs.runtime, 'python') }}
-        env:
-          dir: ${{ matrix.manifest }}
-
-      - uses: ./.github/actions/zip-and-push.yml
-  deploy_lambdas:
-    name: build and deploy lambda
-    needs: [get-lambda-folders,deploy_layers]
-    strategy:
-      fail-fast: false
-      matrix:
-        node-version: [12.x]
-        manifest: ${{ fromJson(needs.get-lambda-folders.outputs.node_dirs) }}
-    runs-on: ubuntu-latest
-    timeout-minutes: 30
-    steps:
-      - uses: actions/checkout@v1
-
-      - uses: ./.github/actions/setup-enviroment
-        id: setup
-        with:
-          dir: ${{matrix.manifest}}
-          AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY_ID}}
-          AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_ACCESS_KEY}}
-          
       - name: get properties
         id: json_properties
         uses: ActionsTools/read-json-action@main
@@ -218,149 +117,21 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: eu-north-1
-
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
-        if: ${{ startsWith(steps.json_properties.outputs.runtime, 'Node') }}
-        with:
-          node-version: ${{ matrix.node-version }}
-
-      - uses: actions/setup-python@v4
+      
+      - uses: ./.github/actions/python-build
         if: ${{ startsWith(steps.json_properties.outputs.runtime, 'python') }}
         with:
-          python-version: "3.11"
-
-      - name: npm install and build
-        run: |
-          cd ${{matrix.manifest}}
-          npm install
-          npm run build --if-present
-        if: ${{ startsWith(steps.json_properties.outputs.runtime, 'Node') }}
-        env:
-          CI: true
-
-      - name: Create dependencies layer for python
-        run: |
-          function_name=$(basename $dir)
-          LAYER_NAME=PYTHON-DEP-${function_name}
-
-          mkdir -p $function_name-deps/python
-
-          python -m pip install \
-            --platform manylinux2014_x86_64 \
-            --only-binary=:all: \
-            --target ./$function_name-deps/python \
-            -r $dir/requirements.txt \
-            --no-user
-
-          # Create a zip file containing the layer content
-          cd $function_name-deps
-          zip -r layer.zip .
-
-          # Publish the layer to AWS Lambda
-          aws lambda publish-layer-version \
-            --layer-name $LAYER_NAME \
-            --description "Python dependencies for $dir" \
-            --zip-file fileb://layer.zip
-          
-          # Get all versions of the Lambda layer
-          LAYER_VERSIONS=$(aws lambda list-layer-versions \
-            --layer-name $LAYER_NAME \
-            --query 'LayerVersions[*].Version')
-
-          # Sort versions in descending order
-          SORTED_VERSIONS=($(echo $LAYER_VERSIONS | tr -d '[],' | tr ' ' '\n' | sort -nr))
-
-          # Retain the latest 5 versions and delete the rest
-          for version in "${SORTED_VERSIONS[@]:5}"; do
-              echo "Deleting Lambda layer version: $version"
-              aws lambda delete-layer-version \
-                --layer-name $LAYER_NAME \
-                --version-number $version
-          done
-        if: ${{ startsWith(steps.json_properties.outputs.runtime, 'python') }}
-        env:
           dir: ${{ matrix.manifest }}
 
-      - uses: vimtor/action-zip@v1
+      - uses: ./.github/actions/node-build
+        if: ${{ startsWith(steps.json_properties.outputs.runtime, 'Node') }}
         with:
-          files: ${{matrix.manifest}}/
-          recursive: true
-          dest: bundle.zip
+          dir: ${{ matrix.manifest }}
 
-      - name: Dynamically create Lambdas
-        run: |
-          function_name=$(basename $dir)
-
-          # Check if the function exists
-          if aws lambda get-function --function-name $function_name &> /dev/null; then
-            aws lambda update-function-code \
-              --function-name $function_name \
-              --zip-file fileb://bundle.zip
-
-            sleep 5
-
-            aws lambda update-function-configuration \
-              --function-name $function_name \
-              --handler $handler \
-              --runtime $runtime \
-              --memory-size $memorysize \
-              --timeout $timeout
-          else
-            if aws iam get-role --role-name ${function_name}-role &> /dev/null; then
-              role_arn=$(aws iam get-role --role-name ${function_name}-role --query 'Role.Arn' --output text)
-            else
-              # Create a new IAM role for the Lambda function
-              role_arn=$(aws iam create-role --role-name ${function_name}-role --assume-role-policy-document '{"Version": "2012-10-17","Statement": [{"Effect": "Allow","Principal": {"Service": "lambda.amazonaws.com"},"Action": "sts:AssumeRole"}]}' --query 'Role.Arn' --output text)
-              
-              # Attach basic Lambda execution policy to the new role
-              aws iam attach-role-policy --policy-arn arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole --role-name ${function_name}-role
-              aws iam attach-role-policy --policy-arn arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess --role-name ${function_name}-role
-
-              # Role attachment takes time
-              sleep 30
-            fi
-            
-            # Create the new lambda
-            aws lambda create-function \
-              --function-name $function_name \
-              --runtime $runtime \
-              --handler $handler \
-              --zip-file fileb://bundle.zip \
-              --memory-size $memorysize \
-              --timeout $timeout \
-              --role $role_arn
-          fi
-        env:
+      - uses: ./.github/actions/zip-and-push
+        with:
           dir: ${{ matrix.manifest }}
           handler: ${{steps.json_properties.outputs.handler}}
           runtime: ${{steps.json_properties.outputs.runtime}}
           memorysize: ${{steps.json_properties.outputs.memorysize}}
           timeout: ${{steps.json_properties.outputs.timeout}}
-
-      - name: Dynamically attach layers
-        run: |
-          function_name=$(basename $dir)
-
-
-          combined_layers=""
-
-          # Read layer names and loop through each layer
-          for LAYER_NAME in $(jq -r '.Layers[]' $dir/config.json); do
-              # Get the ARN of the latest version of the Lambda layer
-              LAYER_ARN=$(aws lambda list-layer-versions \
-                --layer-name $LAYER_NAME \
-                --query 'LayerVersions[0].LayerVersionArn' --output text)
-              echo $LAYER_ARN
-              combined_layers="$combined_layers $LAYER_ARN"
-          done
-          
-          echo $function_name
-          echo $combined_layers
-
-          # Attach the layer to the Lambda function
-          aws lambda update-function-configuration \
-            --function-name $function_name \
-            --layers $combined_layers
-        env:
-          dir: ${{ matrix.manifest }}

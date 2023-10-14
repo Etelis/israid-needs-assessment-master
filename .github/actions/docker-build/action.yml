@@ -58,45 +58,6 @@ runs:
                 --code ImageUri=${{inputs.ecr_repo}}:${{inputs.function_name}}_latest \
                 --role $role_arn
           fi
-          
-          # Creation of docker based image is taking time to initialize
-          sleep 60
-
         shell: bash
         env:
           function_name: ${{inputs.function_name}}
-
-      - name: Create base code layer for python
-        run: |
-          LAYER_NAME=PYTHON-CODE-${function_name}
-
-          mkdir -p code
-          cp $dir/* code/
-
-          zip -r layer.zip code
-
-          # Publish the layer to AWS Lambda
-          aws lambda publish-layer-version \
-            --layer-name $LAYER_NAME \
-            --description "Python code for $dir" \
-            --zip-file fileb://layer.zip
-          
-          # Get all versions of the Lambda layer
-          LAYER_VERSIONS=$(aws lambda list-layer-versions \
-            --layer-name $LAYER_NAME \
-            --query 'LayerVersions[*].Version')
-
-          # Sort versions in descending order
-          SORTED_VERSIONS=($(echo $LAYER_VERSIONS | tr -d '[],' | tr ' ' '\n' | sort -nr))
-
-          # Retain the latest 5 versions and delete the rest
-          for version in "${SORTED_VERSIONS[@]:5}"; do
-              echo "Deleting Lambda layer version: $version"
-              aws lambda delete-layer-version \
-                --layer-name $LAYER_NAME \
-                --version-number $version
-          done
-        env:
-          dir: ${{ inputs.dir }}
-          function_name: ${{ inputs.function_name }}
-        shell: bash

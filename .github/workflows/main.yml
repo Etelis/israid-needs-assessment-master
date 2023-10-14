@@ -142,7 +142,7 @@ jobs:
  
       - name: Build step for docker based code
         uses: ./.github/actions/docker-build
-        if: ${{ startsWith(steps.json_properties.outputs.runtime, 'Docker') && steps.json_properties.outputs.BaseImageRefresh == 'true' }}
+        if: ${{ startsWith(steps.json_properties.outputs.runtime, 'Docker') }}
         with:
           dir: ${{ matrix.manifest }}
           function_name: ${{ steps.function_name.outputs.function_name }}

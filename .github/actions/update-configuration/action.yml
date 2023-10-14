@@ -22,6 +22,21 @@ inputs:
 runs:
   using: "composite"
   steps:
+      - name: Wait until function is ready
+        run: |
+          while true; do
+            status=$(aws lambda get-function-configuration --function-name $function_name --query 'State.Status' --output text)
+            if [ "$status" == "Active" ]; then
+                echo "Lambda function is active and ready."
+                break
+            fi
+            echo "Waiting for the Lambda function to become active..."
+            sleep 5
+          done
+        shell: bash
+        env:
+          function_name: ${{ inputs.function_name }}
+
       - name: Dynamically create Lambdas
         run: |
           # Use AWS CLI to describe the Lambda function
@@ -50,6 +65,22 @@ runs:
           timeout: ${{inputs.timeout}}
         shell: bash
 
+
+      - name: Wait until function is ready
+        run: |
+          while true; do
+            status=$(aws lambda get-function-configuration --function-name $function_name --query 'State.Status' --output text)
+            if [ "$status" == "Active" ]; then
+                echo "Lambda function is active and ready."
+                break
+            fi
+            echo "Waiting for the Lambda function to become active..."
+            sleep 5
+          done
+        shell: bash
+        env:
+          function_name: ${{ inputs.function_name }}
+          
       - name: Dynamically attach layers
         run: |
           combined_layers=""

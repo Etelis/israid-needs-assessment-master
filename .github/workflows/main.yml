@@ -156,15 +156,6 @@ jobs:
           -r $dir/requirements.txt \
           --no-user
 
-          rm -rf python/lxml*
-
-          docker run -v $(pwd):/app -w /app amazonlinux:2 yum install -y python-pip && \
-          python -m pip install \
-          --only-binary=:all: \
-          --target ./$function_name-deps/python \
-          --no-user \
-          lxml
-
           # Create a zip file containing the layer content
           cd $function_name-deps
           zip -r layer.zip .

@@ -201,11 +201,14 @@ jobs:
           if aws lambda get-function --function-name $function_name &> /dev/null; then
             aws lambda update-function-code \
               --function-name $function_name \
+              --zip-file fileb://bundle.zip
+
+            aws lambda update-function-configuration \
+              --function-name $function_name \
               --handler $handler \
               --runtime $runtime \
               --memory-size $memorysize \
-              --timeout $timeout \
-              --zip-file fileb://bundle.zip
+              --timeout $timeout
           else
             if aws iam get-role --role-name ${function_name}-role &> /dev/null; then
               role_arn=$(aws iam get-role --role-name ${function_name}-role --query 'Role.Arn' --output text)

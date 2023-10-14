@@ -177,6 +177,10 @@ jobs:
           echo $function_name
           echo $combined_layers
 
+          # Sleep before attaching to give time to heal
+          sleep 15
+
+
           # Attach the layer to the Lambda function
           aws lambda update-function-configuration \
             --function-name $function_name \

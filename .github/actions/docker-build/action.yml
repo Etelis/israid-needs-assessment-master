@@ -24,7 +24,9 @@ runs:
         with:
           context: ${{inputs.dir}}
           push: true
-          tags: 558964794123.dkr.ecr.eu-north-1.amazonaws.com/israaid:latest
+          tags: |
+            something:lamba
+            ${{ecr_repo}}:latest
 
       - name: Deploy Lambda function
         run: |
@@ -34,7 +36,7 @@ runs:
               # Function exists, update the function image
               aws lambda update-function-code \
                   --function-name $function_name \
-                  --image-uri "${{ inputs.ecr_repo }}/my-lambda-function:latest"
+                  --image-uri "${{ inputs.ecr_repo }}:latest"
           else
               # Function doesn't exist, create a new one
               if aws iam get-role --role-name ${function_name}-role &> /dev/null; then
@@ -53,8 +55,9 @@ runs:
               aws lambda create-function \
                 --function-name $function_name \
                 --package-type Image \
-                --code ImageUri=${{ inputs.ecr_repo }}/my-lambda-function:latest \
+                --code ImageUri=${{ inputs.ecr_repo }}:latest \
                 --role $role_arn
+          fi
         shell: bash
         env:
           dir: ${{inputs.dir}}

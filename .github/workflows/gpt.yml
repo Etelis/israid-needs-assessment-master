@@ -1,0 +1,51 @@
+name: Build and Deploy Lambda Function
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        
+      - name: Set up AWS CLI
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1  # Change this to your desired AWS region
+        
+      - name: Get AWS Account ID
+        id: aws_account_id
+        run: echo "::set-output name=account_id::$(aws sts get-caller-identity --query 'Account' --output text)"
+        
+      - name: Build Docker image
+        run: docker build -t my-lambda-function .
+        
+      - name: Log in to Amazon ECR
+        run: aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${{ steps.aws_account_id.outputs.account_id }}.dkr.ecr.us-east-1.amazonaws.com
+        
+      - name: Tag Docker image
+        run: docker tag my-lambda-function:latest ${{ steps.aws_account_id.outputs.account_id }}.dkr.ecr.us-east-1.amazonaws.com/my-lambda-function:latest
+        
+      - name: Push Docker image to Amazon ECR
+        run: docker push ${{ steps.aws_account_id.outputs.account_id }}.dkr.ecr.us-east-1.amazonaws.com/my-lambda-function:latest
+        
+      - name: Deploy Lambda function
+        run: |
+          aws lambda create-function \
+            --function-name MyLambdaFunction \
+            --package-type Image \
+            --code ImageUri=${{ steps.aws_account_id.outputs.account_id }}.dkr.ecr.us-east-1.amazonaws.com/my-lambda-function:latest \
+            --role arn:aws:iam::${{ steps.aws_account_id.outputs.account_id }}:role/MyLambdaRole \
+            --region us-east-1  # Change this to your desired AWS region
+        
+      - name: Clean up
+        run: |
+          docker logout ${{ steps.aws_account_id.outputs.account_id }}.dkr.ecr.us-east-1.amazonaws.com
+          docker rmi my-lambda-function:latest

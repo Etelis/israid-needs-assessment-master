@@ -203,6 +203,8 @@ jobs:
               --function-name $function_name \
               --zip-file fileb://bundle.zip
 
+            sleep 5
+            
             aws lambda update-function-configuration \
               --function-name $function_name \
               --handler $handler \

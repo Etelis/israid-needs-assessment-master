@@ -199,6 +199,13 @@ jobs:
     steps:
       - uses: actions/checkout@v1
 
+      - uses: ./.github/actions/setup-enviroment
+        id: setup
+        with:
+          dir: ${{matrix.manifest}}
+          AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY_ID}}
+          AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_ACCESS_KEY}}
+          
       - name: get properties
         id: json_properties
         uses: ActionsTools/read-json-action@main

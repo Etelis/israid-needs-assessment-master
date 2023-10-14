@@ -10,10 +10,6 @@ inputs:
   dir:
     description: 'Directory'
     required: true
-outputs:
-  json_properties:
-    description: "json_properties"
-    value: ${{ steps.json_properties.outputs.* }}
 runs:
   using: "composite"
   steps:

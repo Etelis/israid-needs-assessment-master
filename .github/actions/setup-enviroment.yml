@@ -1,5 +1,8 @@
 runs:  
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        
       - name: get properties
         id: json_properties
         uses: ActionsTools/read-json-action@main

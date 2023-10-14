@@ -59,25 +59,24 @@ def compute_similarity(question_list, new_question):
 
 def lambda_handler(event, context):
     try:
-        body = json.loads(event['body'])
-        docs = body['docs']
-        others = body['others']
+        docs = event['docs']
+        others = event['others']
 
         similarity_scores = compute_similarity(docs, others)
 
         return {
             'statusCode': 200,
-            'body': json.dumps({'similarity_scores': similarity_scores})
+            'body': {'similarity_scores': similarity_scores}
         }
     except ClientError as e:
         logger.error(f"Client error: {e}")
         return {
             'statusCode': 500,
-            'body': json.dumps({'error_message': 'Internal server error'})
+            'body': {'Internal server error'}
         }
     except Exception as e:
         logger.error(f"Error: {e}")
         return {
             'statusCode': 500,
-            'body': json.dumps({'error_message': 'Internal server error'})
+            'body': {'Internal server error'}
         }

@@ -95,27 +95,26 @@ def answer_question(question, docs):
 
 def lambda_handler(event, context):
     try:
-        body = json.loads(event['body'])
-        question = body['question']
-        context = body['context']
+        question = event['question']
+        context = event['context']
 
         answer = answer_question(question, context)
 
         return {
             'statusCode': 200,
-            'body': json.dumps({'answer': answer})
+            'body': {'answer': answer}
         }
     except ClientError as e:
         logger.error(f"Client error: {e}")
         return {
             'statusCode': 500,
-            'body': json.dumps({'error_message': 'Internal server error'})
+            'body': {'Internal server error'}
         }
     except Exception as e:
         logger.error(f"Error: {e}")
         return {
             'statusCode': 500,
-            'body': json.dumps({'error_message': 'Internal server error'})
+            'body': {'Internal server error'}
         }
 
 

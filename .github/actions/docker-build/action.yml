@@ -15,7 +15,7 @@ runs:
       - name: Log in to Amazon ECR
         uses: aws-actions/amazon-ecr-login@v1
         with:
-          registry: ${{ inputs.ecr_repo }}
+          registries: ${{ inputs.ecr_repo }}
 
 
       - name: Set up QEMU

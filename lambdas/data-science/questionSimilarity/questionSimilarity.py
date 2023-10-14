@@ -41,8 +41,11 @@ def compute_similarity(question_list, new_question):
         output_docs = query({"inputs": {"source_sentence": "", "sentences": question_list}})
         output_others = query({"inputs": {"source_sentence": "", "sentences": new_question}})
 
-        historic_emb = output_docs['outputs']
-        new_emb = output_others['outputs']
+        #historic_emb = output_docs['outputs']
+        #new_emb = output_others['outputs']
+
+        historic_emb = output_docs
+        new_emb = output_others
 
         similarities = util.pytorch_cos_sim(new_emb, historic_emb)
         similarities = similarities.squeeze()

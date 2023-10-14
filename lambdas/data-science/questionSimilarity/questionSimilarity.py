@@ -10,7 +10,7 @@ logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
 THRESHOLD = 0.7
-API_URL = "https://api-inference.huggingface.co/models/sentence-transformers/all-mpnet-base-v2'"
+API_URL = "https://api-inference.huggingface.co/models/sentence-transformers/all-mpnet-base-v2"
 headers = {"Authorization": "Bearer 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"}
 
 

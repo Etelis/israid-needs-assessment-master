@@ -4,5 +4,7 @@
     "BaseImageRefresh": true,
     "MemorySize": 128,
     "Timeout": 250,
-    "Layers": []
+    "Layers": [
+        "PYTHON-CODE-questionSimilarity"
+    ]
 }

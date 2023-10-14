@@ -130,7 +130,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - uses: ./.github/actions/setup-enviroment.yml
+      - uses: Etelis/israid-needs-assessment-master/.github/workflows/setup-enviroment.yml@NodeTesting
 
       - uses: actions/setup-python@v4
         if: ${{ startsWith(steps.json_properties.outputs.runtime, 'python') }}

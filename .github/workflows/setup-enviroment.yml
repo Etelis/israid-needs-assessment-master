@@ -1,8 +1,12 @@
-runs:  
+name: The Reusable Workflow
+on:
+  workflow_call
+jobs:  
+  deploy_lambdas:
+    name: build and deploy lambda
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-        
       - name: get properties
         id: json_properties
         uses: ActionsTools/read-json-action@main

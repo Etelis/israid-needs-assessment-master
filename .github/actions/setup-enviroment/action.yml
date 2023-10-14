@@ -13,7 +13,7 @@ inputs:
 outputs:
   json_properties:
     description: "json_properties"
-    value: ${{ steps.json_properties.outputs.handler }}
+    value: ${{ steps.json_properties.outputs.* }}
 runs:
   using: "composite"
   steps:

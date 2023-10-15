@@ -117,4 +117,5 @@ runs:
               --type "$integration_type" \
               --integration-http-method "$integration_http_method" \
               --uri "arn:aws:apigateway:$AWS_REGION:lambda:path/2015-03-31/functions/${lambda_arn}/invocations"
+              --request-templates file://lambdas/data-science/askQuestion/temp.json
         shell: bash

@@ -126,46 +126,44 @@ runs:
         run: |
             # Read input JSON file
             input_file="api-models/${{inputs.MODEL}}.json"
-            request_templates=$(jq -c '.' "$input_file")
+            model_definition=$(jq -c '.' "$input_file")
 
             # Get existing request module ID, if it exists
-            module_id=$(aws apigateway get-request-validators \
+            model_id=$(aws apigateway get-models \
                 --rest-api-id ${{ steps.get-api-id.outputs.id }} \
                 --query "items[?name=='${{inputs.MODEL}}'].id" \
                 --output text)
 
             # Check if the module exists
-            if [ -z "$module_id" ]; then
+            if [ -z "$model_id" ]; then
                 # Create a new API Gateway request module
-                module_id=$(aws apigateway create-request-validator \
+                model_id=$(aws apigateway create-model \
                     --rest-api-id ${{ steps.get-api-id.outputs.id }} \
                     --name "${{inputs.MODEL}}" \
-                    --validate-request-body \
-                    --validate-request-parameters \
-                    --request-templates "$request_templates" \
-                    --output text --query 'id')
+                    --content-type "application/json" \
+                    --schema "$model_definition" \
+                    --output text \
+                    --query 'id')
                 
-                echo "Request Module Created. ID: $module_id"
+                echo "Model Created. ID: $model_id"
             else
                 # Update existing API Gateway request module
-                aws apigateway update-request-validator \
+                aws apigateway update-model \
                     --rest-api-id ${{ steps.get-api-id.outputs.id }} \
-                    --request-validator-id "$module_id" \
-                    --patch-operations op=replace,path=/requestValidatorName,value="${{inputs.MODEL}}" \
-                    op=replace,path=/validateRequestBody,value=true \
-                    op=replace,path=/validateRequestParameters,value=true \
-                    op=replace,path=/requestTemplates,value="$request_templates"
+                    --model-id "$model_id" \
+                    --patch-operations op=replace,path=/name,value=${{inputs.MODEL}} \
+                    op=replace,path=/schema,value="$model_definition"
 
-                echo "Request Module Updated. ID: $module_id"
+                echo "Model Updated. ID: $model_id"
             fi
 
-            # Attach the request module to a specific API Gateway method
+            # Attach the model to a specific API Gateway method
             aws apigateway update-method \
                 --rest-api-id ${{ steps.get-api-id.outputs.id }} \
                 --resource-id ${{ steps.get-resource-id.outputs.id }} \
                 --http-method "${{ inputs.METHOD }}" \
-                --patch-operations op=replace,path=/requestValidatorId,value="$module_id"
+                --request-parameters '{"method.request.header.Content-Type":"'"$model_id"'"}'
 
-            echo "Request module attached to the method."
+            echo "Model attached to the method."
         shell: bash
         if: ${{ inputs.MODEL != '' }}

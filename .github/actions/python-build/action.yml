@@ -15,7 +15,7 @@ runs:
   steps:
       - name: Using python version ${{steps.python_version.outputs.python_version}}
         id: python_version
-        uses: ../replace
+        uses: replace
         with:
           body: ${{inputs.runtime}}
           string1: "python"

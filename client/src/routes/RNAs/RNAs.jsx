@@ -21,16 +21,12 @@ export const RNAs = () => {
   );
 
   const handleNameFilterChange = (event) => {
-    console.log("here", event.target.value);
     setNameFilter(event.target.value);
   };
 
   const filteredRnas = rnas.filter((rna) => {
     const matchesActiveFilter =
       activeFilter === RNAFilterOptions.ONGOING ? !rna.isCompleted : true;
-
-    console.log("matchesActiveFilter", matchesActiveFilter);
-    console.log("nameFilter", nameFilter);
 
     if (!nameFilter) {
       return matchesActiveFilter;
@@ -39,8 +35,6 @@ export const RNAs = () => {
     const matchesNameFilter = rna?.communityName
       ?.toLowerCase()
       .includes(nameFilter.toLowerCase());
-
-    console.log("matchesNameFilter", matchesNameFilter);
 
     return matchesActiveFilter && matchesNameFilter;
   });

@@ -23,7 +23,7 @@ runs:
             --query "items[?name=='${{ inputs.API_NAME }}'].id" \
             --output text)
 
-          if [ "$id" != "" ]; then
+          if [ -z $id ]; then
             aws apigateway create-rest-api \
               --name "${{ inputs.API_NAME }}" \
               --description "API Gateway for ${{ inputs.API_NAME }}"
@@ -42,7 +42,7 @@ runs:
             --query "items[?path=='${{ inputs.PATH }}'].id" \
             --output text)
 
-          if [ "$id" != "" ]; then
+          if [ -z $id ]; then
             aws apigateway create-resource \
               --rest-api-id ${{ steps.get-api-id.outputs.id }} \
               --parent-id ${{ steps.get-api-id.outputs.id }} \
@@ -63,7 +63,7 @@ runs:
             --resource-id ${{ steps.get-resource-id.outputs.id }} \
             --http-method "${{ inputs.METHOD }})
 
-          if [ "$id" != "" ]; then
+          if [ -z $id ]; then
             aws apigateway put-method \
               --rest-api-id ${{ steps.get-api-id.outputs.id }} \
               --resource-id ${{ steps.get-resource-id.outputs.id }} \

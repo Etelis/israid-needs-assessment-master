@@ -44,6 +44,9 @@ runs:
           PARENT_ID="null"
 
           for SEGMENT in "${PATH_SEGMENTS[@]}"; do
+              if [ -z $SEGMENT ]; then
+                SEGMENT="/"
+              fi
               # Check if the resource already exists
               RESOURCE_EXISTS=$(aws apigateway get-resources \
                 --rest-api-id "${{ steps.get-api-id.outputs.id }}" \

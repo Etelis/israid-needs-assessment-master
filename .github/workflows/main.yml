@@ -3,6 +3,35 @@ on:
   push:
     branches: [main, master, DevopsTesting]
 jobs:
+  amplify_deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up AWS CLI
+        uses: aws-actions/configure-aws-credentials@v3
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-north-1
+
+      - name: Check if Amplify app exists
+        id: check-amplify-app
+        run: |
+          amplifyAppStatus=$(amplify app list --json | jq '.[] | .appName' | grep -o 'YourAmplifyAppName' || true)
+          echo "::set-output name=appExists::$(if [ -z "$amplifyAppStatus" ]; then echo "false"; else echo "true"; fi)"
+
+      - name: Install Amplify CLI
+        run: |
+          npm install -g @aws-amplify/cli
+        if: steps.check-amplify-app.outputs.appExists == 'false'  # Install only if app doesn't exist
+
+      - name: Amplify Init & Deploy
+        run: |
+          amplify init --app https://github.com/${{ github.repository }}
+          amplify push --y
+        if: steps.check-amplify-app.outputs.appExists == 'false'  # Deploy only if app doesn't exist
   get-layers-folders:
     name: Get the layers folders
     runs-on: ubuntu-latest

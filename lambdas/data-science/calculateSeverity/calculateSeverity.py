@@ -1,4 +1,6 @@
+import json
 import logging
+import boto3
 from botocore.exceptions import ClientError
 from textblob import TextBlob
 
@@ -24,23 +26,39 @@ def severity(text):
 
 def lambda_handler(event, context):
     try:
-        text = event['answer']['otherText']
+        # event = json.loads(event['body'])
+        text = event['text']
 
         sev = severity(text)
 
         return {
             'statusCode': 200,
-            'body': {'negative_score': str(sev)}
+            'body': json.dumps({'negative_score': str(sev)})
         }
     except ClientError as e:
         logger.error(f"Client error: {e}")
         return {
             'statusCode': 500,
-            'body': {'Internal server error'}
+            'body': json.dumps({'error_message': 'Internal server error'})
         }
     except Exception as e:
         logger.error(f"Error: {e}")
         return {
             'statusCode': 500,
-            'body': {'Internal server error'}
+            'body': json.dumps({'error_message': 'Internal server error'})
         }
+
+
+# Expected Input Format ######
+# event = {
+#     "text": "Reporting from the heart of Canada, I stand amidst the aftermath of a devastating earthquake that \
+# has sent shockwaves through the nation. The scene before me is one of chaos and destruction, a stark reminder of \
+# the unforgiving power of nature. Buildings once standing tall now lie in ruins, their structural integrity compromised \
+# by the violent tremors. Streets are cracked, and debris is strewn across the landscape, painting a grim picture of the \
+# widespread havoc wreaked by this seismic event. The local population's resilience is evident as they sift through the rubble, \
+# searching for survivors and tending to the injured. Emergency responders work tirelessly, battling against the odds to \
+# provide aid and relief to those affected by this catastrophe. As the dust settles, the magnitude of the situation becomes \
+# all too clear – this earthquake has left a deep scar on the Canadian landscape, testing the resolve of its people as they \
+# unite in the face of adversity."
+# }
+# lambda_handler(event, {})

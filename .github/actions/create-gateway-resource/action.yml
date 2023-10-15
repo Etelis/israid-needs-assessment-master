@@ -94,6 +94,25 @@ runs:
               --resource-id ${{ steps.get-resource-id.outputs.id }} \
               --http-method "${{ inputs.METHOD }}" \
               --authorization-type NONE
+            
+            FUNCTION_NAME=${{ inputs.LAMBDA }}
+            API_GW_ID=${{ steps.get-api-id.outputs.id }}
+            METHOD=${{ inputs.METHOD }}
+            RESOURCE=${{ inputs.PATH }}
+            YOUR_ACCOUNT=$(aws sts get-caller-identity --query 'Account' --output text)
+            
+            # Generate a random string
+            random_string=$(date +%s%N | md5sum | head -c16)
+
+            # Use the random string as statement ID
+            STATEMENT_ID="Statement-${random_string}"
+
+            aws lambda add-permission   \
+            --function-name "$FUNCTION_NAME"   \
+            --source-arn "arn:aws:execute-api:$AWS_REGION:$YOUR_ACCOUNT:$API_GW_ID/*/${METHOD}${RESOURCE}"   \
+            --principal apigateway.amazonaws.com   \
+            --statement-id $STATEMENT_ID   \
+            --action lambda:InvokeFunction
           fi 
         shell: bash
 

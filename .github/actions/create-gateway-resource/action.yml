@@ -126,7 +126,7 @@ runs:
         run: |
             # Read input JSON file
             input_file="api-models/${{inputs.MODEL}}.json"
-            model_definition=$(cat "$input_file" | jq -R . | jq -s @sh")
+            model_definition=$(cat "$input_file" | jq -R . | jq -s @sh)
 
             # Get existing request module ID, if it exists
             model_id=$(aws apigateway get-models \

@@ -107,7 +107,7 @@ runs:
             --resource-id ${{ steps.get-resource-id.outputs.id }} \
             --http-method "${{ inputs.METHOD }}" \
             --type AWS_PROXY \
-            --integration-http-method "${{ inputs.METHOD }}" \
-            --uri "arn:aws:apigateway:${{ runner.os }}-east-1:lambda:path/2015-03-31/functions/${lambda_arn}/invocations"
+            --integration-http-method POST \
+            --uri "arn:aws:apigateway:$AWS_REGION:lambda:path/2015-03-31/functions/${lambda_arn}/invocations"
           echo "Lambda integrated successfully!"
         shell: bash

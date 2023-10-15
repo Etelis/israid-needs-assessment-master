@@ -149,7 +149,7 @@ runs:
                 aws apigateway update-model \
                     --rest-api-id ${{ steps.get-api-id.outputs.id }} \
                     --model-name "${{inputs.MODEL}}" \
-                    --patch-operations op=replace,path=/schema,value="$model_definition"
+                    --patch-operations 'op=replace,path=/schema,value="$model_definition"'
 
                 echo "Model Updated"
             fi

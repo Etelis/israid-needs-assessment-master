@@ -15,7 +15,7 @@ runs:
   steps:
       - name: Extract python version
         id: python_version
-        uses: replace
+        uses: ./.github/actions/replace
         with:
           body: ${{inputs.runtime}}
           string1: "python"

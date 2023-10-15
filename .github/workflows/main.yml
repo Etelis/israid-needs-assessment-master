@@ -131,7 +131,7 @@ jobs:
           done
 
           folders=$(printf '%s\n' "${folders[@]}" | jq -R -s -c 'split("\n")[:-1]')
-          api_names=$(printf '%s\n' "${folders[@]}" | jq -R -s -c 'split("\n")[:-1]')
+          api_names=$(printf '%s\n' "${api_names[@]}" | jq -R -s -c 'split("\n")[:-1]')
 
           echo "folders=$folders" >> "$GITHUB_OUTPUT"
           echo "api_names=$api_names" >> "$GITHUB_OUTPUT"

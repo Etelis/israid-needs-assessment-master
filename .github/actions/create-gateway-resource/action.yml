@@ -136,9 +136,9 @@ runs:
         run: |
           # Check if method response exists
           method_response_id=$(aws apigateway get-method-response \
-            --rest-api-id "ncqqhge1bf" \
-            --resource-id "u5rccb" \
-            --http-method "GET" \
+            --rest-api-id ${{ steps.get-api-id.outputs.id }} \
+            --resource-id ${{ steps.get-resource-id.outputs.id }} \
+            --http-method "${{ inputs.METHOD }}" \
             --status-code 200 \
             --output text 2>/dev/null)
           echo "Method Response ID: $method_response_id"
@@ -147,9 +147,9 @@ runs:
           if [ -z "$method_response_id" ]; then
             echo "Method response does not exist. Creating..."
             aws apigateway put-method-response \
-              --rest-api-id "ncqqhge1bf" \
-              --resource-id "u5rccb" \
-              --http-method "GET" \
+              --rest-api-id ${{ steps.get-api-id.outputs.id }} \
+              --resource-id ${{ steps.get-resource-id.outputs.id }} \
+              --http-method "${{ inputs.METHOD }}" \
               --status-code 200 \
               --response-models '{"application/json": "Empty"}'
           else
@@ -158,9 +158,9 @@ runs:
 
           # Check if integration response exists
           integration_response_id=$(aws apigateway get-integration-response \
-            --rest-api-id "ncqqhge1bf" \
-            --resource-id "u5rccb" \
-            --http-method "GET" \
+            --rest-api-id ${{ steps.get-api-id.outputs.id }} \
+            --resource-id ${{ steps.get-resource-id.outputs.id }} \
+            --http-method "${{ inputs.METHOD }}" \
             --status-code 200 \
             --output text 2>/dev/null)
           echo "Integration Response ID: $integration_response_id"
@@ -169,9 +169,9 @@ runs:
           if [ -z "$integration_response_id" ]; then
             echo "Integration response does not exist. Creating..."
             aws apigateway put-integration-response \
-              --rest-api-id "ncqqhge1bf" \
-              --resource-id "u5rccb" \
-              --http-method "GET" \
+              --rest-api-id ${{ steps.get-api-id.outputs.id }} \
+              --resource-id ${{ steps.get-resource-id.outputs.id }} \
+              --http-method "${{ inputs.METHOD }}" \
               --status-code 200 \
               --selection-pattern "" \
               --response-templates '{"application/json": ""}'

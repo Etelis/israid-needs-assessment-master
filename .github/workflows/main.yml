@@ -350,7 +350,7 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: eu-north-1
 
-      - name: API Gateway wizard
+      - name: API Gateway wizard - main
         uses: ./.github/actions/create-gateway-resource
         with:
           LAMBDA: ${{ steps.function_name.outputs.function_name }}
@@ -360,6 +360,17 @@ jobs:
           INTEGRATION: ${{fromJson(steps.json_properties.outputs.Api_Settings).Integration}}
           MODEL: ${{fromJson(steps.json_properties.outputs.Api_Settings).Model}}
         if: ${{ steps.json_properties.outputs.Api_Settings != '' }}
+
+      - name: API Gateway wizard - 2
+        uses: ./.github/actions/create-gateway-resource
+        with:
+          LAMBDA: ${{ steps.function_name.outputs.function_name }}
+          API_NAME: ${{ fromJson(steps.json_properties.outputs.Api_Settings2).Api_Name}}
+          PATH: ${{fromJson(steps.json_properties.outputs.Api_Settings2).Path}}
+          METHOD: ${{fromJson(steps.json_properties.outputs.Api_Settings2).Method}}
+          INTEGRATION: ${{fromJson(steps.json_properties.outputs.Api_Settings2).Integration}}
+          MODEL: ${{fromJson(steps.json_properties.outputs.Api_Settings2).Model}}
+        if: ${{ steps.json_properties.outputs.Api_Settings2 != '' }}        
 
   deploy_apis:
     name: Deploy APIs

@@ -187,6 +187,7 @@ jobs:
       fail-fast: false
       matrix:
         manifest: ${{ fromJson(needs.get-model-filles.outputs.folders) }}
+        apis: ${{ fromJson(needs.get-lambda-folders.outputs.api_names) }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -198,6 +199,15 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: eu-north-1
 
+      - name: Check if API Gateway named ${{ inputs.API_NAME }} exists
+        id: get-api-id
+        run: |
+          id=$(aws apigateway get-rest-apis \
+            --query "items[?name=='${{ matrix.apis }}'].id" \
+            --output text)
+          echo "id=$id" >> "$GITHUB_OUTPUT"
+        shell: bash
+      
       - name: Deploy model with conf ${{matrix.manifest}}
         run: |
             MODEL=$(basename ${{matrix.manifest}})
@@ -307,7 +317,7 @@ jobs:
           timeout: ${{steps.json_properties.outputs.timeout}}
 
   deploy_gateway_routes:
-    name: build and deploy lambdas
+    name: Create aws api gateway routes
     needs: [deploy_lambdas, deploy_models]
     strategy:
       fail-fast: false

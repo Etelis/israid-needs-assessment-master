@@ -1,13 +1,13 @@
 {
     "type": "object",
     "properties": {
-        "docs": {
+        "source sentences": {
             "type": "array",
             "items": {
                 "type": "string"
             }
         },
-        "others": {
+        "source sentence": {
             "type": "string"
         }
     },

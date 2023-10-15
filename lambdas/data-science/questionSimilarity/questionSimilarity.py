@@ -81,13 +81,13 @@ def lambda_handler(event, context):
 
 
 # Expected Input Format ######
-event = {
-    "source sentence":
-        "How can I be a good geologist?",
-    "sentences": [
-        "What is the step by step guide to invest in share market in india?",
-        "What is the step by step guide to invest in share market in india?",
-        "What is the story of Kohinoor (Koh-i-Noor) Diamond?"
-    ]
-}
-lambda_handler(event, {})
+# event = {
+#    "source sentence":
+#        "How can I be a good geologist?",
+#    "sentences": [
+#        "What is the step by step guide to invest in share market in india?",
+#        "What is the step by step guide to invest in share market in india?",
+#        "What is the story of Kohinoor (Koh-i-Noor) Diamond?"
+#    ]
+#
+#lambda_handler(event, {})

@@ -50,7 +50,7 @@ def lambda_handler(event, context):
 
 
 # Expected Input Format ######
-event = {
-    "text": "This is very bad."
-}
-lambda_handler(event, {})
+#event = {
+#    "text": "This is very bad."
+#}
+#lambda_handler(event, {})

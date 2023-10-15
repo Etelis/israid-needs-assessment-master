@@ -1,19 +1,11 @@
 {
     "type": "object",
     "properties": {
-        "answer": {
-            "type": "object",
-            "properties": {
-                "otherText": {
-                    "type": "string"
-                }
-            },
-            "required": [
-                "otherText"
-            ]
+        "text": {
+            "type": "string"
         }
     },
     "required": [
-        "answer"
+        "string"
     ]
 }

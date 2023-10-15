@@ -1,0 +1,106 @@
+name: 'API Gateway resource creator'
+description: 'API Gateway resource creator'
+inputs:
+  API_NAME:
+    description: 'API_NAME'
+    required: true
+  PATH:
+    description: 'PATH'
+    required: true
+  LAMBDA:
+    description: 'LAMBDA'
+    required: true
+  METHOD:
+    description: 'METHOD'
+    required: true
+runs:
+  using: "composite"
+  steps:
+      - name: Check if API Gateway exists
+        id: check-api-gateway
+        run: |
+          aws apigateway get-rest-apis \
+            --query "items[?name=='${{ inputs.API_NAME }}'].id" \
+            --output text
+          echo "API Gateway ID is $?"
+        continue-on-error: true
+        shell: bash
+
+      - name: Create API Gateway if it does not exist
+        if: ${{ steps.check-api-gateway.outcome == 'failure' }}
+        run: |
+          aws apigateway create-rest-api \
+            --name "${{ inputs.API_NAME }}" \
+            --description "API Gateway for ${{ inputs.API_NAME }}"
+          echo "API Gateway created successfully!"
+        continue-on-error: true
+        shell: bash
+
+      - name: Get API Gateway ID
+        id: get-api-id
+        run: |
+          aws apigateway get-rest-apis \
+            --query "items[?name=='${{ inputs.API_NAME }}'].id" \
+            --output text
+          echo "API Gateway ID is ${{ steps.get-api-id.outputs.id }}"
+        shell: bash
+
+      - name: Check if Resource exists
+        id: check-resource
+        run: |
+          aws apigateway get-resources \
+            --rest-api-id ${{ steps.get-api-id.outputs.id }} \
+            --query "items[?path=='${{ inputs.PATH }}'].id" \
+            --output text
+          echo "Resource ID is $?"
+        continue-on-error: true
+        shell: bash
+
+      - name: Create Resource if it does not exist
+        if: ${{ steps.check-resource.outcome == 'failure' }}
+        run: |
+          aws apigateway create-resource \
+            --rest-api-id ${{ steps.get-api-id.outputs.id }} \
+            --parent-id ${{ steps.get-api-id.outputs.id }} \
+            --path-part "${{ inputs.PATH }}"
+          echo "Resource created successfully!"
+        continue-on-error: true
+        shell: bash
+
+      - name: Check if Method exists
+        id: check-method
+        run: |
+          aws apigateway get-method \
+            --rest-api-id ${{ steps.get-api-id.outputs.id }} \
+            --resource-id ${{ steps.check-resource.outputs.id }} \
+            --http-method "${{ inputs.METHOD }}"
+          echo "Method exists"
+        continue-on-error: true
+        shell: bash
+
+      - name: Create Method if it does not exist
+        if: ${{ steps.check-method.outcome == 'failure' }}
+        run: |
+          aws apigateway put-method \
+          --rest-api-id ${{ steps.get-api-id.outputs.id }} \
+          --resource-id ${{ steps.check-resource.outputs.id }} \
+          --http-method "${{ inputs.METHOD }}" \
+          --authorization-type NONE
+          echo "Method created successfully!"
+        continue-on-error: true
+        shell: bash
+
+      - name: Attach Lambda to Method
+        run: |
+          lambda_arn=$(aws lambda list-functions \
+            --query "Functions[?FunctionName=='${{ inputs.LAMBDA }}'].FunctionArn" \
+            --output text)
+          aws apigateway put-integration \
+            --rest-api-id ${{ steps.get-api-id.outputs.id }} \
+            --resource-id ${{ steps.check-resource.outputs.id }} \
+            --http-method "${{ inputs.METHOD }}" \
+            --type AWS_PROXY \
+            --integration-http-method "${{ inputs.METHOD }}" \
+            --uri "arn:aws:apigateway:${{ runner.os }}-east-1:lambda:path/2015-03-31/functions/${lambda_arn}/invocations"
+          echo "Lambda integrated successfully!"
+        shell: bash

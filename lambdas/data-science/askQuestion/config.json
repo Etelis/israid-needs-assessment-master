@@ -6,5 +6,11 @@
     "Layers": [
         "PYTHON-DEP-askQuestion",
         "sample-docs"
-    ]
+    ],
+    "Api_Settings": {
+        "Method": "Post",
+        "Api_Name": "Artume",
+        "Path": "/ad/matay"
+    }
+    
 }

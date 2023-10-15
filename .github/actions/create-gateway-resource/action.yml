@@ -140,7 +140,6 @@ runs:
             --resource-id "${{ steps.get-resource-id.outputs.id }}" \
             --http-method "${{ inputs.METHOD }}" \
             --status-code 200 \
-            --query 'id' \
             --output text 2>/dev/null)
 
           # Create default method response if it doesn't exist
@@ -159,7 +158,6 @@ runs:
             --resource-id "${{ steps.get-resource-id.outputs.id }}" \
             --http-method "${{ inputs.METHOD }}" \
             --status-code 200 \
-            --query 'id' \
             --output text 2>/dev/null)
 
           # Create default integration response if it doesn't exist

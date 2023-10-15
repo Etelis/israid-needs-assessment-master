@@ -143,6 +143,8 @@ jobs:
       fail-fast: false
       matrix:
         manifest: ${{ fromJson(needs.get-lambda-folders.outputs.api_names) }}
+    outputs:
+      api_names: ${{ needs.get-lambda-folders.outputs.api_names }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -187,7 +189,7 @@ jobs:
       fail-fast: false
       matrix:
         manifest: ${{ fromJson(needs.get-model-filles.outputs.folders) }}
-        apis: ${{ fromJson(needs.get-lambda-folders.outputs.api_names) }}
+        apis: ${{ fromJson(needs.deploy_apis.outputs.api_names) }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1

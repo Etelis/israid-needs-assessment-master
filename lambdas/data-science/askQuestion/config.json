@@ -11,6 +11,7 @@
         "Method": "POST",
         "Api_Name": "Artume",
         "Path": "/askQuestion",
-        "Integration": false
+        "Integration": false,
+        "Model": "askQuestion"
     }
 }

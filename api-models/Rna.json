@@ -1,0 +1,22 @@
+{
+    "type": "object",
+    "properties": {
+        "communityName": {
+            "type": "string"
+        },
+        "communityType": {
+            "type": "string"
+        },
+        "location": {
+            "type": "string"
+        },
+        "status": {
+            "type": "number"
+        }
+    },
+    "required": [
+        "communityName",
+        "communityType",
+        "location"
+    ]
+}

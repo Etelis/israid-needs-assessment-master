@@ -10,6 +10,7 @@
         "Method": "POST",
         "Api_Name": "Artume",
         "Path": "/questionSimilarity",
-        "Integration": false
+        "Integration": false,
+        "Model": "askQuestion"
     }
 }

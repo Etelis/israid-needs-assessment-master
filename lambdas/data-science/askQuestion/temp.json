@@ -1,4 +1,0 @@
-{
-    "application/json": "{\"var1\": \"$input.params('var1')\", \"var2\": \"$input.params('var2')\"}",
-    "application/xml": "{\"var1\": \"$input.params('var1')\", \"var2\": \"$input.params('var2')\"}"
-}  

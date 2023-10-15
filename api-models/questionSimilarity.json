@@ -1,0 +1,18 @@
+{
+    "type": "object",
+    "properties": {
+        "docs": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "others": {
+            "type": "string"
+        }
+    },
+    "required": [
+        "docs",
+        "others"
+    ]
+}

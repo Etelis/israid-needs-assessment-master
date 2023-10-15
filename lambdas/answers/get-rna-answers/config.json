@@ -6,5 +6,12 @@
     "Layers": [
         "schema-layer",
         "aws-dynamo-connector"
-    ]
+    ],
+    "Api_Settings": {
+        "Method": "GET",
+        "Api_Name": "Artume",
+        "Path": "/rnas/{rnaId}/answers",
+        "Integration": true,
+        "Model": ""
+    }
 }

@@ -130,6 +130,7 @@ runs:
 
             # Get existing request module ID, if it exists
             module_id=$(aws apigateway get-request-validators \
+                --rest-api-id ${{ steps.get-api-id.outputs.id }} \
                 --query "items[?name=='${{inputs.MODEL}}'].id" \
                 --output text)
 
@@ -137,6 +138,7 @@ runs:
             if [ -z "$module_id" ]; then
                 # Create a new API Gateway request module
                 module_id=$(aws apigateway create-request-validator \
+                    --rest-api-id ${{ steps.get-api-id.outputs.id }} \
                     --name "${{inputs.MODEL}}" \
                     --validate-request-body true \
                     --validate-request-parameters true \
@@ -147,6 +149,7 @@ runs:
             else
                 # Update existing API Gateway request module
                 aws apigateway update-request-validator \
+                    --rest-api-id ${{ steps.get-api-id.outputs.id }} \
                     --request-validator-id "$module_id" \
                     --patch-operations op=replace,path=/requestValidatorName,value="${{inputs.MODEL}}" \
                     op=replace,path=/validateRequestBody,value=true \

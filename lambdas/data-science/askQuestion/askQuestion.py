@@ -1,8 +1,10 @@
 import docx
 import PyPDF2
 import numpy as np
+import json
 import logging
 import requests
+import boto3
 from botocore.exceptions import ClientError
 
 # Configure logging
@@ -10,7 +12,7 @@ logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
 API_URL = "https://api-inference.huggingface.co/models/distilbert-base-uncased-distilled-squad"
-headers = {"Authorization": "Bearer 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"}
+headers = {"Authorization": "Bearer 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"}
 
 
 def docx_to_text(uploaded_doc_path):
@@ -50,7 +52,6 @@ def preprocess_docs(docs_paths):
 
 def query(payload):
     try:
-        payload["wait_for_model"] = True
         response = requests.post(API_URL, headers=headers, json=payload)
         response.raise_for_status()
         return response.json()
@@ -59,17 +60,17 @@ def query(payload):
         raise
 
 
-def answer_question(question, docs):
+def answer_question(question, context):
     """
     Initiate question answering based on a document list
 
     :param question: a string question to be answered
-    :param docs: a list of PATHS to .docx/.txt/.pdf documents
+    :param context: a list of PATHS to .docx/.txt/.pdf documents
 
     :returns: Answer to the question alongside reliability measures
     """
     # gpu = 1 if torch.cuda.is_available() else 0
-    contents = preprocess_docs(docs)
+    contents = preprocess_docs(context)
     texts = [content[0] for content in contents]
     try:
         # Approach 1: if file name/start-end chars are necessary too, need to check each doc individually
@@ -94,6 +95,7 @@ def answer_question(question, docs):
 
 def lambda_handler(event, context):
     try:
+        # event = json.loads(event['body'])
         question = event['question']
         context = event['context']
 
@@ -101,24 +103,26 @@ def lambda_handler(event, context):
 
         return {
             'statusCode': 200,
-            'body': {'answer': answer}
+            'body': json.dumps({'answer': answer})
         }
     except ClientError as e:
         logger.error(f"Client error: {e}")
         return {
             'statusCode': 500,
-            'body': {'Internal server error'}
+            'body': json.dumps({'error_message': 'Internal server error'})
         }
     except Exception as e:
         logger.error(f"Error: {e}")
         return {
             'statusCode': 500,
-            'body': {'Internal server error'}
+            'body': json.dumps({'error_message': 'Internal server error'})
         }
 
 
-
-
-
-
-
+# Expected Input Format ######
+# event = {
+#     'question': "which benchmark do we want to beat?",
+#     'context': ['Bertpaper.pdf', 'doctest.docx', 'TODO - Data Science.txt']
+#
+# }
+# lambda_handler(event, {})

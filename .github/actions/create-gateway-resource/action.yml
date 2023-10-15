@@ -41,7 +41,7 @@ runs:
         id: get-resource-id
         run: |
           # Split the URL route into an array of path segments
-          IFS='/' read -ra PATH_SEGMENTS <<< "/ad/matay"
+          IFS='/' read -ra PATH_SEGMENTS <<< "${{ inputs.PATH }}"
 
           # Create API Gateway resources based on the path segments
           PARENT_ID="null"
@@ -117,5 +117,4 @@ runs:
               --type "$integration_type" \
               --integration-http-method "$integration_http_method" \
               --uri "arn:aws:apigateway:$AWS_REGION:lambda:path/2015-03-31/functions/${lambda_arn}/invocations"
-
         shell: bash

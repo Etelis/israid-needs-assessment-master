@@ -134,23 +134,12 @@ runs:
 
       - name: Create default responses
         run: |
-          aws apigateway get-method-response \
-            --rest-api-id ${{ steps.get-api-id.outputs.id }} \
-            --resource-id ${{ steps.get-resource-id.outputs.id }} \
-            --http-method "${{ inputs.METHOD }}" \
-            --status-code 200 \
-            --output text
-          # Check if method response exists
-          method_response_id=$(aws apigateway get-method-response \
-            --rest-api-id ${{ steps.get-api-id.outputs.id }} \
-            --resource-id ${{ steps.get-resource-id.outputs.id }} \
-            --http-method "${{ inputs.METHOD }}" \
-            --status-code 200 \
-            --output text 2>/dev/null)
-          echo "Method Response ID: $method_response_id"
-
           # Create default method response if it doesn't exist
-          if [ -z "$method_response_id" ]; then
+          if ! aws apigateway get-method-response \
+          --rest-api-id ${{ steps.get-api-id.outputs.id }} \
+          --resource-id ${{ steps.get-resource-id.outputs.id }} \
+          --http-method "${{ inputs.METHOD }}" \
+          --status-code 200  &> /dev/null; then
             echo "Method response does not exist. Creating..."
             aws apigateway put-method-response \
               --rest-api-id ${{ steps.get-api-id.outputs.id }} \
@@ -162,17 +151,12 @@ runs:
             echo "Method response already exists."
           fi
 
-          # Check if integration response exists
-          integration_response_id=$(aws apigateway get-integration-response \
-            --rest-api-id ${{ steps.get-api-id.outputs.id }} \
-            --resource-id ${{ steps.get-resource-id.outputs.id }} \
-            --http-method "${{ inputs.METHOD }}" \
-            --status-code 200 \
-            --output text 2>/dev/null)
-          echo "Integration Response ID: $integration_response_id"
-
           # Create default integration response if it doesn't exist
-          if [ -z "$integration_response_id" ]; then
+          if ! aws apigateway get-integration-response \
+          --rest-api-id ${{ steps.get-api-id.outputs.id }} \
+          --resource-id ${{ steps.get-resource-id.outputs.id }} \
+          --http-method "${{ inputs.METHOD }}" \
+          --status-code 200  &> /dev/null; then
             echo "Integration response does not exist. Creating..."
             aws apigateway put-integration-response \
               --rest-api-id ${{ steps.get-api-id.outputs.id }} \

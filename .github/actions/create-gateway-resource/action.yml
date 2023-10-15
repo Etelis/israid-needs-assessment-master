@@ -79,7 +79,7 @@ runs:
             fi
           done
 
-          echo "id=$RESOURCE_EXISTS" >> "$GITHUB_OUTPUT"
+          echo "id=$PARENT_ID" >> "$GITHUB_OUTPUT"
           echo "API Gateway resources creation completed."
         shell: bash
 

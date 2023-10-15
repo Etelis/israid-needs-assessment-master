@@ -16,7 +16,7 @@ inputs:
 runs:
   using: "composite"
   steps:
-      - name: Check if API Gateway exists
+      - name: Check if API Gateway named ${{ inputs.API_NAME }} exists
         id: get-api-id
         run: |
           id=$(aws apigateway get-rest-apis \
@@ -34,7 +34,7 @@ runs:
           echo "id=$id" >> "$GITHUB_OUTPUT"
         shell: bash
 
-      - name: Check if Resource exists
+      - name: Check if Resource named ${{ inputs.PATH }} exists
         id: get-resource-id
         run: |
           id=$(aws apigateway get-resources \
@@ -62,7 +62,7 @@ runs:
             --rest-api-id ${{ steps.get-api-id.outputs.id }} \
             --resource-id ${{ steps.get-resource-id.outputs.id }} \
             --http-method "${{ inputs.METHOD }})
-            
+
           if [ "$id" != "" ]; then
             aws apigateway put-method \
               --rest-api-id ${{ steps.get-api-id.outputs.id }} \

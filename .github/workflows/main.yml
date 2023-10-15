@@ -190,6 +190,6 @@ jobs:
         uses: ./.github/actions/create-gateway-resource
         with:
           LAMBDA: ${{ steps.function_name.outputs.function_name }}
-          API_NAME: ${{steps.json_properties.outputs.api_settings.api_name}}
-          PATH: ${{steps.json_properties.outputs.api_settings.path}}
-          METHOD: ${{steps.json_properties.outputs.api_settings.method}}
+          API_NAME: ${{steps.json_properties.outputs.Api_Settings.Api_Name}}
+          PATH: ${{steps.json_properties.outputs.Api_Settings.Path}}
+          METHOD: ${{steps.json_properties.outputs.Api_Settings.Method}}

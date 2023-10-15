@@ -29,9 +29,11 @@ jobs:
 
       - name: Amplify Init & Deploy
         run: |
-          amplify init --app https://github.com/${{ github.repository }}
+          amplify configure --app https://github.com/${{ github.repository }}
+          amplify init
           amplify push --y
         if: steps.check-amplify-app.outputs.appExists == 'false'  # Deploy only if app doesn't exist
+        
   get-layers-folders:
     name: Get the layers folders
     runs-on: ubuntu-latest

@@ -8,7 +8,7 @@
     ],
     "Api_Settings": {
         "Method": "POST",
-        "Api_Name": "Artume",
+        "Api_Name": "IsraAID app",
         "Path": "/calculateSeverity",
         "Integration": false,
         "Model": "calculateSeverity"

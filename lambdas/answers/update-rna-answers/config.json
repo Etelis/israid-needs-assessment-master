@@ -9,7 +9,7 @@
     ],
     "Api_Settings": {
         "Method": "PUT",
-        "Api_Name": "Artume",
+        "Api_Name": "IsraAID app",
         "Path": "/rnas/{rnaId}/answers",
         "Integration": true,
         "Model": ""

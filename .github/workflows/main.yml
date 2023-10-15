@@ -379,7 +379,7 @@ jobs:
       fail-fast: false
       matrix:
         manifest: ${{ fromJson(needs.create_apis.outputs.api_names) }}
-        stage: [Prod]
+        stage: [IsraAid]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -392,6 +392,7 @@ jobs:
           aws-region: eu-north-1
 
       - name: Check if API Gateway named ${{ matrix.manifest }} exists
+        id: deploy-api
         run: |
           api_id=$(aws apigateway get-rest-apis \
             --query "items[?name=='${{ matrix.manifest }}'].id" \
@@ -415,6 +416,20 @@ jobs:
                   --stage-name "$stage" \
                   --deployment-id "$dep_id"
           fi
+          
+          url=https://$api_id.execute-api.$AWS_REGION.amazonaws.com/$stage
+          echo "Deployed stage URL: $url"
+          echo "url=$url" >> "$GITHUB_OUTPUT"
 
-          echo "Deployed stage URL: https://$api_id.execute-api.$AWS_REGION.amazonaws.com/$stage"
+          app_id=$(aws amplify list-apps --query "apps[?name=='temp1'].appId" --output text)
+        shell: bash
+
+      - name: Export to amplify env vars
+        run: |
+          app_id=$(aws amplify list-apps --query "apps[?name=='israid-needs-assessment-master'].appId" --output text)
+
+          aws amplify update-app \
+            --app-id $app_id \
+            --environment-variables BackendURL=${{ steps.deploy-api.outputs.url }} \
+            --region eu-central-1
         shell: bash

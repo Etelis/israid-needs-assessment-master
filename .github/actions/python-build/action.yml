@@ -13,7 +13,7 @@ inputs:
 runs:
   using: "composite"
   steps:
-      - name: Using python version ${{steps.python_version.outputs.python_version}}
+      - name: Extract python version
         id: python_version
         uses: replace
         with:

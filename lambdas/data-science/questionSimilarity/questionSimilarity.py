@@ -40,8 +40,13 @@ def compute_similarity(question_list, new_question):
 
         similarities = query({"inputs": {"source_sentence": new_question, "sentences": question_list}})
 
+<<<<<<< HEAD
         relevant_questions = [question_list[i] for i in range(len(similarities)) if similarities[i] >= THRESHOLD]
         rel_len = len(relevant_questions)
+=======
+        historic_emb = output_docs.reshape(-1, 1)
+        new_emb = output_others.reshape(1, -1)
+>>>>>>> 35019ef3115d94eddc545bc80698ca1256b8684f
 
         result = f"This Question is similar to {rel_len} question{'s' if rel_len > 1 else ''}: \n" + "\n".join(relevant_questions)
         return result

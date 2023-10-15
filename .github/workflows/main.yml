@@ -193,4 +193,5 @@ jobs:
           API_NAME: ${{ fromJson(steps.json_properties.outputs.Api_Settings).Api_Name}}
           PATH: ${{fromJson(steps.json_properties.outputs.Api_Settings).Path}}
           METHOD: ${{fromJson(steps.json_properties.outputs.Api_Settings).Method}}
+          INTEGRATION: ${{fromJson(steps.json_properties.outputs.Api_Settings).Integration}}
         if: ${{ steps.json_properties.outputs.Api_Settings != '' }}

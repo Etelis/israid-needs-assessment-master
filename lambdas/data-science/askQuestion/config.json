@@ -10,7 +10,8 @@
     "Api_Settings": {
         "Method": "POST",
         "Api_Name": "Artume",
-        "Path": "/ad/matay"
+        "Path": "/ad/matay",
+        "Integration": true
     }
     
 }

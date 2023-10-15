@@ -156,7 +156,7 @@ runs:
               --rest-api-id ${{ steps.get-api-id.outputs.id }} \
               --resource-id ${{ steps.get-resource-id.outputs.id }} \
               --http-method "${{ inputs.METHOD }}" \
-              --patch-operations "op=replace,path=/requestModels/application~1json,value=$model_id"
+              --patch-operations --patch-operations '[{"op":"add", "path":"/requestModels/application~1json", "value":"${{inputs.MODEL}}"}]'
             echo "Model attached to the method."
         shell: bash
         if: ${{ inputs.MODEL != '' }}

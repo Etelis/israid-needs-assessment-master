@@ -142,21 +142,21 @@ runs:
                     --model-name "${{inputs.MODEL}}"
                 echo "Model Deleted"
             fi
-            aws apigateway create-model \
+            model_id=$(aws apigateway create-model \
               --rest-api-id ${{ steps.get-api-id.outputs.id }} \
               --name "${{inputs.MODEL}}" \
               --content-type "application/json" \
-              --schema "$model_definition"               
+              --schema "$model_definition" \
+              --query 'id' \
+              --output text)               
             echo "Model Created"
 
             # Attach the model to a specific API Gateway method
-            aws apigateway put-method \
+            aws apigateway update-method \
               --rest-api-id ${{ steps.get-api-id.outputs.id }} \
               --resource-id ${{ steps.get-resource-id.outputs.id }} \
               --http-method "${{ inputs.METHOD }}" \
-              --authorization-type NONE
-              --request-models '{"application/json":"${{inputs.MODEL}}"}'
-
+              --patch-operations "op=replace,path=/requestModels/application~1json,value=$model_id"
             echo "Model attached to the method."
         shell: bash
         if: ${{ inputs.MODEL != '' }}

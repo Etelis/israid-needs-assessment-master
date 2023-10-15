@@ -11,6 +11,6 @@
         "Api_Name": "Artume",
         "Path": "/calculateSeverity",
         "Integration": false,
-        "Model": "askQuestion"
+        "Model": "calculateSeverity"
     }
 }

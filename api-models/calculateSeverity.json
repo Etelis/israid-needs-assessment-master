@@ -1,0 +1,19 @@
+{
+    "type": "object",
+    "properties": {
+        "answer": {
+            "type": "object",
+            "properties": {
+                "otherText": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "otherText"
+            ]
+        }
+    },
+    "required": [
+        "answer"
+    ]
+}

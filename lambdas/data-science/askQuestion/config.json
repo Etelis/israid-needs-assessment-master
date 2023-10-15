@@ -6,5 +6,12 @@
     "Layers": [
         "PYTHON-DEP-askQuestion",
         "sample-docs"
-    ]
+    ],
+    "Api_Settings": {
+        "Method": "POST",
+        "Api_Name": "IsraAID app",
+        "Path": "/askQuestion",
+        "Integration": false,
+        "Model": "askQuestion"
+    }
 }

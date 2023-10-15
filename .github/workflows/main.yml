@@ -15,7 +15,7 @@ jobs:
         run: |
           var1=$(find layers -mindepth 1 -maxdepth 1 -type d | jq -R -s -c 'split("\n")[:-1]')
           echo "folders=$var1" >> "$GITHUB_OUTPUT"
-  
+
   deploy_layers:
     name: build and deploy layers
     needs: get-layers-folders
@@ -34,12 +34,12 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: eu-north-1
 
-      - name: get properties
+      - name: get properties from ${{matrix.manifest}}/config.json
         id: json_properties
         uses: ActionsTools/read-json-action@main
         with:
           file_path: "${{matrix.manifest}}/config.json"
-      
+
       - name: Extract node version
         id: node_version
         uses: ./.github/actions/replace
@@ -47,13 +47,13 @@ jobs:
           body: ${{ steps.json_properties.outputs.runtime }}
           string1: "nodejs"
           string2: ""
-        if: ${{ startsWith(steps.json_properties.outputs.runtime, 'Node') }}
+        if: ${{ startsWith(steps.json_properties.outputs.runtime, 'node') }}
 
       - name: Use Node.js ${{ steps.node_version.outputs.value }}
         uses: actions/setup-node@v1
         with:
           node-version: ${{ steps.node_version.outputs.value }}
-        if: ${{ startsWith(steps.json_properties.outputs.runtime, 'Node') }}
+        if: ${{ startsWith(steps.json_properties.outputs.runtime, 'node') }}
 
       - name: Create layer
         run: |
@@ -96,9 +96,81 @@ jobs:
           done
         env:
           dir: ${{ matrix.manifest }}
-  
+
   get-lambda-folders:
     name: Get the lambda folders
+    runs-on: ubuntu-latest
+    outputs:
+      folders: ${{ steps.folder-fetcher.outputs.folders }}
+      api_names: ${{ steps.folder-fetcher.outputs.api_names }}
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: get all folders and unique list of used APIs
+        id: folder-fetcher
+        run: |
+          # Get a list of folders with config.json files
+          folders=$(find lambdas -mindepth 2 -maxdepth 2 -type d)
+
+          # Initialize an empty array to store unique Api_Name values
+          api_names=()
+
+          # Loop through each folder and extract Api_Name from config.json
+          for folder in $folders; do
+              config_file="$folder/config.json"
+              
+              # Check if config.json file exists in the folder
+              if [ -f "$config_file" ]; then
+                  api_name=$(jq -r '.Api_Settings.Api_Name' "$config_file")
+                  
+                  # Check if Api_Name is not empty and unique
+                  if [ -n "$api_name" ] && ! [[ " ${api_names[@]} " =~ " $api_name " ]]; then
+                      api_names+=("$api_name")
+                  fi
+              fi
+          done
+
+          folders=$(printf '%s\n' "${folders[@]}" | jq -R -s -c 'split("\n")[:-1]')
+          api_names=$(printf '%s\n' "${api_names[@]}" | jq -R -s -c 'split("\n")[:-1]')
+
+          echo "folders=$folders" >> "$GITHUB_OUTPUT"
+          echo "api_names=$api_names" >> "$GITHUB_OUTPUT"
+
+  create_apis:
+    name: Create APIs
+    needs: get-lambda-folders
+    strategy:
+      fail-fast: false
+      matrix:
+        manifest: ${{ fromJson(needs.get-lambda-folders.outputs.api_names) }}
+    outputs:
+      api_names: ${{ needs.get-lambda-folders.outputs.api_names }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Set up AWS CLI
+        uses: aws-actions/configure-aws-credentials@v3
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-north-1
+
+      - name: Check if API Gateway named ${{ matrix.manifest }} exists
+        run: |
+          id=$(aws apigateway get-rest-apis \
+            --query "items[?name=='${{ matrix.manifest }}'].id" \
+            --output text)
+
+          if [ -z $id ]; then
+            aws apigateway create-rest-api \
+              --name "${{ matrix.manifest }}" \
+              --description "API Gateway for ${{ matrix.manifest }}"
+          fi
+        shell: bash
+
+  get-model-filles:
+    name: Get the model configuration files
     runs-on: ubuntu-latest
     outputs:
       folders: ${{ steps.folder-fetcher.outputs.folders }}
@@ -107,16 +179,78 @@ jobs:
       - name: get all folders
         id: folder-fetcher
         run: |
-          var1=$(find lambdas -mindepth 2 -maxdepth 2 -type d | jq -R -s -c 'split("\n")[:-1]')
+          var1=$(find api-models -mindepth 1 -maxdepth 1 | jq -R -s -c 'split("\n")[:-1]')
           echo "folders=$var1" >> "$GITHUB_OUTPUT"
+
+  deploy_models:
+    name: build and deploy models
+    needs: [get-model-filles, create_apis]
+    strategy:
+      fail-fast: false
+      matrix:
+        manifest: ${{ fromJson(needs.get-model-filles.outputs.folders) }}
+        apis: ${{ fromJson(needs.create_apis.outputs.api_names) }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Set up AWS CLI
+        uses: aws-actions/configure-aws-credentials@v3
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-north-1
+
+      - name: Check if API Gateway named ${{ inputs.API_NAME }} exists
+        id: get-api-id
+        run: |
+          id=$(aws apigateway get-rest-apis \
+            --query "items[?name=='${{ matrix.apis }}'].id" \
+            --output text)
+          echo "id=$id" >> "$GITHUB_OUTPUT"
+        shell: bash
+
+      - name: Deploy model with conf ${{matrix.manifest}}
+        run: |
+          MODEL=$(basename ${{matrix.manifest}})
+          MODEL=${MODEL%.*}
+
+          # Read input JSON file
+          model_definition=$(cat ${{matrix.manifest}})
+
+          # Get existing request module ID, if it exists
+          model_id=$(aws apigateway get-models \
+              --rest-api-id ${{ steps.get-api-id.outputs.id }} \
+              --query "items[?name=='$MODEL'].id" \
+              --output text)
+
+          # Check if the module exists
+          if [ -n "$model_id" ]; then
+              # Update the model using the new schema
+              aws apigateway update-model \
+                --rest-api-id ${{ steps.get-api-id.outputs.id }} \
+                --model-name "$MODEL" \
+                --patch-operations "op=replace,path=/schema,value='$model_definition'"
+          else
+              model_id=$(aws apigateway create-model \
+                --rest-api-id ${{ steps.get-api-id.outputs.id }} \
+                --name "$MODEL" \
+                --content-type "application/json" \
+                --schema "$model_definition" \
+                --query 'id' \
+                --output text)               
+              echo "Model Created"
+          fi
 
   deploy_lambdas:
     name: build and deploy lambdas
-    needs: [get-lambda-folders,deploy_layers]
+    needs: [get-lambda-folders, deploy_layers]
     strategy:
       fail-fast: false
       matrix:
         manifest: ${{ fromJson(needs.get-lambda-folders.outputs.folders) }}
+    outputs:
+      folders: ${{ needs.get-lambda-folders.outputs.folders }}
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
@@ -135,14 +269,13 @@ jobs:
           var1=$(basename ${{matrix.manifest}})
           echo "function_name=$var1" >> "$GITHUB_OUTPUT"
 
-
       - name: Set up AWS CLI
         uses: aws-actions/configure-aws-credentials@v3
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: eu-north-1
-      
+
       - name: Build step for python based code
         uses: ./.github/actions/python-build
         if: ${{ startsWith(steps.json_properties.outputs.runtime, 'python') }}
@@ -157,7 +290,7 @@ jobs:
         with:
           dir: ${{ matrix.manifest }}
           runtime: ${{steps.json_properties.outputs.runtime}}
- 
+
       - name: Build step for docker based code
         uses: ./.github/actions/docker-build
         if: ${{ startsWith(steps.json_properties.outputs.runtime, 'Docker') }}
@@ -185,3 +318,104 @@ jobs:
           runtime: ${{steps.json_properties.outputs.runtime}}
           memorysize: ${{steps.json_properties.outputs.memorysize}}
           timeout: ${{steps.json_properties.outputs.timeout}}
+
+  deploy_gateway_routes:
+    name: Create aws api gateway routes
+    needs: [deploy_lambdas, deploy_models]
+    strategy:
+      fail-fast: false
+      matrix:
+        manifest: ${{ fromJson(needs.deploy_lambdas.outputs.folders) }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: get properties
+        id: json_properties
+        uses: ActionsTools/read-json-action@main
+        with:
+          file_path: "${{matrix.manifest}}/config.json"
+
+      - name: Set function_name variable all folders
+        id: function_name
+        run: |
+          var1=$(basename ${{matrix.manifest}})
+          echo "function_name=$var1" >> "$GITHUB_OUTPUT"
+          
+      - name: Set up AWS CLI
+        uses: aws-actions/configure-aws-credentials@v3
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-north-1
+
+      - name: API Gateway wizard - main
+        uses: ./.github/actions/create-gateway-resource
+        with:
+          LAMBDA: ${{ steps.function_name.outputs.function_name }}
+          API_NAME: ${{ fromJson(steps.json_properties.outputs.Api_Settings).Api_Name}}
+          PATH: ${{fromJson(steps.json_properties.outputs.Api_Settings).Path}}
+          METHOD: ${{fromJson(steps.json_properties.outputs.Api_Settings).Method}}
+          INTEGRATION: ${{fromJson(steps.json_properties.outputs.Api_Settings).Integration}}
+          MODEL: ${{fromJson(steps.json_properties.outputs.Api_Settings).Model}}
+        if: ${{ steps.json_properties.outputs.Api_Settings != '' }}
+
+      - name: API Gateway wizard - 2
+        uses: ./.github/actions/create-gateway-resource
+        with:
+          LAMBDA: ${{ steps.function_name.outputs.function_name }}
+          API_NAME: ${{ fromJson(steps.json_properties.outputs.Api_Settings2).Api_Name}}
+          PATH: ${{fromJson(steps.json_properties.outputs.Api_Settings2).Path}}
+          METHOD: ${{fromJson(steps.json_properties.outputs.Api_Settings2).Method}}
+          INTEGRATION: ${{fromJson(steps.json_properties.outputs.Api_Settings2).Integration}}
+          MODEL: ${{fromJson(steps.json_properties.outputs.Api_Settings2).Model}}
+        if: ${{ steps.json_properties.outputs.Api_Settings2 != '' }}        
+
+  deploy_apis:
+    name: Deploy APIs
+    needs: [create_apis,deploy_gateway_routes]
+    strategy:
+      fail-fast: false
+      matrix:
+        manifest: ${{ fromJson(needs.create_apis.outputs.api_names) }}
+        stage: [IsraAid]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Set up AWS CLI
+        uses: aws-actions/configure-aws-credentials@v3
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-north-1
+
+      - name: Check if API Gateway named ${{ matrix.manifest }} exists
+        id: deploy-api
+        run: |
+          api_id=$(aws apigateway get-rest-apis \
+            --query "items[?name=='${{ matrix.manifest }}'].id" \
+            --output text)
+          stage=${{matrix.stage}}
+
+          dep_id=$(aws apigateway create-deployment \
+            --rest-api-id "$api_id" \
+            --stage-name "$stage" \
+            --query 'id' \
+            --output text)
+
+          # Check if the stage already exists
+          existing_stage=$(aws apigateway get-stage --rest-api-id "$api_id" \
+            --stage-name "$stage" 2>/dev/null)
+
+          if [[ -z "$existing_stage" ]]; then
+              # If the stage doesn't exist, create it
+              aws apigateway create-stage \
+                  --rest-api-id "$api_id" \
+                  --stage-name "$stage" \
+                  --deployment-id "$dep_id"
+          fi
+
+          echo "Deployed stage URL: https://$api_id.execute-api.$AWS_REGION.amazonaws.com/$stage"
+        shell: bash

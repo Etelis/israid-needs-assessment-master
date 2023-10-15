@@ -6,5 +6,12 @@
     "Layers": [
         "schema-layer",
         "aws-dynamo-connector"
-    ]
+    ],
+    "Api_Settings": {
+        "Method": "PUT",
+        "Api_Name": "IsraAID app",
+        "Path": "/rnas/{rnaId}/answers",
+        "Integration": true,
+        "Model": ""
+    }
 }

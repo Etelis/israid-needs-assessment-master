@@ -5,5 +5,12 @@
     "Timeout": 250,
     "Layers": [
         "PYTHON-DEP-calculateSeverity"
-    ]
+    ],
+    "Api_Settings": {
+        "Method": "POST",
+        "Api_Name": "IsraAID app",
+        "Path": "/calculateSeverity",
+        "Integration": false,
+        "Model": "calculateSeverity"
+    }
 }

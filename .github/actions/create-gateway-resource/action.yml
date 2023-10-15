@@ -1,0 +1,183 @@
+name: 'API Gateway resource creator'
+description: 'API Gateway resource creator'
+inputs:
+  API_NAME:
+    description: 'API_NAME'
+    required: true
+  PATH:
+    description: 'PATH'
+    required: true
+  LAMBDA:
+    description: 'LAMBDA'
+    required: true
+  METHOD:
+    description: 'METHOD'
+    required: true
+  INTEGRATION:
+    description: 'METHOD'
+    required: true
+  MODEL:
+    description: 'METHOD'
+    required: true
+runs:
+  using: "composite"
+  steps:
+      - name: Check if API Gateway named ${{ inputs.API_NAME }} exists
+        id: get-api-id
+        run: |
+          id=$(aws apigateway get-rest-apis \
+            --query "items[?name=='${{ inputs.API_NAME }}'].id" \
+            --output text)
+          echo "id=$id" >> "$GITHUB_OUTPUT"
+        shell: bash
+
+      - name: Check if Resource named ${{ inputs.PATH }} exists
+        id: get-resource-id
+        run: |
+          # Split the URL route into an array of path segments
+          IFS='/' read -ra PATH_SEGMENTS <<< "${{ inputs.PATH }}"
+
+          # Create API Gateway resources based on the path segments
+          PARENT_ID="null"
+          RESOURCE_EXISTS=""
+          CURRENT_FULL_PATH=""
+
+          for SEGMENT in "${PATH_SEGMENTS[@]}"; do
+            if [ "$CURRENT_FULL_PATH" != "/" ]; then
+              CURRENT_FULL_PATH=$CURRENT_FULL_PATH"/"$SEGMENT
+            else
+              CURRENT_FULL_PATH="/"$SEGMENT
+            fi
+            echo $CURRENT_FULL_PATH
+            echo $PARENT_ID
+            # Check if the resource already exists
+            RESOURCE_EXISTS=$(aws apigateway get-resources \
+              --rest-api-id ${{ steps.get-api-id.outputs.id }} \
+              --query "items[?path=='$CURRENT_FULL_PATH'].id" \
+              --output text)
+
+            if [ -z "$RESOURCE_EXISTS" ]; then
+              # Create the resource
+              RESOURCE_ID=$(aws apigateway create-resource \
+                --rest-api-id ${{ steps.get-api-id.outputs.id }} \
+                --parent-id "$PARENT_ID" \
+                --path-part "$SEGMENT" \
+                --query 'id' \
+                --output text)
+
+              echo "Created resource '$CURRENT_FULL_PATH' with ID: $RESOURCE_ID"
+              PARENT_ID="$RESOURCE_ID"
+            else
+              echo "Resource '$CURRENT_FULL_PATH' already exists with ID: $RESOURCE_EXISTS"
+              PARENT_ID="$RESOURCE_EXISTS"
+            fi
+          done
+
+          echo "id=$PARENT_ID" >> "$GITHUB_OUTPUT"
+          echo "API Gateway resources creation completed."
+        shell: bash
+
+      - name: Check if Method exists
+        run: |
+          if ! aws apigateway get-method --rest-api-id ${{ steps.get-api-id.outputs.id }} --resource-id ${{ steps.get-resource-id.outputs.id }} --http-method "${{ inputs.METHOD }}" &> /dev/null; then
+            aws apigateway put-method \
+              --rest-api-id ${{ steps.get-api-id.outputs.id }} \
+              --resource-id ${{ steps.get-resource-id.outputs.id }} \
+              --http-method "${{ inputs.METHOD }}" \
+              --authorization-type NONE
+            
+            FUNCTION_NAME=${{ inputs.LAMBDA }}
+            API_GW_ID=${{ steps.get-api-id.outputs.id }}
+            METHOD=${{ inputs.METHOD }}
+            RESOURCE=${{ inputs.PATH }}
+            YOUR_ACCOUNT=$(aws sts get-caller-identity --query 'Account' --output text)
+            
+            # Generate a random string
+            random_string=$(date +%s%N | md5sum | head -c16)
+
+            # Use the random string as statement ID
+            STATEMENT_ID="Statement-${random_string}"
+
+            aws lambda add-permission   \
+            --function-name "$FUNCTION_NAME"   \
+            --source-arn "arn:aws:execute-api:$AWS_REGION:$YOUR_ACCOUNT:$API_GW_ID/*/${METHOD}${RESOURCE}"   \
+            --principal apigateway.amazonaws.com   \
+            --statement-id $STATEMENT_ID   \
+            --action lambda:InvokeFunction
+          fi 
+        shell: bash
+
+      - name: Attach Lambda to Method
+        run: |
+          lambda_arn=$(aws lambda list-functions \
+            --query "Functions[?FunctionName=='${{ inputs.LAMBDA }}'].FunctionArn" \
+            --output text)
+
+          # Check the integration type based on the 'integration' variable
+          if [[ "${{ inputs.INTEGRATION }}" == "true" ]]; then
+              integration_type="AWS_PROXY"
+              integration_http_method="POST"
+          else
+              integration_type="AWS"
+              integration_http_method="${{ inputs.METHOD }}"
+              integration_http_method="POST"
+          fi
+          # Create API Gateway integration
+          aws apigateway put-integration \
+              --rest-api-id ${{ steps.get-api-id.outputs.id }} \
+              --resource-id ${{ steps.get-resource-id.outputs.id }} \
+              --http-method "${{ inputs.METHOD }}" \
+              --type "$integration_type" \
+              --integration-http-method "$integration_http_method" \
+              --uri "arn:aws:apigateway:$AWS_REGION:lambda:path/2015-03-31/functions/${lambda_arn}/invocations"
+        shell: bash
+
+      - name: Create default responses
+        run: |
+          # Create default method response if it doesn't exist
+          if ! aws apigateway get-method-response \
+          --rest-api-id ${{ steps.get-api-id.outputs.id }} \
+          --resource-id ${{ steps.get-resource-id.outputs.id }} \
+          --http-method "${{ inputs.METHOD }}" \
+          --status-code 200  &> /dev/null; then
+            echo "Method response does not exist. Creating..."
+            aws apigateway put-method-response \
+              --rest-api-id ${{ steps.get-api-id.outputs.id }} \
+              --resource-id ${{ steps.get-resource-id.outputs.id }} \
+              --http-method "${{ inputs.METHOD }}" \
+              --status-code 200 \
+              --response-models '{"application/json": "Empty"}'
+          else
+            echo "Method response already exists."
+          fi
+
+          # Create default integration response if it doesn't exist
+          if ! aws apigateway get-integration-response \
+          --rest-api-id ${{ steps.get-api-id.outputs.id }} \
+          --resource-id ${{ steps.get-resource-id.outputs.id }} \
+          --http-method "${{ inputs.METHOD }}" \
+          --status-code 200  &> /dev/null; then
+            echo "Integration response does not exist. Creating..."
+            aws apigateway put-integration-response \
+              --rest-api-id ${{ steps.get-api-id.outputs.id }} \
+              --resource-id ${{ steps.get-resource-id.outputs.id }} \
+              --http-method "${{ inputs.METHOD }}" \
+              --status-code 200 \
+              --selection-pattern "" \
+              --response-templates '{"application/json": ""}'
+          else
+            echo "Integration response already exists."
+          fi
+        shell: bash
+
+      - name: Attach model to method
+        run: |
+            # Attach the model to a specific API Gateway method
+            aws apigateway update-method \
+              --rest-api-id ${{ steps.get-api-id.outputs.id }} \
+              --resource-id ${{ steps.get-resource-id.outputs.id }} \
+              --http-method "${{ inputs.METHOD }}" \
+              --patch-operations --patch-operations '[{"op":"add", "path":"/requestModels/application~1json", "value":"${{inputs.MODEL}}"}]'
+            echo "Model attached to the method."
+        shell: bash
+        if: ${{ inputs.MODEL != '' }}

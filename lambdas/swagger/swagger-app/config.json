@@ -5,5 +5,19 @@
     "Timeout": 15,
     "Layers": [
         "swagger-layer"
-    ]
+    ],
+    "Api_Settings": {
+        "Method": "GET",
+        "Api_Name": "IsraAID app",
+        "Path": "/api-docs",
+        "Integration": true,
+        "Model": ""
+    },
+    "Api_Settings2": {
+        "Method": "GET",
+        "Api_Name": "IsraAID app",
+        "Path": "/api-docs/{proxy+}",
+        "Integration": true,
+        "Model": ""
+    }
 }

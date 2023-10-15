@@ -5,5 +5,12 @@
     "Timeout": 250,
     "Layers": [
         "PYTHON-DEP-questionSimilarity"
-    ]
+    ],
+    "Api_Settings": {
+        "Method": "POST",
+        "Api_Name": "IsraAID app",
+        "Path": "/questionSimilarity",
+        "Integration": false,
+        "Model": "questionSimilarity"
+    }
 }

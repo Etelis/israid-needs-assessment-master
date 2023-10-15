@@ -193,4 +193,4 @@ jobs:
           API_NAME: ${{ fromJson(steps.json_properties.outputs.Api_Settings).Api_Name}}
           PATH: ${{fromJson(steps.json_properties.outputs.Api_Settings).Path}}
           METHOD: ${{fromJson(steps.json_properties.outputs.Api_Settings).Method}}
-        if: ${{ steps.json_properties.outputs.Api_Settings != "" }}
+        if: ${{ !isNullOrEmpty(steps.json_properties.outputs.Api_Settings) }}

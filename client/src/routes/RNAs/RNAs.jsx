@@ -1,11 +1,13 @@
+import { useState } from "react";
 import { Stack, Typography, List } from "@mui/material";
+import { useQuery } from "@tanstack/react-query";
+import { api } from "../../utils/axios";
+import RNAFilterOptions from '../../enums/RNAFilterOptions';
 import { ContinueButton } from "../../components/ContinueButton";
 import ProgressOverview from "../../components/ProgressOverview";
 import { ProgressCard } from "./ProgressCard";
-import { useQuery } from "@tanstack/react-query";
-import { api } from "../../utils/axios";
-import styles from "./styles";
 import { FilterActionButtons } from "./FilterActionButtons";
+import styles from "./styles";
 
 export const RNAs = () => {
   const { data: rnas = [], isLoading } = useQuery(
@@ -13,6 +15,9 @@ export const RNAs = () => {
     async () => (await api.get("/rnas")).data,
     { refetchOnWindowFocus: false }
   );
+  
+  const [activeFilter, setActiveFilter] = useState(RNAFilterOptions.ALL);
+  const filteredRnas = activeFilter === RNAFilterOptions.ONGOING ? rnas.filter(rna => !rna.isCompleted) : rnas;
 
   return (
     <Stack spacing={3} sx={styles.rnasPage} alignItems="center">
@@ -23,10 +28,10 @@ export const RNAs = () => {
         leftColumnCaption="RNAs Filled"
         isLeftColumnInPercentage={false}
       />
-      <FilterActionButtons/>
+      <FilterActionButtons setActiveFilter={setActiveFilter} />
       <List sx={styles.rnasList}>
         {!isLoading &&
-          rnas.map(({ id, lastSyncDate, creationDate, communityName }) => (
+          filteredRnas.map(({ id, lastSyncDate, creationDate, communityName }) => (
             <ProgressCard
               sx={styles.rna}
               value={Math.floor(Math.random() * 101)} // TODO: evaluate % based on number of questions answered

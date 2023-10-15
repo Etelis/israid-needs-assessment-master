@@ -14,7 +14,7 @@ const RNA = new Entity({
     table: RnaTable,
     attributes: {
         id: { type: 'string', partitionKey: true, default: () => uuidv4() }, 
-        status: { type: 'number', default: 1 },
+        isCompleted: 'boolean',
         communityName: 'string',
         communityType: 'string',
         location: 'string',

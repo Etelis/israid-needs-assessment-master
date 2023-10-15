@@ -1,34 +1,29 @@
 import { useState } from "react";
 import { Button, Box } from "@mui/material";
 import { styles } from "./styles";
+import RNAFilterOptions from '../../../enums/RNAFilterOptions';
 
-const FilterActionButtons = () => {
-  const [isOngoingButtonActive, setIsOngoingButtonActive] = useState(false);
-  const [isAllButtonActive, setAllButtonActive] = useState(false);
+const FilterActionButtons = ({ setActiveFilter }) => {
+  const [activeButton, setActiveButton] = useState(RNAFilterOptions.ALL);
 
-  const handleOngoingButtonClick = () => {
-    setIsOngoingButtonActive(true);
-    setAllButtonActive(false);
-  };
-
-  const handleAllButtonClick = () => {
-    setAllButtonActive(true);
-    setIsOngoingButtonActive(false);
+  const handleButtonClick = (filterOption) => {
+    setActiveButton(filterOption);
+    setActiveFilter(filterOption);
   };
 
   return (
     <Box sx={styles.container}>
       <Button
         variant="contained"
-        sx={styles.button(isOngoingButtonActive)}
-        onClick={handleOngoingButtonClick}
+        sx={styles.button(activeButton === RNAFilterOptions.ONGOING)}
+        onClick={() => handleButtonClick(RNAFilterOptions.ONGOING)}
       >
         {"Ongoing"}
       </Button>
       <Button
         variant="contained"
-        sx={styles.button(isAllButtonActive)}
-        onClick={handleAllButtonClick}
+        sx={styles.button(activeButton === RNAFilterOptions.ALL)}
+        onClick={() => handleButtonClick(RNAFilterOptions.ALL)}
       >
         {"All"}
       </Button>

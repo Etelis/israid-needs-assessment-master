@@ -1,10 +1,9 @@
 import { Schema, SchemaTypes, model } from 'mongoose';
 
 const rnaSchema = new Schema({
-  status: {
-    type: SchemaTypes.Number,
-    enum: [1, 2],
-    default: 1
+  isCompleted: {
+    type: SchemaTypes.Boolean,
+    default: false
   },
   communityName: {
     type: SchemaTypes.String,

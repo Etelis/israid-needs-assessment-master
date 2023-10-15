@@ -43,7 +43,7 @@ def compute_similarity(question_list, new_question):
         similar_questions = [question_list[i] for i in range(len(similarities)) if similarities[i] >= THRESHOLD]
         rel_len = len(similar_questions)
 
-        text = f"This Question is similar to {rel_len} question{'s' if rel_len > 1 else ''}: \n" + "\n".join(similar_questions)
+        text = f"This Question is similar to {rel_len} question{'s' if rel_len != 1 else ''}: \n" + "\n".join(similar_questions)
         
         return {"text":text, "similar_questions":similar_questions}
     except Exception as e:

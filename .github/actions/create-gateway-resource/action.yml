@@ -137,31 +137,29 @@ runs:
             # Check if the module exists
             if [ -z "$model_id" ]; then
                 # Create a new API Gateway request module
-                model_id=$(aws apigateway create-model \
+                aws apigateway create-model \
                     --rest-api-id ${{ steps.get-api-id.outputs.id }} \
                     --name "${{inputs.MODEL}}" \
                     --content-type "application/json" \
-                    --schema "$model_definition" \
-                    --output text \
-                    --query 'id')
+                    --schema "$model_definition"
                 
-                echo "Model Created. ID: $model_id"
+                echo "Model Created"
             else
                 # Update existing API Gateway request module
                 aws apigateway update-model \
                     --rest-api-id ${{ steps.get-api-id.outputs.id }} \
                     --model-name "${{inputs.MODEL}}" \
-                    --patch-operations op=replace,path=/schema,value="$model_definition"
+                    --patch-operations op=replace,path=/schema,value='$model_definition'
 
-                echo "Model Updated. ID: $model_id"
+                echo "Model Updated"
             fi
 
             # Attach the model to a specific API Gateway method
-            aws apigateway update-method \
-                --rest-api-id ${{ steps.get-api-id.outputs.id }} \
-                --resource-id ${{ steps.get-resource-id.outputs.id }} \
-                --http-method "${{ inputs.METHOD }}" \
-                --request-parameters '{"method.request.header.Content-Type":"'"$model_id"'"}'
+            aws apigateway put-method \
+              --rest-api-id ${{ steps.get-api-id.outputs.id }} \
+              --resource-id ${{ steps.get-resource-id.outputs.id }} \
+              --http-method "${{ inputs.METHOD }}" \
+              --request-models '{"application/json":"${{inputs.MODEL}}"}'
 
             echo "Model attached to the method."
         shell: bash

@@ -44,8 +44,8 @@ def compute_similarity(question_list, new_question):
         #historic_emb = output_docs['outputs']
         #new_emb = output_others['outputs']
 
-        historic_emb = output_docs
-        new_emb = output_others
+        historic_emb = output_docs.reshape(-1, 1)
+        new_emb = output_others.reshape(1, -1)
 
         similarities = util.pytorch_cos_sim(new_emb, historic_emb)
         similarities = similarities.squeeze()

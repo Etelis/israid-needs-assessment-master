@@ -47,13 +47,13 @@ jobs:
           body: ${{ steps.json_properties.outputs.runtime }}
           string1: "nodejs"
           string2: ""
-        if: ${{ startsWith(steps.json_properties.outputs.runtime, 'Node') }}
+        if: ${{ startsWith(steps.json_properties.outputs.runtime, 'node') }}
 
       - name: Use Node.js ${{ steps.node_version.outputs.value }}
         uses: actions/setup-node@v1
         with:
           node-version: ${{ steps.node_version.outputs.value }}
-        if: ${{ startsWith(steps.json_properties.outputs.runtime, 'Node') }}
+        if: ${{ startsWith(steps.json_properties.outputs.runtime, 'node') }}
 
       - name: Create layer
         run: |
@@ -190,6 +190,6 @@ jobs:
         uses: ./.github/actions/create-gateway-resource
         with:
           LAMBDA: ${{ steps.function_name.outputs.function_name }}
-          API_NAME: ${{steps.json_properties.outputs.Api_Settings.Api_Name}}
-          PATH: ${{steps.json_properties.outputs.Api_Settings.Path}}
-          METHOD: ${{steps.json_properties.outputs.Api_Settings.Method}}
+          API_NAME: ${{ fromJson(steps.json_properties.outputs.Api_Settings).Api_Name}}
+          PATH: ${{fromJson(steps.json_properties.outputs.Api_Settings).Path}}
+          METHOD: ${{fromJson(steps.json_properties.outputs.Api_Settings).Method}}

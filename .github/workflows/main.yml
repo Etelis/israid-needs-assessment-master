@@ -40,8 +40,7 @@ jobs:
         with:
           file_path: "${{matrix.manifest}}/config.json"
       
-
-      - name: Extract python version
+      - name: Extract node version
         id: node_version
         uses: ./.github/actions/replace
         with:

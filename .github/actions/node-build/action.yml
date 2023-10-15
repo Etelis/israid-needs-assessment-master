@@ -10,20 +10,18 @@ inputs:
 runs:
   using: "composite"
   steps:
-      - name: Get node version
+      - name: Extract node version
         id: node_version
-        run: |
-          # Replace substring using sed
-          node_version=$(echo "${{inputs.runtime}}" | sed 's/nodejs//')
-          
-          # Print the updated string
-          echo "node_version=$node_version" >> "$GITHUB_OUTPUT"
-        shell: bash
+        uses: ./.github/actions/replace
+        with:
+          body: ${{ inputs.runtime }}
+          string1: "nodejs"
+          string2: ""
 
-      - name: Use Node.js ${{steps.node_version.outputs.node_version}}
+      - name: Use Node.js ${{steps.node_version.outputs.value}}
         uses: actions/setup-node@v1
         with:
-          node-version: ${{steps.node_version.outputs.node_version}}
+          node-version: ${{steps.node_version.outputs.value}}
 
       - name: npm install and build
         run: |

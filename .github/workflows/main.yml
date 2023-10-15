@@ -34,7 +34,7 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: eu-north-1
 
-      - name: get properties
+      - name: get properties from ${{matrix.manifest}}/config.json
         id: json_properties
         uses: ActionsTools/read-json-action@main
         with:

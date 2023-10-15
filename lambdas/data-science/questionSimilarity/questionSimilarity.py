@@ -40,11 +40,12 @@ def compute_similarity(question_list, new_question):
 
         similarities = query({"inputs": {"source_sentence": new_question, "sentences": question_list}})
 
-        relevant_questions = [question_list[i] for i in range(len(similarities)) if similarities[i] >= THRESHOLD]
-        rel_len = len(relevant_questions)
+        similar_questions = [question_list[i] for i in range(len(similarities)) if similarities[i] >= THRESHOLD]
+        rel_len = len(similar_questions)
 
-        result = f"This Question is similar to {rel_len} question{'s' if rel_len > 1 else ''}: \n" + "\n".join(relevant_questions)
-        return result
+        text = f"This Question is similar to {rel_len} question{'s' if rel_len > 1 else ''}: \n" + "\n".join(similar_questions)
+        
+        return {"text":text, "similar_questions":similar_questions}
     except Exception as e:
         logger.error(f"Failed to compute similarity: {e}")
         raise

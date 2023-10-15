@@ -46,7 +46,7 @@ jobs:
         uses: ./.github/actions/replace
         with:
           body: ${{ steps.json_properties.outputs.runtime }}
-          string1: "node"
+          string1: "nodejs"
           string2: ""
         if: ${{ startsWith(steps.json_properties.outputs.runtime, 'Node') }}
 

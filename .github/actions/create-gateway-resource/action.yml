@@ -37,23 +37,37 @@ runs:
       - name: Check if Resource named ${{ inputs.PATH }} exists
         id: get-resource-id
         run: |
-          id=$(aws apigateway get-resources \
-            --rest-api-id ${{ steps.get-api-id.outputs.id }} \
-            --query "items[?path=='${{ inputs.PATH }}'].id" \
-            --output text)
+          # Split the URL route into an array of path segments
+          IFS='/' read -ra PATH_SEGMENTS <<< "${{ inputs.PATH }}"
 
-          if [ -z $id ]; then
-            aws apigateway create-resource \
-              --rest-api-id ${{ steps.get-api-id.outputs.id }} \
-              --parent-id ${{ steps.get-api-id.outputs.id }} \
-              --path-part "${{ inputs.PATH }}"
-          fi
+          # Create API Gateway resources based on the path segments
+          PARENT_ID="null"
 
-          id=$(aws apigateway get-resources \
-            --rest-api-id ${{ steps.get-api-id.outputs.id }}
-            --query "items[?path=='${{ inputs.PATH }}'].id" \
-            --output text)
-          echo "id=$id" >> "$GITHUB_OUTPUT"
+          for SEGMENT in "${PATH_SEGMENTS[@]}"; do
+              # Check if the resource already exists
+              RESOURCE_EXISTS=$(aws apigateway get-resources \
+                --rest-api-id "$API_NAME" \
+                --query "items[?path=='$SEGMENT'].id" \
+                --output text)
+
+              if [ -z "$RESOURCE_EXISTS" ]; then
+                  # Create the resource
+                  RESOURCE_ID=$(aws apigateway create-resource \
+                      --rest-api-id "$API_NAME" \
+                      --parent-id "$PARENT_ID" \
+                      --path-part "$SEGMENT" \
+                      --query 'id' \
+                      --output text)
+
+                  echo "Created resource '$SEGMENT' with ID: $RESOURCE_ID"
+                  PARENT_ID="$RESOURCE_ID"
+              else
+                  echo "Resource '$SEGMENT' already exists with ID: $RESOURCE_EXISTS"
+                  PARENT_ID="$RESOURCE_EXISTS"
+              fi
+          done
+          echo "id=$RESOURCE_EXISTS" >> "$GITHUB_OUTPUT"
+          echo "API Gateway resources creation completed."
         shell: bash
 
       - name: Check if Method exists

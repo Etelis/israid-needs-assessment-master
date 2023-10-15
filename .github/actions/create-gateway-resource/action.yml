@@ -110,6 +110,7 @@ runs:
           else
               integration_type="AWS"
               integration_http_method="${{ inputs.METHOD }}"
+              integration_http_method="POST"
           fi
 
           # Create API Gateway integration

@@ -416,6 +416,22 @@ jobs:
                   --stage-name "$stage" \
                   --deployment-id "$dep_id"
           fi
+          
+          url=https://$api_id.execute-api.$AWS_REGION.amazonaws.com/$stage
+          echo "Deployed stage URL: $url"
+          echo "url=$url" >> "$GITHUB_OUTPUT"
 
-          echo "Deployed stage URL: https://$api_id.execute-api.$AWS_REGION.amazonaws.com/$stage"
+          app_id=$(aws amplify list-apps --query "apps[?name=='temp1'].appId" --output text)
+        shell: bash
+
+      - name: Export to amplify env vars
+        run: |
+          app_id=$(aws amplify list-apps \
+            --query "apps[?name=='israid-needs-assessment-master'].appId" \
+            --output text --region eu-central-1)
+
+          aws amplify update-app \
+            --app-id $app_id \
+            --environment-variables BackendURL=${{ steps.deploy-api.outputs.url }} \
+            --region eu-central-1
         shell: bash

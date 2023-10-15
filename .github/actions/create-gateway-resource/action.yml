@@ -46,14 +46,14 @@ runs:
           for SEGMENT in "${PATH_SEGMENTS[@]}"; do
               # Check if the resource already exists
               RESOURCE_EXISTS=$(aws apigateway get-resources \
-                --rest-api-id "$API_NAME" \
+                --rest-api-id "${{ steps.get-api-id.outputs.id }}" \
                 --query "items[?path=='$SEGMENT'].id" \
                 --output text)
 
               if [ -z "$RESOURCE_EXISTS" ]; then
                   # Create the resource
                   RESOURCE_ID=$(aws apigateway create-resource \
-                      --rest-api-id "$API_NAME" \
+                      --rest-api-id "${{ steps.get-api-id.outputs.id }}" \
                       --parent-id "$PARENT_ID" \
                       --path-part "$SEGMENT" \
                       --query 'id' \

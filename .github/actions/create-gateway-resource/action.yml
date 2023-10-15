@@ -47,22 +47,22 @@ runs:
 
           for SEGMENT in "${PATH_SEGMENTS[@]}"; do
             if [ "$CURRENT_FULL_PATH" != "/" ]; then
-            CURRENT_FULL_PATH=$CURRENT_FULL_PATH"/"$SEGMENT
+              CURRENT_FULL_PATH=$CURRENT_FULL_PATH"/"$SEGMENT
             else
-            CURRENT_FULL_PATH="/"$SEGMENT
+              CURRENT_FULL_PATH="/"$SEGMENT
             fi
             echo $CURRENT_FULL_PATH
             echo $PARENT_ID
             # Check if the resource already exists
             RESOURCE_EXISTS=$(aws apigateway get-resources \
-            --rest-api-id "fwiujtl0o9" \
-            --query "items[?path=='$CURRENT_FULL_PATH'].id" \
-            --output text)
+              --rest-api-id ${{ steps.get-api-id.outputs.id }} \
+              --query "items[?path=='$CURRENT_FULL_PATH'].id" \
+              --output text)
 
             if [ -z "$RESOURCE_EXISTS" ]; then
               # Create the resource
               RESOURCE_ID=$(aws apigateway create-resource \
-                --rest-api-id "fwiujtl0o9" \
+                --rest-api-id ${{ steps.get-api-id.outputs.id }} \
                 --parent-id "$PARENT_ID" \
                 --path-part "$SEGMENT" \
                 --query 'id' \
@@ -75,6 +75,7 @@ runs:
               PARENT_ID="$RESOURCE_EXISTS"
             fi
           done
+          
           echo "id=$RESOURCE_EXISTS" >> "$GITHUB_OUTPUT"
           echo "API Gateway resources creation completed."
         shell: bash

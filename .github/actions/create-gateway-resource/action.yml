@@ -140,8 +140,8 @@ runs:
                 module_id=$(aws apigateway create-request-validator \
                     --rest-api-id ${{ steps.get-api-id.outputs.id }} \
                     --name "${{inputs.MODEL}}" \
-                    --validate-request-body true \
-                    --validate-request-parameters true \
+                    --validate-request-body \
+                    --validate-request-parameters \
                     --request-templates "$request_templates" \
                     --output text --query 'id')
                 

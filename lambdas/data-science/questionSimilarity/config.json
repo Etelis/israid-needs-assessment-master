@@ -5,5 +5,11 @@
     "Timeout": 250,
     "Layers": [
         "PYTHON-DEP-questionSimilarity"
-    ]
+    ],
+    "Api_Settings": {
+        "Method": "POST",
+        "Api_Name": "Artume",
+        "Path": "/questionSimilarity",
+        "Integration": false
+    }
 }

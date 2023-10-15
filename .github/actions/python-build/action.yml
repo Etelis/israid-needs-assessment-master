@@ -13,21 +13,18 @@ inputs:
 runs:
   using: "composite"
   steps:
-
-      - name: Get python version
-        id: python_version
-        run: |
-          # Replace substring using sed
-          python_version=$(echo "${{inputs.runtime}}" | sed 's/python//')
-          
-          # Print the updated string
-          echo "python_version=$python_version" >> "$GITHUB_OUTPUT"
-        shell: bash
-
       - name: Using python version ${{steps.python_version.outputs.python_version}}
+        id: python_version
+        uses: ../replace
+        with:
+          body: ${{inputs.runtime}}
+          string1: "python"
+          string2: ""
+
+      - name: Using python version ${{steps.python_version.outputs.value}}
         uses: actions/setup-python@v4
         with:
-          python-version: ${{steps.python_version.outputs.python_version}}
+          python-version: ${{steps.python_version.outputs.value}}
 
       - name: Create dependencies layer for python
         run: |

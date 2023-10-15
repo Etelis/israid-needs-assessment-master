@@ -11,7 +11,7 @@ inputs:
     description: 'string2'
     required: true
 outputs:
-  replaced_string:
+  value:
     description: "replaced string"
     value: ${{ steps.replaced_string.outputs.replaced_string }}
 

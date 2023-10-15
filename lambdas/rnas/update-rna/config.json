@@ -4,7 +4,6 @@
     "MemorySize": 128,
     "Timeout": 15,
     "Layers": [
-        "aws-sdk-layer",
         "schema-layer",
         "aws-dynamo-connector"
     ]

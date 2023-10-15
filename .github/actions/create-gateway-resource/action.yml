@@ -38,7 +38,7 @@ runs:
         id: get-resource-id
         run: |
           id=$(aws apigateway get-resources \
-            --rest-api-id ${{ steps.get-api-id.outputs.id }}
+            --rest-api-id ${{ steps.get-api-id.outputs.id }} \
             --query "items[?path=='${{ inputs.PATH }}'].id" \
             --output text)
 

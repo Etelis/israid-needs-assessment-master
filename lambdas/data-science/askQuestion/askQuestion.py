@@ -1,10 +1,8 @@
 import docx
 import PyPDF2
 import numpy as np
-import json
 import logging
 import requests
-import boto3
 from botocore.exceptions import ClientError
 
 # Configure logging
@@ -12,7 +10,7 @@ logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
 API_URL = "https://api-inference.huggingface.co/models/distilbert-base-uncased-distilled-squad"
-headers = {"Authorization": "Bearer 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"}
+headers = {"Authorization": "Bearer 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"}
 
 
 def docx_to_text(uploaded_doc_path):

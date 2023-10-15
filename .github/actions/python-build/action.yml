@@ -10,9 +10,21 @@ inputs:
 runs:
   using: "composite"
   steps:
-      - uses: actions/setup-python@v4
+
+      - name: Get python version
+        id: python_version
+        run: |
+          # Replace substring using sed
+          python_version=$(echo "${{inputs.runtime}}" | sed 's/python//')
+          
+          # Print the updated string
+          echo "python_version=$python_version" >> "$GITHUB_OUTPUT"
+        shell: bash
+
+      - name: Using python version ${{steps.python_version.outputs.python_version}}
+        uses: actions/setup-python@v4
         with:
-          python-version: "3.11"
+          python-version: ${{steps.python_version.outputs.python_version}}
 
       - name: Create dependencies layer for python
         run: |

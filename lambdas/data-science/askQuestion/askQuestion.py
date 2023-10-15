@@ -52,6 +52,7 @@ def preprocess_docs(docs_paths):
 
 def query(payload):
     try:
+        payload["wait_for_model"] = True
         response = requests.post(API_URL, headers=headers, json=payload)
         response.raise_for_status()
         return response.json()

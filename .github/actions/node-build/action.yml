@@ -7,10 +7,20 @@ inputs:
 runs:
   using: "composite"
   steps:
-      - name: Use Node.js 12.x
+      - name: Get node version
+        id: node_version
+        run: |
+          # Replace substring using sed
+          node_version=$(echo "${{inputs.runtime}}" | sed 's/nodejs//')
+          
+          # Print the updated string
+          echo "node_version=$node_version" >> "$GITHUB_OUTPUT"
+        shell: bash
+
+      - name: Use Node.js ${{steps.node_version.outputs.node_version}}
         uses: actions/setup-node@v1
         with:
-          node-version: 12.x
+          node-version: ${{steps.node_version.outputs.node_version}}
 
       - name: npm install and build
         run: |

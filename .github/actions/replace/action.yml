@@ -1,0 +1,29 @@
+name: 'String replacer'
+description: 'String replacer'
+inputs:
+  body:
+    description: 'The string to work on'
+    required: true
+  string1:
+    description: 'string1'
+    required: true
+  string2:
+    description: 'string2'
+    required: true
+outputs:
+  replaced_string:
+    description: "replaced string"
+    value: ${{ steps.replaced_string.outputs.replaced_string }}
+
+runs:
+  using: "composite"
+  steps:
+      - name: Replacing 
+        id: node_version {{inputs.string1}} with {{inputs.string2}} on {{inputs.body}}
+        run: |
+          # Replace substring using sed
+          replaced_string=$(echo "${{inputs.body}}" | sed 's/${{inputs.string1}}/${{inputs.string2}}/')
+          
+          # Print the updated string
+          echo "replaced_string=$replaced_string" >> "$GITHUB_OUTPUT"
+        shell: bash

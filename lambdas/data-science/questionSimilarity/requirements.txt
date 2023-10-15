@@ -1,5 +1,2 @@
-boto3
 botocore
 Requests
-sentence-transformers
-awslambdaric

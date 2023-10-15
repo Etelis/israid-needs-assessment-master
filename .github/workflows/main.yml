@@ -96,9 +96,79 @@ jobs:
           done
         env:
           dir: ${{ matrix.manifest }}
-  
+
   get-lambda-folders:
     name: Get the lambda folders
+    runs-on: ubuntu-latest
+    outputs:
+      folders: ${{ steps.folder-fetcher.outputs.folders }}
+      api_names: ${{ steps.folder-fetcher.outputs.api_names }}
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: get all folders and unique list of used APIs
+        id: folder-fetcher
+        run: |
+          # Get a list of folders with config.json files
+          folders=$(find lambdas -mindepth 2 -maxdepth 2 -type d)
+
+          # Initialize an empty array to store unique Api_Name values
+          api_names=()
+
+          # Loop through each folder and extract Api_Name from config.json
+          for folder in $folders; do
+              config_file="$folder/config.json"
+              
+              # Check if config.json file exists in the folder
+              if [ -f "$config_file" ]; then
+                  api_name=$(jq -r '.Api_Settings.Api_Name' "$config_file")
+                  
+                  # Check if Api_Name is not empty and unique
+                  if [ -n "$api_name" ] && ! [[ " ${api_names[@]} " =~ " $api_name " ]]; then
+                      api_names+=("$api_name")
+                  fi
+              fi
+          done
+
+          folders=$(printf '%s\n' "${folders[@]}" | jq -R -s -c 'split("\n")[:-1]')
+          api_names=$(printf '%s\n' "${folders[@]}" | jq -R -s -c 'split("\n")[:-1]')
+
+          echo "folders=$folders" >> "$GITHUB_OUTPUT"
+          echo "api_names=$api_names" >> "$GITHUB_OUTPUT"
+
+  deploy_apis:
+    name: build and deploy APIs
+    needs: get-lambda-folders
+    strategy:
+      fail-fast: false
+      matrix:
+        manifest: ${{ fromJson(needs.get-lambda-folders.outputs.api_names) }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Set up AWS CLI
+        uses: aws-actions/configure-aws-credentials@v3
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-north-1
+    
+      - name: Check if API Gateway named ${{ matrix.manifest }} exists
+        run: |
+          id=$(aws apigateway get-rest-apis \
+            --query "items[?name=='${{ matrix.manifest }}'].id" \
+            --output text)
+
+          if [ -z $id ]; then
+            aws apigateway create-rest-api \
+              --name "${{ matrix.manifest }}" \
+              --description "API Gateway for ${{ matrix.manifest }}"
+          fi 
+        shell: bash
+
+  get-model-filles:
+    name: Get the model configuration files
     runs-on: ubuntu-latest
     outputs:
       folders: ${{ steps.folder-fetcher.outputs.folders }}
@@ -107,8 +177,58 @@ jobs:
       - name: get all folders
         id: folder-fetcher
         run: |
-          var1=$(find lambdas -mindepth 2 -maxdepth 2 -type d | jq -R -s -c 'split("\n")[:-1]')
+          var1=$(find api-models -mindepth 1 -maxdepth 1 | jq -R -s -c 'split("\n")[:-1]')
           echo "folders=$var1" >> "$GITHUB_OUTPUT"
+  
+  deploy_models:
+    name: build and deploy models
+    needs: [get-model-filles,deploy_apis]
+    strategy:
+      fail-fast: false
+      matrix:
+        manifest: ${{ fromJson(needs.get-model-filles.outputs.folders) }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Set up AWS CLI
+        uses: aws-actions/configure-aws-credentials@v3
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-north-1
+
+      - name: Deploy model with conf ${{matrix.manifest}}
+        run: |
+            MODEL=$(basename ${{matrix.manifest}})
+            MODEL=${MODEL%.*}
+
+            # Read input JSON file
+            model_definition=$(cat ${{matrix.manifest}})
+
+            # Get existing request module ID, if it exists
+            model_id=$(aws apigateway get-models \
+                --rest-api-id ${{ steps.get-api-id.outputs.id }} \
+                --query "items[?name=='$MODEL'].id" \
+                --output text)
+
+            # Check if the module exists
+            if [ -n "$model_id" ]; then
+                # Update the model using the new schema
+                aws apigateway update-model \
+                  --rest-api-id ${{ steps.get-api-id.outputs.id }} \
+                  --model-name "$MODEL" \
+                  --patch-operations "op=replace,path=/schema,value='$model_definition'"
+            else
+                model_id=$(aws apigateway create-model \
+                  --rest-api-id ${{ steps.get-api-id.outputs.id }} \
+                  --name "$MODEL" \
+                  --content-type "application/json" \
+                  --schema "$model_definition" \
+                  --query 'id' \
+                  --output text)               
+                echo "Model Created"
+            fi
 
   deploy_lambdas:
     name: build and deploy lambdas
@@ -185,6 +305,30 @@ jobs:
           runtime: ${{steps.json_properties.outputs.runtime}}
           memorysize: ${{steps.json_properties.outputs.memorysize}}
           timeout: ${{steps.json_properties.outputs.timeout}}
+
+  deploy_gateway_routes:
+    name: build and deploy lambdas
+    needs: [deploy_lambdas, deploy_models]
+    strategy:
+      fail-fast: false
+      matrix:
+        manifest: ${{ fromJson(needs.get-lambda-folders.outputs.folders) }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: get properties
+        id: json_properties
+        uses: ActionsTools/read-json-action@main
+        with:
+          file_path: "${{matrix.manifest}}/config.json"
+
+      - name: Set function_name variable all folders
+        id: function_name
+        run: |
+          var1=$(basename ${{matrix.manifest}})
+          echo "function_name=$var1" >> "$GITHUB_OUTPUT"
 
       - name: API Gateway wizard
         uses: ./.github/actions/create-gateway-resource

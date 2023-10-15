@@ -405,12 +405,5 @@ jobs:
                   --deployment-id "$dep_id"
           fi
 
-          # Get the stage URL and output it
-          stage_url=$(aws apigateway get-stage \
-            --rest-api-id "$api_id" \
-            --stage-name "$stage" \
-            --query 'invokeUrl' \
-            --output text)
-
-          echo "Deployed stage URL: $stage_url"
+          echo "Deployed stage URL: https://$api_id.execute-api.$AWS_REGION.amazonaws.com/$stage"
         shell: bash

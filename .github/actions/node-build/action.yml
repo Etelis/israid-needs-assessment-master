@@ -4,6 +4,9 @@ inputs:
   dir:
     description: 'Directory'
     required: true
+  runtime:
+    description: 'runtime'
+    required: true
 runs:
   using: "composite"
   steps:

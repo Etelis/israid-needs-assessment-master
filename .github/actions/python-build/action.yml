@@ -7,6 +7,9 @@ inputs:
   function_name:
     description: 'function_name'
     required: true
+  runtime:
+    description: 'runtime'
+    required: true
 runs:
   using: "composite"
   steps:

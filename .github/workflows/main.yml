@@ -39,11 +39,12 @@ jobs:
         uses: ActionsTools/read-json-action@main
         with:
           file_path: "${{matrix.manifest}}/config.json"
-          
+
       - name: Use Node.js 12.x
         uses: actions/setup-node@v1
         with:
           node-version: 12.x
+        if: ${{ startsWith(steps.json_properties.outputs.runtime, 'Node') }}
 
       - name: Create layer
         run: |
@@ -139,12 +140,14 @@ jobs:
         with:
           dir: ${{ matrix.manifest }}
           function_name: ${{ steps.function_name.outputs.function_name }}
+          runtime: ${{steps.json_properties.outputs.runtime}}
 
       - name: Build step for node based code
         uses: ./.github/actions/node-build
         if: ${{ startsWith(steps.json_properties.outputs.runtime, 'Node') }}
         with:
           dir: ${{ matrix.manifest }}
+          runtime: ${{steps.json_properties.outputs.runtime}}
  
       - name: Build step for docker based code
         uses: ./.github/actions/docker-build

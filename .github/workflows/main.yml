@@ -190,6 +190,8 @@ jobs:
       matrix:
         manifest: ${{ fromJson(needs.get-model-filles.outputs.folders) }}
         apis: ${{ fromJson(needs.deploy_apis.outputs.api_names) }}
+    outputs:
+      folders: ${{ needs.get-model-filles.outputs.folders }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -324,7 +326,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        manifest: ${{ fromJson(needs.get-lambda-folders.outputs.folders) }}
+        manifest: ${{ fromJson(needs.deploy_lambdas.outputs.folders) }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code

@@ -42,7 +42,8 @@ runs:
 
           # Create API Gateway resources based on the path segments
           PARENT_ID="null"
-
+          RESOURCE_EXISTS=""
+          
           for SEGMENT in "${PATH_SEGMENTS[@]}"; do
               if [ -z $SEGMENT ]; then
                 SEGMENT="/"

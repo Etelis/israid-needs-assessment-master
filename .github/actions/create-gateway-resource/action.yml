@@ -17,77 +17,44 @@ runs:
   using: "composite"
   steps:
       - name: Check if API Gateway exists
-        id: check-api-gateway
-        run: |
-          aws apigateway get-rest-apis \
-            --query "items[?name=='${{ inputs.API_NAME }}'].id" \
-            --output text
-          echo "API Gateway ID is $?"
-        continue-on-error: true
-        shell: bash
-
-      - name: Create API Gateway if it does not exist
-        if: ${{ steps.check-api-gateway.outcome == 'failure' }}
-        run: |
-          aws apigateway create-rest-api \
-            --name "${{ inputs.API_NAME }}" \
-            --description "API Gateway for ${{ inputs.API_NAME }}"
-          echo "API Gateway created successfully!"
-        continue-on-error: true
-        shell: bash
-
-      - name: Get API Gateway ID
         id: get-api-id
         run: |
-          aws apigateway get-rest-apis \
+          if ! aws apigateway get-rest-apis --query "items[?name=='${{ inputs.API_NAME }}'].id" &> /dev/null; then
+            aws apigateway create-rest-api \
+              --name "${{ inputs.API_NAME }}" \
+              --description "API Gateway for ${{ inputs.API_NAME }}"
+          fi 
+          id=$(aws apigateway get-rest-apis \
             --query "items[?name=='${{ inputs.API_NAME }}'].id" \
-            --output text
-          echo "API Gateway ID is ${{ steps.get-api-id.outputs.id }}"
+            --output text)
+          echo "id=$id" >> "$GITHUB_OUTPUT"
         shell: bash
 
       - name: Check if Resource exists
-        id: check-resource
+        id: get-resource-id
         run: |
-          aws apigateway get-resources \
-            --rest-api-id ${{ steps.get-api-id.outputs.id }} \
+          if ! aws apigateway get-resources --rest-api-id ${{ steps.get-api-id.outputs.id }} --query "items[?path=='${{ inputs.PATH }}'].id" &> /dev/null; then
+            aws apigateway create-resource \
+              --rest-api-id ${{ steps.get-api-id.outputs.id }} \
+              --parent-id ${{ steps.get-api-id.outputs.id }} \
+              --path-part "${{ inputs.PATH }}"
+          fi
+          id=$(aws apigateway get-resources \
+            --rest-api-id ${{ steps.get-api-id.outputs.id }}
             --query "items[?path=='${{ inputs.PATH }}'].id" \
-            --output text
-          echo "Resource ID is $?"
-        continue-on-error: true
-        shell: bash
-
-      - name: Create Resource if it does not exist
-        if: ${{ steps.check-resource.outcome == 'failure' }}
-        run: |
-          aws apigateway create-resource \
-            --rest-api-id ${{ steps.get-api-id.outputs.id }} \
-            --parent-id ${{ steps.get-api-id.outputs.id }} \
-            --path-part "${{ inputs.PATH }}"
-          echo "Resource created successfully!"
-        continue-on-error: true
+            --output text)
+          echo "id=$id" >> "$GITHUB_OUTPUT"
         shell: bash
 
       - name: Check if Method exists
-        id: check-method
         run: |
-          aws apigateway get-method \
-            --rest-api-id ${{ steps.get-api-id.outputs.id }} \
-            --resource-id ${{ steps.check-resource.outputs.id }} \
-            --http-method "${{ inputs.METHOD }}"
-          echo "Method exists"
-        continue-on-error: true
-        shell: bash
-
-      - name: Create Method if it does not exist
-        if: ${{ steps.check-method.outcome == 'failure' }}
-        run: |
-          aws apigateway put-method \
-          --rest-api-id ${{ steps.get-api-id.outputs.id }} \
-          --resource-id ${{ steps.check-resource.outputs.id }} \
-          --http-method "${{ inputs.METHOD }}" \
-          --authorization-type NONE
-          echo "Method created successfully!"
-        continue-on-error: true
+          if ! aws apigateway get-method get-resources --rest-api-id ${{ steps.get-api-id.outputs.id }} --resource-id ${{ steps.get-resource-id.outputs.id }} --http-method "${{ inputs.METHOD }} &> /dev/null; then
+            aws apigateway put-method \
+              --rest-api-id ${{ steps.get-api-id.outputs.id }} \
+              --resource-id ${{ steps.get-resource-id.outputs.id }} \
+              --http-method "${{ inputs.METHOD }}" \
+              --authorization-type NONE
+          fi 
         shell: bash
 
       - name: Attach Lambda to Method
@@ -95,9 +62,10 @@ runs:
           lambda_arn=$(aws lambda list-functions \
             --query "Functions[?FunctionName=='${{ inputs.LAMBDA }}'].FunctionArn" \
             --output text)
+            
           aws apigateway put-integration \
             --rest-api-id ${{ steps.get-api-id.outputs.id }} \
-            --resource-id ${{ steps.check-resource.outputs.id }} \
+            --resource-id ${{ steps.get-resource-id.outputs.id }} \
             --http-method "${{ inputs.METHOD }}" \
             --type AWS_PROXY \
             --integration-http-method "${{ inputs.METHOD }}" \

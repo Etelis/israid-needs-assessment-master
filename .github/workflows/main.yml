@@ -3,37 +3,6 @@ on:
   push:
     branches: [main, master, DevopsTesting]
 jobs:
-  amplify_deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Set up AWS CLI
-        uses: aws-actions/configure-aws-credentials@v3
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: eu-north-1
-
-      - name: Check if Amplify app exists
-        id: check-amplify-app
-        run: |
-          amplifyAppStatus=$(amplify app list --json | jq '.[] | .appName' | grep -o 'YourAmplifyAppName' || true)
-          echo "::set-output name=appExists::$(if [ -z "$amplifyAppStatus" ]; then echo "false"; else echo "true"; fi)"
-
-      - name: Install Amplify CLI
-        run: |
-          npm install -g @aws-amplify/cli
-        if: steps.check-amplify-app.outputs.appExists == 'false'  # Install only if app doesn't exist
-
-      - name: Amplify Init & Deploy
-        run: |
-          amplify configure --app https://github.com/${{ github.repository }}
-          amplify init
-          amplify push --y
-        if: steps.check-amplify-app.outputs.appExists == 'false'  # Deploy only if app doesn't exist
-        
   get-layers-folders:
     name: Get the layers folders
     runs-on: ubuntu-latest
@@ -167,8 +136,8 @@ jobs:
           echo "folders=$folders" >> "$GITHUB_OUTPUT"
           echo "api_names=$api_names" >> "$GITHUB_OUTPUT"
 
-  deploy_apis:
-    name: build and deploy APIs
+  create_apis:
+    name: Create APIs
     needs: get-lambda-folders
     strategy:
       fail-fast: false
@@ -215,12 +184,12 @@ jobs:
 
   deploy_models:
     name: build and deploy models
-    needs: [get-model-filles, deploy_apis]
+    needs: [get-model-filles, create_apis]
     strategy:
       fail-fast: false
       matrix:
         manifest: ${{ fromJson(needs.get-model-filles.outputs.folders) }}
-        apis: ${{ fromJson(needs.deploy_apis.outputs.api_names) }}
+        apis: ${{ fromJson(needs.create_apis.outputs.api_names) }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -391,3 +360,57 @@ jobs:
           INTEGRATION: ${{fromJson(steps.json_properties.outputs.Api_Settings).Integration}}
           MODEL: ${{fromJson(steps.json_properties.outputs.Api_Settings).Model}}
         if: ${{ steps.json_properties.outputs.Api_Settings != '' }}
+
+  deploy_apis:
+    name: Deploy APIs
+    needs: [create_apis,deploy_gateway_routes]
+    strategy:
+      fail-fast: false
+      matrix:
+        manifest: ${{ fromJson(needs.create_apis.outputs.api_names) }}
+        stage: [Prod]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Set up AWS CLI
+        uses: aws-actions/configure-aws-credentials@v3
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-north-1
+
+      - name: Check if API Gateway named ${{ matrix.manifest }} exists
+        run: |
+          api_id=$(aws apigateway get-rest-apis \
+            --query "items[?name=='${{ matrix.manifest }}'].id" \
+            --output text)
+          stage=${{matrix.stage}}
+
+          dep_id=$(aws apigateway create-deployment \
+            --rest-api-id "$api_id" \
+            --stage-name "$stage" \
+            --query 'id' \
+            --output text)
+
+          # Check if the stage already exists
+          existing_stage=$(aws apigateway get-stage --rest-api-id "$api_id" \
+            --stage-name "$stage" 2>/dev/null)
+
+          if [[ -z "$existing_stage" ]]; then
+              # If the stage doesn't exist, create it
+              aws apigateway create-stage \
+                  --rest-api-id "$api_id" \
+                  --stage-name "$stage" \
+                  --deployment-id "$dep_id"
+          fi
+
+          # Get the stage URL and output it
+          stage_url=$(aws apigateway get-stage \
+            --rest-api-id "$api_id" \
+            --stage-name "$stage" \
+            --query 'invokeUrl' \
+            --output text)
+
+          echo "Deployed stage URL: $stage_url"
+        shell: bash

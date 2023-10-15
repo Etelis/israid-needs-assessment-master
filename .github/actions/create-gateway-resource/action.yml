@@ -134,13 +134,13 @@ runs:
 
       - name: Create default responses
         run: |
-
           # Check if method response exists
           method_response_id=$(aws apigateway get-method-response \
             --rest-api-id "${{ steps.get-api-id.outputs.id }}" \
             --resource-id "${{ steps.get-resource-id.outputs.id }}" \
             --http-method "${{ inputs.METHOD }}" \
             --status-code 200 \
+            --query 'id' \
             --output text 2>/dev/null)
 
           # Create default method response if it doesn't exist
@@ -159,6 +159,7 @@ runs:
             --resource-id "${{ steps.get-resource-id.outputs.id }}" \
             --http-method "${{ inputs.METHOD }}" \
             --status-code 200 \
+            --query 'id' \
             --output text 2>/dev/null)
 
           # Create default integration response if it doesn't exist
@@ -171,6 +172,7 @@ runs:
               --selection-pattern "" \
               --response-templates '{"application/json": ""}'
           fi
+
         shell: bash
 
       - name: Attach model to method

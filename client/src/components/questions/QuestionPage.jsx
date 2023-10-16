@@ -123,10 +123,10 @@ const QuestionPage = () => {
 		};
 
 		const oldAnswer = {
-			questionId: oldAnswerRef.current.questionId,
-			value: oldAnswerRef.current.value,
-			photos: oldAnswerRef.current.photos,
-			notes: oldAnswerRef.current.notes,
+			questionId: oldAnswerRef.current?.questionId,
+			value: oldAnswerRef.current?.value,
+			photos: oldAnswerRef.current?.photos,
+			notes: oldAnswerRef.current?.notes,
 		};
 
 		if (!isEqual(oldAnswer, newAnswer)) {

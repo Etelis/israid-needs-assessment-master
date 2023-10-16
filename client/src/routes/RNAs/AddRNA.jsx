@@ -2,19 +2,22 @@ import { Stack } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { ContinueButton } from '../../components/ContinueButton';
 import InputField from '../../components/input-field/InputField';
-import useAddRnaMutation from '../../utils/useAddRnaMutation';
+import useAddRnaMutation from '../../utils/online/useAddRnaMutation';
+import { useNavigate } from 'react-router-dom';
 
 const AddRNA = () => {
+	const navigate = useNavigate();
+	const { mutateAsync: addRna, isLoading } = useAddRnaMutation();
 	const {
 		register,
 		handleSubmit,
 		formState: { errors },
 	} = useForm();
 
-	const { mutate: addRna, isLoading } = useAddRnaMutation();
-
 	const onSubmit = (data) => {
-		addRna(data);
+		addRna(data).then((newlyAddRna) =>
+			navigate(`/RNAs/${newlyAddRna.id}`, { replace: true })
+		);
 	};
 
 	return (

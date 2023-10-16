@@ -1,7 +1,7 @@
 import { Navigate, useRoutes } from 'react-router-dom';
-import useAnswersQuery from '../utils/useAnswersQuery';
-import useRnasQuery from '../utils/useRnasQuery';
 import CategoriesQuestionsRoutes from './CategoriesQuestionsRoutes';
+import useRnasQuery from '../utils/online/useRnasQuery';
+import useAnswersQuery from '../utils/online/useAnswersQuery';
 import { AddRNA, RNAs } from './RNAs';
 
 const Routes = () => {

@@ -1,7 +1,7 @@
 import { keys } from 'idb-keyval';
 import useUpdateRnaAnswersMutation from './useUpdateRnaAnswersMutation';
 import { useQueryClient } from '@tanstack/react-query';
-import useSavedAndCachedRnaAnswers from './useSavedAndCachedRnaAnswers';
+import useSavedAndCachedRnaAnswers from '../useSavedAndCachedRnaAnswers';
 
 const getUpdatedRnasIds = async () => {
 	const allKeys = await keys();

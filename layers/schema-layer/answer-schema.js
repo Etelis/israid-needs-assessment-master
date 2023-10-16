@@ -5,30 +5,36 @@ const AWS = require("/opt/dynamoSdkToToolbox/aws-sdk");
 const { dynamoSdkToToolbox } = require("/opt/dynamoSdkToToolbox/index.ts");
 
 const DynamoDB = new AWS.DynamoDB();
-
 const tableDefinition = {
-  TableName: "Answers",
-  AttributeDefinitions: [
-    {
-      AttributeType: "S",
-      AttributeName: "id",
-    }
-  ],
-  KeySchema: [
-    {
-      AttributeName: "id",
-      KeyType: "HASH",
-    }
-  ],
-  BillingMode: "PAY_PER_REQUEST"
-};
+    TableName: "Answers",
+    AttributeDefinitions: [
+      {
+        AttributeType: "S",
+        AttributeName: "id",
+      }
+    ],
+    KeySchema: [
+      {
+        AttributeName: "id",
+        KeyType: "HASH",
+      }
+    ],
+    BillingMode: "PAY_PER_REQUEST"
+  };
 
-try {
-  await DynamoDB.createTable(tableDefinition).promise();
-  console.log("Table created successfully.");
-} catch (error) {
-  console.error("Error creating table:", error);
-}
+
+const createTable = async () => {
+    try {
+      await DynamoDB.createTable(tableDefinition).promise();
+      console.log("Table created successfully.");
+    } catch (error) {
+      console.error("Error creating table:", error);
+    }
+  };
+  
+  createTable(); 
+  
+  
 
 const AnswerTable = new Table({
     ...dynamoSdkToToolbox(tableDefinition),

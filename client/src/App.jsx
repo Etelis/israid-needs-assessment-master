@@ -1,46 +1,50 @@
-import { QueryClient } from '@tanstack/react-query';
-import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client';
-import { del, get, set } from 'idb-keyval';
+import { QueryClient } from "@tanstack/react-query";
+import { PersistQueryClientProvider } from "@tanstack/react-query-persist-client";
+import { del, get, set } from "idb-keyval";
+import { Provider } from "react-redux";
+import { MemoryRouter as Router } from "react-router-dom";
 
-import { MemoryRouter as Router } from 'react-router-dom';
-import { Navbar } from './components/Navbar/Navbar';
-import Routes from './routes';
-import { ThemeProvider } from './theme';
+import store from "./redux/store";
+import { Navbar } from "./components/Navbar/Navbar";
+import Routes from "./routes";
+import { ThemeProvider } from "./theme";
 
 const queryClient = new QueryClient({
-	defaultOptions: {
-		queries: {
-			cacheTime: Infinity,
-		},
-	},
+  defaultOptions: {
+    queries: {
+      cacheTime: Infinity,
+    },
+  },
 });
 
-const createIDBPersister = (idbValidKey = 'reactQuery') => ({
-	persistClient: async (client) => {
-		set(idbValidKey, client);
-	},
-	restoreClient: async () => {
-		return await get(idbValidKey);
-	},
-	removeClient: async () => {
-		await del(idbValidKey);
-	},
+const createIDBPersister = (idbValidKey = "reactQuery") => ({
+  persistClient: async (client) => {
+    set(idbValidKey, client);
+  },
+  restoreClient: async () => {
+    return await get(idbValidKey);
+  },
+  removeClient: async () => {
+    await del(idbValidKey);
+  },
 });
 
 const persister = createIDBPersister();
 
 const App = () => (
-	<PersistQueryClientProvider
-		client={queryClient}
-		persistOptions={{ persister }}
-	>
-		<ThemeProvider>
-			<Router>
-				<Navbar />
-				<Routes />
-			</Router>
-		</ThemeProvider>
-	</PersistQueryClientProvider>
+  <PersistQueryClientProvider
+    client={queryClient}
+    persistOptions={{ persister }}
+  >
+    <Provider store={store}>
+      <ThemeProvider>
+        <Router>
+          <Navbar />
+          <Routes />
+        </Router>
+      </ThemeProvider>
+    </Provider>
+  </PersistQueryClientProvider>
 );
 
 export default App;

@@ -28,8 +28,8 @@ const QuestionCategory = ({ id, title, preview, totalQuestions, answeredQusetion
         </AccordionSummary>
         <AccordionDetails>
           {subCategories.map((x) => (
-            <SubQuestionCategory title={x.name} answeredQusetion={x.answeredQuestionAmount} categoryId={id} id={x.id}
-            totalQuestions={x.totalQuestionAmount} key={x.id}></SubQuestionCategory>
+            <SubQuestionCategory title={x.name} categoryId={id} id={x.id}
+            questions={x.questions} answers={x.answers} key={x.id}></SubQuestionCategory>
             ))}
         </AccordionDetails>
       </Accordion>

@@ -1,14 +1,11 @@
-const answerButton = (theme, isSelected) => {
+const answerButton = (theme, isSelected, selectedColor) => {
   return {
     color: isSelected && theme.colors.selectedText,
     width: '170px',
     height: '60px',
-    backgroundColor: isSelected && theme.colors.selected,
+    backgroundColor: isSelected && selectedColor,
     '&:hover': {
-      backgroundColor: isSelected && theme.colors.selected,
-    },
-    span: isSelected && {
-      border: `3px solid ${theme.colors.selectedBorder}`,
+      backgroundColor: isSelected && selectedColor,
     },
   };
 };

@@ -3,7 +3,7 @@ import { CircularProgressLabel } from '../../../components/CircularProgressLabel
 import { Link } from 'react-router-dom';
 import styles from './styles';
 
-const ProgressCard = ({value,  lastSyncDate,  communityName,  route,sx = {},  ...props}) => (
+const ProgressCard = ({value, lastSyncDate, communityName, route, sx = {}, ...props}) => (
   <Card
     variant='outlined'
     sx={{ ...styles.defaultProgressCard, ...sx }}

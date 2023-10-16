@@ -3,10 +3,8 @@ import { createTheme } from '@mui/material';
 export default () =>
   createTheme({
     colors: {
-      selected: '#9BB068',
-      selectedBorder: '#BDD42A',
       selectedText: 'white',
-      utility: '#4B3425',
+      utility: '#0A77FF',
     },
     typography: {
       fontSize: 16,
@@ -15,6 +13,17 @@ export default () =>
       borderRadius: 0,
     },
     components: {
+      MuiCssBaseline: {
+        styleOverrides: {
+          body: {
+            height: '100vh',
+
+            '& #root': {
+              height: '100vh'
+            }
+          }
+        }
+      },
       MuiSvgIcon: {
         styleOverrides: {
           root: {

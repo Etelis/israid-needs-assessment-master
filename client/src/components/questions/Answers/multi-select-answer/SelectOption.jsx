@@ -3,7 +3,7 @@ import styles from './styles';
 
 const SelectOption = ({ option, isSelected, onClick }) => (
   <Button
-    sx={(theme) => styles.selectOption(theme, isSelected)}
+    sx={styles.selectOption(isSelected)}
     onClick={onClick}
   >
     {option}

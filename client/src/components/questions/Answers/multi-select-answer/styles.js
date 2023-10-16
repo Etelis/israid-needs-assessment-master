@@ -1,15 +1,12 @@
-const selectOption = (theme, isSelected) => {
-  return {
-    display: 'flex',
-    color: isSelected && theme.colors.selectedText,
-    width: 1,
-    height: 1,
-    backgroundColor: isSelected && theme.colors.selected,
-    '&:hover': {
-      backgroundColor: isSelected && theme.colors.selected,
-    },
-  };
-};
+const selectOption = (isSelected) => ({
+	display: 'flex',
+	width: 1,
+	height: 1,
+	backgroundColor: isSelected && '#B9B9B9',
+	'&:hover': {
+		backgroundColor: isSelected && '#B9B9B9',
+	},
+});
 
 const styles = { selectOption };
 

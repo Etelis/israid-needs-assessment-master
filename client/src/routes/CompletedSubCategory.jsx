@@ -6,39 +6,61 @@ import { CircularProgressLabel } from '../components/CircularProgressLabel/Circu
 import subCategories from '../static-data/sub-categories.json';
 
 const CompletedSubCategory = () => {
-  const rnaId = useParams().rnaId;
-  const categoryId = useParams().categoryId;
-  const subCategoryId = useParams().subCategoryId;
+	const { rnaId, categoryId, subCategoryId } = useParams();
+	const navigate = useNavigate();
 
-  const navigate = useNavigate()
-  const categorySubCategories = subCategories.filter(x => x.categoryId === categoryId);
-  const subCategoryIndex = categorySubCategories.findIndex(x => x.id === subCategoryId);
-  const subCategory = categorySubCategories[subCategoryIndex];
-  const nextSubCategory = categorySubCategories[subCategoryIndex + 1];
+	const currentCategorySubCategories = subCategories.filter(
+		(x) => x.categoryId === categoryId
+	);
+	const curentSubCategoryIndex = currentCategorySubCategories.findIndex(
+		(x) => x.id === subCategoryId
+	);
+	const subCategory = currentCategorySubCategories[curentSubCategoryIndex];
+	const nextSubCategory =
+		currentCategorySubCategories[curentSubCategoryIndex + 1];
 
-  return (
-    <Stack spacing={2} alignItems='center' m={2}>
-      <Typography variant='h6'>{subCategory.name}</Typography>
-      <CircularProgressLabel value={100} size={150} fontSize='xx-large'/>
-      <Typography variant='subtitle2' sx={{textAlign: 'center'}}>
-        Based on your previous answers, we were
-        able to skip a few questions
-      </Typography>
-      <Typography variant='caption' sx={{textAlign: 'center'}}>
-        you can still see them if you go back to caterogy
-        and select "view all questions"
-      </Typography>
-        <Button variant="contained" endIcon={<EastOutlinedIcon />}
-        disabled={!nextSubCategory}
-        onClick={() => navigate(nextSubCategory ? `/RNAs/${rnaId}/${categoryId}/${nextSubCategory.id}` : `/RNAs/${rnaId}/review`)}>
-          {nextSubCategory ? 'Next Sub Category' : 'Review'}
-        </Button>
-        <Button variant="outlined" startIcon={<WidgetsOutlinedIcon />}
-        onClick={() => navigate(`/RNAs/${rnaId}`)}>
-          Show all categories
-        </Button>
-    </Stack>
-  )
-}
+	return (
+		<Stack spacing={4} alignItems='center' m={2}>
+			<Typography variant='h4' textAlign='center'>
+				<b>{subCategory.name}</b>
+			</Typography>
+			<CircularProgressLabel
+				value={100}
+				size={200}
+				fontSize='xx-large'
+				sx={(theme) => ({ color: theme.colors.utility })}
+			/>
+			<Typography variant='subtitle2' sx={{ textAlign: 'center' }}>
+				Based on your previous answers, we were able to skip a few
+				questions
+			</Typography>
+			<Typography variant='caption' sx={{ textAlign: 'center' }}>
+				you can still see them if you go back to caterogy and select
+				"view all questions"
+			</Typography>
+			<Stack spacing={2}>
+				<Button
+					variant='contained'
+					endIcon={<EastOutlinedIcon />}
+					disabled={!nextSubCategory}
+					onClick={() =>
+						navigate(
+							`/RNAs/${rnaId}/${categoryId}/${nextSubCategory.id}`
+						)
+					}
+				>
+					{nextSubCategory ? 'Next Sub Category' : 'All Done'}
+				</Button>
+				<Button
+					variant='outlined'
+					startIcon={<WidgetsOutlinedIcon />}
+					onClick={() => navigate(`/RNAs/${rnaId}`)}
+				>
+					Show all categories
+				</Button>
+			</Stack>
+		</Stack>
+	);
+};
 
 export default CompletedSubCategory;

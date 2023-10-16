@@ -1,12 +1,13 @@
 const actionButton = {
-  width: '120px',
-  height: '50px',
+  width: '180px',
+  height: '60px',
   '& svg': {
     fontSize: '22px !important',
   },
 };
 
 const nextButton = (theme, isDisabled) => ({
+  height: '60px',
   color: !isDisabled && 'white !important',
   backgroundColor: !isDisabled && theme.colors.utility,
   '&:hover': {
@@ -17,14 +18,6 @@ const nextButton = (theme, isDisabled) => ({
   },
 });
 
-const defaultSkipButton = {
-  py: 2,
-  px: 4,
-  backgroundColor: 'white',
-  color: 'black',
-  border: 'solid 1px lightgrey'
-};
-
-const styles = { actionButton, nextButton, defaultSkipButton };
+const styles = { actionButton, nextButton };
 
 export default styles;

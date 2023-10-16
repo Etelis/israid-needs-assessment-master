@@ -20,6 +20,7 @@
     "@tanstack/react-query-persist-client": "^4.32.6",
     "axios": "^1.4.0",
     "idb-keyval": "^6.2.1",
+    "lodash": "^4.17.21",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.45.4",

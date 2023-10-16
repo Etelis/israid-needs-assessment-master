@@ -8,39 +8,39 @@ import Routes from './routes';
 import { ThemeProvider } from './theme';
 
 const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      cacheTime: Infinity,
-    },
-  },
+	defaultOptions: {
+		queries: {
+			cacheTime: Infinity,
+		},
+	},
 });
 
 const createIDBPersister = (idbValidKey = 'reactQuery') => ({
-  persistClient: async (client) => {
-    set(idbValidKey, client);
-  },
-  restoreClient: async () => {
-    return await get(idbValidKey);
-  },
-  removeClient: async () => {
-    await del(idbValidKey);
-  },
+	persistClient: async (client) => {
+		set(idbValidKey, client);
+	},
+	restoreClient: async () => {
+		return await get(idbValidKey);
+	},
+	removeClient: async () => {
+		await del(idbValidKey);
+	},
 });
 
-const persister = createIDBPersister('shit');
+const persister = createIDBPersister();
 
 const App = () => (
-  <PersistQueryClientProvider
-    client={queryClient}
-    persistOptions={{ persister }}
-  >
-    <ThemeProvider>
-      <Router>
-        <Navbar />
-        <Routes />
-      </Router>
-    </ThemeProvider>
-  </PersistQueryClientProvider>
+	<PersistQueryClientProvider
+		client={queryClient}
+		persistOptions={{ persister }}
+	>
+		<ThemeProvider>
+			<Router>
+				<Navbar />
+				<Routes />
+			</Router>
+		</ThemeProvider>
+	</PersistQueryClientProvider>
 );
 
 export default App;

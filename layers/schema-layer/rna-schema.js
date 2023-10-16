@@ -6,7 +6,7 @@ const { dynamoSdkToToolbox } = require("/opt/dynamoSdkToToolbox/index.js");
 
 const DynamoDB = new AWS.DynamoDB();
 const tableDefinition = {
-    TableName: "Rnas",
+    TableName: "Answers",
     AttributeDefinitions: [
       {
         AttributeType: "S",
@@ -20,43 +20,35 @@ const tableDefinition = {
       }
     ],
     BillingMode: "PAY_PER_REQUEST"
-  };
-
-
-const createTable = async () => {
-    return DynamoDB.createTable(tableDefinition).promise()
-        .then(() => {
-            console.log("Table created successfully.");
-        })
-        .catch(error => {
-            console.error("Error creating table:", error);
-            throw error; // Rethrow the error to be caught by the caller
-        });
 };
 
+const createTable = async () => {
+    try {
+      await DynamoDB.createTable(tableDefinition).promise();
+      console.log("Table created successfully.");
+    } catch (error) {
+      console.error("Error creating table:", error);
+    }
+  };
+  
+createTable();   
 
-async function setupEntities() {
-    const tableDefinition = await createTable();
+const RnaTable = new Table({
+    ...dynamoSdkToToolbox(tableDefinition),
+    DocumentClient
+})
 
-    const RnaTable = new Table({
-        ...dynamoSdkToToolbox(tableDefinition),
-        DocumentClient
-    });
+const RNA = new Entity({
+    name: 'RNA',
+    table: RnaTable,
+    attributes: {
+        id: { type: 'string', partitionKey: true, default: () => uuidv4() }, 
+        isCompleted: 'boolean',
+        communityName: 'string',
+        communityType: 'string',
+        location: 'string',
+        creationDate: { type: 'string', default: () => new Date().toISOString() }
+    }
+});
 
-    const RNA = new Entity({
-        name: 'RNA',
-        table: RnaTable,
-        attributes: {
-            id: { type: 'string', partitionKey: true, default: () => uuidv4() }, 
-            isCompleted: 'boolean',
-            communityName: 'string',
-            communityType: 'string',
-            location: 'string',
-            creationDate: { type: 'string', default: () => new Date().toISOString() }
-        }
-    });
-
-    return RNA;
-}
-
-module.exports = { setupEntities }; // Export the setupEntities function
+module.exports = { RNA };

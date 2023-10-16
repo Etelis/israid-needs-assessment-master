@@ -2,7 +2,7 @@ const { Table, Entity } = require('dynamodb-toolbox');
 const { DocumentClient } = require('/opt/aws-dynamo-connector/index.js');
 const { v4: uuidv4 } = require('uuid');
 const AWS = require("aws-sdk");
-const { dynamoSdkToToolbox } = require("/opt/dynamoSdkToToolbox/index.ts");
+const { dynamoSdkToToolbox } = require("/opt/dynamoSdkToToolbox/index.js");
 
 const DynamoDB = new AWS.DynamoDB();
 const tableDefinition = {

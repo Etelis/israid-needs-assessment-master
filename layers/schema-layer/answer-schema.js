@@ -21,12 +21,13 @@ const tableDefinition = {
   BillingMode: "PAY_PER_REQUEST"
 };
 
+await DynamoDB.createTable(tableDefinition).promise()
+
 const AnswerTable = new Table({
     ...dynamoSdkToToolbox(tableDefinition),
     DocumentClient
 })
 
-await DynamoDB.createTable(tableDefinition).promise()
 
 const Answer = new Entity({
     name: 'Answer',

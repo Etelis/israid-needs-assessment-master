@@ -1,45 +1,22 @@
 import { Box } from '@mui/material';
+import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
-import { api } from '../utils/axios';
 import ProgressOverview from '../components/ProgressOverview';
 import QuestionCategory from '../components/QuestionCategory';
-
+import { useCategoriesContext } from '../context/useCategoriesContext';
 import categories from '../static-data/categories.json';
-import questions from '../static-data/questions.json';
 import subCategories from '../static-data/sub-categories.json';
 
-const getQuestionsAmountForSubCategory = (subCategoryId) =>
-	questions.reduce(
-		(amount, question) =>
-			question.subCategoryId === subCategoryId ? amount + 1 : amount,
-		0
-	);
-
-const isQuestionInAnswers = (question, answers) =>
-	!!answers.find((answer) => answer.questionId === question.id);
-
-const getAnswersAmountForSubCategory = (subCategoryId, rnaAnswers) => {
-	const subCategoryQuestions = questions.filter(
-		(question) => question.subCategoryId === subCategoryId
-	);
-
-	return subCategoryQuestions.reduce(
-		(amount, question) =>
-			isQuestionInAnswers(question, rnaAnswers) ? amount + 1 : amount,
-		0
-	);
-};
-
-const useViewCategories = (rnaAnswers) => {
+const useViewCategories = (
+	rnaAnswers,
+	getQuestionsForSubCategory,
+	getAnswersForSubCategory
+) => {
 	const viewSubCategories = subCategories.map((x) => {
 		return {
 			...x,
-			totalQuestionAmount: getQuestionsAmountForSubCategory(x.id),
-			answeredQuestionAmount: getAnswersAmountForSubCategory(
-				x.id,
-				rnaAnswers
-			),
+			questions: getQuestionsForSubCategory(x.id),
+			answers: getAnswersForSubCategory(x.id, rnaAnswers),
 		};
 	});
 
@@ -52,11 +29,11 @@ const useViewCategories = (rnaAnswers) => {
 			...x,
 			subCategories: categorySubCategories,
 			totalQuestionAmount: categorySubCategories.reduce(
-				(amount, x) => amount + x.totalQuestionAmount,
+				(amount, x) => amount + x.questions.length,
 				0
 			),
 			answeredQuestionAmount: categorySubCategories.reduce(
-				(amount, x) => amount + x.answeredQuestionAmount,
+				(amount, x) => amount + x.answers.length,
 				0
 			),
 		};
@@ -65,24 +42,32 @@ const useViewCategories = (rnaAnswers) => {
 
 const CategoriesList = () => {
 	const { rnaId } = useParams();
-	const { data: rnaAnswers = [], isLoading } = useQuery(
-		['answers', `${rnaId}`],
-		async () => (await api.get(`/rnas/${rnaId}/answers`)).data,
-		{ refetchOnWindowFocus: false }
+	const {
+		fetchAnswers,
+		answers,
+		questions,
+		getQuestionsForSubCategory,
+		getAnswersForSubCategory,
+	} = useCategoriesContext();
+
+	useEffect(() => {
+		fetchAnswers(rnaId);
+	}, [rnaId]);
+
+	const viewCategories = useViewCategories(
+		answers,
+		getQuestionsForSubCategory,
+		getAnswersForSubCategory
 	);
-
-	if (isLoading) {
-		return null;
-	}
-
-	const viewCategories = useViewCategories(rnaAnswers);
 
 	return (
 		<Box>
 			<ProgressOverview
-				leftColumnAmount={65}
+				leftColumnAmount={Math.floor(
+					(answers.length / questions.length) * 100
+				)}
 				leftColumnCaption={'Form Completed'}
-				rightColumnAmount={1080}
+				rightColumnAmount={answers.length}
 				rightColumnCaption={'Questions Answered'}
 			/>
 			{viewCategories?.map((x, index) => (

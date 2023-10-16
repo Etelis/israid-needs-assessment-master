@@ -2,8 +2,8 @@ import { Grid } from '@mui/material';
 import { useState } from 'react';
 import SelectOption from './SelectOption';
 
-const MultiSelectAnswer = ({ defaultAnswer, setAnswer, options }) => {
-  const [selectedOptions, setSelectedOptions] = useState(defaultAnswer || []);
+const MultiSelectAnswer = ({ answer, setAnswer, options }) => {
+  const [selectedOptions, setSelectedOptions] = useState(answer || []);
 
   const onSelect = (option) => {
     let newSelected;
@@ -20,7 +20,7 @@ const MultiSelectAnswer = ({ defaultAnswer, setAnswer, options }) => {
   };
 
   return (
-    <Grid container spacing={2} padding='20px'>
+    <Grid container spacing={2} p={2} pl={0}>
       {options.map((option) => (
         <Grid key={option} item xs={6}>
           <SelectOption

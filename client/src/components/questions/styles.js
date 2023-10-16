@@ -1,5 +1,6 @@
 const questionBox = {
-  margin: '15px 8px',
+  margin: 2,
+  padding: 1,
   textAlign: 'center',
   borderRadius: '5px',
   border: '1px solid gray',

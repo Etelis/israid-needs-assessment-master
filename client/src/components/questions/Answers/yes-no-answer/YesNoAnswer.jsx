@@ -7,11 +7,13 @@ const YesNoAnswer = ({ answer, setAnswer }) => {
       <AnswerButton
         answer='No'
         isSelected={answer === false}
+        selectedColor='#A81313A8'
         onClick={() => setAnswer(false)}
       />
       <AnswerButton
         answer='Yes'
         isSelected={answer}
+        selectedColor='#13A813A8'
         onClick={() => setAnswer(true)}
       />
     </Stack>

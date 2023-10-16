@@ -1,9 +1,10 @@
-import { Box, TextField } from '@mui/material';
-import { get, set } from 'idb-keyval';
-import { useEffect, useState } from 'react';
+import { Stack, TextField } from '@mui/material';
+import { isEqual } from 'lodash';
+import { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { useCategoriesContext } from '../../context/useCategoriesContext';
 import CompletedSubCategory from '../../routes/CompletedSubCategory';
-import questions from '../../static-data/questions.json';
+import useUpdateCacheRnaAnswer from '../../utils/useUpdateCacheRnaAnswer';
 import AnswerInput from './Answers/AnswerInput';
 import PhotoManager from './Answers/PhotoManager';
 import Controls from './Controls/Controls';
@@ -11,123 +12,178 @@ import Question from './Question';
 import styles from './styles';
 
 const isAnswerAsExpected = (answer, question) => {
-  const expectedAnswer = question.dependencies.expectedAnswer;
+	const expectedAnswer = question.dependencies.expectedAnswer;
 
-  if (Array.isArray(answer.value)) {
-    return answer.value.includes(expectedAnswer);
-  }
+	if (Array.isArray(answer.value)) {
+		return answer.value.includes(expectedAnswer);
+	}
 
-  return answer.value === expectedAnswer;
+	return answer.value === expectedAnswer;
 };
 
-const isQuestionReduntent = (question, rnaAnswers) =>
-  !question.dependencies || (
-    rnaAnswers[question.dependencies.questionId] &&
-    isAnswerAsExpected(rnaAnswers[question.dependencies.questionId], question)
-  );
+/*  
+  This function verifies the question dependencies, if a question is relient on another question's
+  answer then we need to ensure the answer recieved on the other question is as expected in the dependency,
+  if not the question can be safely skipped
+*/
+const isQuestionViable = (question, answers) => {
+	if (!question.dependencies) {
+		return true;
+	}
+
+	const dependencyAnswer = answers.find(
+		(x) => x.questionId === question.dependencies.questionId
+	);
+
+	return dependencyAnswer && isAnswerAsExpected(dependencyAnswer, question);
+};
 
 const QuestionPage = () => {
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [attachedPhotos, setAttachedPhotos] = useState([]);
-  const [notes, setNotes] = useState();
+	const { subCategoryId, rnaId } = useParams();
+	const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+	const [attachedPhotos, setAttachedPhotos] = useState([]);
+	const [currentNotes, setCurrentNotes] = useState('');
+	const [currentValue, setCurrentValue] = useState();
+	const {
+		getQuestionsForSubCategory,
+		getAnswersForSubCategory,
+		fetchAnswers,
+		answers: rnaAnswers,
+	} = useCategoriesContext();
+	const [answers, setAnswers] = useState(
+		getAnswersForSubCategory(subCategoryId)
+	);
+	const [questions, setQuestions] = useState(
+		getQuestionsForSubCategory(subCategoryId)
+	);
+	const oldAnswerRef = useRef();
 
-  const [rnaAnswers, setRnaAnswers] = useState({});
-  const [isLoading, setIsLoading] = useState(true);
-  
-  const subCategoryId = useParams().subCategoryId;
-  const rnaId = useParams().rnaId;
+	useEffect(() => {
+		setCurrentQuestionIndex(0);
+		setAnswers(getAnswersForSubCategory(subCategoryId));
+		setQuestions(getQuestionsForSubCategory(subCategoryId));
+	}, [subCategoryId, rnaId]);
 
-  const subCategoryQuestions = questions.filter(x => x.subCategoryId === subCategoryId);
-  const viewQuestions = subCategoryQuestions.filter(x => isQuestionReduntent(x, rnaAnswers));
+	useEffect(() => {
+		setAnswers(getAnswersForSubCategory(subCategoryId));
+	}, [rnaAnswers]);
 
-  useEffect(() => {
-    get(rnaId)
-      .then(currentRnaAnswers => {
-        if (!currentRnaAnswers) {
-          return;
-        }
+	const viableQuestions = questions.filter((x) =>
+		isQuestionViable(x, answers)
+	);
 
-        setRnaAnswers(currentRnaAnswers);
-      }).finally(() => setIsLoading(false))
-  }, []);
+	const currentQuestion = viableQuestions[currentQuestionIndex];
 
-  if (isLoading) {
-    return null;
-  }
+	const setAnswerFields = () => {
+		oldAnswerRef.current = answers.find(
+			(x) => x.questionId === currentQuestion.id
+		);
 
-  if (currentQuestionIndex >= viewQuestions.length) {
-    return <CompletedSubCategory/>;
-  }
+		if (oldAnswerRef.current) {
+			setCurrentNotes(oldAnswerRef.current.notes);
+			setCurrentValue(oldAnswerRef.current.value);
+			setAttachedPhotos(oldAnswerRef.current.photos);
+		}
+	};
 
-  const currentQuestion = viewQuestions[currentQuestionIndex];
-  const currentAnswer = rnaAnswers[currentQuestion.id] ?? {};
+	useEffect(() => {
+		if (currentQuestion) {
+			setAnswerFields();
+		}
+	}, [currentQuestion?.id, answers]);
 
-  const setCurrentAnswer = value => {
-    setRnaAnswers(oldAnswers => ({
-      ...oldAnswers,
-      [currentQuestion.id]: {
-        questionId: currentQuestion.id,
-        value,
-        photos: attachedPhotos.map(x => x.data),
-        notes: notes
-      }
-    }));
-  }
-  
-  const skip = () => {
-    setCurrentQuestionIndex(currentQuestionIndex + 1);
-  }
+	if (currentQuestionIndex >= viableQuestions.length) {
+		return <CompletedSubCategory />;
+	}
 
-  const prev = () => {
-    setCurrentQuestionIndex(currentQuestionIndex - 1);
-  }
+	const resetAnswerFields = () => {
+		setCurrentNotes('');
+		setCurrentValue(null);
+		setAttachedPhotos([]);
+	};
 
-  const persistAnswers = async () => {
-    await set(rnaId, rnaAnswers);
-    
-    setCurrentQuestionIndex(currentQuestionIndex + 1);
-  }
+	const skip = () => {
+		setCurrentQuestionIndex(currentQuestionIndex + 1);
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    
-    persistAnswers();
-  };
+		resetAnswerFields();
+	};
 
-  return (
-    <Box>
-      <Question question={currentQuestion.title} />
-      <form onSubmit={handleSubmit}>
-        <AnswerInput
-          question={currentQuestion}
-          answer={currentAnswer.value}
-          setAnswer={setCurrentAnswer}
-        />
+	const prev = () => {
+		setCurrentQuestionIndex(currentQuestionIndex - 1);
 
-        <PhotoManager
-          attachedPhotos={attachedPhotos}
-          setAttachedPhotos={setAttachedPhotos}
-        />
+		resetAnswerFields();
+	};
 
-        <TextField
-          label='Additional Notes...'
-          fullWidth
-          multiline
-          rows='2'
-          sx={styles.notesBox}
-          value={notes}
-          onChange={(e) => setNotes(e.target.value)}
-        />
+	const saveUpdatedAnswer = async () => {
+		const newAnswer = {
+			questionId: currentQuestion.id,
+			value: currentValue,
+			photos: attachedPhotos,
+			notes: currentNotes,
+		};
 
-        <Controls
-          onPrev={prev}
-          canGoPrev={currentQuestionIndex !== 0}
-          canGoNext={currentAnswer.value != null}
-          onSkip={skip}
-        />
-      </form>
-    </Box>
-  );
+		const oldAnswer = {
+			questionId: oldAnswerRef.current.questionId,
+			value: oldAnswerRef.current.value,
+			photos: oldAnswerRef.current.photos,
+			notes: oldAnswerRef.current.notes,
+		};
+
+		if (!isEqual(oldAnswer, newAnswer)) {
+			await useUpdateCacheRnaAnswer(rnaId, newAnswer);
+			await fetchAnswers(rnaId);
+			console.log('newAnswer', newAnswer);
+		}
+	};
+
+	const handleSubmit = async (event) => {
+		event.preventDefault();
+
+		await saveUpdatedAnswer();
+
+		skip();
+	};
+
+	return (
+		<form onSubmit={handleSubmit}>
+			<Stack
+				minHeight='80vh'
+				p={2}
+				spacing={3}
+				justifyContent='space-around'
+			>
+				<Question question={currentQuestion.title} />
+
+				<AnswerInput
+					question={currentQuestion}
+					answer={currentValue}
+					setAnswer={setCurrentValue}
+				/>
+
+				<TextField
+					label='Additional Notes...'
+					fullWidth
+					multiline
+					rows='3'
+					sx={styles.notesBox}
+					value={currentNotes}
+					onChange={(e) => setCurrentNotes(e.target.value)}
+				/>
+
+				<PhotoManager
+					attachedPhotos={attachedPhotos}
+					setAttachedPhotos={setAttachedPhotos}
+				/>
+
+				<Controls
+					onPrev={prev}
+					canGoPrev={currentQuestionIndex !== 0}
+					canGoNext={currentValue != null}
+					onSkip={skip}
+				/>
+			</Stack>
+		</form>
+	);
 };
 
 export default QuestionPage;

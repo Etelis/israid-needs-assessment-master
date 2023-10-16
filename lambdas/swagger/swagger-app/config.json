@@ -8,7 +8,7 @@
     ],
     "Api_Settings": {
         "Method": "GET",
-        "Api_Name": "IsraAID app2",
+        "Api_Name": "IsraAID app",
         "Path": "/api-docs",
         "Integration": true,
         "Model": ""

@@ -6,7 +6,7 @@ const { dynamoSdkToToolbox } = require("/opt/dynamoSdkToToolbox/index.js");
 
 const DynamoDB = new AWS.DynamoDB();
 const tableDefinition = {
-    TableName: "Answers",
+    TableName: "Rnas",
     AttributeDefinitions: [
       {
         AttributeType: "S",

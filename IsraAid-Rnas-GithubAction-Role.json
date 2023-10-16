@@ -1,0 +1,34 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": [
+                "lambda:CreateFunction",
+                "iam:GetRole",
+                "lambda:ListFunctions",
+                "apigateway:*",
+                "apigateway:PUT",
+                "lambda:GetLayerVersion",
+                "lambda:GetFunction",
+                "lambda:PublishLayerVersion",
+                "lambda:UpdateFunctionConfiguration",
+                "iam:CreateRole",
+                "lambda:GetFunctionConfiguration",
+                "iam:AttachRolePolicy",
+                "amplify:ListApps",
+                "apigateway:DELETE",
+                "lambda:UpdateFunctionCode",
+                "iam:PassRole",
+                "apigateway:PATCH",
+                "lambda:DeleteLayerVersion",
+                "lambda:ListLayerVersions",
+                "apigateway:POST",
+                "apigateway:GET",
+                "amplify:UpdateApp"
+            ],
+            "Resource": "*"
+        }
+    ]
+}

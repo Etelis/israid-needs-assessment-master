@@ -56,7 +56,7 @@ async function setupEntities() {
         }
     });
 
-    module.exports = { RNA };
+    return RNA;
 }
 
-setupEntities();
+module.exports = { setupEntities }; // Export the setupEntities function

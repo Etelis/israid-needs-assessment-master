@@ -1,6 +1,7 @@
 {
     "dependencies": {
         "dynamodb-toolbox": "^0.8.5",
-        "uuid": "^9.0.0"
+        "uuid": "^9.0.0",
+        "aws-sdk": "^2.0.0"
     }
 }

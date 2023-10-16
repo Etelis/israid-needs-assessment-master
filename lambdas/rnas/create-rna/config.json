@@ -5,7 +5,8 @@
     "Timeout": 15,
     "Layers": [
         "schema-layer",
-        "aws-dynamo-connector"
+        "aws-dynamo-connector",
+        "dynamoSdkToToolbox"
     ],
     "Api_Settings": {
         "Method": "POST",

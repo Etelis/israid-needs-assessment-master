@@ -1,12 +1,32 @@
 const { Table, Entity } = require('dynamodb-toolbox');
 const { DocumentClient } = require('/opt/aws-dynamo-connector/index.js');
 const { v4: uuidv4 } = require('uuid');
+const { DynamoDB } = require("/opt/dynamoSdkToToolbox/aws-sdk");
+const { dynamoSdkToToolbox } = require("/opt/dynamoSdkToToolbox/index.ts");
+
+const tableDefinition = {
+  TableName: "Answers",
+  AttributeDefinitions: [
+    {
+      AttributeType: "S",
+      AttributeName: "id",
+    }
+  ],
+  KeySchema: [
+    {
+      AttributeName: "id",
+      KeyType: "HASH",
+    }
+  ],
+  BillingMode: "PAY_PER_REQUEST"
+};
 
 const AnswerTable = new Table({
-    name: 'Answers', 
-    partitionKey: 'id', 
-    DocumentClient: DocumentClient, 
-});
+    ...dynamoSdkToToolbox(tableDefinition),
+    DocumentClient
+})
+
+await DynamoDB.createTable(tableDefinition).promise()
 
 const Answer = new Entity({
     name: 'Answer',
@@ -21,5 +41,6 @@ const Answer = new Entity({
         creationDate: { type: 'string', default: () => new Date().toISOString() }
     }
 });
+
 
 module.exports = { Answer };

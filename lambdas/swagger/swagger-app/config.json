@@ -8,14 +8,14 @@
     ],
     "Api_Settings": {
         "Method": "GET",
-        "Api_Name": "IsraAID app",
+        "Api_Name": "IsraAID app2",
         "Path": "/api-docs",
         "Integration": true,
         "Model": ""
     },
     "Api_Settings2": {
         "Method": "GET",
-        "Api_Name": "IsraAID app2",
+        "Api_Name": "IsraAID app",
         "Path": "/api-docs/{proxy+}",
         "Integration": true,
         "Model": ""

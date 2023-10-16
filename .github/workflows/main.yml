@@ -426,7 +426,7 @@ jobs:
 
       - name: Export to amplify env vars
         run: |
-          app_name=$(echo "${{github.repo}}" | cut -d'/' -f2)
+          app_name=$(echo "${{ github.repository }}" | cut -d'/' -f2)
           app_id=$(aws amplify list-apps \
             --query "apps[?name=='$app_name'].appId" \
             --output text --region eu-central-1)

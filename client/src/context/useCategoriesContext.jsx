@@ -1,14 +1,22 @@
-import { createContext, useContext, useReducer } from 'react';
+import {
+	createContext,
+	useContext,
+	useEffect,
+	useMemo,
+	useReducer,
+} from 'react';
 import questions from '../static-data/questions.json';
+import subCategories from '../static-data/sub-categories.json';
 import { useQueryClient } from '@tanstack/react-query';
 import useSavedAndCachedRnaAnswers from '../utils/useSavedAndCachedRnaAnswers';
+import { useParams } from 'react-router-dom';
 
 // Initial data for questions, answers, and rnas
 // Can Eventually populate the questions from the DB instead of static data
 const initialData = {
 	questions,
-	answers: [],
-	rnas: [],
+	rnaAnswers: [],
+	subCategories: [],
 };
 
 const CategoriesContext = createContext(initialData);
@@ -25,64 +33,76 @@ const dataReducer = (state, action) => {
 				...state,
 				questions: action.payload,
 			};
-		case 'SET_ANSWERS':
-			return { ...state, answers: action.payload };
-		case 'SET_RNAS':
-			return { ...state, rnas: action.payload };
+		case 'SET_RNA_ANSWERS':
+			return { ...state, rnaAnswers: action.payload };
+		case 'SET_SUB_CATEGORIES':
+			return { ...state, subCategories: action.payload };
 		default:
 			return state;
 	}
 };
 
+const getQuestionsForSubCategory = (subCategoryId, questions) =>
+	questions.filter((question) => question.subCategoryId === subCategoryId);
+
+const getAnswersForSubCategory = (subCategoryId, rnaAnswers, questions) => {
+	const subCategoryQuestionsIds = getQuestionsForSubCategory(
+		subCategoryId,
+		questions
+	).map((x) => x.id);
+
+	return rnaAnswers.filter((answer) =>
+		subCategoryQuestionsIds.includes(answer.questionId)
+	);
+};
+
+const buildSubCategories = (questions, rnaAnswers) =>
+	subCategories.map((x) => {
+		return {
+			...x,
+			questions: getQuestionsForSubCategory(x.id, questions),
+			answers: getAnswersForSubCategory(x.id, rnaAnswers, questions),
+		};
+	});
+
 export const CategoriesProvider = ({ children }) => {
 	const [state, dispatch] = useReducer(dataReducer, initialData);
+	const { rnaId } = useParams();
 	const queryClient = useQueryClient();
+
+	const fetchRnaAnswers = async () => {
+		const result = await useSavedAndCachedRnaAnswers(rnaId, queryClient);
+
+		dispatch({ type: 'SET_RNA_ANSWERS', payload: result ?? [] });
+	};
 
 	const setQuestions = (questions) => {
 		dispatch({ type: 'SET_QUESTIONS', payload: questions ?? [] });
 	};
 
-	const setAnswers = (answers) => {
-		dispatch({ type: 'SET_ANSWERS', payload: answers ?? [] });
+	const setSubCategories = (subCategories) => {
+		dispatch({ type: 'SET_SUB_CATEGORIES', payload: subCategories ?? [] });
 	};
 
-	const setRnas = (rnas) => {
-		dispatch({ type: 'SET_RNAS', payload: rnas ?? [] });
-	};
+	useEffect(() => {
+		fetchRnaAnswers();
+	}, [rnaId]);
 
-	const getQuestionsForSubCategory = (subCategoryId) =>
-		state.questions.filter(
-			(question) => question.subCategoryId === subCategoryId
-		);
+	useEffect(() => {
+		setSubCategories(buildSubCategories(state.questions, state.rnaAnswers));
+	}, [state.rnaAnswers]);
 
-	const getAnswersForSubCategory = (subCategoryId) => {
-		const subCategoryQuestionsIds = getQuestionsForSubCategory(
-			subCategoryId
-		).map((x) => x.id);
-
-		return state.answers.filter((answer) =>
-			subCategoryQuestionsIds.includes(answer.questionId)
-		);
-	};
-
-	const fetchAnswers = async (rnaId) => {
-		const result = await useSavedAndCachedRnaAnswers(rnaId, queryClient);
-
-		setAnswers(result);
-	};
+	const value = useMemo(
+		() => ({
+			...state,
+			setQuestions,
+			fetchRnaAnswers,
+		}),
+		[state]
+	);
 
 	return (
-		<CategoriesContext.Provider
-			value={{
-				...state,
-				setQuestions,
-				setAnswers,
-				setRnas,
-				getQuestionsForSubCategory,
-				getAnswersForSubCategory,
-				fetchAnswers,
-			}}
-		>
+		<CategoriesContext.Provider value={value}>
 			{children}
 		</CategoriesContext.Provider>
 	);

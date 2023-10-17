@@ -3,16 +3,20 @@ import { useState } from 'react';
 import { ContinueButton } from '../../components/ContinueButton';
 import ProgressOverview from '../../components/ProgressOverview';
 import RNAFilterOptions from '../../enums/RNAFilterOptions';
-import useRnasQuery from '../../utils/useRnasQuery';
+import useRnas from '../../utils/useRnas';
 import { FilterActionButtons } from './FilterActionButtons';
 import { ProgressCard } from './ProgressCard';
 import { SearchFilter } from './SearchFilter';
 import styles from './styles';
+import { useQueryClient } from '@tanstack/react-query';
+import useOnlineStatus from '../../utils/useOnlineStatus';
 
 export const RNAs = () => {
+	const queryClient = useQueryClient();
 	const [activeFilter, setActiveFilter] = useState(RNAFilterOptions.ALL);
-	const { data: rnas = [], isLoading } = useRnasQuery();
+	const rnas = useRnas(queryClient) ?? [];
 	const [nameFilter, setNameFilter] = useState('');
+	const isOnline = useOnlineStatus();
 
 	const handleNameFilterChange = (event) => {
 		setNameFilter(event.target.value);
@@ -48,24 +52,23 @@ export const RNAs = () => {
 				onChange={handleNameFilterChange}
 			/>
 			<List sx={styles.rnasList}>
-				{!isLoading &&
-					filteredRnas.map(
-						({ id, lastSyncDate, creationDate, communityName }) => (
-							<ProgressCard
-								sx={styles.rna}
-								value={Math.floor(Math.random() * 101)} // TODO: evaluate % based on number of questions answered
-								key={id}
-								lastSyncDate={new Date(
-									lastSyncDate ?? creationDate
-								).toLocaleDateString('en-US')}
-								communityName={communityName}
-								route={id}
-							/>
-						)
-					)}
+				{filteredRnas.map(
+					({ id, lastSyncDate, creationDate, communityName }) => (
+						<ProgressCard
+							sx={styles.rna}
+							value={Math.floor(Math.random() * 101)} // TODO: evaluate % based on number of questions answered
+							key={id}
+							lastSyncDate={new Date(
+								lastSyncDate ?? creationDate
+							).toLocaleDateString('en-US')}
+							communityName={communityName}
+							route={id}
+						/>
+					)
+				)}
 			</List>
-			<ContinueButton link='add' sx={styles.newRnaButton}>
-				<Typography>New RNA</Typography>
+			<ContinueButton link='add' sx={styles.newRnaButton} disabled={!isOnline}>
+				<Typography>{ isOnline ? 'New RNA' : 'Offline...' }</Typography>
 			</ContinueButton>
 		</Stack>
 	);

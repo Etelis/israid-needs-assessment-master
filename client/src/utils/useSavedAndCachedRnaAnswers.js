@@ -1,5 +1,5 @@
 import { get } from 'idb-keyval';
-import { useRnaAnswers } from './useRnaAnswersQuery';
+import useRnaAnswers from './useRnaAnswers';
 
 const mergeAnswers = (oldAnswers, updatedAnswers) => {
 	let mergedAnswers = [...oldAnswers];

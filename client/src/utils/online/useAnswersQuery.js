@@ -1,5 +1,5 @@
 import { useQueries } from '@tanstack/react-query';
-import { api } from './axios';
+import { api } from '../axios';
 
 const useAnswersQuery = (rnas) => {
 	const fetchRnaAnswers = (rnaId) => async () =>
@@ -10,7 +10,7 @@ const useAnswersQuery = (rnas) => {
 		queryFn: fetchRnaAnswers(rna.id),
 	}));
 
-	return useQueries({queries: answerQueries});
+	return useQueries({ queries: answerQueries });
 };
 
 export default useAnswersQuery;

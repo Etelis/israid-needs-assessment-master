@@ -10,7 +10,7 @@ const useAnswersQuery = (rnas) => {
 		queryFn: fetchRnaAnswers(rna.id),
 	}));
 
-	return useQueries({queries: answerQueries});
+	return useQueries({ queries: answerQueries });
 };
 
 export default useAnswersQuery;

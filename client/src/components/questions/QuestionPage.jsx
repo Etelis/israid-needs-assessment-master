@@ -38,44 +38,51 @@ const isQuestionViable = (question, answers) => {
 	return dependencyAnswer && isAnswerAsExpected(dependencyAnswer, question);
 };
 
+const getCurrentSubCategory = (subCategoryId, subCategories) =>
+	subCategories.find((x) => x.id === subCategoryId);
+
+const isCurrentAnswerValid = (answer) => {
+	if (typeof answer === 'string') {
+		return answer !== '';
+	} else if (Array.isArray(answer)) {
+		return answer.length > 0;
+	} else if (typeof answer === 'boolean') {
+		return true;
+	} else {
+		return !!answer;
+	}
+};
+
 const QuestionPage = () => {
 	const { subCategoryId, rnaId } = useParams();
 	const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
 	const [attachedPhotos, setAttachedPhotos] = useState([]);
 	const [currentNotes, setCurrentNotes] = useState('');
 	const [currentValue, setCurrentValue] = useState();
-	const {
-		getQuestionsForSubCategory,
-		getAnswersForSubCategory,
-		fetchAnswers,
-		answers: rnaAnswers,
-	} = useCategoriesContext();
-	const [answers, setAnswers] = useState(
-		getAnswersForSubCategory(subCategoryId)
-	);
-	const [questions, setQuestions] = useState(
-		getQuestionsForSubCategory(subCategoryId)
+	const { subCategories, fetchRnaAnswers } = useCategoriesContext();
+	const [currentSubCategory, setCurrentSubCategory] = useState(
+		getCurrentSubCategory(subCategoryId, subCategories)
 	);
 	const oldAnswerRef = useRef();
 
 	useEffect(() => {
 		setCurrentQuestionIndex(0);
-		setAnswers(getAnswersForSubCategory(subCategoryId));
-		setQuestions(getQuestionsForSubCategory(subCategoryId));
-	}, [subCategoryId, rnaId]);
+	}, [subCategoryId]);
 
 	useEffect(() => {
-		setAnswers(getAnswersForSubCategory(subCategoryId));
-	}, [rnaAnswers]);
+		setCurrentSubCategory(
+			getCurrentSubCategory(subCategoryId, subCategories)
+		);
+	}, [subCategories, subCategoryId]);
 
-	const viableQuestions = questions.filter((x) =>
-		isQuestionViable(x, answers)
+	const viableQuestions = currentSubCategory.questions.filter((x) =>
+		isQuestionViable(x, currentSubCategory.answers)
 	);
 
 	const currentQuestion = viableQuestions[currentQuestionIndex];
 
 	const setAnswerFields = () => {
-		oldAnswerRef.current = answers.find(
+		oldAnswerRef.current = currentSubCategory.answers.find(
 			(x) => x.questionId === currentQuestion.id
 		);
 
@@ -90,7 +97,7 @@ const QuestionPage = () => {
 		if (currentQuestion) {
 			setAnswerFields();
 		}
-	}, [currentQuestion?.id, answers]);
+	}, [currentQuestionIndex, currentSubCategory.answers]);
 
 	if (currentQuestionIndex >= viableQuestions.length) {
 		return <CompletedSubCategory />;
@@ -98,7 +105,7 @@ const QuestionPage = () => {
 
 	const resetAnswerFields = () => {
 		setCurrentNotes('');
-		setCurrentValue(null);
+		setCurrentValue(undefined);
 		setAttachedPhotos([]);
 	};
 
@@ -131,7 +138,7 @@ const QuestionPage = () => {
 
 		if (!isEqual(oldAnswer, newAnswer)) {
 			await useUpdateCacheRnaAnswer(rnaId, newAnswer);
-			await fetchAnswers(rnaId);
+			await fetchRnaAnswers();
 			console.log('newAnswer', newAnswer);
 		}
 	};
@@ -178,7 +185,7 @@ const QuestionPage = () => {
 				<Controls
 					onPrev={prev}
 					canGoPrev={currentQuestionIndex !== 0}
-					canGoNext={currentValue != null}
+					canGoNext={isCurrentAnswerValid(currentValue)}
 					onSkip={skip}
 				/>
 			</Stack>

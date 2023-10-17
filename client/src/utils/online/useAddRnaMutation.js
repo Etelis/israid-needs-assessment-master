@@ -1,17 +1,18 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { api } from '../axios';
 
-const useAddRnaMutation = () => {
+const useAddRnaMutation = (onSuccess = () => {}) => {
 	const queryClient = useQueryClient();
 
-	const addRna = async (newRna) =>
-		await api.post('/rnas', newRna).then(async ({data: newRna}) => {
-			await queryClient.fetchQuery(['rnas']);
-			
-			return newRna;
-		});
+	const addRna = async (newRna) => {
+		const { data: newlyCreatedRna } = await api.post('/rnas', newRna);
 
-	return useMutation(addRna);
+		await queryClient.fetchQuery(['rnas']);
+
+		return newlyCreatedRna;
+	};
+
+	return useMutation(addRna, { onSuccess });
 };
 
 export default useAddRnaMutation;

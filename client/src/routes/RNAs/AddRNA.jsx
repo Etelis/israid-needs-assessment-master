@@ -7,7 +7,10 @@ import { useNavigate } from 'react-router-dom';
 
 const AddRNA = () => {
 	const navigate = useNavigate();
-	const { mutateAsync: addRna, isLoading } = useAddRnaMutation();
+	const onAddRnaSuccess = (newlyAddRna) =>
+		navigate(`/RNAs/${newlyAddRna.id}`, { replace: true });
+	const { mutateAsync: addRna, isLoading } =
+		useAddRnaMutation(onAddRnaSuccess);
 	const {
 		register,
 		handleSubmit,
@@ -15,9 +18,7 @@ const AddRNA = () => {
 	} = useForm();
 
 	const onSubmit = (data) => {
-		addRna(data).then((newlyAddRna) =>
-			navigate(`/RNAs/${newlyAddRna.id}`, { replace: true })
-		);
+		addRna(data);
 	};
 
 	return (

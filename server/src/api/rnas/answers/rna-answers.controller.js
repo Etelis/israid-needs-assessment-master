@@ -22,7 +22,7 @@ const hasAnswerChanged = (oldAnswer, newAnswer) => {
 
 export const updateRnaAnswers = (req, res, next) => {
   const {rnaId} = req.params;
-  const {answers: newAnswers} = req.body;
+  const newAnswers = req.body;
 
   Answer.find({rnaId})
     .then(async oldAnswers => {

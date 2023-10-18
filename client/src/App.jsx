@@ -17,7 +17,9 @@ const queryClient = new QueryClient({
   },
 });
 
-const createIDBPersister = (idbValidKey = "reactQuery") => ({
+const createIDBPersister = (
+  idbValidKey = import.meta.env.VITE_REACT_QUERY_KEY
+) => ({
   persistClient: async (client) => {
     set(idbValidKey, client);
   },

@@ -3,42 +3,41 @@
   "category": {
     "id": "objectid",
     "name": "string",
-    "description": "string",
+    "description": "nullable string",
     "iconSrc": "base64"
   },
-  "subCategory": {
+  "subcategory": {
     "id": "objectid",
     "name": "string",
-    "categoryId": "objectid"
+    "categoryid": "objectid"
   },
   "question": {
-    "title": "string",
-    "hintText": "nullable string",
-    "subCatergoryId": "objectid",
-    "type": "yes-no|text|multi-select",
-    "options": [], // If multi-select,
-    "dependencies": {
-      "questionId": "objectid",
-      "expectedAnswer": "boolean|select-option"
-    }
-  },
+    "id": "objectid",
+    "category": "objectid",
+    "subcategory": "objectid",
+    "order": "int",
+    "question": "string",
+    "answertype": "string",
+    "options": "nullable array",
+    "dependency": "nullable int"
+    },
 
   // Dynamic Information
   "rna": {
     "id": "objectid",
-    "status": "",
-    "communityName": "string",
-    "communityType": "nullable string",
-    "lastUpdateDate": "nullable date",
-    "creationDate": "date",
+    "status": "nullable float",
+    "communityname": "string",
+    "communitytype": "nullable string",
+    "lastupdatedate": "nullable datetime",
+    "creationdate": "datetime",
     "location": "nullable array"
   },
   "answer": {
     "id": "objectid",
-    "questionId": "objectid",
-    "rnaId": "objectid",
-    "value": "boolean|string|[string]",
-    "photo": "base64",
+    "questionid": "objectid",
+    "rnaid": "objectid",
+    "value": "nullable array", //can be array - multianswer or single value array - yes/no/maybe
+    "photo": "nullable base64 array",
     "otherText": "string"
   }
 }

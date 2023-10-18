@@ -20,7 +20,16 @@ const answerSchema = new Schema({
   notes: {
     type: SchemaTypes.String,
     required: false
-  }
+  },
+  creationDate: {
+    type: SchemaTypes.Date,
+    required: true,
+    default: () => new Date()
+  },
+  lastUpdateDate: {
+    type: SchemaTypes.Date,
+    required: false
+  },
 }, { versionKey: false });
 
 export const Answer = model('answer', answerSchema);

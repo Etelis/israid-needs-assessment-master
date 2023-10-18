@@ -1,5 +1,5 @@
 export const convertRnaToDto = rna => ({
-  id: rna.permanentId,
+  id: rna._id,
   isCompleted: rna.isCompleted,
   communityName: rna.communityName,
   communityType: rna.communityType,

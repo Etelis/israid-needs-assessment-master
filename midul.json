@@ -1,45 +1,45 @@
 {
   // Static Information
   "category": {
-    "id": "objectid",
+    "id": "uuid",
     "name": "string",
-    "description": "nullable string",
+    "description": "string",
     "iconSrc": "base64"
   },
   "subcategory": {
-    "id": "objectid",
+    "id": "uuid",
     "name": "string",
-    "categoryid": "objectid"
+    "categoryId": "uuid"
   },
   "question": {
-    "id": "objectid",
+    "id": "uuid",
     "category": "objectid",
-    "subcategory": "objectid",
+    "subCategory": "objectid",
     "order": "int",
     "question": "string",
-    "answertype": "string",
-    "options": "nullable array",
-    "dependency": "nullable int"
+    "type": "string", //can be either 'multi-select' / 'yes-no' / 'text'
+    "options": "array",
+    "dependency": "uuid"
     },
 
   // Dynamic Information
   "rna": {
-    "id": "objectid",
-    "status": "nullable float",
-    "communityname": "string",
-    "communitytype": "nullable string",
-    "lastupdatedate": "nullable datetime",
-    "creationdate": "datetime",
-    "location": "nullable array",
-    "answered": "nullable int",
-    "severity": "nullable int"
+    "id": "uuid",
+    "isCompleted": "boolean",
+    "communityName": "string",
+    "communityType": "string",
+    "lastUpdatedOn": "nullable datetime",
+    "createdOn": "datetime",
+    "location": "nullable string",
+    "severity": "int"
   },
   "answer": {
-    "id": "objectid",
-    "questionid": "objectid",
-    "rnaid": "objectid",
-    "value": "nullable array", //can be array - multianswer or single value array - yes/no/maybe
-    "photo": "nullable base64 array",
-    "otherText": "string"
+    "id": "uuid",
+    "questionId": "uuid",
+    "rnaId": "uuid",
+    "value": "string array / boolean / string", //depends on question type -> same order 
+    "photos": "base64 string array",
+    "notes": "string",
+    "createdOn": "datetime"
   }
 }

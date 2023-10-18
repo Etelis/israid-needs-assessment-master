@@ -1,75 +1,82 @@
-import { List, Stack, Typography } from '@mui/material';
-import { useState } from 'react';
-import { ContinueButton } from '../../components/ContinueButton';
-import ProgressOverview from '../../components/ProgressOverview';
-import RNAFilterOptions from '../../enums/RNAFilterOptions';
-import useRnas from '../../utils/useRnas';
-import { FilterActionButtons } from './FilterActionButtons';
-import { ProgressCard } from './ProgressCard';
-import { SearchFilter } from './SearchFilter';
-import styles from './styles';
-import { useQueryClient } from '@tanstack/react-query';
-import useOnlineStatus from '../../utils/useOnlineStatus';
+import { List, Stack, Typography } from "@mui/material";
+import { useState, useEffect } from "react";
+import { ContinueButton } from "../../components/ContinueButton";
+import ProgressOverview from "../../components/ProgressOverview";
+import RNAFilterOptions from "../../enums/RNAFilterOptions";
+import useRnas from "../../utils/useRnas";
+import { FilterActionButtons } from "./FilterActionButtons";
+import { ProgressCard } from "./ProgressCard";
+import { SearchFilter } from "./SearchFilter";
+import styles from "./styles";
+import { useAppDispatch } from "../../redux/store";
+import { setRnas } from "../../redux/reducers/Rnas.slice";
+import { useQueryClient } from "@tanstack/react-query";
+import useOnlineStatus from "../../utils/useOnlineStatus";
 
 export const RNAs = () => {
-	const queryClient = useQueryClient();
-	const [activeFilter, setActiveFilter] = useState(RNAFilterOptions.ALL);
-	const rnas = useRnas(queryClient) ?? [];
-	const [nameFilter, setNameFilter] = useState('');
-	const isOnline = useOnlineStatus();
+  const queryClient = useQueryClient();
+  const [activeFilter, setActiveFilter] = useState(RNAFilterOptions.ALL);
+  const rnas = useRnas(queryClient) ?? [];
+  const [nameFilter, setNameFilter] = useState("");
+  const dispatch = useAppDispatch();
+  const isOnline = useOnlineStatus();
 
-	const handleNameFilterChange = (event) => {
-		setNameFilter(event.target.value);
-	};
+  const handleNameFilterChange = (event) => {
+    setNameFilter(event.target.value);
+  };
 
-	const filteredRnas = rnas.filter((rna) => {
-		const matchesActiveFilter =
-			activeFilter === RNAFilterOptions.ONGOING ? !rna.isCompleted : true;
+  useEffect(() => {
+    dispatch(setRnas(rnas));
+  }, [rnas]);
 
-		if (!nameFilter) {
-			return matchesActiveFilter;
-		}
+  const filteredRnas = rnas.filter((rna) => {
+    const matchesActiveFilter =
+      activeFilter === RNAFilterOptions.ONGOING ? !rna.isCompleted : true;
 
-		const matchesNameFilter = rna?.communityName
-			?.toLowerCase()
-			.includes(nameFilter.toLowerCase());
+    if (!nameFilter) {
+      return matchesActiveFilter;
+    }
 
-		return matchesActiveFilter && matchesNameFilter;
-	});
+    const matchesNameFilter = rna?.communityName
+      ?.toLowerCase()
+      .includes(nameFilter.toLowerCase());
 
-	return (
-		<Stack spacing={3} sx={styles.rnasPage} alignItems='center'>
-			<ProgressOverview
-				rightColumnAmount={8512}
-				rightColumnCaption='Questions Answered'
-				leftColumnAmount={3}
-				leftColumnCaption='RNAs Filled'
-				isLeftColumnInPercentage={false}
-			/>
-			<FilterActionButtons setActiveFilter={setActiveFilter} />
-			<SearchFilter
-				placeholder='Search by name'
-				onChange={handleNameFilterChange}
-			/>
-			<List sx={styles.rnasList}>
-				{filteredRnas.map(
-					({ id, lastSyncDate, creationDate, communityName }) => (
-						<ProgressCard
-							sx={styles.rna}
-							value={Math.floor(Math.random() * 101)} // TODO: evaluate % based on number of questions answered
-							key={id}
-							lastSyncDate={new Date(
-								lastSyncDate ?? creationDate
-							).toLocaleDateString('en-US')}
-							communityName={communityName}
-							route={id}
-						/>
-					)
-				)}
-			</List>
-			<ContinueButton link='add' sx={styles.newRnaButton} disabled={!isOnline}>
-				<Typography>{ isOnline ? 'New RNA' : 'Offline...' }</Typography>
-			</ContinueButton>
-		</Stack>
-	);
+    return matchesActiveFilter && matchesNameFilter;
+  });
+
+  return (
+    <Stack spacing={3} sx={styles.rnasPage} alignItems="center">
+      <ProgressOverview
+        rightColumnAmount={8512}
+        rightColumnCaption="Questions Answered"
+        leftColumnAmount={3}
+        leftColumnCaption="RNAs Filled"
+        isLeftColumnInPercentage={false}
+      />
+      <FilterActionButtons setActiveFilter={setActiveFilter} />
+      <SearchFilter
+        placeholder="Search by name"
+        onChange={handleNameFilterChange}
+      />
+      <List sx={styles.rnasList}>
+        {filteredRnas.map(
+          ({ id, lastSyncDate, creationDate, communityName }) => (
+            <ProgressCard
+              sx={styles.rna}
+              value={Math.floor(Math.random() * 101)} // TODO: evaluate % based on number of questions answered
+              key={id}
+              lastSyncDate={new Date(
+                lastSyncDate ?? creationDate
+              ).toLocaleDateString("en-US")}
+              communityName={communityName}
+              route={id}
+            />
+          )
+        )}
+      </List>
+      <ContinueButton link="add" sx={styles.newRnaButton} disabled={!isOnline}>
+        <Typography>{isOnline ? "New RNA" : "Offline..."}</Typography>
+      </ContinueButton>
+    </Stack>
+  );
 };

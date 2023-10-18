@@ -1,7 +1,8 @@
-import AppBar from '@mui/material/AppBar';
-import Container from '@mui/material/Container';
-import Toolbar from '@mui/material/Toolbar';
-import { appbarContainerStyle } from './styles';
+import AppBar from "@mui/material/AppBar";
+import Container from "@mui/material/Container";
+import Toolbar from "@mui/material/Toolbar";
+import { appbarContainerStyle } from "./styles";
+import BreadcrumbsComponent from "../Breadcrumb";
 
 export const Navbar = () => (
   <>
@@ -13,5 +14,6 @@ export const Navbar = () => (
       </Container>
     </AppBar>
     <Toolbar />
+    <BreadcrumbsComponent />
   </>
-)
+);

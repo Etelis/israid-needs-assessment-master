@@ -15,6 +15,7 @@
     "@fontsource/roboto": "^5.0.8",
     "@mui/icons-material": "^5.14.3",
     "@mui/material": "^5.14.5",
+    "@reduxjs/toolkit": "^1.9.7",
     "@tanstack/query-async-storage-persister": "^4.32.6",
     "@tanstack/react-query": "^4.32.6",
     "@tanstack/react-query-persist-client": "^4.32.6",
@@ -24,7 +25,9 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.45.4",
-    "react-router-dom": "^6.15.0"
+    "react-redux": "^8.1.3",
+    "react-router-dom": "^6.15.0",
+    "redux": "^4.2.1"
   },
   "devDependencies": {
     "@types/react": "^18.2.15",

@@ -22,7 +22,7 @@
 "order": 2,
 "question": " Is school the only education system available?",
 "answertype": "yes-no",
-"options": ["informal education programs", "afternoon activities"],
+"options": [],
 "dependency": 11
 },
 {"id": 13,
@@ -164,7 +164,7 @@
 "category": 2,
 "subcategory": 3,
 "order": 12,
-"question": " Is online learning offered? ",
+"question": " Is online learning offered?� ",
 "answertype": "yes-no",
 "options": [],
 "dependency": 11
@@ -191,7 +191,7 @@
 "category": 2,
 "subcategory": 4,
 "order": 1,
-"question": " Are there language barriers?",
+"question": " Are there language barriers?� ",
 "answertype": "yes-no",
 "options": [],
 "dependency": 194
@@ -209,7 +209,7 @@
 "category": 2,
 "subcategory": 4,
 "order": 3,
-"question": " How can we identify partners for dealing with language barriers?",
+"question": " How can we identify partners for dealing with language barriers?� ",
 "answertype": "multi-select",
 "options": ["Limited vocabulary","different languages", "language complexity", "regional accents and pronunciation challenges "],
 "dependency": 34
@@ -227,7 +227,7 @@
 "category": 2,
 "subcategory": 4,
 "order": 5,
-"question": "How can they be supported and integrated? Are there specific training requirements?",
+"question": "How can they be supported and integrated? Are there specific training requirements?� ",
 "answertype": "multi-select",
 "options": [" Financial support for resources and infrastructure","Technical assistance and expertise","Strengthening community engagement and participation", "Integration into existing programs and initiatives", "Collaboration with relevant stakeholders and organizations","Training in specific skills and knowledge","Capacity-building workshops for community members","Customized training based on identified needs","Ongoing monitoring and evaluation"],
 "dependency": 37
@@ -236,7 +236,7 @@
 "category": 2,
 "subcategory": 4,
 "order": 6,
-"question": " What possible collaborations exist for dealing education for Refugees/IDPs/Migrants?",
+"question": "What possible collaborations exist for dealing education for Refugees/IDPs/Migrants?",
 "answertype": "multi-select",
 "options": ["Partnerships with international NGOs", "coordination with UN agencies", "Collaboration with local schools and universities", "Involvement of community-based organizations", "Joint efforts with host country's education authorities", "Engagement of private sector for funding and resources", "Limited collaborative efforts for education provision"],
 "dependency": ""
@@ -290,7 +290,7 @@
 "category": 3,
 "subcategory": 18,
 "order": 5,
-"question": "What methodologies do they use to implement their interventions? ",
+"question": "What methodologies do they use to implement their interventions?� ",
 "answertype": "multi-select",
 "options": ["Participatory workshops and training", "Information campaigns and awareness raising", "Mobile clinics and medical camps", "Door-to-door surveys and assessments", "Collaborative community meetings", "Skill-building sessions and demonstrations", "Capacity-building through education", "No specific methodologies identified"],
 "dependency": 187
@@ -317,9 +317,9 @@
 "category": 3,
 "subcategory": 24,
 "order": 3,
-"question": "What access to the mass media is there in the area (for example, radio, television, video, newspapers)?",
+"question": "What access to the mass media is there in the area?",
 "answertype": "multi-select",
-"options": [],
+"options": ["radio", "television", "video", "newspapers"],
 "dependency": ""
 },
 {"id": 219,
@@ -336,7 +336,7 @@
 "subcategory": 24,
 "order": 5,
 "question": "Which segments of the population can and should be targeted (for example, mothers, children, community leaders, religious leaders)?",
-"answertype": "multi-select",
+"answertype": "Text",
 "options": [],
 "dependency": ""
 },
@@ -533,7 +533,7 @@
 "category": 3,
 "subcategory": 20,
 "order": 2,
-"question": "What tools does the community usually use to cope with crises/How does the community usually cope? ",
+"question": "What tools does the community usually use to cope with crises/How does the community usually cope?� ",
 "answertype": "multi-select",
 "options": ["Social support networks among community members","Relying on traditional healing practices","Community-based organizations and committees", "Accessing local religious or spiritual resources","Self-help groups for mutual assistance","Engaging in income-generating activities","Sharing resources within extended families", "No specific coping tools or strategies identified"],
 "dependency": ""
@@ -652,7 +652,7 @@
 "order": 2,
 "question": "Which age group is most affected?",
 "answertype": "multi-select",
-"options": [],
+"options": ["0-18", "18-35", "35-50", "50-65", "65+"],
 "dependency": ""
 },
 {"id": 4,
@@ -776,9 +776,9 @@
 "category": 1,
 "subcategory": 16,
 "order": 4,
-"question": " Are there specific health problems for women (e.g. high birth rate, anaemia, sexually transmitted diseases, sexual violence/rape, and abortion)?",
+"question": " Are there specific health problems for women?",
 "answertype": "multi-select",
-"options": [],
+"options": ["high birth rate", "anaemia", "sexually transmitted diseases", "sexual violence/rape", "abortion"],
 "dependency": ""
 },
 {"id": 186,
@@ -1073,7 +1073,7 @@
 "category": 5,
 "subcategory": 7,
 "order": 4,
-"question": "Is there any lack in hygiene promotion activities? If there are,  are they linked with water and sanitation and/or health services?",
+"question": "Is there any lack in hygiene promotion activities? If there are,  are they linked with water and sanitation and/or health services?� ",
 "answertype": "yes-no",
 "options": [],
 "dependency": ""
@@ -1191,7 +1191,7 @@
 "subcategory": 7,
 "order": 3,
 "question": "Which segments of the population can and should be targeted (for example mothers; children; community leaders; religious leaders)?",
-"answertype": "multi-select",
+"answertype": "Text",
 "options": [],
 "dependency": ""
 },
@@ -1686,7 +1686,7 @@
 "subcategory": 10,
 "order": 9,
 "question": " Are there traditional beliefs and practices (for example, the belief that dirty water causes malaria) that relate to vectors and vector-borne disease? Are any of these beliefs or practices either useful or harmful?",
-"answertype": "yes-no",
+"answertype": "multi-select",
 "options": [" Belief that dirty water causes malaria","Hanging certain herbs to repel mosquitoes", "Using specific amulets for protection", "Avoiding certain foods to prevent disease", "Belief in local remedies for mosquito bites", "Traditional practices for preventing mosquito breeding", "No specific traditional beliefs or practices identified"],
 "dependency": ""
 },

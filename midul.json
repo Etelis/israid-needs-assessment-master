@@ -30,7 +30,8 @@
     "communitytype": "nullable string",
     "lastupdatedate": "nullable datetime",
     "creationdate": "datetime",
-    "location": "nullable array"
+    "location": "nullable array",
+    "severity": "nullable int"
   },
   "answer": {
     "id": "objectid",

@@ -31,6 +31,7 @@
     "lastupdatedate": "nullable datetime",
     "creationdate": "datetime",
     "location": "nullable array",
+    "answered": "nullable int",
     "severity": "nullable int"
   },
   "answer": {

@@ -31,7 +31,9 @@
     "lastUpdatedOn": "nullable datetime",
     "createdOn": "datetime",
     "location": "nullable string",
-    "severity": "int"
+    "answered": "nullable int",
+    "lastactivequestion": "nullable int",
+    "severity": "nullable int"
   },
   "answer": {
     "id": "uuid",

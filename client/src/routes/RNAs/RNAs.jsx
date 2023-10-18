@@ -15,7 +15,6 @@ export const RNAs = () => {
   const [activeFilter, setActiveFilter] = useState(RNAFilterOptions.ALL);
   const { data: rnas = [], isLoading } = useRnasQuery();
   const [nameFilter, setNameFilter] = useState("");
-  console.log("rnas", rnas);
   const dispatch = useAppDispatch();
   const handleNameFilterChange = (event) => {
     setNameFilter(event.target.value);

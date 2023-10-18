@@ -1,5 +1,6 @@
 import React from "react";
-import { Typography, Link, Breadcrumbs } from "@mui/material";
+import { Typography, Link, Breadcrumbs, Box } from "@mui/material";
+import { blue } from "@mui/material/colors";
 import { useLocation, useNavigate } from "react-router-dom"; // useHistory got replaced by useNavigate in v.6 +
 import { useAppSelector } from "../redux/store";
 import categories from "../static-data/categories.json";
@@ -17,12 +18,12 @@ function BreadcrumbsComponent() {
    */
   const getCrumbContent = () => {
     const crumbs = pathnames.map((name, index) => {
-      let routeTo = getRoute(pathnames);
+      let routeTo = getRoute(pathnames, name);
       const isLast = index === pathnames.length - 1;
 
       switch (index) {
         case 1:
-          name === "add" ? "" : getRnaName(rnas, name);
+          name = name === "add" ? "New RNA" : getRnaName(rnas, name);
           break;
         case 2:
           name = getCategoryName(name);
@@ -43,10 +44,9 @@ function BreadcrumbsComponent() {
     return crumbs;
   };
 
-  const getRoute = (pathnames) => {
-    const len = pathnames.length;
+  const getRoute = (pathnames, name) => {
     let route;
-    if (len <= 1) {
+    if (name === "RNAs") {
       route = `/RNAs`;
     } else {
       route = `/RNAs/${pathnames[1]}`;
@@ -77,6 +77,7 @@ function BreadcrumbsComponent() {
         key={name}
         color="inherit"
         href={routeTo}
+        underline="none"
         onClick={(event) => {
           handleClick(event, routeTo);
         }}
@@ -88,7 +89,7 @@ function BreadcrumbsComponent() {
 
   const getTextCrumb = (name) => {
     return (
-      <Typography key={name} color="text.primary">
+      <Typography key={name} color={blue[500]}>
         {name}
       </Typography>
     );
@@ -100,9 +101,11 @@ function BreadcrumbsComponent() {
   };
 
   return (
-    <Breadcrumbs separator={">"} aria-label="breadcrumb">
-      {getCrumbContent()}
-    </Breadcrumbs>
+    <Box ml={2} mt={1}>
+      <Breadcrumbs separator={">"} aria-label="breadcrumb">
+        {getCrumbContent()}
+      </Breadcrumbs>
+    </Box>
   );
 }
 

@@ -18,8 +18,8 @@
     "order": "int",
     "question": "string",
     "type": "string", //can be either 'multi-select' / 'yes-no' / 'text'
-    "shownotesifyes": "boolean",
-    "shownotesifno": "boolean",
+    "showNotesIfYes": "boolean",
+    "showNotesIfNo": "boolean",
     "options": "array",
     "dependency": "uuid"
     },

@@ -22,7 +22,7 @@ function BreadcrumbsComponent() {
 
       switch (index) {
         case 1:
-          name = getRnaName(rnas, name);
+          name === "add" ? "" : getRnaName(rnas, name);
           break;
         case 2:
           name = getCategoryName(name);

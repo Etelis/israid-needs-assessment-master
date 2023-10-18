@@ -1,0 +1,6 @@
+statistics
+pandas
+plotly
+fpdf
+base64
+math

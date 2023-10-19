@@ -2,8 +2,8 @@ import EastOutlinedIcon from '@mui/icons-material/EastOutlined';
 import WidgetsOutlinedIcon from '@mui/icons-material/WidgetsOutlined';
 import { Button, Stack, Typography } from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom';
-import { CircularProgressLabel } from '../components/CircularProgressLabel/CircularProgressLabel';
-import subCategories from '../static-data/sub-categories.json';
+import { CircularProgressLabel } from '../../components/CircularProgressLabel/CircularProgressLabel';
+import subCategories from '../../static-data/sub-categories.json';
 
 const CompletedSubCategory = () => {
 	const { rnaId, categoryId, subCategoryId } = useParams();

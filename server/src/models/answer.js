@@ -1,12 +1,18 @@
 import { Schema, SchemaTypes, model } from 'mongoose';
+import { v4 as uuidv4 } from 'uuid'; 
 
 const answerSchema = new Schema({
+  id: {
+    type: SchemaTypes.String,
+    required: true,
+    default: () => uuidv4()
+  },
   questionId: {
     type: SchemaTypes.String,
     required: true
   },
   rnaId: {
-    type: SchemaTypes.ObjectId,
+    type: SchemaTypes.String,
     required: true
   },
   value: {
@@ -21,14 +27,10 @@ const answerSchema = new Schema({
     type: SchemaTypes.String,
     required: false
   },
-  creationDate: {
+  createdOn: {
     type: SchemaTypes.Date,
     required: true,
     default: () => new Date()
-  },
-  lastUpdateDate: {
-    type: SchemaTypes.Date,
-    required: false
   },
 }, { versionKey: false });
 

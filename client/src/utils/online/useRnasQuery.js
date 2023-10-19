@@ -1,10 +1,13 @@
 import { useQuery } from '@tanstack/react-query';
 import { api } from '../axios';
 
-const useRnasQuery = () => {
-	const fetchRnas = async () => (await api.get('/rnas')).data;
+const fetchRnas = async () => (await api.get('/rnas')).data;
 
-	return useQuery(['rnas'], fetchRnas);
+export const rnasQuery = {
+	queryKey: ['rnas'],
+	queryFn: fetchRnas,
 };
+
+const useRnasQuery = () => useQuery(rnasQuery);
 
 export default useRnasQuery;

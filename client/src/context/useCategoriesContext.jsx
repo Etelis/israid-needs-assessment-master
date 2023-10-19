@@ -8,8 +8,9 @@ import {
 import questions from '../static-data/questions.json';
 import subCategories from '../static-data/sub-categories.json';
 import { useQueryClient } from '@tanstack/react-query';
-import useSavedAndCachedRnaAnswers from '../utils/useSavedAndCachedRnaAnswers';
+import getSavedAndCachedRnaAnswers from '../utils/cache/getSavedAndCachedRnaAnswers';
 import { useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 // Initial data for questions, answers, and rnas
 // Can Eventually populate the questions from the DB instead of static data
@@ -71,9 +72,16 @@ export const CategoriesProvider = ({ children }) => {
 	const queryClient = useQueryClient();
 
 	const fetchRnaAnswers = async () => {
-		const result = await useSavedAndCachedRnaAnswers(rnaId, queryClient);
+		try {
+			const result = await getSavedAndCachedRnaAnswers(
+				rnaId,
+				queryClient
+			);
 
-		dispatch({ type: 'SET_RNA_ANSWERS', payload: result ?? [] });
+			dispatch({ type: 'SET_RNA_ANSWERS', payload: result ?? [] });
+		} catch (error) {
+			toast.error('Something Went Wrong Getting Rna Answers');
+		}
 	};
 
 	const setQuestions = (questions) => {

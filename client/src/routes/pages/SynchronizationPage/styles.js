@@ -10,6 +10,10 @@ const progressBar = {
 const syncButton = {
 	color: (theme) => theme.colors.selectedText,
 	backgroundColor: (theme) => theme.colors.utility,
+	'&:hover': {
+		color: (theme) => theme.colors.selectedText,
+		backgroundColor: (theme) => theme.colors.utility,
+	},
 	height: '60px',
 	width: '60%',
 };

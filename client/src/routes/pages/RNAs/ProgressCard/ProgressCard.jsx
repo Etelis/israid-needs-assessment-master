@@ -1,5 +1,5 @@
 import { CardActionArea, CardContent, Card, Stack,Typography,} from '@mui/material';
-import { CircularProgressLabel } from '../../../components/CircularProgressLabel/CircularProgressLabel';
+import { CircularProgressLabel } from '../../../../components/CircularProgressLabel/CircularProgressLabel';
 import { Link } from 'react-router-dom';
 import styles from './styles';
 

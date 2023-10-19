@@ -1,8 +1,8 @@
 import { Stack } from '@mui/material';
 import { useForm } from 'react-hook-form';
-import { ContinueButton } from '../../components/ContinueButton';
-import InputField from '../../components/input-field/InputField';
-import useAddRnaMutation from '../../utils/online/useAddRnaMutation';
+import { ContinueButton } from '../../../components/ContinueButton';
+import InputField from '../../../components/input-field/InputField';
+import useAddRnaMutation from '../../../utils/online/useAddRnaMutation';
 import { useNavigate } from 'react-router-dom';
 
 const AddRNA = () => {

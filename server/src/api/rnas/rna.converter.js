@@ -1,9 +1,9 @@
 export const convertRnaToDto = rna => ({
-  id: rna._id,
+  id: rna.id,
   isCompleted: rna.isCompleted,
   communityName: rna.communityName,
   communityType: rna.communityType,
-  lastUpdateDate: rna.lastUpdateDate,
-  creationDate: rna.creationDate,
+  lastUpdatedOn: rna.lastUpdatedOn,
+  createdOn: rna.createdOn,
   location: rna.location
 });

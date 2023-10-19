@@ -3,13 +3,14 @@ import { isEqual } from 'lodash';
 import { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useCategoriesContext } from '../../context/useCategoriesContext';
-import CompletedSubCategory from '../../routes/CompletedSubCategory';
-import useUpdateCacheRnaAnswer from '../../utils/useUpdateCacheRnaAnswer';
+import CompletedSubCategory from '../../routes/pages/CompletedSubCategory';
+import cacheAnswer from '../../utils/cache/cacheAnswer';
 import AnswerInput from './Answers/AnswerInput';
 import PhotoManager from './Answers/PhotoManager';
 import Controls from './Controls/Controls';
 import Question from './Question';
 import styles from './styles';
+import { toast } from 'react-toastify';
 
 const isAnswerAsExpected = (answer, question) => {
 	const expectedAnswer = question.dependencies.expectedAnswer;
@@ -137,9 +138,18 @@ const QuestionPage = () => {
 		};
 
 		if (!isEqual(oldAnswer, newAnswer)) {
-			await useUpdateCacheRnaAnswer(rnaId, newAnswer);
+			await cacheAnswer({
+				...newAnswer,
+				rnaId,
+				createdOn: new Date(),
+			});
 			await fetchRnaAnswers();
-			console.log('newAnswer', newAnswer);
+
+			console.log('newAnswer', {
+				...newAnswer,
+				rnaId,
+				createdOn: new Date(),
+			});
 		}
 	};
 

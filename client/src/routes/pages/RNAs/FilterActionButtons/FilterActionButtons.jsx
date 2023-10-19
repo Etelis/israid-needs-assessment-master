@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button, Box } from "@mui/material";
 import { styles } from "./styles";
-import RNAFilterOptions from '../../../enums/RNAFilterOptions';
+import RNAFilterOptions from '../../../../enums/RNAFilterOptions';
 
 const FilterActionButtons = ({ setActiveFilter }) => {
   const [activeButton, setActiveButton] = useState(RNAFilterOptions.ALL);

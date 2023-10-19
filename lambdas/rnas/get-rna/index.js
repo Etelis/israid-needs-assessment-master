@@ -5,20 +5,26 @@ exports.handler = async function () {
         const rnas = await RNA.scan();
 
         const formattedRnas = rnas.Items.map((rna) => {
-            const { id, isCompleted, communityName, communityType, lastUpdatedOn, createdOn, location, answered, 
-                lastactivequestion, severity } = rna;
+            const { id, Creator, CreatorPosition, CreatorPhone, Emergency, AffectedHouseholds, communityName, 
+                communityType, location, createdOn, lastUpdatedOn, answered, lastactivequestion, 
+                isCompleted, severity } = rna;
 
             return {
                 id,
-                isCompleted,
+                Creator,
+                CreatorPosition,
+                CreatorPhone,
+                Emergency,
+                AffectedHouseholds,
                 communityName,
                 communityType,
-                lastUpdatedOn,
-                createdOn,
                 location,
+                createdOn,
+                lastUpdatedOn,
                 answered,
                 lastactivequestion,
-                severity,
+                isCompleted,
+                severity
             };
         });
 

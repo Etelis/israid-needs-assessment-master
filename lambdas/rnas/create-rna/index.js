@@ -1,12 +1,25 @@
 const { RNA } = require('/opt/schema-layer/rna-schema.js');
 
 exports.handler = async function (event, context) {
-    const { communityName, communityType, location } = event;
+    const { Creator, CreatorPosition, CreatorPhone, Emergency, AffectedHouseholds, communityName, 
+        communityType, location, createdOn, lastUpdatedOn, answered, lastactivequestion, 
+        isCompleted, severity } = event;
    
-    const rnaItem = {
+    const rnaItem = { // Took out ID field
+        Creator,
+        CreatorPosition,
+        CreatorPhone,
+        Emergency,
+        AffectedHouseholds,
         communityName,
         communityType,
-        location
+        location,
+        createdOn,
+        lastUpdatedOn,
+        answered,
+        lastactivequestion,
+        isCompleted,
+        severity
     };
 
     try {

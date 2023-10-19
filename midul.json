@@ -27,14 +27,19 @@
   // Dynamic Information
   "rna": {
     "id": "uuid",
-    "isCompleted": "boolean",
+    "Creator": "string",
+    "CreatorPosition": "string",
+    "CreatorPhone": "string",
+    "Emergency": "string",
+    "AffectedHouseholds": "float",
     "communityName": "string",
     "communityType": "string",
-    "lastUpdatedOn": "nullable datetime",
-    "createdOn": "datetime",
     "location": "nullable string",
+    "createdOn": "datetime",
+    "lastUpdatedOn": "nullable datetime",
     "answered": "nullable int",
     "lastactivequestion": "nullable int",
+    "isCompleted": "boolean",
     "severity": "nullable int"
   },
   "answer": {

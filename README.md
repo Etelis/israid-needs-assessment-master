@@ -1,6 +1,6 @@
 # IsraAid Needs Assessment Application Overview
 
-Welcome to the IsraAid Needs Assessment application, a powerful tool designed to support humanitarian aid efforts in 3rd world countries. This guide provides an overview of the project, its objectives, and the essential components that make it all possible.
+Welcome to the IsraAid Rapid Needs Assessment application, a powerful tool designed to support humanitarian aid efforts around the globe. This guide provides an overview of the project, its objectives, and the essential components that make it all possible.
 
 ## Table of Contents
 

@@ -18,9 +18,6 @@
     "type": "string", //can be either 'multi-select' / 'yes-no' / 'text'
     "question": "string",
     "order": "int",
-    "showNotes": "boolean",
-    "showNotesIfYes": "boolean",
-    "showNotesIfNo": "boolean",
     "options": "string array",
     "skip": "uuid array"
     },

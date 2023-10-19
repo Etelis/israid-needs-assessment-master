@@ -77,7 +77,7 @@ CAT_TO_SUBCAT = {"Education": ["General", "Refugees/IDPs/Migrants"],
                           "Solid waste disposal",
                           "Vector-borne disease",
                           "Water supply and access"]}
-JSON = [{
+JSON_example = [{
     "category": {
         "id": "2",
         "name": "Education",
@@ -433,10 +433,10 @@ def calac_measure(item):
 
 
 
-def create_measure(subcat, json):
+def create_measure(subcat, JSON_example):
     total_grade = 0.0
     quest_counter = 0
-    for item in json:
+    for item in JSON_example:
         if item["subcategory"]["name"] == subcat:
             total_grade += calac_measure(item)
             quest_counter += 1
@@ -452,19 +452,19 @@ def run_RNA(list):
     return rna_dict
 
 
-def calc_grades(json):
-    rna_dict = run_RNA(json)
+def calc_grades(JSON_example):
+    rna_dict = run_RNA(JSON_example)
     for id in rna_dict:
         for subcat in rna_dict[id]:
-            for item in json:
+            for item in JSON_example:
                 if item["rna"]["id"] == id and item["subcategory"] \
                         ["name"] == subcat:
-                    rna_dict[id][subcat] += create_measure(subcat, json)
+                    rna_dict[id][subcat] += create_measure(subcat, JSON_example)
     return rna_dict
 
 
-def find_main_issue(json):
-    rna_dict = calc_grades(json)
+def find_main_issue(JSON_example):
+    rna_dict = calc_grades(JSON_example)
     main_issues = {}
     for id in rna_dict:
         max_subcats = [key for key, value in rna_dict[id].items() if
@@ -479,8 +479,8 @@ def find_main_issue(json):
     return main_issues
 
 
-def rna_measure(json):
-    rna_dict = calc_grades(json)
+def rna_measure(JSON_example):
+    rna_dict = calc_grades(JSON_example)
     rna_grades = {}
     rna_final_grades = {}
     for rna in rna_dict:
@@ -502,11 +502,11 @@ def rna_measure(json):
     return rna_index
 
 
-def create_percent_chart(json):
+def create_percent_chart(JSON_example):
     fig = go.Figure()
     fig.add_trace(go.Bar(
             y=['questionnaire progress'],
-            x=[float(json[0]['rna']['status'])],
+            x=[float(JSON_example[0]['rna']['status'])],
             name='percent completed',
             orientation='h',
             marker=dict(
@@ -516,7 +516,7 @@ def create_percent_chart(json):
     ))
     fig.add_trace(go.Bar(
             y=['questionnaire progress'],
-            x=[100.0 - float(json[0]['rna']['status'])],
+            x=[100.0 - float(JSON_example[0]['rna']['status'])],
             name='percent remaining',
             orientation='h',
             marker=dict(
@@ -544,8 +544,8 @@ def plot_priorities(cat_dict):
     fig.write_image('categories.png')
 
 
-def categories_index(json, current_rna):
-    rna_dict = calc_grades(json)
+def categories_index(JSON_example, current_rna):
+    rna_dict = calc_grades(JSON_example)
     rna_grades = {}
     rna_categories = {}
     for rna in rna_dict:
@@ -580,20 +580,20 @@ def create_PDF_File():
     pdf.set_auto_page_break(auto=True, margin=15)
     pdf.add_page()
 
-    pdf.general_details(JSON)
+    pdf.general_details(JSON_example)
 
     pdf.set_font('helvetica', '', 16)
 
     pdf.set_title(SECOND_TITLE)
-    test_main_issues = find_main_issue(JSON)
-    problematic_rna = rna_measure(JSON)
+    test_main_issues = find_main_issue(JSON_example)
+    problematic_rna = rna_measure(JSON_example)
 
     for key, value in test_main_issues.items():
         subcat_txt = f'\n In RNA number : {key} , {value} \n'
         rna_txt = f'\n {problematic_rna[key]} \n'
-        categories_index(JSON, key)
+        categories_index(JSON_example, key)
 
-    percent_txt = explain_percentages(float(JSON[0]['rna']['status']))
+    percent_txt = explain_percentages(float(JSON_example[0]['rna']['status']))
 
     with open('insights.txt', 'w') as insights_file:
         insights_file.write(subcat_txt)
@@ -602,14 +602,14 @@ def create_PDF_File():
 
     pdf.print_chapter('insights', 'insights.txt')
 
-    create_percent_chart(JSON)
+    create_percent_chart(JSON_example)
     pdf.image("progress.png", 30, 100, 160, 80)
     pdf.image("categories.png", 30, 170, 160, 100)
 
     pdf.add_page()
     pdf.set_title(THIRD_TITLE)
-    generate_txt(JSON)
-    categories = generate_cat_list(JSON)
+    generate_txt(JSON_example)
+    categories = generate_cat_list(JSON_example)
     photo_y_location = 160
     photo_x_location = 0
     cat_index = 0
@@ -638,3 +638,5 @@ def create_PDF_File():
 
     pdf.output('finalPDF.pdf')
 
+
+create_PDF_File()

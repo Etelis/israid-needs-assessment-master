@@ -16,11 +16,11 @@ Welcome to the IsraAid Rapid Needs Assessment application, a powerful tool desig
 
 ## 1. Introduction
 
-The IsraAid Needs Assessment application is a vital tool designed to empower humanitarian aid workers and support their mission to assess and address urgent needs in 3rd world countries. This innovative application is tailored to function seamlessly in both online and offline environments, ensuring that aid workers can collect essential data under any conditions, even in remote and disconnected regions.
+The IsraAid Rapid Needs Assessment (RNA) application is a vital tool designed to empower humanitarian aid workers and support their mission to assess and address urgent needs around the globe. This innovative application is tailored to function seamlessly in both online and offline environments, ensuring that aid workers can collect essential data under any conditions, even in remote and disconnected regions.
 
 ## 2. Database and Framework
 
-**Database**: To securely manage and store the critical data collected during surveys, our project leverages Amazon DynamoDB, a flexible and scalable database solution.
+**Database**: To securely manage and store the critical data collected during surveys, our project leverages Amazon DynamoDB, a flexible and scalable database solution. In Offline mode the data is stored locally on the mobile device, until synchronization is performed.
 
 **Framework**: The application's runtime environment includes both Node.js and Python functions, chosen for their versatility and adaptability to the diverse needs of humanitarian aid missions.
 
@@ -34,13 +34,13 @@ The deployment architecture encompasses several key components:
 
 - **Layer Deployment**: Layers are used to share resources among Lambda functions, streamlining the development and deployment process.
 
-- **Lambda Function Deployment**: Our Lambda functions, whether built in Node.js or Python, are essential for the functionality of the IsraAid Needs Assessment application.
+- **Lambda Function Deployment**: Our Lambda functions, whether built in Node.js or Python, are essential for the functionality of the IsraAid RNA application.
 
-- **API Gateway Configuration**: API Gateway resources and routes are configured to enable HTTP access to our services, ensuring that aid workers can easily interact with the application.
+- **API Gateway Configuration**: API Gateway resources and routes are configured to enable HTTPS access to our services, ensuring that aid workers can easily and safely interact with the application.
 
 ## 6. Automations
 
-Automation plays a central role in the IsraAid Needs Assessment application. Workflows have been carefully designed to streamline and enhance operational efficiency:
+Automation plays a central role in the IsraAid RNA application. Workflows have been carefully designed to streamline and enhance operational efficiency:
 
 - **Workflow Elaboration**: The application incorporates several automated workflows that manage various processes, including the transformation of Python functions into lambdas. These workflows are designed to simplify tasks, reduce manual intervention, and improve overall system reliability. In other words, you dont have to do anything as an IT guy thanks to Artume <3
 

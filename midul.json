@@ -1,43 +1,51 @@
 {
   // Static Information
   "category": {
-    "id": "objectid",
+    "id": "uuid",
     "name": "string",
-    "description": "nullable string",
+    "description": "string",
     "iconSrc": "base64"
   },
   "subcategory": {
-    "id": "objectid",
+    "id": "uuid",
     "name": "string",
-    "categoryid": "objectid"
+    "categoryId": "uuid"
   },
   "question": {
-    "id": "objectid",
+    "id": "uuid",
     "category": "objectid",
-    "subcategory": "objectid",
-    "order": "int",
+    "subCategory": "objectid",
+    "type": "string", //can be either 'multi-select' / 'yes-no' / 'text'
     "question": "string",
-    "answertype": "string",
-    "options": "nullable array",
-    "dependency": "nullable int"
+    "order": "int",
+    "options": "string array",
+    "skip": "uuid array"
     },
 
   // Dynamic Information
   "rna": {
-    "id": "objectid",
-    "status": "nullable float",
-    "communityname": "string",
-    "communitytype": "nullable string",
-    "lastupdatedate": "nullable datetime",
-    "creationdate": "datetime",
-    "location": "nullable array"
+    "id": "uuid",
+    "Creator": "string",
+    "CreatorPosition": "nullable string",
+    "CreatorPhone": "nullable string",
+    "Emergency": "nullable string",
+    "AffectedHouseholds": "nullable float",
+    "communityName": "string",
+    "communityType": "string",
+    "location": "string",
+    "createdOn": "datetime",
+    "lastUpdatedOn": "datetime",
+    "answered": "int",
+    "isCompleted": "boolean",
+    "severity": "int"
   },
   "answer": {
-    "id": "objectid",
-    "questionid": "objectid",
-    "rnaid": "objectid",
-    "value": "nullable array", //can be array - multianswer or single value array - yes/no/maybe
-    "photo": "nullable base64 array",
-    "otherText": "string"
+    "id": "uuid",
+    "questionId": "uuid",
+    "rnaId": "uuid",
+    "value": "string array / boolean / string", //depends on question type -> same order 
+    "photos": "base64 string array",
+    "notes": "string",
+    "createdOn": "datetime"
   }
 }

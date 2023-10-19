@@ -41,12 +41,12 @@ def compute_similarity(new_question, question_list):
         similarities = query({"inputs": {"source_sentence": new_question, "sentences": question_list}})
         relevant_indices = [i for i in range(len(similarities)) if similarities[i] >= THRESHOLD]
         rel_len = len(relevant_indices)
-        text = f"This Question is similar to {str(rel_len)} question{'s' if rel_len > 1 else ''}: \n" + '\n'.join(
-            question_list) if rel_len > 0 else 'No similar questions found'
+        # text = f"This Question is similar to {str(rel_len)} question{'s' if rel_len > 1 else ''}: \n" + '\n'.join(
+        #     question_list) if rel_len > 0 else 'No similar questions found'
         if rel_len:
-            result = {'similar_questions': [question_list[i] for i in relevant_indices], 'text': text}
+            result = {'similar_questions': [question_list[i] for i in relevant_indices]}
         else:
-            result = {'similar_questions': [], 'text': text}
+            result = {'similar_questions': []}
         #print(text)
         return result
     except Exception as e:
@@ -82,12 +82,12 @@ def lambda_handler(event, context):
 
 # Expected Input Format ######
 # event = {
-#    "source sentence":
-#        "How can I be a good geologist?",
-#    "sentences": [
-#        "What is the step by step guide to invest in share market in india?",
-#        "What is the step by step guide to invest in share market in india?",
-#        "What is the story of Kohinoor (Koh-i-Noor) Diamond?"
-#    ]
-#
-#lambda_handler(event, {})
+#     "source sentence":
+#         "How can I be a good geologist?",
+#     "sentences": [
+#         "What is the step by step guide to invest in share market in india?",
+#         "What is the step by step guide to invest in share market in india?",
+#         "What is the story of Kohinoor (Koh-i-Noor) Diamond?"
+#     ]
+# }
+# lambda_handler(event, {})

@@ -15,13 +15,14 @@
     "id": "uuid",
     "category": "objectid",
     "subCategory": "objectid",
-    "order": "int",
-    "question": "string",
     "type": "string", //can be either 'multi-select' / 'yes-no' / 'text'
+    "question": "string",
+    "order": "int",
+    "showNotes": "boolean",
     "showNotesIfYes": "boolean",
     "showNotesIfNo": "boolean",
-    "options": "array",
-    "dependency": "uuid"
+    "options": "string array",
+    "skip": "uuid array"
     },
 
   // Dynamic Information

@@ -1,6 +1,6 @@
 from openpyxl import Workbook
 
-JSON = [{
+JSON_example = [{
   "category": {
     "id": "5iezgjlw5l",
     "name": "General",
@@ -342,6 +342,9 @@ def generate_excel_report(json):
         ws.cell(row_num, 6).value = len(item['answer']['photo'])
         row_num += 1
     wb.save('report.xlsx')
+
+
+generate_excel_report(JSON_example)
 
 
 

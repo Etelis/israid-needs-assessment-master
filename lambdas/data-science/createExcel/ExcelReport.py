@@ -1,7 +1,4 @@
-import geopy 
-from PIL import Image
-import io
-import folium
+from openpyxl import Workbook
 
 JSON_example = [{
   "category": {
@@ -239,21 +236,35 @@ JSON_example = [{
   }
 }]
 
-def generate_locations(JSON_example):
-    locations = []
-    for item in JSON_example:
-        if item['rna']['location'] not in locations:
-            locations.append(item['rna']['location'])
-    return locations
 
-def create_map(JSON_example):
-    object=geopy.Nominatim(user_agent="Nikki")
-    locations = generate_locations(JSON_example)
-    markers = []
-    map = folium.Map(location=[20,0], tiles="OpenStreetMap", zoom_start=2)
-    for location in locations:
-        h=object.geocode(location)
-        folium.Marker([h.latitude,h.longitude]).add_to(map)
-    map.save("map.html")
+def generate_excel_report(json):
+    wb = Workbook()
+    ws = wb.active
+    headers = ['RNA_id', 'category', 'subcategory', 'question', 'answer', 'images_number']
+    for i in range(len(headers)):
+        ws.cell(row = 1, column = i+1).value = headers[i]
+    row_num = 2
+    for item in json:
+        ws.cell(row= row_num, column = 1).value = item['rna']['id']
+        ws.cell(row= row_num, column = 2).value = item['category']['name']
+        ws.cell(row= row_num, column = 3).value = item['subcategory']['name']
+        ws.cell(row= row_num, column = 4).value = item['question']['question']
+        if item['question']['type'] == 'multi-select':
+          answer_str = ''
+          for answer in item['answer']['value']:
+            if answer == item['answer']['value'][-1]:
+               answer_str += answer
+            else:
+               answer_str += answer + ', '
+          ws.cell(row= row_num, column = 5).value = answer_str
+        else:
+           ws.cell(row = row_num, column = 5).value = str(item['answer']['value'])
+        ws.cell(row_num, 6).value = len(item['answer']['photos'])
+        row_num += 1
+    wb.save('report.xlsx')
 
-create_map(JSON_example)
+
+generate_excel_report(JSON_example)
+
+
+

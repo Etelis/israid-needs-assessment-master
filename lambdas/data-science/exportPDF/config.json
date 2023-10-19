@@ -1,0 +1,17 @@
+{
+  "Handler": "createPdf.lambda_handler",
+  "Runtime": "python3.11",
+  "MemorySize": 128,
+  "Timeout": 250,
+  "Layers": [
+      "PYTHON-DEP-createPdf",
+      "sample-docs"
+  ],
+  "Api_Settings": {
+      "Method": "POST",
+      "Api_Name": "IsraAID app",
+      "Path": "/exportPDF",
+      "Integration": false,
+      "Model": "exportPDF"
+  }
+}

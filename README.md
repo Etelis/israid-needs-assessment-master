@@ -42,7 +42,7 @@ The deployment architecture encompasses several key components:
 
 Automation plays a central role in the IsraAid Needs Assessment application. Workflows have been carefully designed to streamline and enhance operational efficiency:
 
-- **Workflow Elaboration**: The application incorporates several automated workflows that manage various processes, including the transformation of Python functions into learning processes. These workflows are designed to simplify tasks, reduce manual intervention, and improve overall system reliability.
+- **Workflow Elaboration**: The application incorporates several automated workflows that manage various processes, including the transformation of Python functions into lambdas. These workflows are designed to simplify tasks, reduce manual intervention, and improve overall system reliability. In other words, you dont have to do anything as an IT guy thanks to Artume <3
 
 ## 7. Adding New API Endpoints
 

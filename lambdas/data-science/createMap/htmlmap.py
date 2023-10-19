@@ -3,7 +3,7 @@ from PIL import Image
 import io
 import folium
 
-JSON = [{
+JSON_example = [{
     "category": {
         "id": "2",
         "name": "Education",
@@ -202,19 +202,21 @@ JSON = [{
         }
     }]
 
-def generate_locations(json):
+def generate_locations(JSON_example):
     locations = []
-    for item in json:
+    for item in JSON_example:
         if item['rna']['location'] not in locations:
             locations.append(item['rna']['location'])
     return locations
 
-def create_map(json):
+def create_map(JSON_example):
     object=geopy.Nominatim(user_agent="Nikki")
-    locations = generate_locations(json)
+    locations = generate_locations(JSON_example)
     markers = []
     map = folium.Map(location=[20,0], tiles="OpenStreetMap", zoom_start=2)
     for location in locations:
         h=object.geocode(location)
         folium.Marker([h.latitude,h.longitude]).add_to(map)
     map.save("map.html")
+
+create_map(JSON_example)

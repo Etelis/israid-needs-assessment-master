@@ -54,7 +54,7 @@ Our APIs are documented using Swagger for your convenience. You can access the S
 
 ## 9. Conclusion
 
-As an IT professional responsible for the IsraAid Needs Assessment application, your primary tasks involve ensuring smooth operations and maintaining secure access to AWS resources. Here's what you need to do:
+As an IT professional responsible for the IsraAid RNA application, your primary tasks involve ensuring smooth operations and maintaining secure access to AWS resources. Here's what you need to do:
 
 1. **Create a Dedicated User in AWS**: To maintain the security of the application and adhere to best practices, create a dedicated user in AWS with the appropriate permissions. This user should have the necessary access to manage and deploy the application's resources while minimizing any potential security risks.
 

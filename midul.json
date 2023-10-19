@@ -28,19 +28,19 @@
   "rna": {
     "id": "uuid",
     "Creator": "string",
-    "CreatorPosition": "string",
-    "CreatorPhone": "string",
-    "Emergency": "string",
-    "AffectedHouseholds": "float",
+    "CreatorPosition": "nullable string",
+    "CreatorPhone": "nullable string",
+    "Emergency": "nullable string",
+    "AffectedHouseholds": "nullable float",
     "communityName": "string",
     "communityType": "string",
-    "location": "nullable string",
+    "location": "string",
     "createdOn": "datetime",
-    "lastUpdatedOn": "nullable datetime",
-    "answered": "nullable int",
-    "lastactivequestion": "nullable int",
+    "lastUpdatedOn": "datetime",
+    "answered": "int",
+    "lastactivequestion": "int",
     "isCompleted": "boolean",
-    "severity": "nullable int"
+    "severity": "int"
   },
   "answer": {
     "id": "uuid",

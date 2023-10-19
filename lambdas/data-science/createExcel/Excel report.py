@@ -342,12 +342,6 @@ def generate_excel_report(json):
         ws.cell(row_num, 6).value = len(item['answer']['photo'])
         row_num += 1
     wb.save('report.xlsx')
-    print('saved the file')
 
-def main():
-    generate_excel_report(MIDUL_JSON)
-
-if __name__ == '__main__':
-    main()
 
 

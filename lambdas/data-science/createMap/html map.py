@@ -209,12 +209,12 @@ def generate_locations(json):
             locations.append(item['rna']['location'])
     return locations
 
-object=geopy.Nominatim(user_agent="Nikki")
-locations = generate_locations(JSON)
-markers = []
-center =object.geocode("Algiers, Algeria")
-map = folium.Map(location=[20,0], tiles="OpenStreetMap", zoom_start=2)
-for location in locations:
-    h=object.geocode(location)
-    folium.Marker([h.latitude,h.longitude]).add_to(map)
-map.save("map.html")
+def create_map(json):
+    object=geopy.Nominatim(user_agent="Nikki")
+    locations = generate_locations(json)
+    markers = []
+    map = folium.Map(location=[20,0], tiles="OpenStreetMap", zoom_start=2)
+    for location in locations:
+        h=object.geocode(location)
+        folium.Marker([h.latitude,h.longitude]).add_to(map)
+    map.save("map.html")

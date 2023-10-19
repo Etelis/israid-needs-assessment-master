@@ -4,3 +4,4 @@ plotly
 fpdf
 base64
 math
+textblob

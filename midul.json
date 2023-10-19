@@ -39,7 +39,7 @@
     "createdOn": "datetime",
     "lastUpdatedOn": "datetime",
     "answered": "int",
-    "lastactivequestion": "int",
+    "lastactivequestion": "uuid",
     "isCompleted": "boolean",
     "severity": "int"
   },

@@ -1,9 +1,10 @@
 export const convertAnswerToDto = answer => ({
-  id: answer._id,
+  id: answer.id,
   questionId: answer.questionId,
   value: answer.value,
   photos: answer.photos,
   notes: answer.notes,
-  lastUpdateDate: answer.lastUpdateDate,
-  creationDate: answer.creationDate,
+  rnaId: answer.rnaId,
+  lastUpdatedOn: answer.lastUpdatedOn,
+  createdOn: answer.createdOn,
 });

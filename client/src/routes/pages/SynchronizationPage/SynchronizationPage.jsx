@@ -1,55 +1,47 @@
 //TODO: when syncing needs to pull all data from the db, upload the local cache, delete the local cache
-//TODO: this page is accessible only if internet is present
 //TODO: if internet is present and the user has un synced updates (answered new questions for example)
 //TODO: than pop a reminder to the user that he should sync now (every 15 min or so)
 
 import SyncIcon from '@mui/icons-material/Sync';
 import { Button, LinearProgress, Stack, Typography } from '@mui/material';
-import { useQueryClient } from '@tanstack/react-query';
-import { get, set } from 'idb-keyval';
+import { get } from 'idb-keyval';
 import { useEffect, useState } from 'react';
-import useUpdateRnaAnswersMutation from '../../utils/online/useUpdateRnaAnswersMutation';
-import useUploadLocalCache from '../../utils/online/useUploadLocalCache';
-import useLocalCacheChanges from '../../utils/useLocalCacheChanges';
+import {cacheUsageKeyTypes} from '../../../utils/cache/cacheKeyTypes';
+import useSynchronizeMutation from '../../../utils/online/useSynchronizeMutation';
+import getLocalCacheChanges from '../../../utils/cache/getLocalCacheChanges';
 import styles from './styles';
 
 const formatDate = (date) => date;
 
 const SynchronizationPage = () => {
-	const [lastSynced, setLastSynced] = useState();
+	const [lastSynced, setLastSynced] = useState('');
 	const [isLoading, setIsLoading] = useState(false);
-	const queryClient = useQueryClient();
-	const { mutateAsync: updateAnswersMutation } =
-		useUpdateRnaAnswersMutation();
 	const [cacheChanges, setCacheChanges] = useState([]);
+	const { mutateAsync: synchronize } = useSynchronizeMutation();
+
+	const getLastSync = async () => {
+		const lastSync = await get(cacheUsageKeyTypes.lastSync);
+
+		setLastSynced(lastSync);
+	};
+
+	const getCacheChanges = async () => {
+		const localCacheChanges = await getLocalCacheChanges();
+
+		setCacheChanges(localCacheChanges);
+	};
 
 	useEffect(() => {
-		const fetchSyncDate = async () => {
-			const lastSync = await get('lastSync');
-
-			setLastSynced(lastSync);
-		};
-
-		const fetchCacheChanges = async () => {
-			const localCacheChanges = await useLocalCacheChanges();
-
-			setCacheChanges(localCacheChanges);
-		};
-
-		fetchSyncDate();
-		fetchCacheChanges();
+		getLastSync();
+		getCacheChanges();
 	}, []);
 
 	const onSync = async () => {
 		setIsLoading(true);
 
-		await queryClient.refetchQueries();
+		await synchronize();
 
-		await useUploadLocalCache(queryClient, updateAnswersMutation);
-
-		await set('lastSync', new Date());
-
-		await queryClient.refetchQueries();
+		await Promise.all([getLastSync(), getCacheChanges()]);
 
 		setIsLoading(false);
 	};
@@ -77,6 +69,11 @@ const SynchronizationPage = () => {
 						<b>Last Synced: {formatDate(lastSynced)}</b>
 					</Typography>
 				</Stack>
+				{cacheChanges.length > 0 && (
+					<Typography variant='h6'>
+						{`You have ${cacheChanges.length} local changes to upload`}
+					</Typography>
+				)}
 				<Button
 					variant='outlined'
 					endIcon={<SyncIcon />}

@@ -2556,7 +2556,7 @@
     "id": "233",
     "title": "Which segments of the population can and should be targeted (for example, mothers, children, community leaders, religious leaders)?",
     "subCategoryId": "24",
-    "type": "multi-select"
+    "type": "text"
   },
   {
     "id": "230",
@@ -2578,7 +2578,7 @@
     "id": "231",
     "title": "What access to the mass media is there in the area (for example, radio, television, video, newspapers)?",
     "subCategoryId": "24",
-    "type": "multi-select"
+    "type": "text"
   },
   {
     "id": "232",

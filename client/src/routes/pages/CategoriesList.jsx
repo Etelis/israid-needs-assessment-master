@@ -1,10 +1,10 @@
 import { Box } from '@mui/material';
-import ProgressOverview from '../components/ProgressOverview';
-import QuestionCategory from '../components/QuestionCategory';
-import { useCategoriesContext } from '../context/useCategoriesContext';
-import categories from '../static-data/categories.json';
+import ProgressOverview from '../../components/ProgressOverview';
+import QuestionCategory from '../../components/QuestionCategory';
+import { useCategoriesContext } from '../../context/useCategoriesContext';
+import categories from '../../static-data/categories.json';
 
-const useViewCategories = (subCategories) =>
+const getViewCategories = (subCategories) =>
 	categories.map((x) => {
 		const categorySubCategories = subCategories.filter(
 			(y) => y.categoryId === x.id
@@ -31,7 +31,7 @@ const CategoriesList = () => {
 		return null;
 	}
 
-	const viewCategories = useViewCategories(subCategories);
+	const viewCategories = getViewCategories(subCategories);
 
 	return (
 		<Box>

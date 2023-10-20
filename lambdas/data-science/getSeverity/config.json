@@ -9,8 +9,8 @@
     "Api_Settings": {
         "Method": "POST",
         "Api_Name": "IsraAID app",
-        "Path": "/calculateSeverity",
+        "Path": "/getSeverity",
         "Integration": false,
-        "Model": "calculateSeverity"
+        "Model": "getSeverity"
     }
 }

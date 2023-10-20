@@ -35,7 +35,7 @@
     "location": "string",
     "createdOn": "datetime",
     "lastUpdatedOn": "datetime",
-    "isCompleted": "boolean",
+    "isCompleted": "boolean"
   },
   "answer": {
     "id": "uuid",

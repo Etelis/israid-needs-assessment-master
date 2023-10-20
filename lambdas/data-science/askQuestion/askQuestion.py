@@ -51,6 +51,11 @@ def answer_question(question, context):
         logger.error(f"Failed to answer question: {e}")
         raise
 
+''' notes TODO 
+1. confidence_threshold = 0.8, remove confidence from answer
+2. instead of Start-end Characters, send source: string("14-17")
+3. instead of Original File, send filename: string("file_name")
+'''
     # texts_joined = ''.join(texts)
     # question_answerer = pipeline("question-answering", model='distilbert-base-uncased-distilled-squad')
     # best_response = question_answerer(question=question, context=texts_joined)
@@ -58,9 +63,11 @@ def answer_question(question, context):
 
 def lambda_handler(event, context):
     try:
+        context = json.loads(event['context'])['body']['answer']
+    
         #event = json.loads(event['body'])
         question = event['question']
-        context = event['context']
+        # context = event['context']
 
         answer = answer_question(question, context)
 

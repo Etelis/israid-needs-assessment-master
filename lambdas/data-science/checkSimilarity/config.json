@@ -9,8 +9,8 @@
     "Api_Settings": {
         "Method": "POST",
         "Api_Name": "IsraAID app",
-        "Path": "/questionSimilarity",
+        "Path": "/checkSimilarity",
         "Integration": false,
-        "Model": "questionSimilarity"
+        "Model": "checkSimilarity"
     }
 }

@@ -44,15 +44,14 @@ def compute_similarity(new_question, question_list):
         # text = f"This Question is similar to {str(rel_len)} question{'s' if rel_len > 1 else ''}: \n" + '\n'.join(
         #     question_list) if rel_len > 0 else 'No similar questions found'
         if rel_len:
-            result = {'similar_questions': [question_list[i] for i in relevant_indices]}
+            result = {'similarQuestions': [question_list[i] for i in relevant_indices]}
         else:
-            result = {'similar_questions': []}
+            result = {'similarQuestions': []}
         #print(text)
         return result
     except Exception as e:
         logger.error(f"Failed to compute similarity: {e}")
         raise
-
 
 def lambda_handler(event, context):
     try:
@@ -60,11 +59,11 @@ def lambda_handler(event, context):
         new_question = event['source sentence']
         prev_quesitons = event['sentences']
 
-        similarity_scores = compute_similarity(new_question, prev_quesitons)
+        similarQuestions = compute_similarity(new_question, prev_quesitons)
 
         return {
             'statusCode': 200,
-            'body': {'similarity_scores': similarity_scores}
+            'body': {'similarQuestions': similarQuestions}
         }
     except ClientError as e:
         logger.error(f"Client error: {e}")

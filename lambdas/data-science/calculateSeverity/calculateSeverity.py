@@ -23,7 +23,6 @@ def severity(text):
     sev = 0.8 * ((-1 * sentiment.polarity - (-1)) / 2) + 0.2 * (1 - sentiment.subjectivity)
     return sev
 
-
 def lambda_handler(event, context):
     try:
         # event = json.loads(event['body'])

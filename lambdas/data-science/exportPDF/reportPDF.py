@@ -2,7 +2,6 @@ from statistics import mean
 import pandas as pd
 import plotly.express as px
 from fpdf import FPDF
-import plotly.graph_objects as go
 import base64
 import math
 from textblob import TextBlob
@@ -12,11 +11,11 @@ TITLE_TEMPLATE = 'IsraAid PDF Report'
 MAIN_TITLE = 'About RNA'
 SECOND_TITLE = 'Insights from the findings'
 THIRD_TITLE = 'Questions & Answers'
-POSSIBLE_ANSWERS = ["No", "Maybe", "Yes"]
-CATEGORY_NAMES = ["General", "Education", "Health", "Protection - MHPSS - CFS",
-                  "WASH"]
 
-JSON_example = [{
+LOGO = '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'
+
+
+example_JSON = [{
         "category": {
             "id": "2",
             "name": "Education",
@@ -212,7 +211,7 @@ JSON_example = [{
                 "rnaId": "6sah2013",
                 "value": True,
                 "photos": [],
-                "notes": "",
+                "notes": "VERY BAD!!",
                 "createdOn": "19/10/23"
             }
         },
@@ -265,11 +264,15 @@ JSON_example = [{
                 "createdOn": "19/10/2023"
             }
         }]
+def convert_logo():
+    with open(r"logo_image.png", "wb") as decodeit:
+        decodeit.write(base64.b64decode(LOGO))
 
 class PDF(FPDF):
     def header(self):
         # logo
-        self.image(r"logo.png", 10, 8, 50)
+        convert_logo()
+        self.image(r"logo_image.png", 10, 8, 50)
         # font
         self.set_font('helvetica', 'B', 20)
         # calculate width of title and position
@@ -336,8 +339,8 @@ class PDF(FPDF):
         self.chapter_title(chap_title)
         self.chapter_body(file_name)
 
-    def general_details(self, json):
-        item = json[0]
+    def general_details(self, example_JSON):
+        item = example_JSON[0]
         last_date = item['rna']['lastUpdatedOn']
         creation_date = item['rna']['createdOn']
         location = item['rna']['location']
@@ -350,9 +353,9 @@ class PDF(FPDF):
         # line break
         self.ln()
 
-def generate_subcat_list(json):
+def generate_subcat_list(example_JSON):
     subcat_list = []
-    for item in json:
+    for item in example_JSON:
         if item['subcategory']['name'] not in subcat_list:
             subcat_list.append(item['subcategory']['name'])
     return subcat_list
@@ -381,21 +384,21 @@ def generate_cat_to_subcat(example_JSON):
             cat_to_subcat[item['category']['name']].append(item['subcategory']['name'])
     return cat_to_subcat
 
-def sub_cat_dict(json):
+def sub_cat_dict(example_JSON):
     dict = {}
-    for item in json:
+    for item in example_JSON:
         if item['subcategory']['name'] not in dict:
             dict[item['subcategory']['name']] = item['category']['name']
     return dict
 
-def generate_txt(json):
-    categories = generate_cat_list(json)
-    cat_to_subcat_dict = generate_cat_to_subcat(json)
+def generate_txt(example_JSON):
+    categories = generate_cat_list(example_JSON)
+    cat_to_subcat_dict = generate_cat_to_subcat(example_JSON)
     for category in categories:
         with open(f'{category}.txt', 'w') as f:
             for subcat in cat_to_subcat_dict[category]:
                 f.write(f"\n{subcat}-\n")
-                for item in json:
+                for item in example_JSON:
                     if item['category']['name'] == category and item['subcategory']['name'] == subcat:
                         if item['question']['type'] == 'multi-select':
                             answer_string = ''
@@ -410,7 +413,7 @@ def generate_txt(json):
                             f.write(
                                 f"{item['question']['id']}) {item['question']['question']} - {str(item['answer']['value'])}")
         with open(f'{category}_images.txt', 'w') as file:
-            for item in json:
+            for item in example_JSON:
                 if item['category']['name'] == category:
                     images_string = ''
                     if item['answer']['photos'] is None:
@@ -454,10 +457,10 @@ def calac_measure(item):
 
 
 
-def create_measure(subcat, JSON_example):
+def create_measure(subcat, example_JSON):
     total_grade = 0.0
     quest_counter = 0
-    for item in JSON_example:
+    for item in example_JSON:
         if item["subcategory"]["name"] == subcat:
             total_grade += calac_measure(item)
             quest_counter += 1
@@ -471,25 +474,24 @@ def run_RNA(list):
     for item in list:
         if str(item["rna"]["id"]) not in rna_dict.keys():
             rna_dict[item["rna"]["id"]] = subcat_grades
-    #print(rna_dict)
     return rna_dict
 
 
-def calc_grades(JSON_example):
-    rna_dict = run_RNA(JSON_example)
+def calc_grades(example_JSON):
+    rna_dict = run_RNA(example_JSON)
     for id in rna_dict:
         for subcat in rna_dict[id]:
-            for item in JSON_example:
+            for item in example_JSON:
                 if item["rna"]["id"] == id and item["subcategory"] \
                         ["name"] == subcat:
-                    rna_dict[id][subcat] += create_measure(subcat, JSON_example)
+                    rna_dict[id][subcat] += create_measure(subcat, example_JSON)
     return rna_dict
 
 
-def find_main_issue(JSON_example):
-    rna_dict = calc_grades(JSON_example)
+def find_main_issue(example_JSON):
+    rna_dict = calc_grades(example_JSON)
     main_issues = {}
-    sub_and_cat_dict = sub_cat_dict(JSON_example)
+    sub_and_cat_dict = sub_cat_dict(example_JSON)
     for id in rna_dict:
         max_subcats = [key for key, value in rna_dict[id].items() if
                        value == max(rna_dict[id].values())]
@@ -503,18 +505,17 @@ def find_main_issue(JSON_example):
     return main_issues
 
 
-def rna_measure(JSON_example):
-    rna_dict = calc_grades(JSON_example)
+def rna_measure(example_JSON):
+    rna_dict = calc_grades(example_JSON)
     rna_grades = {}
     rna_final_grades = {}
-    cat_to_subcat_dict = generate_cat_to_subcat(JSON_example)
+    cat_to_subcat_dict = generate_cat_to_subcat(example_JSON)
     for rna in rna_dict:
         for cat in cat_to_subcat_dict:
             subcat_grades = []
             for subcat in rna_dict[rna]:
                 if subcat in cat_to_subcat_dict[cat]:
                     subcat_grades.append(rna_dict[rna][subcat])
-            print(subcat_grades)
             avg_subcat_grades = mean(subcat_grades)
             rna_grades[cat] = avg_subcat_grades
         rna_final_grades[rna] = mean(rna_grades.values())
@@ -541,9 +542,9 @@ def plot_priorities(cat_dict):
     fig.write_image('categories.png')
 
 
-def categories_index(JSON_example, current_rna):
-    rna_dict = calc_grades(JSON_example)
-    cat_to_subcat_dict = generate_cat_to_subcat(JSON_example)
+def categories_index(example_JSON, current_rna):
+    rna_dict = calc_grades(example_JSON)
+    cat_to_subcat_dict = generate_cat_to_subcat(example_JSON)
     rna_grades = {}
     rna_categories = {}
     for rna in rna_dict:
@@ -567,34 +568,34 @@ def create_PDF_File():
     pdf.set_auto_page_break(auto=True, margin=15)
     pdf.add_page()
 
-    pdf.general_details(JSON_example)
+    pdf.general_details(example_JSON)
 
     pdf.set_font('helvetica', '', 16)
 
     pdf.set_title(SECOND_TITLE)
-    test_main_issues = find_main_issue(JSON_example)
-    problematic_rna = rna_measure(JSON_example)
+    test_main_issues = find_main_issue(example_JSON)
+    problematic_rna = rna_measure(example_JSON)
 
     for key, value in test_main_issues.items():
         subcat_txt = f'\n In RNA number : {key} , {value} \n'
         rna_txt = f'\n {problematic_rna[key]} \n'
-        categories_index(JSON_example, key)
+        categories_index(example_JSON, key)
 
 
     with open('insights.txt', 'w') as insights_file:
         insights_file.write(subcat_txt)
         insights_file.write(rna_txt)
-        if JSON_example[0]['rna']['isCompleted'] is False:
+        if example_JSON[0]['rna']['isCompleted'] is False:
             insights_file.write('Please note that the Questionnaire is not completed!')
 
     pdf.print_chapter('insights', 'insights.txt')
 
-    pdf.image("categories.png", 30, 170, 160, 100)
+    pdf.image("categories.png", 30, 110, 160, 100)
 
     pdf.add_page()
     pdf.set_title(THIRD_TITLE)
-    generate_txt(JSON_example)
-    categories = generate_cat_list(JSON_example)
+    generate_txt(example_JSON)
+    categories = generate_cat_list(example_JSON)
     photo_y_location = 160
     photo_x_location = 0
     cat_index = 0

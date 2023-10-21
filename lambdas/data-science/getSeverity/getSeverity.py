@@ -51,49 +51,12 @@ def create_measure(subcat, example_JSON):
     normalized_grade = float(total_grade / quest_counter)
     return normalized_grade
 
-''' notes TODO 
-1. expect input:
-    [
-        'id': 'uuid',                     # can be for all rna's/ per rna / per category / per subcategory / per question 
-        'answers': [{
-                    'id': answer.id',
-                    'value': answer.value,
-                    'notes': answer.notes
-                    }, 
-                    {
-                    'id': answer.id',
-                    'value': answer.value,
-                    'notes': answer.notes
-                    }],
-        'id': 'uuid',
-        'answers': [{
-                    'id': answer.id',
-                    'value': answer.value,
-                    'notes': answer.notes
-                    }, 
-                    {
-                    'id': answer.id',
-                    'value': answer.value,
-                    'notes': answer.notes
-                    }]
-                    
-                    ]
-
-2. edit all functions here (without X1.5 for important questions), to return a json of:
-        {'scores': [
-                    16,
-                    76
-                    ]
-                    }
-
-'''
 
 def lambda_handler(event, context):
     try:
         all_answers = json.loads(event['body']) # list of dicts like example above
 
-        # use all_answers to get back sev_dict which is a dict of ['id','severity'].
-        sev_dict = get_severity(all_answers)
+        sev_dict = get_severity(all_answers)   # UPDATE THIS FUNCTION TO RETURN A DICT OF ['id','severity']
 
         return {
             'statusCode': 200,
@@ -114,7 +77,16 @@ def lambda_handler(event, context):
 
 
 # Expected Input Format ######
-#event = {
-#    "text": "This is very bad."
-#}
+#event = { 
+#         [
+#           'answer.id': {
+#                     'value': answer.value,
+#                     'notes': answer.notes
+#                     }, 
+#           'answer.id': {
+#                     'value': answer.value,
+#                     'notes': answer.notes
+#                     }
+#          ]
+#       }
 #lambda_handler(event, {})

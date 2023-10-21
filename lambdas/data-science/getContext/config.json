@@ -10,8 +10,8 @@
     "Api_Settings": {
         "Method": "POST",
         "Api_Name": "IsraAID app",
-        "Path": "/askQuestion",
+        "Path": "/getContext",
         "Integration": false,
-        "Model": "askQuestion"
+        "Model": "getContext"
     }
 }

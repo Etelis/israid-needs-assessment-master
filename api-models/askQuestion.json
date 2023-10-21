@@ -1,20 +1,23 @@
 {
     "type": "object",
-    "properties": {
-        "question": {
-            "type": "string",
-            "description": "The question to search the answer to"
-        },
-        "context": {
-            "type": "array",
-            "items": {
-                "type": "string"
+    "properties": 
+            {
+            "question": {
+                        "type": "string",
+                        "description": "A string that represents the question"
+                        },
+            "context": {
+                        "type": "array",
+                        "items": 
+                                {
+                                "type": "string"
+                                },
+                        "description": "An array of files (=local temporary paths) in which to search the answer"
+                        }
             },
-            "description": "An array of paths in which to search the answer"
-        }
-    },
-    "required": [
-        "question",
-        "context"
-    ]
+    "required": 
+            [
+            "question",
+            "context"
+            ]
 }

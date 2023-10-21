@@ -1,0 +1,27 @@
+{
+    "type": "object",
+    "properties": 
+                {
+                "context": {
+                            "type": "array",
+                            "items": 
+                                    {
+                                    "type": "string"
+                                    },
+                            "description": "An array of every file text"
+                            },
+                "names": {
+                            "type": "array",
+                            "items": 
+                                    {
+                                    "type": "string"
+                                    },
+                            "description": "An array of every file name"
+                            }
+                },
+    "required": 
+            [
+            "context",
+            "names"
+            ]
+}

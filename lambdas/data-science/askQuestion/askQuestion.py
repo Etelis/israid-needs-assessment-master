@@ -51,7 +51,7 @@ def answer_question(question, context):
                       'source': (best_response['start'], best_response['end']),
                       'filename': names[best_response_idx]}
         else:
-            result = {'answer': 'Not confident enough in answer',
+            result = {'answer': [],
                       'source': (),
                       'filename': ''}
         # answer = f"{best_response['answer']} | Confidence: {round(best_response['score'], 4)} | Start-end Characters: {best_response['start'], best_response['end']} | Original File: {names[best_response_idx]}"

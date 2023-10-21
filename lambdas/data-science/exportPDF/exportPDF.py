@@ -1,3 +1,6 @@
+import json
+import logging
+import requests
 from statistics import mean
 import pandas as pd
 import plotly.express as px
@@ -5,6 +8,8 @@ from fpdf import FPDF
 import base64
 import math
 from textblob import TextBlob
+import boto3
+from botocore.exceptions import ClientError
 
 
 TITLE_TEMPLATE = 'IsraAid PDF Report'
@@ -511,7 +516,6 @@ def categories_index(example_JSON, current_rna):
         rna_categories[rna] = rna_grades
     plot_priorities(rna_categories[current_rna])
 
-
 def create_PDF_File():
     pdf = PDF('P', 'mm', 'Letter')
 
@@ -577,56 +581,79 @@ def create_PDF_File():
 
     pdf.output('finalPDF.pdf')
 
+def lambda_handler(event, context):
+    try:
+        information = json.loads(event['body'])
+        
+        pdf_file_path = create_PDF_File(information)   # UPDATE THIS FUNCTION TO RETURN A PATH TO THE PDF FILE
+        # THE RETURNED PATH SHOULD BE: os.path.join(os.getcwd(),'filename.pdf')
 
-create_PDF_File()
+        return {
+            'statusCode': 200,
+            'body': json.dumps({'severity': str(sev_dict)})
+        }
+    except ClientError as e:
+        logger.error(f"Client error: {e}")
+        return {
+            'statusCode': 500,
+            'body': json.dumps({'error_message': 'Internal server error'})
+        }
+    except Exception as e:
+        logger.error(f"Error: {e}")
+        return {
+            'statusCode': 500,
+            'body': json.dumps({'error_message': 'Internal server error'})
+        }
 
 
-''' notes TODO 
-1. expect input:
-    {
-    "rna":{
-        "id": "uuid",
-        "Creator": "string",
-        "CreatorPosition": "nullable string",
-        "CreatorPhone": "nullable string",
-        "Emergency": "nullable string",
-        "AffectedHouseholds": "nullable float",
-        "communityName": "string",
-        "communityType": "string",
-        "location": "string",
-        "createdOn": "datetime",
-        "lastUpdatedOn": "datetime",
-        "isCompleted": "boolean"
-        },
-        Answer (object),
-        Category (array of objects),
-        sub category (array of objects),
-    },
-    "question": {
-                "id" (list)
-                "category" (list)
-                "subCategory" (list)
-                "question" (list)
-                "order" (list) #order by the order
-                "options" (list of lists)
-                },
-    "answer": {
-                "questionId" (list)
-                "value" (list)
-                "photos" (list of lists)
-                "notes" (list)
-                }
-    "category": {
-                "id" (list)
-                "name" (list)
-                },
-    "subcategory": {
-                "id" (list)
-                "name" (list)
-                "categoryId" (list)
-                }
-    }
-            
-
-2. need to return the path to the pdf file, save(os.path.join(os.getcwd(),'filename.pdf'))
-'''
+# Expected Input Format ######
+# event = 
+# {
+# 'rna.id':
+#     {
+#     "Creator",
+#     "CreatorPosition",
+#     "CreatorPhone",
+#     "Emergency",
+#     "AffectedHouseholds",
+#     "communityName",
+#     "communityType",
+#     "location",
+#     "createdOn",
+#     "lastUpdatedOn",
+#     "isCompleted"
+#     },
+# 'rna_questions': 
+#     [
+#       {'question.id':
+#           "question.category",
+#           "question.subCategory",
+#           "question.question",
+#           "question.order",
+#           "question.options"
+#        },
+#  ...],
+# 'rna_answers': 
+#     [
+#       {'answer.id':
+#             "answer.questionId",
+#             "answer.value",
+#             "answer.photos",
+#             "answer.notes"
+#        },
+#  ...],
+# 'categories': 
+#    [
+#       {'category.id':
+#             "category.name"
+#       },
+#  ...],
+# "subcategories": {
+#   [
+#       {"subcategory.id":
+#             "subcategory.name",
+#             "subcategory.categoryId"
+#        },
+#  ...]
+# }
+#lambda_handler(event, {})

@@ -1,0 +1,145 @@
+{
+"type": "object",
+"properties": 
+        {
+        "rna_id": 
+                {
+                "type": "object",
+                "properties": 
+                        {
+                        "Creator": 
+                                {
+                                "type": "string",
+                                "description": "The name of the creator of the RNA"
+                                },
+                        "CreatorPosition": 
+                                {
+                                "type": "string",
+                                "description": "The position of the creator of the RNA"
+                                },
+                        "CreatorPhone": 
+                                {
+                                "type": "string",
+                                "description": "The phone number of the creator of the RNA"
+                                },
+                        "Emergency": 
+                                {
+                                "type": "string",
+                                "description": "The emergency for which the RNA was created"
+                                },
+                        "AffectedHouseholds": 
+                                {
+                                "type": "float",
+                                "description": "The number of affected households"
+                                },
+                        "communityName": 
+                                {
+                                "type": "string",
+                                "description": "The name of the community"
+                                },
+                        "communityType": 
+                                {
+                                "type": "string",
+                                "description": "The type of the community"
+                                },
+                        "location": 
+                                {
+                                "type": "string",
+                                "description": "The location of the RNA"
+                                },
+                        "createdOn": 
+                                {
+                                "type": "string",
+                                "description": "The date and time on which the RNA was created"
+                                },
+                        "lastUpdatedOn": 
+                                {
+                                "type": "string",
+                                "description": "The date and time on which the RNA was last updated"
+                                },
+                        "isCompleted:": 
+                                {
+                                "type": "boolean",
+                                "description": "Whether the RNA is completed or not"
+                                }
+                        },
+                "description": "An array with all of the information about the RNA"
+                },
+        "rna_questions": 
+                {
+                "type": "array",
+                "items": 
+                        {
+                        "type": "object",
+                        "properties":
+                                {
+                                "question_id":
+                                        {
+                                        "type": "object",
+                                        "description": "Given information about a single question"
+                                        }
+                                }
+                        },
+                "description": "An array of the RNA questions and the given information"
+                },
+        "rna_answers": 
+                {
+                "type": "array",
+                "items": 
+                        {
+                        "type": "object",
+                        "properties":
+                                {
+                                "answer_id":
+                                        {
+                                        "type": "object",
+                                        "description": "Given information about a single answer"
+                                        }
+                                }
+                        },
+                "description": "An array of the RNA answers and the given information"
+                },
+        "categories": 
+                {
+                "type": "array",
+                "items": 
+                        {
+                        "type": "object",
+                        "properties":
+                                {
+                                "category_id":
+                                        {
+                                        "type": "object",
+                                        "description": "Given information about a single category"
+                                        }
+                                }
+                        },
+                "description": "An array of all categories and their given information"
+                },
+        "subcategories": 
+                {
+                "type": "array",
+                "items": 
+                        {
+                        "type": "object",
+                        "properties":
+                                {
+                                "subcategory_id":
+                                        {
+                                        "type": "object",
+                                        "description": "Given information about a single subcategory"
+                                        }
+                                }
+                        },
+                "description": "An array of all subcategories and their given information"
+                }
+        },
+"required": 
+        [
+        "rna_id",
+        "rna_questions",
+        "rna_answers",
+        "categories",
+        "subcategories"
+        ]
+}

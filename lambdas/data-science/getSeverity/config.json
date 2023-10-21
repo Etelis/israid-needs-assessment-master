@@ -1,5 +1,5 @@
 {
-    "Handler": "calculateSeverity.lambda_handler",
+    "Handler": "getSeverity.lambda_handler",
     "Runtime": "python3.11",
     "MemorySize": 128,
     "Timeout": 250,
@@ -7,7 +7,7 @@
         "PYTHON-DEP-calculateSeverity"
     ],
     "Api_Settings": {
-        "Method": "POST",
+        "Method": "GET",
         "Api_Name": "IsraAID app",
         "Path": "/getSeverity",
         "Integration": false,

@@ -54,7 +54,7 @@ def create_measure(subcat, example_JSON):
 ''' notes TODO 
 1. expect input:
     [
-        'id': 'id',
+        'id': 'uuid',                     # can be for all rna's/ per rna / per category / per subcategory / per question 
         'answers': [{
                     'id': answer.id',
                     'value': answer.value,
@@ -65,7 +65,7 @@ def create_measure(subcat, example_JSON):
                     'value': answer.value,
                     'notes': answer.notes
                     }],
-        'id': 'id',
+        'id': 'uuid',
         'answers': [{
                     'id': answer.id',
                     'value': answer.value,
@@ -90,14 +90,14 @@ def create_measure(subcat, example_JSON):
 
 def lambda_handler(event, context):
     try:
-        # event = json.loads(event['body'])
-        text = event['text']
+        all_answers = json.loads(event['body']) # list of dicts like example above
 
-        sev = severity(text)
+        # use all_answers to get back sev_dict which is a dict of ['id','severity'].
+        sev_dict = get_severity(all_answers)
 
         return {
             'statusCode': 200,
-            'body': json.dumps({'negative_score': str(sev)})
+            'body': json.dumps({'severity': str(sev_dict)})
         }
     except ClientError as e:
         logger.error(f"Client error: {e}")

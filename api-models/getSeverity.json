@@ -1,11 +1,39 @@
 {
     "type": "object",
-    "properties": {
-        "text": {
-            "type": "string"
-        }
-    },
-    "required": [
-        "string"
-    ]
+    "properties": 
+            {
+            "id": 
+                {
+                "type": "uuid",
+                "description": "An id that represents the group of given answers (e.g. all RNAs / a single question)"
+                },
+            "answers": 
+                {
+                "type": "array",
+                "properties":
+                            {
+                            "id": 
+                                {
+                                "type": "uuid",
+                                "description": "An id that represents the answer"
+                                },
+                            "value": 
+                                {
+                                "type": "string",
+                                "description": "The answer as string"
+                                },
+                            "notes": 
+                                {
+                                "type": "string",
+                                "description": "Free text (if given)"
+                                }
+                            },
+                "description": "An array of answers"
+                }
+            },
+    "required": 
+            [
+            "id",
+            "answers"
+            ]
 }

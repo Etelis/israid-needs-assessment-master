@@ -40,13 +40,23 @@ The deployment architecture encompasses several key components:
 
 ## 6. Automations
 
-Automation plays a central role in the IsraAid RNA application. Workflows have been carefully designed to streamline and enhance operational efficiency:
+Automation plays a central role in the IsraAid RNA application. Workflows have been carefully designed to streamline and enhance operational efficiency, We are using github workflows
 
-- **Workflow Elaboration**: The application incorporates several automated workflows that manage various processes, including the transformation of Python functions into lambdas. These workflows are designed to simplify tasks, reduce manual intervention, and improve overall system reliability. In other words, you dont have to do anything as an IT guy thanks to Artume <3
+Our actions workflow automates the deployment of Lambda functions, layers, API Gateway configurations, and routes based on the configurations defined in your project's repository.
+In other words, you dont have to do anything as an IT guy thanks to Artume <3
 
 ## 7. Adding New API Endpoints
 
 To expand the functionality of the application with new features, you can add new API endpoints. This is achieved by creating dedicated folders within the "lambdas" directory, writing the corresponding code, and configuring API settings. This process allows for the seamless expansion of the application's capabilities.
+
+Example of directory hierarchy 
+
+- lambdas
+  - example_directory
+    - example_directory
+      - Example.py
+      - config.json
+      - requirements.txt
 
 ## 8. Swagger API Documentation
 

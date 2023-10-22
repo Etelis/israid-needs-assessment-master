@@ -3,6 +3,7 @@ import logging
 import boto3
 from botocore.exceptions import ClientError
 from textblob import TextBlob
+import math
 
 # Configure logging
 logger = logging.getLogger()
@@ -23,33 +24,34 @@ def severity(text):
     sev = 0.8 * ((-1 * sentiment.polarity - (-1)) / 2) + 0.2 * (1 - sentiment.subjectivity)
     return sev
 
-def calac_measure(item):
+def calaculate_answer(answer):
     total_grade = 0.0
-    if item["question"]["type"] == "yes-no":
-                if item["answer"]["notes"] != "":
-                    if item["answer"]["value"] is True:
-                        txt_severity = severity(item["answer"]["notes"])
-                        total_grade += 2 * txt_severity
-
-                if item['question']['order'] == 1 :
-                    if item["answer"]["value"] is True:
-                        total_grade *= 1.5
-
-    if item["question"]["type"] == "text":
-        txt_severity = severity(item["question"]["type"])
-        total_grade += txt_severity
-
+    if type(answer['value']) == bool:
+        if answer['value'] == True:
+            if answer['notes'] != '':
+                total_grade = severity(answer['notes'])
+            else:
+                total_grade = 1
+    if type(answer['value']) == str:
+         total_grade = severity(answer['value'])
     return total_grade
 
-def create_measure(subcat, example_JSON):
-    total_grade = 0.0
-    quest_counter = 0
-    for item in example_JSON:
-        if item["subcategory"]["name"] == subcat:
-            total_grade += calac_measure(item)
-            quest_counter += 1
-    normalized_grade = float(total_grade / quest_counter)
-    return normalized_grade
+def normalize(severity_dict):
+    max_value = max(severity_dict.values())
+    for item in severity_dict:
+        severity_dict[item] = math.ceil((severity_dict[item]/max_value)*100)
+    return severity_dict
+
+def get_severity(answers):
+    severity_dict = {}
+    for item in answers:
+        total_grade = 0.0
+        for answer in item:
+            total_grade += calaculate_answer(answer)
+        severity_dict[item] = total_grade/len(item)
+    severity_dict = normalize(severity_dict)
+    return severity_dict
+
 
 
 def lambda_handler(event, context):

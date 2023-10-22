@@ -1,7 +1,9 @@
-statistics
-pandas
+json
+logging
+requests
 plotly
 fpdf
 base64
-math
-textblob
+os
+boto3
+botocore

@@ -1,13 +1,10 @@
 import json
 import logging
 import requests
-from statistics import mean
-import pandas as pd
 import plotly.express as px
 from fpdf import FPDF
 import base64
-import math
-from textblob import TextBlob
+import os
 import boto3
 from botocore.exceptions import ClientError
 
@@ -270,6 +267,8 @@ example_JSON = [{
                 "createdOn": "19/10/2023"
             }
         }]
+
+#convert the base64 string of the logo to png, in order to not keep the photo on the server
 def convert_logo():
     with open(r"logo_image.png", "wb") as decodeit:
         decodeit.write(base64.b64decode(LOGO))
@@ -345,11 +344,10 @@ class PDF(FPDF):
         self.chapter_title(chap_title)
         self.chapter_body(file_name)
 
-    def general_details(self, example_JSON):
-        item = example_JSON[0]
-        last_date = item['rna']['lastUpdatedOn']
-        creation_date = item['rna']['createdOn']
-        location = item['rna']['location']
+    def general_details(self, json):
+        last_date = json['rna']['lastUpdatedOn']
+        creation_date = json['rna']['createdOn']
+        location = json['rna']['location']
         self.set_font('helvetica', '', 10)
         # background color
         self.set_fill_color(200, 220, 255)
@@ -359,164 +357,145 @@ class PDF(FPDF):
         # line break
         self.ln()
 
-def generate_subcat_list(example_JSON):
-    subcat_list = []
-    for item in example_JSON:
-        if item['subcategory']['name'] not in subcat_list:
-            subcat_list.append(item['subcategory']['name'])
-    return subcat_list
-
-def generate_subcat_grades (example_JSON):
-    subcat_grades = {}
-    subcat_list = generate_subcat_list(example_JSON)
-    for subcat in subcat_list:
-        subcat_grades[subcat] = 0
-    return subcat_grades
-
-def generate_cat_list(example_JSON):
+#creates list with all category names in the db
+def generate_cat_list(json):
     cat_list = []
-    for item in example_JSON:
-        if item['category']['name'] not in cat_list:
-            cat_list.append(item['category']['name'])
+    for category in json['categories']:
+        if category['category.name'] not in cat_list:
+            cat_list.append(category['category.name'])
     return cat_list
 
+#creates dictionary with subcategory id as key and subcategory name as value
+def subcats_names(json):
+    subcats_names = {}
+    for subcategory in json['subcategories']:
+        subcats_names[subcategory['subcategory.id']] = subcategory['subcategory.name']
+    return subcats_names
 
-def generate_cat_to_subcat(example_JSON):
-    cat_to_subcat = {}
-    for item in example_JSON:
-        if item['category']['name'] not in cat_to_subcat:
-            cat_to_subcat[item['category']['name']] = []
-        if item['subcategory']['name'] not in cat_to_subcat[item['category']['name']]:
-            cat_to_subcat[item['category']['name']].append(item['subcategory']['name'])
-    return cat_to_subcat
+#creates dictionary with category id as key and category name as value
+def categories_names(json):
+    cats_names = {}
+    for category in json['categories']:
+        subcats_names[category['category.id']] = category['category.name']
+    return cats_names
 
-def sub_cat_dict(example_JSON):
-    dict = {}
-    for item in example_JSON:
-        if item['subcategory']['name'] not in dict:
-            dict[item['subcategory']['name']] = item['category']['name']
-    return dict
+#create dictionary with category (the whole dictionary) as key and list of the subcategories (the whole dictionary) as values
+def generate_sub_cats(json):
+    subcats_dict = {}
+    for category in json['categories']:
+        subcats_dict[category['category.id']] = []
+    for subcategory in json['subcategories']:
+        subcats_dict[subcategory['subcategory.categoryId']].append(subcategory)
+    return subcats_dict
 
-def generate_txt(example_JSON):
-    categories = generate_cat_list(example_JSON)
-    cat_to_subcat_dict = generate_cat_to_subcat(example_JSON)
-    for category in categories:
-        with open(f'{category}.txt', 'w') as f:
-            for subcat in cat_to_subcat_dict[category]:
-                f.write(f"\n{subcat}-\n")
-                for item in example_JSON:
-                    if item['category']['name'] == category and item['subcategory']['name'] == subcat:
-                        if item['question']['type'] == 'multi-select':
+#create dictionary with categoryid as key and list of subcategories id as values
+def generate_subcats_ids(json):
+    subcats_to_cats = {}
+    for subcategory in json['subcategories']:
+        if subcategory['subcategory.categoryId'] not in subcats_to_cats:
+            subcats_to_cats[subcategory['subcategory.categoryId']] = [subcategory['subcategory.id']]
+        else:
+            subcats_to_cats[subcategory['subcategory.categoryId']].append([subcategory['subcategory.id']])
+    return subcats_to_cats
+
+#creates dictionary with subcategory id as key and list of its questions id as value
+def generate_subcats_questions(json):
+    subcats_questions = {}
+    for subcategory in json['subcategories']:
+        subcats_questions[subcategory['subcategory.categoryId']] = []
+    for question in json['rna_questions']:
+        subcats_questions[question['question.subCategory']].append(question['question.id'])
+    return subcats_questions
+
+#returns a dictionary with the details on a specific question based on its id
+def find_question(json, questionid):
+    for question in json['rna_questions']:
+        if question['question.id'] == questionid:
+            return question
+    return None
+
+#generate the text file for the Questions&Answers page
+def generate_txt(json):
+    sub_cats_dict = generate_sub_cats(json)
+    subcats_questions = generate_subcats_questions(json)
+    for category in json['categories']:
+        with open(f"{category['category.name']}.txt", 'w') as f:
+            for subcat in sub_cats_dict[category['category.id']]:
+                f.write(f"\n{subcat['subcategory.name']}-\n")
+                for answer in json['rna_answers']:
+                    if answer['answer.questionId'] in subcats_questions:
+                        question = find_question(json, answer['answer.questionId'])
+                        question_title = question['question.question']
+                        if type(answer['answer.value']) == list:
                             answer_string = ''
-                            for answer in item['answer']['value']:
-                                if answer != item['answer']['value'][-1]:
-                                    answer_string += f'{answer}, '
+                            for choice in answer['answer.value']:
+                                if choice != answer['answer.value'][-1]:
+                                    answer_string += f'{choice}, '
                                 else:
-                                    answer_string += f'{answer}\n'
+                                    answer_string += f'{choice}\n'
                             f.write(
-                                f"{item['question']['id']}) {item['question']['question']} - {answer_string}")
+                                f"{answer['answer.questionId']}) {question_title} - {answer_string}")
                         else:
                             f.write(
-                                f"{item['question']['id']}) {item['question']['question']} - {str(item['answer']['value'])}")
+                                f"{answer['answer.questionId']}) {question_title} - {str(answer['answer.value'])}")
+                
         with open(f'{category}_images.txt', 'w') as file:
-            for item in example_JSON:
-                if item['category']['name'] == category:
+            for answer in json['rna_answers']:
+                question = find_question(json, answer['answer.questionId'])
+                if question['question.category'] == category['category.id']:
                     images_string = ''
-                    if item['answer']['photos'] is None:
+                    if answer['answer.photos'] is None:
                         continue
                     else:
-                        for answer in item['answer']['photos']:
-                            images_string += f'{answer}\n'
+                        for photo in answer['answer.photos']:
+                            images_string += f'{photo}\n'
                     file.write(images_string)
 
-def run_RNA(list):
-    subcat_grades = generate_subcat_grades(list)
-    rna_dict = {}
-    for item in list:
-        if str(item["rna"]["id"]) not in rna_dict.keys():
-            rna_dict[item["rna"]["id"]] = subcat_grades
-    return rna_dict
+#finds the worst subcategories in the emergency, uses getSeverity
+def find_worst_subcat(json):
+    subcat_severity = '''call for get severity, paramter = subcategory'''
+    max_subcats = [key for key, value in subcat_severity.items() if value == max(subcat_severity.values())]
+    categories_to_subcats = generate_subcats_ids(json)
+    subcat_names = subcats_names(json)
+    cats_names = categories_names(json)
+    max_string = ''
+    for subcat in max_subcats:
+        for categoryid in categories_to_subcats:
+            if subcat in categoryid:
+                category_id = json['subcategories'][subcat]['categoryID']
+                break
+        subcategory_name = subcat_names[subcat]
+        category_name = cats_names[category_id]
+        if subcat == max_subcats[-1]:
+            max_string += f"{subcategory_name} in the {category_name}."
+        else:
+            max_string += f"{subcategory_name} in the {category_name}, "
+    return max_string
 
-# uses getSeverity (endpoint)
-def calc_grades(example_JSON):
-    rna_dict = run_RNA(example_JSON)
-    for id in rna_dict:
-        for subcat in rna_dict[id]:
-            for item in example_JSON:
-                if item["rna"]["id"] == id and item["subcategory"] \
-                        ["name"] == subcat:
-                    rna_dict[id][subcat] += create_measure(subcat, example_JSON)
-    return rna_dict
+#finds the severity of the RNA, uses getSeverity
+def find_rna_severity(json):
+    rna_severity = '''call for get severity, paramter = rna'''
+    severity_index = rna_severity[json['rna']['id']]
+    severity_txt = f"The severity index of {json['rna']['Emergency']} is {severity_index}."
+    return severity_txt
 
-def find_main_issue(example_JSON):
-    rna_dict = calc_grades(example_JSON)
-    main_issues = {}
-    sub_and_cat_dict = sub_cat_dict(example_JSON)
-    for id in rna_dict:
-        max_subcats = [key for key, value in rna_dict[id].items() if
-                       value == max(rna_dict[id].values())]
-        max_string = 'the most problematic issues are: '
-        for subcat in max_subcats:
-            if subcat == max_subcats[-1]:
-                max_string += f'{subcat} in the {sub_and_cat_dict[subcat]}.'
-            else:
-                max_string += f'{subcat} in the {sub_and_cat_dict[subcat]}, '
-        main_issues[id] = max_string
-    return main_issues
-
-def rna_measure(example_JSON):
-    rna_dict = calc_grades(example_JSON)
-    rna_grades = {}
-    rna_final_grades = {}
-    cat_to_subcat_dict = generate_cat_to_subcat(example_JSON)
-    for rna in rna_dict:
-        for cat in cat_to_subcat_dict:
-            subcat_grades = []
-            for subcat in rna_dict[rna]:
-                if subcat in cat_to_subcat_dict[cat]:
-                    subcat_grades.append(rna_dict[rna][subcat])
-            avg_subcat_grades = mean(subcat_grades)
-            rna_grades[cat] = avg_subcat_grades
-        rna_final_grades[rna] = mean(rna_grades.values())
-    df = pd.DataFrame(rna_final_grades.items(), columns=['rna', 'measure'])
-    df['normalized'] = math.ceil((df['measure'] / df['measure'].max()) * 100)
-    df = df.set_index('rna')
-    rna_index = {}
-    for rna in df.index:
-        rna_index[
-            rna] = f"The severity index of RNA number: {rna} is {df.loc[rna]['normalized']}"
-    return rna_index
-
-def plot_priorities(cat_dict):
-    for cat in list(cat_dict.keys()):
-        if cat_dict[cat] == 0:
-            del cat_dict[cat]
-    new_dict = dict(
-            sorted(cat_dict.items(), key=lambda item: item[1], reverse=True))
-    x_value = list(new_dict.values())
-    y_value = new_dict.keys()
+#creates the image of the priorities based on the severity of the categories, uses getSeverity
+def plot_categories_priorities():
+    categories_severity = '''call for get severity, parameter = categories'''
+    for cat in list(categories_severity.keys()):
+        if categories_severity[cat] == 0:
+            del categories_severity[cat]
+    sorted_dict = dict(
+            sorted(categories_severity.items(), key=lambda item: item[1], reverse=True))
+    x_value = list(sorted_dict.values())
+    y_value = sorted_dict.keys()
     fig = px.funnel(x=x_value, y=y_value, template='simple_white',
                     title="Categories Priorities", width=600, height=400,
                     labels={'x': '', 'y': ''})
     fig.write_image('categories.png')
 
-def categories_index(example_JSON, current_rna):
-    rna_dict = calc_grades(example_JSON)
-    cat_to_subcat_dict = generate_cat_to_subcat(example_JSON)
-    rna_grades = {}
-    rna_categories = {}
-    for rna in rna_dict:
-        for cat in cat_to_subcat_dict:
-            subcat_grades = []
-            for subcat in rna_dict[rna]:
-                if subcat in cat_to_subcat_dict[cat]:
-                    subcat_grades.append(rna_dict[rna][subcat])
-            avg_subcat_grades = mean(subcat_grades)
-            rna_grades[cat] = avg_subcat_grades
-        rna_categories[rna] = rna_grades
-    plot_priorities(rna_categories[current_rna])
-
-def create_PDF_File():
+#creates the pdf file
+def create_PDF_File(json):
     pdf = PDF('P', 'mm', 'Letter')
 
     # get total page numbers
@@ -525,34 +504,29 @@ def create_PDF_File():
     pdf.set_auto_page_break(auto=True, margin=15)
     pdf.add_page()
 
-    pdf.general_details(example_JSON)
+    pdf.general_details(json)
 
     pdf.set_font('helvetica', '', 16)
 
     pdf.set_title(SECOND_TITLE)
-    test_main_issues = find_main_issue(example_JSON)
-    problematic_rna = rna_measure(example_JSON)
-
-    for key, value in test_main_issues.items():
-        subcat_txt = f'\n In RNA number : {key} , {value} \n'
-        rna_txt = f'\n {problematic_rna[key]} \n'
-        categories_index(example_JSON, key)
-
+    worst_subcat = find_worst_subcat(json)
+    rna_index = find_rna_severity(json)
+    rna_txt = f'\n {rna_index} \n'
+    plot_categories_priorities()
 
     with open('insights.txt', 'w') as insights_file:
-        insights_file.write(subcat_txt)
+        insights_file.write(worst_subcat)
         insights_file.write(rna_txt)
-        if example_JSON[0]['rna']['isCompleted'] is False:
+        if json['rna']['isCompleted'] is False:
             insights_file.write('Please note that the Questionnaire is not completed!')
 
     pdf.print_chapter('insights', 'insights.txt')
-
     pdf.image("categories.png", 30, 110, 160, 100)
 
     pdf.add_page()
     pdf.set_title(THIRD_TITLE)
-    generate_txt(example_JSON)
-    categories = generate_cat_list(example_JSON)
+    generate_txt(json)
+    categories = generate_cat_list(json)
     photo_y_location = 160
     photo_x_location = 0
     cat_index = 0
@@ -579,7 +553,9 @@ def create_PDF_File():
         if cat_index < len(categories):
             pdf.add_page()
 
-    pdf.output('finalPDF.pdf')
+    save_path = os.path.join(os.getcwd(),'reportPDF.pdf')
+    pdf.output(save_path)
+    return save_path
 
 def lambda_handler(event, context):
     try:

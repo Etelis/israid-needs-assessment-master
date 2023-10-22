@@ -1,1 +1,9 @@
-export const appbarContainerStyle = {backgroundColor: "white"}
+const appbarContainerStyle = {
+	backgroundColor: 'white',
+};
+
+const toolbar = {
+	justifyContent: 'space-between',
+};
+
+export default { appbarContainerStyle, toolbar };

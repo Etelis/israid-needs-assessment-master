@@ -34,9 +34,9 @@ The deployment architecture encompasses several key components:
 
 - **Layer Deployment**: Layers are used to share resources among Lambda functions, streamlining the development and deployment process.
 
-- **Lambda Function Deployment**: Our Lambda functions, whether built in Node.js or Python, are essential for the functionality of the IsraAid RNA application.
+- **Lambda Function Deployment**: Our Lambda functions, whether built in Node.js or Python, are essential for the functionality of the IsraAid RNA application. They serve as the code for the APIs
 
-- **API Gateway Configuration**: API Gateway resources and routes are configured to enable HTTPS access to our services, ensuring that aid workers can easily and safely interact with the application.
+- **API Gateway Configuration**: API Gateway resources and routes are configured to enable HTTPS access to our services.
 
 ## 6. Automations
 

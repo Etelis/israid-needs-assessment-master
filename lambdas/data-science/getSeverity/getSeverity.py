@@ -80,7 +80,6 @@ def lambda_handler(event, context):
 
 # Expected Input Format ######
 #event = { 
-#         [
 #           'answer.id': {
 #                     'value': answer.value,
 #                     'notes': answer.notes
@@ -89,6 +88,5 @@ def lambda_handler(event, context):
 #                     'value': answer.value,
 #                     'notes': answer.notes
 #                     }
-#          ]
 #       }
 #lambda_handler(event, {})

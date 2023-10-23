@@ -9,6 +9,7 @@ import { Navbar } from './components/Navbar/Navbar';
 import Routes from './routes';
 import { ThemeProvider } from './theme';
 import { ToastContainer, toast } from 'react-toastify';
+import { NavbarButtonsProvider } from './components/Navbar/useNavbarButtonsContext';
 
 const queryClient = new QueryClient({
 	defaultOptions: {
@@ -50,8 +51,10 @@ const App = () => (
 	>
 		<ThemeProvider>
 			<Router>
-				<Navbar />
-				<Routes />
+				<NavbarButtonsProvider>
+					<Navbar />
+					<Routes />
+				</NavbarButtonsProvider>
 			</Router>
 			<ToastContainer
 				position='bottom-right'

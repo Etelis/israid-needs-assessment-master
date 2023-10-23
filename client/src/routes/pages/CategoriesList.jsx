@@ -3,6 +3,9 @@ import ProgressOverview from '../../components/ProgressOverview';
 import QuestionCategory from '../../components/QuestionCategory';
 import { useCategoriesContext } from '../../context/useCategoriesContext';
 import categories from '../../static-data/categories.json';
+import { useNavbarButtonsContext } from '../../components/Navbar/useNavbarButtonsContext';
+import { useEffect } from 'react';
+import { DownloadRnaFileMenuButton } from '../../components/DownloadRnaFileMenuButton';
 
 const getViewCategories = (subCategories) =>
 	categories.map((x) => {
@@ -26,6 +29,11 @@ const getViewCategories = (subCategories) =>
 
 const CategoriesList = () => {
 	const { subCategories, rnaAnswers, questions } = useCategoriesContext();
+	const { setNavbarButtons } = useNavbarButtonsContext();
+
+	useEffect(() => {
+		setNavbarButtons([<DownloadRnaFileMenuButton key='downloadRna' />]);
+	}, []);
 
 	if (!subCategories.length) {
 		return null;

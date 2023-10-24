@@ -1,7 +1,11 @@
 import { Grid } from '@mui/material';
 import SelectOption from './SelectOption';
 
-const MultiSelectAnswer = ({ selectedOptions = [], setSelectedOptions, options }) => {
+const MultiSelectAnswer = ({
+	selectedOptions = [],
+	setSelectedOptions,
+	options,
+}) => {
 	const onSelect = (option) => {
 		let newSelected;
 

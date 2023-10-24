@@ -1,23 +1,24 @@
 const rnasPage = {
-  width: '100%',
-  marginTop: 2,
+	width: '100%',
+	height: '90vh',
+	padding: '14px',
+	paddingBottom: 2,
+	paddingTop: 0,
+	alignItems: 'center',
+	flexGrow: 1
 };
 
 const rnasList = {
-  height: '50vh',
-  overflow: 'auto',
-  width: '100%',
-};
-
-const rna = {
-  width: '100%',
-  marginY: '1vh',
+	flexGrow: 1,
+	overflow: 'auto',
+	width: '100%',
+	paddingTop: 0,
 };
 
 const newRnaButton = {
-  width: '75%',
+	width: '75%',
 };
 
-const styles = { rnasPage, rnasList, rna, newRnaButton};
+const styles = { rnasPage, rnasList, newRnaButton };
 
 export default styles;

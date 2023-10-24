@@ -1,6 +1,6 @@
 import { Card, Stack, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import ProgressBar from './ProgressBar';
+import ProgressBar from '../../../components/ProgressBar';
 
 const SubQuestionCategory = ({ id, categoryId, title, questions, answers }) => {
 	const navigate = useNavigate();

@@ -3,7 +3,8 @@ import { cacheUsageKeyTypes } from '../cache/cacheKeyTypes';
 import useAnswersQuery, { getRnaAnswersQueries } from './useAnswersQuery';
 
 export const downloadedRnaAnswersQueries = async () => {
-	const downloadedRnaIds = await get(cacheUsageKeyTypes.downloadedRnas) ?? [];
+	const downloadedRnaIds =
+		(await get(cacheUsageKeyTypes.downloadedRnas)) ?? [];
 
 	return getRnaAnswersQueries(downloadedRnaIds);
 };

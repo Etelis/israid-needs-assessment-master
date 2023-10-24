@@ -33,11 +33,11 @@ const getSavedAndCachedRnaAnswers = async (rnaId, queryClient) => {
 		const savedAnswers = queryClient.getQueryData(['answers', rnaId]) ?? [];
 		const updatedAnswers = (await getCachedRnaAnswers(rnaId)) ?? [];
 
-		console.log('merged answers', mergeAnswers(savedAnswers, updatedAnswers));
-
 		return mergeAnswers(savedAnswers, updatedAnswers);
 	} catch (error) {
-		toast.error('Something Went Wrong Getting Saved Answers');
+		const errorMessage = 'Something Went Wrong Getting Saved Answers';
+
+		toast.error(errorMessage, { toastId: errorMessage });
 	}
 };
 

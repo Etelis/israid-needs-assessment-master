@@ -10,7 +10,7 @@ const addRnaToList = (rnaIds, newRnaId) => {
 	return [...rnaIds, newRnaId];
 };
 
-const addRnaToCache = async (newRnaId) => {
+const addRnaToDownloaded = async (newRnaId) => {
 	try {
 		const downloadedRnaIds =
 			(await get(cacheUsageKeyTypes.downloadedRnas)) ?? [];
@@ -20,8 +20,10 @@ const addRnaToCache = async (newRnaId) => {
 			addRnaToList(downloadedRnaIds, newRnaId)
 		);
 	} catch (error) {
-		toast.error('Something Went Wrong Saving Answer');
+		const errorMessage = 'Something Went Wrong Saving Rna';
+
+		toast.error(errorMessage, { toastId: errorMessage });
 	}
 };
 
-export default addRnaToCache;
+export default addRnaToDownloaded;

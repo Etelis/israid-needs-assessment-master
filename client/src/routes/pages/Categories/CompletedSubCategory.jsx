@@ -2,8 +2,8 @@ import EastOutlinedIcon from '@mui/icons-material/EastOutlined';
 import WidgetsOutlinedIcon from '@mui/icons-material/WidgetsOutlined';
 import { Button, Stack, Typography } from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom';
-import { CircularProgressLabel } from '../../components/CircularProgressLabel/CircularProgressLabel';
-import subCategories from '../../static-data/sub-categories.json';
+import { CircularProgressLabel } from '../../../components/CircularProgressLabel/CircularProgressLabel';
+import subCategories from '../../../static-data/sub-categories.json';
 
 const CompletedSubCategory = () => {
 	const { rnaId, categoryId, subCategoryId } = useParams();
@@ -31,12 +31,11 @@ const CompletedSubCategory = () => {
 				sx={(theme) => ({ color: theme.colors.utility })}
 			/>
 			<Typography variant='subtitle2' sx={{ textAlign: 'center' }}>
-				Based on your previous answers, we were able to skip a few
-				questions
+				Based on your previous answers, we were able to skip a few questions
 			</Typography>
 			<Typography variant='caption' sx={{ textAlign: 'center' }}>
-				you can still see them if you go back to caterogy and select
-				"view all questions"
+				you can still see them if you go back to caterogy and select "view all
+				questions"
 			</Typography>
 			<Stack spacing={2}>
 				<Button
@@ -44,9 +43,7 @@ const CompletedSubCategory = () => {
 					endIcon={<EastOutlinedIcon />}
 					disabled={!nextSubCategory}
 					onClick={() =>
-						navigate(
-							`/RNAs/${rnaId}/${categoryId}/${nextSubCategory.id}`
-						)
+						navigate(`/RNAs/${rnaId}/${categoryId}/${nextSubCategory.id}`)
 					}
 				>
 					{nextSubCategory ? 'Next Sub Category' : 'All Done'}

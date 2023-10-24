@@ -8,6 +8,8 @@ import {
 	getUpdatedRnaKeys,
 } from '../cache/cacheKeyTypes';
 import { toast } from 'react-toastify';
+import formatDate from '../formatDate';
+import { downloadedRnaAnswersQueries } from './useDownloadedRnasAnswersQuery';
 
 const clearCachedChanges = async () =>
 	delMany(await getLocalCacheChangesKeys());
@@ -19,18 +21,26 @@ const useSynchronizeMutation = () => {
 		try {
 			await queryClient.refetchQueries();
 
-			await set(
-				cacheUsageKeyTypes.lastSync,
-				new Date().toLocaleDateString('en-US')
-			);
+			await set(cacheUsageKeyTypes.lastSync, formatDate(new Date()));
 
 			await clearCachedChanges();
 
-			toast.success('All Up To Date!');
-		} catch (error) {
-			toast.error(
-				'Woops Something Went Wrong, Try Reloading The Application'
+			const answerQueries = await downloadedRnaAnswersQueries();
+
+			const queriesCalls = answerQueries.map((query) =>
+				queryClient.ensureQueryData(query)
 			);
+
+			await Promise.all(queriesCalls);
+
+			const successMessage = 'All Up To Date!';
+
+			toast.success(successMessage, { toastId: successMessage });
+		} catch (error) {
+			const errorMessage =
+				'Woops Something Went Wrong, Try Reloading The Application';
+
+			toast.error(errorMessage, { toastId: errorMessage });
 		}
 	};
 

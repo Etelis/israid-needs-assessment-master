@@ -1,8 +1,8 @@
 import { useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import useOnlineStatus from '../useOnlineStatus';
-import { rnasQuery } from './useRnasQuery';
 import { downloadedRnaAnswersQueries } from './useDownloadedRnasAnswersQuery';
+import { rnasQuery } from './useRnasQuery';
 
 const useLoadApplicationData = () => {
 	const [isLoading, setIsLoading] = useState(true);

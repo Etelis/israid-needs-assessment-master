@@ -4,18 +4,18 @@ import {
 	useEffect,
 	useMemo,
 	useReducer,
+	useState,
 } from 'react';
-import questions from '../static-data/questions.json';
-import subCategories from '../static-data/sub-categories.json';
+import subCategories from '../../../../static-data/sub-categories.json';
 import { useQueryClient } from '@tanstack/react-query';
-import getSavedAndCachedRnaAnswers from '../utils/cache/getSavedAndCachedRnaAnswers';
+import getSavedAndCachedRnaAnswers from '../../../../utils/cache/getSavedAndCachedRnaAnswers';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import getQuestions from '../../../../utils/cache/getQuestions';
 
 // Initial data for questions, answers, and rnas
 // Can Eventually populate the questions from the DB instead of static data
 const initialData = {
-	questions,
 	rnaAnswers: [],
 	subCategories: [],
 };
@@ -24,23 +24,6 @@ const CategoriesContext = createContext(initialData);
 
 export const useCategoriesContext = () => {
 	return useContext(CategoriesContext);
-};
-
-// Reducer to handle data modifications
-const dataReducer = (state, action) => {
-	switch (action.type) {
-		case 'SET_QUESTIONS':
-			return {
-				...state,
-				questions: action.payload,
-			};
-		case 'SET_RNA_ANSWERS':
-			return { ...state, rnaAnswers: action.payload };
-		case 'SET_SUB_CATEGORIES':
-			return { ...state, subCategories: action.payload };
-		default:
-			return state;
-	}
 };
 
 const getQuestionsForSubCategory = (subCategoryId, questions) =>
@@ -67,9 +50,20 @@ const buildSubCategories = (questions, rnaAnswers) =>
 	});
 
 export const CategoriesProvider = ({ children }) => {
-	const [state, dispatch] = useReducer(dataReducer, initialData);
+	const [state, setState] = useState(initialData);
 	const { rnaId } = useParams();
 	const queryClient = useQueryClient();
+	const [questions, setQuestions] = useState([]);
+
+	useEffect(() => {
+		const fetchQuestions = async () => {
+			const allQuestions = await getQuestions();
+
+			setQuestions(allQuestions);
+		};
+
+		fetchQuestions();
+	}, []);
 
 	const fetchRnaAnswers = async () => {
 		try {
@@ -78,18 +72,16 @@ export const CategoriesProvider = ({ children }) => {
 				queryClient
 			);
 
-			dispatch({ type: 'SET_RNA_ANSWERS', payload: result ?? [] });
+			setState({ ...state, rnaAnswers: result ?? [] });
 		} catch (error) {
-			toast.error('Something Went Wrong Getting Rna Answers');
+			const errorMessage = 'Something Went Wrong Getting Rna Answers';
+
+			toast.error(errorMessage, { toastId: errorMessage });
 		}
 	};
 
-	const setQuestions = (questions) => {
-		dispatch({ type: 'SET_QUESTIONS', payload: questions ?? [] });
-	};
-
 	const setSubCategories = (subCategories) => {
-		dispatch({ type: 'SET_SUB_CATEGORIES', payload: subCategories ?? [] });
+		setState({ ...state, subCategories: subCategories ?? [] });
 	};
 
 	useEffect(() => {
@@ -97,16 +89,15 @@ export const CategoriesProvider = ({ children }) => {
 	}, [rnaId]);
 
 	useEffect(() => {
-		setSubCategories(buildSubCategories(state.questions, state.rnaAnswers));
+		setSubCategories(buildSubCategories(questions, state.rnaAnswers));
 	}, [state.rnaAnswers]);
 
 	const value = useMemo(
 		() => ({
 			...state,
-			setQuestions,
 			fetchRnaAnswers,
 		}),
-		[state]
+		[state, questions]
 	);
 
 	return (

@@ -1,34 +1,30 @@
-import { useState } from "react";
-import { Button, Box } from "@mui/material";
-import { styles } from "./styles";
+import { Button, Stack } from '@mui/material';
 import RNAFilterOptions from '../../../../enums/RNAFilterOptions';
+import { styles } from './styles';
 
-const FilterActionButtons = ({ setActiveFilter }) => {
-  const [activeButton, setActiveButton] = useState(RNAFilterOptions.ALL);
+const FilterActionButtons = ({ activeFilter, setActiveFilter }) => {
+	const handleButtonClick = (newFilterOption) => {
+		setActiveFilter(newFilterOption);
+	};
 
-  const handleButtonClick = (filterOption) => {
-    setActiveButton(filterOption);
-    setActiveFilter(filterOption);
-  };
-
-  return (
-    <Box sx={styles.container}>
-      <Button
-        variant="contained"
-        sx={styles.button(activeButton === RNAFilterOptions.ONGOING)}
-        onClick={() => handleButtonClick(RNAFilterOptions.ONGOING)}
-      >
-        {"Ongoing"}
-      </Button>
-      <Button
-        variant="contained"
-        sx={styles.button(activeButton === RNAFilterOptions.ALL)}
-        onClick={() => handleButtonClick(RNAFilterOptions.ALL)}
-      >
-        {"All"}
-      </Button>
-    </Box>
-  );
+	return (
+		<Stack direction='row' width='100%' justifyContent='center' spacing={2}>
+			<Button
+				variant='contained'
+				sx={styles.button(activeFilter === RNAFilterOptions.DOWNLOADED)}
+				onClick={() => handleButtonClick(RNAFilterOptions.DOWNLOADED)}
+			>
+				Downloaded
+			</Button>
+			<Button
+				variant='contained'
+				sx={styles.button(activeFilter === RNAFilterOptions.ALL)}
+				onClick={() => handleButtonClick(RNAFilterOptions.ALL)}
+			>
+				All
+			</Button>
+		</Stack>
+	);
 };
 
 export default FilterActionButtons;

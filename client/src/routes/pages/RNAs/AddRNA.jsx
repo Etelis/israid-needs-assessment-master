@@ -2,23 +2,33 @@ import { Stack } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { ContinueButton } from '../../../components/ContinueButton';
 import InputField from '../../../components/input-field/InputField';
-import useAddRnaMutation from '../../../utils/online/useAddRnaMutation';
+import cacheRna from '../../../utils/cache/cacheRna';
 import { useNavigate } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
+import { useState } from 'react';
+import addRnaToDownloaded from '../../../utils/cache/addRnaToDownloaded';
 
 const AddRNA = () => {
+	const [isLoading, setIsLoading] = useState(false);
 	const navigate = useNavigate();
-	const onAddRnaSuccess = (newlyAddRna) =>
-		navigate(`/RNAs/${newlyAddRna.id}`, { replace: true });
-	const { mutateAsync: addRna, isLoading } =
-		useAddRnaMutation(onAddRnaSuccess);
 	const {
 		register,
 		handleSubmit,
 		formState: { errors },
 	} = useForm();
 
-	const onSubmit = (data) => {
-		addRna(data);
+	const onSubmit = async (newRna) => {
+		setIsLoading(true);
+
+		const newRnaId = uuidv4();
+
+		await cacheRna({ ...newRna, id: newRnaId, createdOn: new Date() });
+
+		await addRnaToDownloaded(newRnaId);
+
+		setIsLoading(false);
+
+		navigate(`/RNAs/${newRnaId}`, { replace: true });
 	};
 
 	return (

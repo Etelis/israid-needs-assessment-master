@@ -1,11 +1,12 @@
 import { Box } from '@mui/material';
-import ProgressOverview from '../../components/ProgressOverview';
-import QuestionCategory from '../../components/QuestionCategory';
-import { useCategoriesContext } from '../../context/useCategoriesContext';
-import categories from '../../static-data/categories.json';
-import { useNavbarButtonsContext } from '../../components/Navbar/useNavbarButtonsContext';
-import { useEffect } from 'react';
-import { DownloadRnaFileMenuButton } from '../../components/DownloadRnaFileMenuButton';
+import ProgressOverview from '../../../components/ProgressOverview';
+import QuestionCategory from '../Categories/QuestionCategory';
+import { useCategoriesContext } from './context/useCategoriesContext';
+import categories from '../../../static-data/categories.json';
+import { useNavbarButtonsContext } from '../../../components/Navbar/useNavbarButtonsContext';
+import { useEffect, useState } from 'react';
+import getQuestions from '../../../utils/cache/getQuestions';
+import { DownloadRnaFileMenuButton } from '../../../components/DownloadRnaFileMenuButton';
 
 const getViewCategories = (subCategories) =>
 	categories.map((x) => {
@@ -28,11 +29,24 @@ const getViewCategories = (subCategories) =>
 	});
 
 const CategoriesList = () => {
-	const { subCategories, rnaAnswers, questions } = useCategoriesContext();
+	const { subCategories, rnaAnswers } = useCategoriesContext();
+	const [questions, setQuestions] = useState([]);
 	const { setNavbarButtons } = useNavbarButtonsContext();
 
 	useEffect(() => {
 		setNavbarButtons([<DownloadRnaFileMenuButton key='downloadRna' />]);
+
+		const fetchQuestions = async () => {
+			const allQuestions = await getQuestions();
+
+			setQuestions(allQuestions);
+		};
+
+		fetchQuestions();
+
+		return () => {
+			setNavbarButtons([]);
+		};
 	}, []);
 
 	if (!subCategories.length) {

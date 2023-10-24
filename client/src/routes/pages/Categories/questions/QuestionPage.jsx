@@ -2,15 +2,14 @@ import { Stack, TextField } from '@mui/material';
 import { isEqual } from 'lodash';
 import { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useCategoriesContext } from '../../context/useCategoriesContext';
-import CompletedSubCategory from '../../routes/pages/CompletedSubCategory';
-import cacheAnswer from '../../utils/cache/cacheAnswer';
+import { useCategoriesContext } from '../context/useCategoriesContext';
+import CompletedSubCategory from '../CompletedSubCategory';
+import cacheAnswer from '../../../../utils/cache/cacheAnswer';
 import AnswerInput from './Answers/AnswerInput';
 import PhotoManager from './Answers/PhotoManager';
 import Controls from './Controls/Controls';
 import Question from './Question';
 import styles from './styles';
-import { toast } from 'react-toastify';
 
 const isAnswerAsExpected = (answer, question) => {
 	const expectedAnswer = question.dependencies.expectedAnswer;
@@ -71,9 +70,7 @@ const QuestionPage = () => {
 	}, [subCategoryId]);
 
 	useEffect(() => {
-		setCurrentSubCategory(
-			getCurrentSubCategory(subCategoryId, subCategories)
-		);
+		setCurrentSubCategory(getCurrentSubCategory(subCategoryId, subCategories));
 	}, [subCategories, subCategoryId]);
 
 	const viableQuestions = currentSubCategory.questions.filter((x) =>
@@ -163,12 +160,7 @@ const QuestionPage = () => {
 
 	return (
 		<form onSubmit={handleSubmit}>
-			<Stack
-				minHeight='80vh'
-				p={2}
-				spacing={3}
-				justifyContent='space-around'
-			>
+			<Stack minHeight='80vh' p={2} spacing={3} justifyContent='space-around'>
 				<Question question={currentQuestion.title} />
 
 				<AnswerInput

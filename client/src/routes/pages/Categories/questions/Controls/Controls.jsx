@@ -2,7 +2,6 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardOutlinedIcon from '@mui/icons-material/ArrowForwardOutlined';
 import SkipNextIcon from '@mui/icons-material/SkipNext';
 import { Button, Stack } from '@mui/material';
-import React from 'react';
 import styles from './styles';
 
 const Controls = ({ onPrev, canGoPrev, canGoNext, onSkip }) => {
@@ -17,11 +16,7 @@ const Controls = ({ onPrev, canGoPrev, canGoNext, onSkip }) => {
 			>
 				Next
 			</Button>
-			<Stack
-				direction='row'
-				justifyContent='space-between'
-				margin={'15px'}
-			>
+			<Stack direction='row' justifyContent='space-between' margin={'15px'}>
 				<Button
 					sx={styles.actionButton}
 					onClick={onPrev}
@@ -31,9 +26,9 @@ const Controls = ({ onPrev, canGoPrev, canGoNext, onSkip }) => {
 					Previous
 				</Button>
 				<Button
-					sx={{  ...styles.actionButton }}
+					sx={{ ...styles.actionButton }}
 					onClick={onSkip}
-          endIcon={<SkipNextIcon />}
+					endIcon={<SkipNextIcon />}
 				>
 					Skip
 				</Button>

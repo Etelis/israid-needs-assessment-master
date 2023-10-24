@@ -4,12 +4,12 @@ const cacheUpdateKeyTypes = {
 	updatedRna: 'rna',
 };
 
-
 // Cache keys that are used to store 'permenant' information about the application
 export const cacheUsageKeyTypes = {
 	lastSync: 'lastSync',
 	reactQueryCache: import.meta.env.VITE_REACT_QUERY_KEY,
 	downloadedRnas: 'downloadedRnas',
+	questions: 'questions',
 };
 
 export const createUpdatedAnswerCacheKey = (answer) =>

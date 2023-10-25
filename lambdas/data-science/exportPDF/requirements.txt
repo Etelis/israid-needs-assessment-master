@@ -1,9 +1,7 @@
-json
 logging
 requests
 plotly
 fpdf
 base64
-os
 boto3
 botocore

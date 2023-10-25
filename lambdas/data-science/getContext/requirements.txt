@@ -1,5 +1,4 @@
 boto3
 botocore
-docx
 PyPDF2
 python_docx

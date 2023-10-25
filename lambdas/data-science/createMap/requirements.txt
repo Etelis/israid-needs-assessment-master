@@ -1,4 +1,4 @@
 geopy
-PIL
+pillow
 io
 folium

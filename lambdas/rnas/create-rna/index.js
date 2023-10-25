@@ -1,39 +1,25 @@
 const { RNA } = require('/opt/schema-layer/rna-schema.js');
 
-exports.handler = async function (event, context) {
-    const { Creator, CreatorPosition, CreatorPhone, Emergency, AffectedHouseholds, communityName, 
-        communityType, location, createdOn, lastUpdatedOn, answered, lastactivequestion, 
-        isCompleted, severity } = event;
-   
-    const rnaItem = { // Took out ID field
-        Creator,
-        CreatorPosition,
-        CreatorPhone,
-        Emergency,
-        AffectedHouseholds,
-        communityName,
-        communityType,
-        location,
-        createdOn,
-        lastUpdatedOn,
-        answered,
-        lastactivequestion,
-        isCompleted,
-        severity
-    };
+//TODO: delete this lambda?
+exports.handler = async (event) => {
+	const newRna = JSON.parse(event.body);
 
-    try {
-        await RNA.put(rnaItem);
-        return {
-            statusCode: 200,
-            body: rnaItem
-        };
-    } catch (error) {
-        console.error(error);
-        
-        return {
-            statusCode: 500,
-            body: 'Internal Server Error',
-        };
-    }
-}
+	try {
+		const newlyCreatedRna = await RNA.put(newRna);
+
+		return {
+			statusCode: 200,
+			// headers: {
+			// 	'Content-Type': 'application/json',
+			// },
+			body: JSON.stringify(newlyCreatedRna),
+		};
+	} catch (error) {
+		console.error(error);
+
+		return {
+			statusCode: 500,
+			body: JSON.stringify({ message: 'Internal Server Error' }),
+		};
+	}
+};

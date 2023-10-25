@@ -1,8 +1,8 @@
 import { useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import useOnlineStatus from '../useOnlineStatus';
-import { downloadedRnaAnswersQueries } from './useDownloadedRnasAnswersQuery';
-import { rnasQuery } from './useRnasQuery';
+import fetchDownloadedRnaAnswersQueries from './fetchDownloadedRnaAnswersQueries';
+import rnasQuery from './rnaQuery';
 
 const useLoadApplicationData = () => {
 	const [isLoading, setIsLoading] = useState(true);
@@ -14,13 +14,7 @@ const useLoadApplicationData = () => {
 			if (isOnline) {
 				await queryClient.ensureQueryData(rnasQuery);
 
-				const answerQueries = await downloadedRnaAnswersQueries();
-
-				const queriesCalls = answerQueries.map((query) =>
-					queryClient.ensureQueryData(query)
-				);
-
-				await Promise.all(queriesCalls);
+				await fetchDownloadedRnaAnswersQueries(queryClient);
 			}
 
 			setIsLoading(false);

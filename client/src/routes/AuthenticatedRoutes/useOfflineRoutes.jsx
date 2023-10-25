@@ -1,6 +1,6 @@
 import { Navigate } from 'react-router-dom';
 import CategoriesQuestionsRoutes from './CategoriesQuestionsRoutes';
-import { AddRNA, RNAs } from './pages/RNAs';
+import { AddRNA, RNAs } from '../pages/RNAs';
 
 const useOfflineRoutes = () => [
 	{

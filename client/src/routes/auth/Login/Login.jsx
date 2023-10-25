@@ -15,7 +15,7 @@ import validationSchema from "./validationSchema";
 import styles from "./styles";
 
 const Login = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const {
     control,
     handleSubmit,
@@ -28,14 +28,8 @@ const Login = () => {
     },
   });
 
-  const { user, setUser } = useUser();
+  const { setUser } = useUser();
   const [error, setError] = useState(null);
-
-  useEffect(() => {
-    if (user) {
-      navigate("/RNAs");
-    }
-  }, [user, navigate]);
 
   const onSubmit = (data) => {
     const { email, password } = data;
@@ -66,7 +60,7 @@ const Login = () => {
         } = decodedToken;
 
         setUser({ name, email, position, phoneNumber });
-        navigate("/RNAs");
+        // navigate("/RNAs");
       },
       onFailure: (err) => {
         setError(convertCognitoErrorToMessage(err.code));

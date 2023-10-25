@@ -1,4 +1,3 @@
 geopy
 pillow
-io
 folium

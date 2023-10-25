@@ -1,5 +1,4 @@
-logging
-requests
+Requests
 plotly
 fpdf
 base64

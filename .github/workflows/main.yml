@@ -332,11 +332,10 @@ jobs:
     needs: [deploy_lambdas, deploy_models]
     strategy:
       fail-fast: false
+      max-parallel: 1
       matrix:
         manifest: ${{ fromJson(needs.deploy_lambdas.outputs.folders) }}
     runs-on: ubuntu-latest
-    concurrency:
-      group: "${{matrix.manifest}}"
     steps:
       - name: Checkout code
         uses: actions/checkout@v2

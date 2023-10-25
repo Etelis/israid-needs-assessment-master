@@ -41,7 +41,6 @@ runs:
               echo "Pip installation failed, falling back to Docker"
               # Run Docker commands only if pip fails
               docker run -v $(pwd):/app -w /app amazonlinux:2 \
-                amazon-linux-extras enable python3.9 \
                 yum install -y python3.9 && \
                 python3.9 -m pip install \
                     --target ./$function_name-deps/python \

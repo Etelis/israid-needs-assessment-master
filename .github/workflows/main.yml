@@ -335,7 +335,8 @@ jobs:
       matrix:
         manifest: ${{ fromJson(needs.deploy_lambdas.outputs.folders) }}
     runs-on: ubuntu-latest
-    continue-on-error: true
+    concurrency:
+      group: "${{matrix.manifest}}"
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -390,7 +391,6 @@ jobs:
         manifest: ${{ fromJson(needs.create_apis.outputs.api_names) }}
         stage: [IsraAid]
     runs-on: ubuntu-latest
-    continue-on-error: true
     steps:
       - uses: actions/checkout@v1
 

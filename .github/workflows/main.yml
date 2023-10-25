@@ -332,7 +332,7 @@ jobs:
     needs: [deploy_lambdas, deploy_models]
     strategy:
       fail-fast: false
-      max-parallel: 1
+      max-parallel: 3
       matrix:
         manifest: ${{ fromJson(needs.deploy_lambdas.outputs.folders) }}
     runs-on: ubuntu-latest

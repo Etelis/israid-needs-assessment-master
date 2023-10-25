@@ -1,7 +1,7 @@
 import { useRoutes } from 'react-router';
-import QuestionPage from './pages/Categories/questions/QuestionPage';
-import { CategoriesProvider } from './pages/Categories/context/useCategoriesContext';
-import CategoriesList from './pages/Categories/CategoriesList';
+import QuestionPage from '../pages/Categories/questions/QuestionPage';
+import { CategoriesProvider } from '../pages/Categories/context/useCategoriesContext';
+import CategoriesList from '../pages/Categories/CategoriesList';
 
 const CategoriesQuestionsRoutes = () => {
 	const CategoriesRoutes = useRoutes([

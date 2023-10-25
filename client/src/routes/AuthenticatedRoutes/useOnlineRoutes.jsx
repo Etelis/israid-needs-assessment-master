@@ -1,5 +1,5 @@
-import useOnlineStatus from '../utils/useOnlineStatus';
-import SynchronizationPage from './pages/SynchronizationPage/SynchronizationPage';
+import useOnlineStatus from '../../utils/useOnlineStatus';
+import SynchronizationPage from '../pages/SynchronizationPage/SynchronizationPage';
 
 const useOnlineRoutes = () => {
 	const isOnline = useOnlineStatus();

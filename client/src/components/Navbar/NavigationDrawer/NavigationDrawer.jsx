@@ -1,4 +1,5 @@
-import { Divider, Drawer, List, Toolbar } from '@mui/material';
+import { Divider, Drawer, IconButton, List, Toolbar } from '@mui/material';
+import LogoutIcon from "@mui/icons-material/Logout";
 import CloudSync from '@mui/icons-material/CloudSync';
 import AnalyticsIcon from '@mui/icons-material/AnalyticsOutlined';
 import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
@@ -8,8 +9,22 @@ import InfoIcon from '@mui/icons-material/Info';
 import RNAList from '@mui/icons-material/ListAlt';
 import ListItemLink from './ListItemLink';
 import styles from './styles';
+import userPool from '../../../../cognito-config';
+import { useUser } from '../../../contexts/UserContext';
+import { useNavigate } from 'react-router';
 
 const NavigationDrawer = ({ isOpen, setOpen }) => {
+	const navigate = useNavigate();
+	const { user, setUser } = useUser();
+
+	const handleLogout = () => {
+		if (user) {
+		  userPool.getCurrentUser().signOut();
+		  setUser(null);
+		  navigate("/login");
+		}
+	  };
+
 	return (
 		<Drawer sx={styles.drawer} open={isOpen} onClose={() => setOpen(false)}>
 			<Toolbar />
@@ -56,6 +71,11 @@ const NavigationDrawer = ({ isOpen, setOpen }) => {
 					icon={<CloudSync />}
 				/>
 				<Divider/>
+				{user && (
+                  <IconButton onClick={handleLogout}>
+                    <LogoutIcon />
+                  </IconButton>
+                )}
 			</List>
 		</Drawer>
 	);

@@ -1,7 +1,6 @@
 import { Router } from 'express';
 import rnasRouter from './rnas';
 import synchronizationRouter from './synchronization';
-
 const apiRouter = Router();
 
 apiRouter.use('/rnas', rnasRouter);

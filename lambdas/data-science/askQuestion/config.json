@@ -4,7 +4,7 @@
     "MemorySize": 128,
     "Timeout": 250,
     "Layers": [
-        // "PYTHON-DEP-askQuestion",
+        "PYTHON-DEP-askQuestion",
         "sample-docs"
     ],
     "Api_Settings": {

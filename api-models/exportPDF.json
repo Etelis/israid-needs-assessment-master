@@ -29,7 +29,7 @@
                                 },
                         "AffectedHouseholds": 
                                 {
-                                "type": "float",
+                                "type": "number",
                                 "description": "The number of affected households"
                                 },
                         "communityName": 
@@ -57,7 +57,7 @@
                                 "type": "string",
                                 "description": "The date and time on which the RNA was last updated"
                                 },
-                        "isCompleted:": 
+                        "isCompleted": 
                                 {
                                 "type": "boolean",
                                 "description": "Whether the RNA is completed or not"

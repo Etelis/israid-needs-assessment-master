@@ -1,10 +1,10 @@
 {
-  "Handler": "createPdf.lambda_handler",
+  "Handler": "exportPDF.lambda_handler",
   "Runtime": "python3.11",
   "MemorySize": 128,
   "Timeout": 250,
   "Layers": [
-      "PYTHON-DEP-createPdf",
+      "PYTHON-DEP-exportPDF",
       "sample-docs"
   ],
   "Api_Settings": {

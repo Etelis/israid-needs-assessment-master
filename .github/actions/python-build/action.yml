@@ -31,10 +31,9 @@ runs:
           LAYER_NAME=PYTHON-DEP-${function_name}
 
           mkdir -p $function_name-deps/python
-
-          python -m pip install \
-            --platform manylinux2014_x86_64 \
-            --only-binary=:all: \
+          
+          docker run -v $(pwd):/app -w /app amazon/aws-lambda-python:${{steps.python_version.outputs.value}} yum install -y python-pip && \
+            python -m pip install \
             --target ./$function_name-deps/python \
             -r $dir/requirements.txt \
             --no-user

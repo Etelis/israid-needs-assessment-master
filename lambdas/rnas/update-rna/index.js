@@ -1,39 +1,33 @@
 const { RNA } = require('/opt/schema-layer/rna-schema.js');
 
+//TODO: delete lambda?
 exports.handler = async function (event) {
-    try {
-        const { id } = event;
+	try {
+		const newRna = JSON.parse(event.body);
 
-        if (!id) {
-            return {
-                statusCode: 400,
-                body: 'id is required for the update.',
-            };
-        }
-        
-        // Find the item in DynamoDB using the ID
-        const { Item: existingRna }= await RNA.get({"id":id});
+		// Find the item in DynamoDB using the ID
+		const { Item: existingRna } = await RNA.get({ id: newRna.id });
 
-        if (!existingRna) {
-            return {
-                statusCode: 404,
-                body: 'Item not found.',
-            };
-        }
-        
-        // Perform the update using the dynamodb-toolbox Entity
-        const updatedRna = await RNA.update(event);
+		if (!existingRna) {
+			return {
+				statusCode: 404,
+				body: JSON.stringify({ message: 'Item not found.' }),
+			};
+		}
 
-        return {
-            statusCode: 200,
-            body: updatedRna,
-        };
-    } catch (error) {
-        console.error(error);
+		// Perform the update using the dynamodb-toolbox Entity
+		const updatedRna = await RNA.update(newRna);
 
-        return {
-            statusCode: 500,
-            body: 'Internal Server Error',
-        };
-    }
-}
+		return {
+			statusCode: 200,
+			body: JSON.stringify(updatedRna),
+		};
+	} catch (error) {
+		console.error(error);
+
+		return {
+			statusCode: 500,
+			body: JSON.stringify({ message: 'Internal Server Error' }),
+		};
+	}
+};

@@ -1,6 +1,6 @@
 const RNAFilterOptions = {
     ALL: 'all',
-    ONGOING: 'ongoing',
+    DOWNLOADED: 'downloaded',
   };
   
   export default RNAFilterOptions;  

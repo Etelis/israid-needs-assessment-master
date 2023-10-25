@@ -6,7 +6,9 @@ const cacheAnswer = async (newAnswer) => {
 	try {
 		await set(createUpdatedAnswerCacheKey(newAnswer), newAnswer);
 	} catch (error) {
-		toast.error('Something Went Wrong Saving Answer');
+		const errorMessage = 'Something Went Wrong Saving Answer';
+
+		toast.error(errorMessage, { toastId: errorMessage });
 	}
 };
 

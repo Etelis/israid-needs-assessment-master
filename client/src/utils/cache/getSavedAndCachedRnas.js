@@ -1,6 +1,16 @@
-import { getMany, keys } from 'idb-keyval';
-import { getUpdatedRnaKeys } from './cacheKeyTypes';
+import { get, getMany, keys } from 'idb-keyval';
+import { cacheUsageKeyTypes, getUpdatedRnaKeys } from './cacheKeyTypes';
 import { toast } from 'react-toastify';
+
+const setIsDownloadedRnaFields = async (rnas) => {
+	const downloadedRnasIds =
+		(await get(cacheUsageKeyTypes.downloadedRnas)) ?? [];
+
+	return rnas.map((rna) => ({
+		...rna,
+		isDownloaded: downloadedRnasIds.includes(rna.id),
+	}));
+};
 
 const mergeRnas = (oldRnas, updatedRnas) => {
 	let mergedRnas = [...oldRnas];
@@ -31,11 +41,13 @@ const getSavedAndCachedRnas = async (queryClient) => {
 		const savedRnas = queryClient.getQueryData(['rnas']) ?? [];
 		const updatedRnas = (await getCachedRnas()) ?? [];
 
-		console.log('merged rnas', mergeRnas(savedRnas, updatedRnas));
+		const allRnas = mergeRnas(savedRnas, updatedRnas);
 
-		return mergeRnas(savedRnas, updatedRnas);
+		return setIsDownloadedRnaFields(allRnas);
 	} catch (error) {
-		toast.error('Something Went Wrong Getting Saved Rnas');
+		const errorMessage = 'Something Went Wrong Getting Saved Rnas';
+
+		toast.error(errorMessage, { toastId: errorMessage });
 	}
 };
 

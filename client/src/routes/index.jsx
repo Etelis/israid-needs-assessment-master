@@ -1,18 +1,19 @@
-import { useRoutes } from 'react-router-dom';
-import LoadingSpinner from '../components/LoadingSpinner';
-import useLoadApplicationData from '../utils/online/useLoadApplicationData';
-import useOfflineRoutes from './useOfflineRoutes';
-import useOnlineRoutes from './useOnlineRoutes';
+import { Route, Routes } from "react-router-dom";
+import { useUser } from "../contexts/UserContext";
+import { AuthenticatedRoutes } from "./AuthenticatedRoutes";
+import { UnauthenticatedRoutes } from "./UnauthenticatedRoutes";
 
-const Routes = () => {
-	const isLoading = useLoadApplicationData();
+const AppRoutes = () => {
+  const { user } = useUser();
 
-	const offlineRoutes = useOfflineRoutes();
-	const onlineRoutes = useOnlineRoutes();
-
-	const ApplicationRoutes = useRoutes([...onlineRoutes, ...offlineRoutes]);
-
-	return isLoading ? <LoadingSpinner /> : ApplicationRoutes;
+  return (
+    <Routes>
+      <Route
+        path="/*"
+        element={user ? <AuthenticatedRoutes /> : <UnauthenticatedRoutes />}
+      />
+    </Routes>
+  );
 };
 
-export default Routes;
+export default AppRoutes;

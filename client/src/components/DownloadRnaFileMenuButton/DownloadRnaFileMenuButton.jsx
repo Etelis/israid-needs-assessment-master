@@ -1,7 +1,6 @@
 import ExcelIcon from '@mui/icons-material/BackupTable';
 import PdfIcon from '@mui/icons-material/PictureAsPdf';
-import DownloadIcon from '@mui/icons-material/SaveAlt';
-import {
+import DownloadIcon from '@mui/icons-material/Description';import {
 	Box,
 	Button,
 	Divider,

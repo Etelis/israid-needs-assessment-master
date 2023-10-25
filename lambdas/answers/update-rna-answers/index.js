@@ -1,52 +1,60 @@
 const { Answer } = require('/opt/schema-layer/answer-schema.js');
 
-exports.handler = async function  handler(event) {
-    try {
-        const { rnaId } = event.pathParameters;
-        const { answers: newAnswers } = JSON.parse(event.body);
-        
-        const { Items: oldAnswers } = await Answer.scan({filters:{attr:"rnaId",eq:rnaId}});
-        
-        const updatedAnswers = newAnswers.map((newAnswer) => {
-            const oldAnswer = oldAnswers.find((x) => x.questionId === newAnswer.questionId);
-            
-            if (!oldAnswer) {
-                return new Answer({ ...newAnswer, rnaId });
-            }
+//TODO: delete this lambda?
+exports.handler = async function handler(event) {
+	try {
+		const { rnaId } = event.pathParameters;
+		const { answers: newAnswers } = JSON.parse(event.body);
 
-            if (!hasAnswerChanged(oldAnswer, newAnswer)) {
-                return null;
-            }
-            
-            oldAnswer.value = newAnswer.value;
-            oldAnswer.photos = newAnswer.photos;
-            oldAnswer.notes = newAnswer.notes;
-            
-            return oldAnswer;
-        });
-        
-        const filteredAnswers = updatedAnswers.filter((x) => x);
-        
-        await Answer.batchPut(filteredAnswers).exec();
-        
-        return {
-            statusCode: 200,
-            body: 'Answers updated successfully',
-        };
-    } catch (error) {
-        console.error(error);
-        
-        return {
-            statusCode: 500,
-            body: 'Internal Server Error',
-        };
-    }
-}
+		const { Items: oldAnswers } = await Answer.scan({
+			filters: { attr: 'rnaId', eq: rnaId },
+		});
+
+		const updatedAnswers = newAnswers.map((newAnswer) => {
+			const oldAnswer = oldAnswers.find(
+				(x) => x.questionId === newAnswer.questionId
+			);
+
+			if (!oldAnswer) {
+				return new Answer({ ...newAnswer, rnaId });
+			}
+
+			if (!hasAnswerChanged(oldAnswer, newAnswer)) {
+				return null;
+			}
+
+			oldAnswer.value = newAnswer.value;
+			oldAnswer.photos = newAnswer.photos;
+			oldAnswer.notes = newAnswer.notes;
+
+			return oldAnswer;
+		});
+
+		const filteredAnswers = updatedAnswers.filter((x) => x);
+
+		await Answer.batchPut(filteredAnswers).exec();
+
+		return {
+			statusCode: 200,
+		};
+	} catch (error) {
+		console.error(error);
+
+		return {
+			statusCode: 500,
+			body: JSON.stringify({ message: 'Internal Server Error' }),
+		};
+	}
+};
 
 const hasAnswerChanged = (oldAnswer, newAnswer) => {
-    if (!newAnswer) {
-        return false;
-    }
+	if (!newAnswer) {
+		return false;
+	}
 
-    return newAnswer.value !== oldAnswer.value || JSON.stringify(newAnswer.photos) !== JSON.stringify(oldAnswer.photos) || newAnswer.notes !== oldAnswer.notes;
+	return (
+		newAnswer.value !== oldAnswer.value ||
+		JSON.stringify(newAnswer.photos) !== JSON.stringify(oldAnswer.photos) ||
+		newAnswer.notes !== oldAnswer.notes
+	);
 };

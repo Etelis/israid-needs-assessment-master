@@ -7,12 +7,26 @@ const useOnlineStatus = () => {
 	useEffect(() => {
 		const handleOnline = () => {
 			setIsOnline(true);
-			toast.info('Internet Connection Found!');
-			toast.success('Synchronizing Now Available');
+
+			const connectionFoundMessage = 'Internet Connection Found!';
+			const synchronizationAvailableMessage =
+				'Synchronizing Now Available';
+
+			toast.info(connectionFoundMessage, {
+				toastId: connectionFoundMessage,
+			});
+			toast.success(synchronizationAvailableMessage, {
+				toastId: synchronizationAvailableMessage,
+			});
 		};
 		const handleOffline = () => {
 			setIsOnline(false);
-			toast.warning('You Are Now In Offline Mode');
+
+			const connectionLostMessage = 'You Are Now In Offline Mode';
+
+			toast.warning(connectionLostMessage, {
+				toastId: connectionLostMessage,
+			});
 		};
 
 		window.addEventListener('online', handleOnline);

@@ -31,12 +31,21 @@ runs:
           LAYER_NAME=PYTHON-DEP-${function_name}
 
           mkdir -p $function_name-deps/python
-          
-          docker run -v $(pwd):/app -w /app amazon/aws-lambda-python:${{steps.python_version.outputs.value}} yum install -y python-pip && \
-            python -m pip install \
+
+          python -m pip install \
+            --platform manylinux2014_x86_64 \
+            --only-binary=:all: \
             --target ./$function_name-deps/python \
             -r $dir/requirements.txt \
-            --no-user
+            --no-user || {
+              echo "Pip installation failed, falling back to Docker"
+              # Run Docker commands only if pip fails
+              docker run -v $(pwd):/app -w /app amazonlinux:2 yum install -y python39 && \
+              python3.9 -m pip install \
+                  --target ./$function_name-deps/python \
+                  -r $dir/requirements.txt \
+                  --no-user
+          }
 
           # Create a zip file containing the layer content
           cd $function_name-deps

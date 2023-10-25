@@ -45,7 +45,8 @@ export const createRna = (req, res, next) => {
 		location,
 	});
 
-	rna.save()
+	rna
+		.save()
 		.then(convertRnaToDto)
 		.then((dto) => {
 			res.send(dto);

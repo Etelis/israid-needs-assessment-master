@@ -52,16 +52,16 @@ export const getUpdatedAnswersModels = (oldAnswers, newAnswers) =>
 		})
 		.filter((x) => x);
 
-export const updateRnaAnswers = (req, res, next) => {
-	const { rnaId } = req.params;
-	const newAnswers = req.body;
+// export const updateRnaAnswers = (req, res, next) => {
+// 	const { rnaId } = req.params;
+// 	const newAnswers = req.body;
 
-	Answer.find({ rnaId })
-		.then(async (oldAnswers) => {
-			const answers = getUpdatedAnswersModels(oldAnswers, newAnswers);
+// 	Answer.find({ rnaId })
+// 		.then(async (oldAnswers) => {
+// 			const answers = getUpdatedAnswersModels(oldAnswers, newAnswers);
 
-			await Promise.all(answers.filter((x) => x).map((x) => x.save()));
-		})
-		.then(() => res.sendStatus(200))
-		.catch(next);
-};
+// 			await Promise.all(answers.filter((x) => x).map((x) => x.save()));
+// 		})
+// 		.then(() => res.sendStatus(200))
+// 		.catch(next);
+// };

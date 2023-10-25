@@ -1,15 +1,15 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { api } from '../axios';
 import { delMany, getMany, set } from 'idb-keyval';
-import { getLocalCacheChangesKeys } from '../cache/getLocalCacheChanges';
+import { toast } from 'react-toastify';
+import { api } from '../axios';
 import {
 	cacheUsageKeyTypes,
 	getUpdatedAnswerKeys,
 	getUpdatedRnaKeys,
 } from '../cache/cacheKeyTypes';
-import { toast } from 'react-toastify';
+import { getLocalCacheChangesKeys } from '../cache/getLocalCacheChanges';
 import formatDate from '../formatDate';
-import { downloadedRnaAnswersQueries } from './useDownloadedRnasAnswersQuery';
+import fetchDownloadedRnaAnswersQueries from './fetchDownloadedRnaAnswersQueries';
 
 const clearCachedChanges = async () =>
 	delMany(await getLocalCacheChangesKeys());
@@ -25,13 +25,7 @@ const useSynchronizeMutation = () => {
 
 			await clearCachedChanges();
 
-			const answerQueries = await downloadedRnaAnswersQueries();
-
-			const queriesCalls = answerQueries.map((query) =>
-				queryClient.ensureQueryData(query)
-			);
-
-			await Promise.all(queriesCalls);
+			await fetchDownloadedRnaAnswersQueries(queryClient);
 
 			const successMessage = 'All Up To Date!';
 

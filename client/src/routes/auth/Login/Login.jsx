@@ -1,21 +1,20 @@
-import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import { Alert, Box, Button } from "@mui/material";
-import { Link, useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Alert, Button } from "@mui/material";
 import { AuthenticationDetails, CognitoUser } from "amazon-cognito-identity-js";
 import jwt_decode from "jwt-decode";
-import convertCognitoErrorToMessage from "../../../utils/aws-cognito/cognito-error-converter";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { Link } from "react-router-dom";
 import userPool from "../../../../cognito-config";
-import { useUser } from "../../../contexts/UserContext";
 import { Form, FormInputText } from "../../../components/Form";
-import { IsraaidLogo } from "../components/IsraaidLogo";
+import { useUser } from "../../../contexts/UserContext";
+import convertCognitoErrorToMessage from "../../../utils/aws-cognito/cognito-error-converter";
 import ConcaveGradient from "../components/ConcaveGradient/ConcaveGradient";
-import validationSchema from "./validationSchema";
+import { IsraaidLogo } from "../components/IsraaidLogo";
 import styles from "./styles";
+import validationSchema from "./validationSchema";
 
 const Login = () => {
-  // const navigate = useNavigate();
   const {
     control,
     handleSubmit,
@@ -60,7 +59,6 @@ const Login = () => {
         } = decodedToken;
 
         setUser({ name, email, position, phoneNumber });
-        // navigate("/RNAs");
       },
       onFailure: (err) => {
         setError(convertCognitoErrorToMessage(err.code));

@@ -6,6 +6,7 @@ jobs:
   get-layers-folders:
     name: Get the layers folders
     runs-on: ubuntu-latest
+    continue-on-error: true
     outputs:
       folders: ${{ steps.folder-fetcher.outputs.folders }}
     steps:
@@ -19,6 +20,7 @@ jobs:
   deploy_layers:
     name: build and deploy layers
     needs: get-layers-folders
+    continue-on-error: true
     strategy:
       fail-fast: false
       matrix:
@@ -103,6 +105,7 @@ jobs:
     outputs:
       folders: ${{ steps.folder-fetcher.outputs.folders }}
       api_names: ${{ steps.folder-fetcher.outputs.api_names }}
+    continue-on-error: true
     steps:
       - uses: actions/checkout@v1
 
@@ -147,6 +150,7 @@ jobs:
     outputs:
       api_names: ${{ needs.get-lambda-folders.outputs.api_names }}
     runs-on: ubuntu-latest
+    continue-on-error: true
     steps:
       - uses: actions/checkout@v1
 
@@ -175,6 +179,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       folders: ${{ steps.folder-fetcher.outputs.folders }}
+    continue-on-error: true
     steps:
       - uses: actions/checkout@v1
       - name: get all folders
@@ -192,6 +197,7 @@ jobs:
         manifest: ${{ fromJson(needs.get-model-filles.outputs.folders) }}
         apis: ${{ fromJson(needs.create_apis.outputs.api_names) }}
     runs-on: ubuntu-latest
+    continue-on-error: true
     steps:
       - uses: actions/checkout@v1
 
@@ -254,6 +260,7 @@ jobs:
       folders: ${{ needs.get-lambda-folders.outputs.folders }}
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    continue-on-error: true
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -328,6 +335,7 @@ jobs:
       matrix:
         manifest: ${{ fromJson(needs.deploy_lambdas.outputs.folders) }}
     runs-on: ubuntu-latest
+    continue-on-error: true
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -382,6 +390,7 @@ jobs:
         manifest: ${{ fromJson(needs.create_apis.outputs.api_names) }}
         stage: [IsraAid]
     runs-on: ubuntu-latest
+    continue-on-error: true
     steps:
       - uses: actions/checkout@v1
 

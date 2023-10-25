@@ -118,6 +118,7 @@ jobs:
           # Loop through each folder and extract Api_Name from config.json
           for folder in $folders; do
               config_file="$folder/config.json"
+              echo $config_file
               
               # Check if config.json file exists in the folder
               if [ -f "$config_file" ]; then

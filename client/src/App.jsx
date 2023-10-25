@@ -1,13 +1,10 @@
 import 'react-toastify/dist/ReactToastify.css';
 
-import { QueryClient } from '@tanstack/react-query';
-import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client';
-import { del, get, set } from 'idb-keyval';
-import { MemoryRouter as Router } from 'react-router-dom';
-
-import { Navbar } from './components/Navbar/Navbar';
-import Routes from './routes';
-import { ThemeProvider } from './theme';
+import { del, get, set } from "idb-keyval";
+import { MemoryRouter as Router } from "react-router-dom";
+import { Navbar } from "./components/Navbar/Navbar";
+import { UserProvider } from "./contexts/UserContext";
+import AppRoutes from "./routes/AppRoutes";
 import { ToastContainer, toast } from 'react-toastify';
 import { NavbarButtonsProvider } from './components/Navbar/useNavbarButtonsContext';
 
@@ -54,12 +51,14 @@ const App = () => (
 		persistOptions={{ persister }}
 	>
 		<ThemeProvider>
-			<Router>
+      <UserProvider>
+        <Router>
 				<NavbarButtonsProvider>
-					<Navbar />
+          <Navbar />
 					<Routes />
 				</NavbarButtonsProvider>
-			</Router>
+        </Router>
+      </UserProvider>
 			<ToastContainer
 				position='bottom-right'
 				autoClose={2000}

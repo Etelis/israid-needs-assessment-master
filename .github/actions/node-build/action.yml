@@ -19,7 +19,7 @@ runs:
           string2: ""
 
       - name: Use Node.js ${{steps.node_version.outputs.value}}
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v4
         with:
           node-version: ${{steps.node_version.outputs.value}}
 

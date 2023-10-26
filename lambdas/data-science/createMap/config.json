@@ -12,6 +12,6 @@
       "Api_Name": "IsraAID app",
       "Path": "/createMap",
       "Integration": false,
-      "Model": "createMap"
+      "Model": ""
   }
 }

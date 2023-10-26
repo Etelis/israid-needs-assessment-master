@@ -1,6 +1,5 @@
 Requests
 plotly
 fpdf
-base64
 boto3
 botocore

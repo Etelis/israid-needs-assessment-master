@@ -2,7 +2,7 @@
     "Handler": "index.handler",
     "Runtime": "nodejs18.x",
     "MemorySize": 128,
-    "Timeout": 15,
+    "Timeout": 300,
     "Layers": [
         "schema-layer",
         "aws-dynamo-connector"

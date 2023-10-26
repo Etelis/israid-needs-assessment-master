@@ -1,7 +1,7 @@
 {
     "type": "object",
     "properties": {
-        "source sentences": {
+        "sentences": {
             "type": "array",
             "items": {
                 "type": "string"

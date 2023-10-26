@@ -4,7 +4,14 @@
   "MemorySize": 128,
   "Timeout": 250,
   "Layers": [
-      "PYTHON-DEP-exportPDF",
-      "sample-docs"
-  ]
+    "PYTHON-DEP-exportPDF",
+    "sample-docs"
+  ],
+  "Api_Settings": {
+    "Method": "POST",
+    "Api_Name": "IsraAID app",
+    "Path": "/exportPDF",
+    "Integration": false,
+    "Model": "exportPDF"
+  }
 }

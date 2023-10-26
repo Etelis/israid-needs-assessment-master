@@ -45,6 +45,40 @@
                     "affectedHouseholds"
                 ]
             }
+        },
+        "updatedAnswers": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "questionId": {
+                        "type": "string"
+                    },
+                    "rnaId": {
+                        "type": "string"
+                    },
+                    "value": {
+                        "type": "object"
+                    },
+                    "photos": {
+                        "type": "array"
+                    },
+                    "notes": {
+                        "type": "string"
+                    },
+                    "createdOn": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "questionId",
+                    "rnaId",
+                    "value"
+                ]
+            }
         }
     }
 }

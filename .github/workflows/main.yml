@@ -128,7 +128,7 @@ jobs:
                   api_name=$(jq -r '.Api_Settings.Api_Name' "$config_file")
                   
                   # Check if Api_Name is not empty and unique
-                  if [ -n "$api_name" ] && ! [[ " ${api_names[@]} " =~ " $api_name " ]]; then
+                  if [ -n "$api_name" ] && [[ $api_name != "null" ]] ! [[ " ${api_names[@]} " =~ " $api_name " ]]; then
                       api_names+=("$api_name")
                   fi
               fi

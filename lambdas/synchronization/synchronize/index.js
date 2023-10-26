@@ -1,85 +1,104 @@
-const { RNA } = require("/opt/schema-layer/rna-schema.js");
-const { Answer } = require("/opt/schema-layer/answer-schema.js");
+const { RNA } = require('/opt/schema-layer/rna-schema.js');
+const { Answer } = require('/opt/schema-layer/answer-schema.js');
 
 const hasRnaChanged = (oldRna, newRna) => {
-  if (!newRna) {
-    return false;
-  }
+	if (!newRna) {
+		return false;
+	}
 
-  return (
-    newRna.communityName !== oldRna.communityName ||
-    newRna.location !== oldRna.location ||
-    newRna.isCompleted !== oldRna.isCompleted ||
-    newRna.communityType !== oldRna.communityType ||
-    newRna.affectedHouseholds !== oldRna.affectedHouseholds
-  );
+	return (
+		newRna.communityName !== oldRna.communityName ||
+		newRna.location !== oldRna.location ||
+		newRna.isCompleted !== oldRna.isCompleted ||
+		newRna.communityType !== oldRna.communityType ||
+		newRna.affectedHouseholds !== oldRna.affectedHouseholds
+	);
 };
 
 const getUpdatedRnasModels = (oldRnas, newRnas) =>
-  newRnas
-    .map((newRna) => {
-      const oldRna = oldRnas.find((x) => x.id === newRna.id);
+	newRnas
+		.map((newRna) => {
+			const oldRna = oldRnas.find((x) => x.id === newRna.id);
 
-      if (!oldRna) {
-        return RNA.put(newRna);
-      }
+			if (!oldRna) {
+				return RNA.put(newRna);
+			}
 
-      if (!hasRnaChanged(oldRna, newRna)) {
-        return null;
-      }
+			if (!hasRnaChanged(oldRna, newRna)) {
+				return null;
+			}
 
-      oldRna.communityName = newRna.communityName;
-      oldRna.communityType = newRna.communityType;
-      oldRna.location = newRna.location;
-      oldRna.affectedHouseholds = newRna.affectedHouseholds;
-      oldRna.lastUpdatedOn = new Date().toISOString();
-      oldRna.isCompleted = newRna.isCompleted;
+			const {
+				communityName,
+				communityType,
+				location,
+				affectedHouseholds,
+				isCompleted,
+			} = newRna;
 
-      return RNA.update({ PK: oldRna.id }, { ...oldRna });
-    })
-    .filter((x) => x);
+			const lastUpdatedOn = new Date().toISOString();
+
+			return RNA.update({
+				id: oldRna.id,
+				lastUpdatedOn,
+				communityName,
+				communityType,
+				location,
+				affectedHouseholds,
+				isCompleted,
+			});
+		})
+		.filter((x) => x);
 
 const hasAnswerChanged = (oldAnswer, newAnswer) => {
-  if (!newAnswer) {
-    return false;
-  }
+	if (!newAnswer) {
+		return false;
+	}
 
-  return (
-    newAnswer.value !== oldAnswer.value ||
-    JSON.stringify(newAnswer.photos) !== JSON.stringify(oldAnswer.photos) ||
-    newAnswer.notes !== oldAnswer.notes
-  );
+	return (
+		newAnswer.value !== oldAnswer.value ||
+		JSON.stringify(newAnswer.photos) !== JSON.stringify(oldAnswer.photos) ||
+		newAnswer.notes !== oldAnswer.notes
+	);
 };
 
 const getUpdatedAnswersModels = (oldAnswers, newAnswers) =>
-  newAnswers
-    .map((newAnswer) => {
-      const oldAnswer = oldAnswers.find(
-        (x) =>
-          x.rnaId === newAnswer.rnaId && x.questionId === newAnswer.questionId
-      );
+	newAnswers
+		.map((newAnswer) => {
+			const oldAnswer = oldAnswers.find(
+				(x) =>
+					x.rnaId === newAnswer.rnaId &&
+					x.questionId === newAnswer.questionId
+			);
 
-      if (!oldAnswer) {
-        return Answer.put(newAnswer);
-      }
+			if (!oldAnswer) {
+				return Answer.put(newAnswer);
+			}
 
-      if (
-        !hasAnswerChanged(oldAnswer, newAnswer) ||
-        new Date(oldAnswer.createdOn) > new Date(newAnswer.createdOn)
-      ) {
-        return null;
-      }
+			if (
+				!hasAnswerChanged(oldAnswer, newAnswer) ||
+				new Date(oldAnswer.createdOn) > new Date(newAnswer.createdOn)
+			) {
+				return null;
+			}
 
-      return Answer.update({ PK: oldAnswer.id }, { ...newAnswer });
-    })
-    .filter((x) => x);
+			const { createdOn, value, photos, notes } = newAnswer;
+
+			return Answer.update({
+				id: oldAnswer.id,
+				createdOn,
+				value,
+				photos,
+				notes,
+			});
+		})
+		.filter((x) => x);
 
 exports.handler = async (event) => {
-  try {
-    const { updatedRnas, updatedAnswers } = event;
+	try {
+		const { updatedRnas, updatedAnswers } = event;
 
-
-    /*
+		/*
 	const formattedUpdatedRnas = updatedRnas.map((rna) => {
       const formattedRna = {
         ...rna,
@@ -101,34 +120,33 @@ exports.handler = async (event) => {
     }));
 	*/
 
-	const formattedUpdatedAnswers = updatedAnswers
-	const formattedUpdatedRnas = updatedRnas
+		const formattedUpdatedAnswers = updatedAnswers;
+		const formattedUpdatedRnas = updatedRnas;
 
+		const updatedRnasModels = getUpdatedRnasModels(
+			(await RNA.scan()).Items,
+			formattedUpdatedRnas
+		);
 
-    const updatedRnasModels = getUpdatedRnasModels(
-      (await RNA.scan()).Items,
-      formattedUpdatedRnas
-    );
+		const updatedAnswersModels = getUpdatedAnswersModels(
+			(await Answer.scan()).Items,
+			formattedUpdatedAnswers
+		);
 
-    const updatedAnswersModels = getUpdatedAnswersModels(
-      (await Answer.scan()).Items,
-      formattedUpdatedAnswers
-    );
+		await Promise.all(updatedRnasModels, updatedAnswersModels);
 
-    await Promise.all(updatedRnasModels, updatedAnswersModels);
+		return {
+			statusCode: 200,
+		};
+	} catch (error) {
+		console.error(error);
 
-    return {
-      statusCode: 200,
-    };
-  } catch (error) {
-    console.error(error);
-
-    return {
-      statusCode: 500,
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ message: "Internal Server Error" }),
-    };
-  }
+		return {
+			statusCode: 500,
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({ message: 'Internal Server Error' }),
+		};
+	}
 };

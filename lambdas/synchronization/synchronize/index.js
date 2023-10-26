@@ -77,7 +77,7 @@ const getUpdatedAnswersModels = (oldAnswers, newAnswers) =>
 
 exports.handler = async (event) => {
 	try {
-		const { updatedRnas, updatedAnswers } = JSON.parse(event.body);
+		const { updatedRnas, updatedAnswers } = event;
 
 		const formattedUpdatedRnas = updatedRnas.map((rna) => ({
 			...rna,

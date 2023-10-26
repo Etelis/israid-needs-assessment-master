@@ -78,7 +78,9 @@ exports.handler = async (event) => {
   try {
     const { updatedRnas, updatedAnswers } = event;
 
-    const formattedUpdatedRnas = updatedRnas.map((rna) => {
+
+    /*
+	const formattedUpdatedRnas = updatedRnas.map((rna) => {
       const formattedRna = {
         ...rna,
         lastUpdatedOn: rna.lastUpdatedOn
@@ -97,6 +99,11 @@ exports.handler = async (event) => {
       ...answer,
       createdOn: answer.createdOn.toISOString(),
     }));
+	*/
+
+	formattedUpdatedAnswers = updatedAnswers
+	formattedUpdatedRnas = updatedRnas
+
 
     const updatedRnasModels = getUpdatedRnasModels(
       (await RNA.scan()).Items,

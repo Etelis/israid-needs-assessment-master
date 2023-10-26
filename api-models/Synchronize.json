@@ -1,0 +1,50 @@
+{
+    "type": "object",
+    "properties": {
+        "updatedRnas": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "creatorId": {
+                        "type": "string"
+                    },
+                    "communityName": {
+                        "type": "string"
+                    },
+                    "communityType": {
+                        "type": "string"
+                    },
+                    "emergency": {
+                        "type": "array"
+                    },
+                    "affectedHouseholds": {
+                        "type": "integer"
+                    },
+                    "location": {
+                        "type": "string"
+                    },
+                    "createdOn": {
+                        "type": "string"
+                    },
+                    "lastUpdatedOn": {
+                        "type": "string"
+                    },
+                    "isCompleted": {
+                        "type": "boolean"
+                    }
+                },
+                "required": [
+                    "creatorId",
+                    "communityName",
+                    "communityType",
+                    "emergency",
+                    "affectedHouseholds"
+                ]
+            }
+        }
+    }
+}

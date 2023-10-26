@@ -101,8 +101,8 @@ exports.handler = async (event) => {
     }));
 	*/
 
-	formattedUpdatedAnswers = updatedAnswers
-	formattedUpdatedRnas = updatedRnas
+	const formattedUpdatedAnswers = updatedAnswers
+	const formattedUpdatedRnas = updatedRnas
 
 
     const updatedRnasModels = getUpdatedRnasModels(

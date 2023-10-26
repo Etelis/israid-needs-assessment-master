@@ -13,6 +13,6 @@
         "Api_Name": "IsraAID app",
         "Path": "/synchronize",
         "Integration": false,
-        "Model": ""
+        "Model": "Synchronize"
     }
 }

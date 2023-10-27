@@ -15,6 +15,7 @@ const textField = {
     fontSize: "0.875rem",
     fontFamily: 'Noyh R SemiLight, sans-serif'
   },
+  width: '350px' 
 };
 
 const styles = { textField };

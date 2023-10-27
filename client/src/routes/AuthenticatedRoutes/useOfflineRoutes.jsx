@@ -1,6 +1,7 @@
 import { Navigate } from 'react-router-dom';
 import CategoriesQuestionsRoutes from './CategoriesQuestionsRoutes';
 import { AddRNA, RNAs } from '../pages/RNAs';
+import { UpdatePersonalDetails } from '../pages/UpdatePersonalDetails';
 
 const useOfflineRoutes = () => [
 	{
@@ -14,6 +15,10 @@ const useOfflineRoutes = () => [
 	{
 		path: 'RNAs/:rnaId/*',
 		element: <CategoriesQuestionsRoutes />,
+	},
+	{
+		path: 'update-personal-details',
+		element: <UpdatePersonalDetails />,
 	},
 	{
 		path: '*',

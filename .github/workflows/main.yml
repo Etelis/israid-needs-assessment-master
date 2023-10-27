@@ -10,7 +10,7 @@ jobs:
     outputs:
       folders: ${{ steps.folder-fetcher.outputs.folders }}
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v4
       - name: get all folders
         id: folder-fetcher
         run: |
@@ -27,7 +27,7 @@ jobs:
         manifest: ${{ fromJson(needs.get-layers-folders.outputs.folders) }}
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v4
 
       - name: Set up AWS CLI
         uses: aws-actions/configure-aws-credentials@v4
@@ -107,7 +107,7 @@ jobs:
       api_names: ${{ steps.folder-fetcher.outputs.api_names }}
     continue-on-error: true
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v4
 
       - name: get all folders and unique list of used APIs
         id: folder-fetcher
@@ -152,7 +152,7 @@ jobs:
     runs-on: ubuntu-latest
     continue-on-error: true
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v4
 
       - name: Set up AWS CLI
         uses: aws-actions/configure-aws-credentials@v4
@@ -181,7 +181,7 @@ jobs:
       folders: ${{ steps.folder-fetcher.outputs.folders }}
     continue-on-error: true
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v4
       - name: get all folders
         id: folder-fetcher
         run: |
@@ -199,7 +199,7 @@ jobs:
     runs-on: ubuntu-latest
     continue-on-error: true
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v4
 
       - name: Set up AWS CLI
         uses: aws-actions/configure-aws-credentials@v4
@@ -389,7 +389,7 @@ jobs:
         stage: [IsraAid]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v4
 
       - name: Set up AWS CLI
         uses: aws-actions/configure-aws-credentials@v4

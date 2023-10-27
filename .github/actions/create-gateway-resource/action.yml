@@ -112,7 +112,7 @@ runs:
 
           integration_type="AWS_PROXY"
           integration_http_method="POST"
-          
+
           # Create API Gateway integration
           aws apigateway put-integration \
               --rest-api-id ${{ steps.get-api-id.outputs.id }} \
@@ -156,6 +156,7 @@ runs:
               --status-code 200 \
               --selection-pattern "" \
               --response-templates '{"application/json": ""}'
+              --response-parameters '{"method.response.header.Access-Control-Allow-Origin": "'"'"'*'"'"'"}'
           else
             echo "Integration response already exists."
           fi

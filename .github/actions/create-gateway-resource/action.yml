@@ -155,7 +155,7 @@ runs:
               --http-method "${{ inputs.METHOD }}" \
               --status-code 200 \
               --selection-pattern "" \
-              --response-templates '{"application/json": ""}'
+              --response-templates '{"application/json": ""}' \
               --response-parameters '{"method.response.header.Access-Control-Allow-Origin": "'"'"'*'"'"'"}'
           else
             echo "Integration response already exists."

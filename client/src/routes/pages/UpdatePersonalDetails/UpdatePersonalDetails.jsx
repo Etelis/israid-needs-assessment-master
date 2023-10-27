@@ -1,64 +1,90 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Button, Alert } from "@mui/material";
-import { Link, useNavigate } from "react-router-dom";
+import { Button, Alert, Typography, Box } from "@mui/material";
+import { Save } from "@mui/icons-material";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { toast } from "react-toastify";
 import { CognitoUserAttribute } from "amazon-cognito-identity-js";
 import userPool from "../../../../cognito-config";
 import convertCognitoErrorToMessage from "../../../utils/aws-cognito/cognito-error-converter";
-import authValidationSchema from "../utils/authValidationSchema";
-import { useUser } from "../../../contexts/UserContext/UserContext";
+import { useUser } from "../../../contexts/UserContext";
 import { Form, FormInputText } from "../../../components/Form";
-import { IsraaidLogo } from "../components/IsraaidLogo";
+import validationSchema from "./validationSchema";
 import styles from "./styles";
 
-const Register = () => {
+const UpdatePersonalDetails = () => {
+  const { user, setUser } = useUser();
   const [error, setError] = useState(null);
-  const { setUser } = useUser();
-  const navigate = useNavigate();
 
   const {
     control,
     handleSubmit,
     formState: { errors },
   } = useForm({
-    resolver: zodResolver(authValidationSchema),
+    resolver: zodResolver(validationSchema),
     defaultValues: {
-      name: "",
-      email: "",
-      password: "",
-      position: "",
-      phoneNumber: "",
+      name: user.name,
+      email: user.email,
+      position: user.position,
+      phoneNumber: user.phoneNumber,
     },
   });
 
-  const onSubmit = async (data) => {
-    const { email, password, name, position, phoneNumber } = data;
+  const onSubmit = (data) => {
+    const { name, email, position, phoneNumber } = data;
 
     const attributeList = [
       new CognitoUserAttribute({ Name: "name", Value: name }),
+      new CognitoUserAttribute({ Name: "email", Value: email }),
       new CognitoUserAttribute({ Name: "custom:position", Value: position }),
       new CognitoUserAttribute({ Name: "phone_number", Value: phoneNumber }),
     ];
 
-    userPool.signUp(email, password, attributeList, null, (err, result) => {
+    const currentUser = userPool.getCurrentUser();
+
+    if (currentUser === null) {
+      setError("User not authenticated");
+
+      return;
+    }
+
+    currentUser.getSession((err, session) => {
       if (err) {
         setError(convertCognitoErrorToMessage(err.code));
+        return;
+      }
+
+      if (!session.isValid()) {
+        setError("Invalid session");
 
         return;
       }
 
-      setError(null);
-      setUser({ name, email, position, phoneNumber });
-      navigate("/RNAs");
+      currentUser.updateAttributes(attributeList, (err) => {
+        if (err) {
+          setError(convertCognitoErrorToMessage(err.code));
+          return;
+        }
+
+        setUser(data);
+        toast.success("Details were update succefully!", {
+          toastId: "updateAttributesSuccess",
+        });
+      });
     });
   };
 
   return (
-    <>
-      <IsraaidLogo />
-      <Form onSubmit={handleSubmit(onSubmit)} sx={styles.form}>
-        {error && <Alert severity="error">{error}</Alert>}
+    <Form onSubmit={handleSubmit(onSubmit)}>
+      {error && (
+        <Alert severity="error" sx={styles.alert}>
+          {error}
+        </Alert>
+      )}
+      <Typography variant="h6" fontWeight="bold" fontSize="2.5rem">
+        Personal Details
+      </Typography>
+      <Box display="flex" flexDirection="column" alignItems="center">
         <FormInputText
           name="name"
           control={control}
@@ -73,14 +99,6 @@ const Register = () => {
           label="Email"
           error={Boolean(errors.email)}
           helperText={errors.email?.message}
-          sx={styles.inputText}
-        />
-        <FormInputText
-          name="password"
-          control={control}
-          label="Password"
-          error={Boolean(errors.password)}
-          helperText={errors.password?.message}
           sx={styles.inputText}
         />
         <FormInputText
@@ -99,19 +117,12 @@ const Register = () => {
           helperText={errors.phoneNumber?.message}
           sx={styles.inputText}
         />
-        <Button
-          type="submit"
-          variant="contained"
-          sx={styles.submitButton}
-        >
-          Sign Up
-        </Button>
-        <Link to="/login" style={styles.link}>
-          Already registered? Sign in here
-        </Link>
-      </Form>
-    </>
+      </Box>
+      <Button type="submit" sx={styles.updateButton} startIcon={<Save />}>
+        Save
+      </Button>
+    </Form>
   );
 };
 
-export default Register;
+export default UpdatePersonalDetails;

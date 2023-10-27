@@ -18,7 +18,7 @@ exports.handler = async () => {
 			headers: {
 				'Content-Type': 'application/json',
 			},
-			body: rnas,
+			body: JSON.stringify(rnas),
 		};
 	} catch (error) {
 		console.error(error);
@@ -28,7 +28,7 @@ exports.handler = async () => {
 			headers: {
 				'Content-Type': 'application/json',
 			},
-			body: 'Internal Server Error',
+			body: JSON.stringify({ message: 'Internal Server Error' }),
 		};
 	}
 };

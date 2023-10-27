@@ -13,11 +13,8 @@ inputs:
   METHOD:
     description: 'METHOD'
     required: true
-  INTEGRATION:
-    description: 'METHOD'
-    required: true
   MODEL:
-    description: 'METHOD'
+    description: 'MODEL'
     required: true
 runs:
   using: "composite"
@@ -113,15 +110,9 @@ runs:
             --query "Functions[?FunctionName=='${{ inputs.LAMBDA }}'].FunctionArn" \
             --output text)
 
-          # Check the integration type based on the 'integration' variable
-          if [[ "${{ inputs.INTEGRATION }}" == "true" ]]; then
-              integration_type="AWS_PROXY"
-              integration_http_method="POST"
-          else
-              integration_type="AWS"
-              integration_http_method="${{ inputs.METHOD }}"
-              integration_http_method="POST"
-          fi
+          integration_type="AWS_PROXY"
+          integration_http_method="POST"
+          
           # Create API Gateway integration
           aws apigateway put-integration \
               --rest-api-id ${{ steps.get-api-id.outputs.id }} \

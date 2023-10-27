@@ -12,7 +12,6 @@
         "Method": "GET",
         "Api_Name": "IsraAID app",
         "Path": "/rnas/{rnaId}/answers",
-        "Integration": true,
         "Model": ""
     }
 }

@@ -65,7 +65,7 @@ def process_context(context):
 
 def lambda_handler(event, context):
     try:
-        # event = json.loads(event['body'])
+        event = json.loads(event['body'])
         context = event['context']
 
         contents = process_context(context)

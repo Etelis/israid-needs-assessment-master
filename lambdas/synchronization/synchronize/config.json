@@ -12,7 +12,6 @@
         "Method": "POST",
         "Api_Name": "IsraAID app",
         "Path": "/synchronize",
-        "Integration": false,
         "Model": "Synchronize"
     }
 }

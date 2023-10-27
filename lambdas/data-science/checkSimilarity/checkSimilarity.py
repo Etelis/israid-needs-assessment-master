@@ -55,7 +55,7 @@ def compute_similarity(new_question, question_list):
 
 def lambda_handler(event, context):
     try:
-        # event = json.loads(event['body'])
+        event = json.loads(event['body'])
         new_question = event['source sentence']
         prev_quesitons = event['sentences']
 

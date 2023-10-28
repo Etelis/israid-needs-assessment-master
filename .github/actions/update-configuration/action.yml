@@ -59,7 +59,7 @@ runs:
               --handler $handler \
               --runtime $runtime \
               --memory-size $memorysize \
-              --timeout $timeout
+              --timeout $timeout \
               --environment $environment
           fi
         env:

@@ -161,42 +161,6 @@ runs:
           fi
         shell: bash
 
-
-      - name: Create CORS Options
-        run: |
-          if ! aws apigateway get-method --rest-api-id ${{ steps.get-api-id.outputs.id }} --resource-id ${{ steps.get-resource-id.outputs.id }} --http-method OPTIONS &> /dev/null; then
-            aws apigateway put-method \
-                --rest-api-id ${{ steps.get-api-id.outputs.id }} \
-                --resource-id ${{ steps.get-resource-id.outputs.id }} \
-                --http-method OPTIONS \
-                --authorization-type NONE
-
-            aws apigateway put-integration \
-                --rest-api-id ${{ steps.get-api-id.outputs.id }} \
-                --resource-id ${{ steps.get-resource-id.outputs.id }} \
-                --http-method OPTIONS \
-                --type MOCK \
-                --request-templates '{ "application/json": "{\"statusCode\": 200}" }'
-
-            # Create methods and declare available response parameters 
-            aws apigateway put-method-response \
-              --rest-api-id ${{ steps.get-api-id.outputs.id }} \
-              --resource-id ${{ steps.get-resource-id.outputs.id }} \
-              --http-method OPTIONS \
-              --status-code 200 \
-              --response-parameters '{"method.response.header.Access-Control-Allow-Headers": true, "method.response.header.Access-Control-Allow-Methods": true, "method.response.header.Access-Control-Allow-Origin": true}'  \
-              --response-models '{"application/json": "Empty"}'
-          fi
-          
-          aws apigateway put-integration-response \
-            --rest-api-id ${{ steps.get-api-id.outputs.id }} \
-            --resource-id ${{ steps.get-resource-id.outputs.id }} \
-            --http-method OPTIONS \
-            --status-code 200  \
-            --response-parameters '{"method.response.header.Access-Control-Allow-Methods": "'\'DELETE,GET,HEAD,OPTIONS,PATCH,POST,PUT\''",
-                  "method.response.header.Access-Control-Allow-Headers": "'\'Content-Type,Authorization,X-Amz-Date,X-Api-Key,X-Amz-Security-Token\''",
-                  "method.response.header.Access-Control-Allow-Origin": "'\'*\''"}'
-        shell: bash
       - name: Attach model to method
         run: |
             # Attach the model to a specific API Gateway method

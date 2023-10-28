@@ -19,6 +19,9 @@ inputs:
   timeout:
     description: 'timeout'
     required: true
+  environment:
+    description: 'environment'
+    required: true
 runs:
   using: "composite"
   steps:
@@ -57,6 +60,7 @@ runs:
               --runtime $runtime \
               --memory-size $memorysize \
               --timeout $timeout
+              --environment $environment
           fi
         env:
           function_name: ${{ inputs.function_name }}

@@ -174,6 +174,57 @@ jobs:
           fi
         shell: bash
 
+  setup_amplify:
+    name: Setup amplify vars
+    needs: [create_apis]
+    strategy:
+      fail-fast: false
+      matrix:
+        manifest: ${{ fromJson(needs.create_apis.outputs.api_names) }}
+    outputs:
+      url: ${{ steps.deploy-amplify.outputs.url }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up AWS CLI
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-north-1
+
+      - name: Check if API Gateway named ${{ matrix.manifest }} exists
+        id: get-api
+        run: |
+          api_id=$(aws apigateway get-rest-apis \
+            --query "items[?name=='${{ matrix.manifest }}'].id" \
+            --output text)
+          stage=IsraAid
+
+          url=https://$api_id.execute-api.$AWS_REGION.amazonaws.com/$stage
+          echo "Deployed stage URL: $url"
+          echo "url=$url" >> "$GITHUB_OUTPUT"
+        shell: bash
+
+      - name: Export to amplify env vars
+        id: deploy-amplify
+        run: |
+          app_name=$(echo "${{ github.repository }}" | cut -d'/' -f2)
+          app_id=$(aws amplify list-apps \
+            --query "apps[?name=='$app_name'].appId" \
+            --output text
+            --region eu-central-1)
+
+          aws amplify update-app \
+            --app-id $app_id \
+            --environment-variables BackendURL=${{ steps.get-api.outputs.url }}
+          
+          url=https://master.$app_id.amplifyapp.com
+          echo "Updated amplify URL: $url"
+          echo "url=$url" >> "$GITHUB_OUTPUT"
+        shell: bash
+
   get-model-filles:
     name: Get the model configuration files
     runs-on: ubuntu-latest
@@ -251,7 +302,7 @@ jobs:
 
   deploy_lambdas:
     name: build and deploy lambdas
-    needs: [get-lambda-folders, deploy_layers]
+    needs: [get-lambda-folders, deploy_layers,setup_amplify]
     strategy:
       fail-fast: false
       matrix:
@@ -326,6 +377,7 @@ jobs:
           runtime: ${{steps.json_properties.outputs.runtime}}
           memorysize: ${{steps.json_properties.outputs.memorysize}}
           timeout: ${{steps.json_properties.outputs.timeout}}
+          environment: "Variables={CORS=${{ needs.setup_amplify.outputs.url }}}"
 
   deploy_gateway_routes:
     name: Create aws api gateway routes
@@ -386,7 +438,6 @@ jobs:
       fail-fast: false
       matrix:
         manifest: ${{ fromJson(needs.create_apis.outputs.api_names) }}
-        stage: [IsraAid]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -404,7 +455,7 @@ jobs:
           api_id=$(aws apigateway get-rest-apis \
             --query "items[?name=='${{ matrix.manifest }}'].id" \
             --output text)
-          stage=${{matrix.stage}}
+          stage=IsraAid
 
           dep_id=$(aws apigateway create-deployment \
             --rest-api-id "$api_id" \
@@ -426,19 +477,4 @@ jobs:
           
           url=https://$api_id.execute-api.$AWS_REGION.amazonaws.com/$stage
           echo "Deployed stage URL: $url"
-          echo "url=$url" >> "$GITHUB_OUTPUT"
-
-          app_id=$(aws amplify list-apps --query "apps[?name=='temp1'].appId" --output text)
-        shell: bash
-
-      - name: Export to amplify env vars
-        run: |
-          app_name=$(echo "${{ github.repository }}" | cut -d'/' -f2)
-          app_id=$(aws amplify list-apps \
-            --query "apps[?name=='$app_name'].appId" \
-            --output text)
-
-          aws amplify update-app \
-            --app-id $app_id \
-            --environment-variables BackendURL=${{ steps.deploy-api.outputs.url }}
         shell: bash

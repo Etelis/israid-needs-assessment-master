@@ -68,6 +68,7 @@ runs:
           runtime: ${{inputs.runtime}}
           memorysize: ${{inputs.memorysize}}
           timeout: ${{inputs.timeout}}
+          environment: ${{inputs.environment}}
         shell: bash
 
 

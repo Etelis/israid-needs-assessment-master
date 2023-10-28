@@ -4,6 +4,7 @@ import boto3
 from botocore.exceptions import ClientError
 from textblob import TextBlob
 import math
+import os
 
 # Configure logging
 logger = logging.getLogger()
@@ -91,19 +92,31 @@ def lambda_handler(event, context):
 
         return {
             'statusCode': 200,
-            'body': json.dumps({'severity': str(sev_dict)})
+            'body': json.dumps({'severity': str(sev_dict)}),
+            'headers': {
+				'Content-Type': 'application/json',
+				'Access-Control-Allow-Origin': os.getenv("CORS")
+			}
         }
     except ClientError as e:
         logger.error(f"Client error: {e}")
         return {
             'statusCode': 500,
-            'body': json.dumps({'error_message': 'Internal server error'})
+            'body': json.dumps({'error_message': 'Internal server error'}),
+            'headers': {
+				'Content-Type': 'application/json',
+				'Access-Control-Allow-Origin': os.getenv("CORS")
+			}
         }
     except Exception as e:
         logger.error(f"Error: {e}")
         return {
             'statusCode': 500,
-            'body': json.dumps({'error_message': 'Internal server error'})
+            'body': json.dumps({'error_message': 'Internal server error'}),
+            'headers': {
+				'Content-Type': 'application/json',
+				'Access-Control-Allow-Origin': os.getenv("CORS")
+			}
         }
 
 

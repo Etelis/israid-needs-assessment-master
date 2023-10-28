@@ -17,6 +17,7 @@ exports.handler = async (event) => {
 			statusCode: 200,
 			headers: {
 				'Content-Type': 'application/json',
+				'Access-Control-Allow-Origin': process.env.CORS
 			},
 			body: JSON.stringify(formattedAnswers),
 		};
@@ -27,6 +28,7 @@ exports.handler = async (event) => {
 			statusCode: 500,
 			headers: {
 				'Content-Type': 'application/json',
+				'Access-Control-Allow-Origin': process.env.CORS
 			},
 			body: JSON.stringify({ message: 'Internal Server Error' }),
 		};

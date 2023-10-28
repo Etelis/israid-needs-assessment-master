@@ -137,6 +137,10 @@ exports.handler = async (event) => {
 
 		return {
 			statusCode: 200,
+			headers: {
+				'Content-Type': 'application/json',
+				'Access-Control-Allow-Origin': process.env.CORS
+			}
 		};
 	} catch (error) {
 		console.error(error);
@@ -145,6 +149,7 @@ exports.handler = async (event) => {
 			statusCode: 500,
 			headers: {
 				'Content-Type': 'application/json',
+				'Access-Control-Allow-Origin': process.env.CORS
 			},
 			body: JSON.stringify({ message: 'Internal Server Error' }),
 		};

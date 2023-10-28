@@ -35,7 +35,7 @@ runs:
           python -m pip install \
             --target ./$function_name-deps/python \
             -r $dir/requirements.txt \
-            --no-user
+            --no-user \
             --platform manylinux2014_x86_64 \
             --only-binary=:all: || {
               echo "Pip installation failed, falling back to Docker"

@@ -213,12 +213,13 @@ jobs:
           app_name=$(echo "${{ github.repository }}" | cut -d'/' -f2)
           app_id=$(aws amplify list-apps \
             --query "apps[?name=='$app_name'].appId" \
-            --output text
+            --output text \
             --region eu-central-1)
 
           aws amplify update-app \
             --app-id $app_id \
-            --environment-variables BackendURL=${{ steps.get-api.outputs.url }}
+            --environment-variables BackendURL=${{ steps.get-api.outputs.url }} \
+            --region eu-central-1
           
           url=https://master.$app_id.amplifyapp.com
           echo "Updated amplify URL: $url"

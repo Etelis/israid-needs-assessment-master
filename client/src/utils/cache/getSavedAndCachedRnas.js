@@ -51,4 +51,12 @@ const getSavedAndCachedRnas = async (queryClient) => {
 	}
 };
 
+export const getRnaForState = async (rnaId, queryClient, setState) => {
+	const rna = (await getSavedAndCachedRnas(queryClient)).find(
+		(currRna) => currRna.id === rnaId
+	);
+
+	setState(rna);
+};
+
 export default getSavedAndCachedRnas;

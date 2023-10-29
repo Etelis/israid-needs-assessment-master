@@ -1,6 +1,6 @@
-import { Card, Stack, Typography } from '@mui/material';
+import { Card, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import ProgressBar from '../../../components/ProgressBar';
+import ProgressSummary from '../../../components/ProgressSummary';
 
 const SubQuestionCategory = ({ id, categoryId, title, questions, answers }) => {
 	const navigate = useNavigate();
@@ -13,26 +13,25 @@ const SubQuestionCategory = ({ id, categoryId, title, questions, answers }) => {
 		<Card
 			onClick={navigateToQuestions}
 			style={{
-				display: 'flex',
-				flexDirection: 'row',
-				padding: '8px',
+				padding: '16px',
 				margin: '8px',
-				alignItems: 'center',
-				justifyContent: 'space-around',
+				borderRadius: '10px',
 			}}
 		>
-			<Stack sx={{ width: '60%' }}>
-				<Typography variant='body2' fontWeight='bold'>
-					{title}
-				</Typography>
-				<ProgressBar
-					answeredQusetion={answers.length}
-					totalQuestions={questions.length}
-				/>
-			</Stack>
-			<Typography variant='button' sx={{ color: '#2AA63C' }}>
-				{answers.length}/{questions.length}
-			</Typography>
+			<ProgressSummary
+				ProgressDetails={
+					<Typography
+						variant='h6'
+						fontWeight='bold'
+						fontSize='18px'
+						sx={{ mb: '6px' }}
+					>
+						{title}
+					</Typography>
+				}
+				currentProgress={answers.length}
+				maxProgress={questions.length}
+			/>
 		</Card>
 	);
 };

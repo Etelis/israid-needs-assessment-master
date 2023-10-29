@@ -1,4 +1,4 @@
-const defaultProgressCard = {
+const rnaDetails = {
 	borderRadius: '16px',
 	flexGrow: '1',
 	boxShadow: '0 0 2px 1px white',
@@ -10,17 +10,19 @@ const progressCardContent = {
 	},
 };
 
-const rnaCard = {
+const rnaCard = (isDownloaded) => ({
 	marginTop: '16px',
 	marginBottom: '16px',
 	borderRadius: '16px',
-	background: 'linear-gradient(to right, #A8FEA6 50%, #B4D9FF 50%)',
+	background: isDownloaded
+		? 'linear-gradient(to right, #A8FEA6 50%, #A8FEA6 50%)'
+		: 'linear-gradient(to right, #A8FEA6 50%, #B4D9FF 50%)',
 	border: '1px solid rgba(0, 0, 0, 0.4)',
 	width: '100%',
-};
+});
 
 const cardButtons = {
-	'svg': {
+	svg: {
 		fontSize: '40px',
 		color: 'black',
 	},
@@ -28,7 +30,7 @@ const cardButtons = {
 
 const styles = {
 	rnaCard,
-	defaultProgressCard,
+	rnaDetails,
 	progressCardContent,
 	cardButtons,
 };

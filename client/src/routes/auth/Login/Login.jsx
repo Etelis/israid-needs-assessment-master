@@ -56,9 +56,10 @@ const Login = () => {
           email,
           ["custom:position"]: position,
           phone_number: phoneNumber,
+          email_verified: emailVerified,
         } = decodedToken;
 
-        setUser({ name, email, position, phoneNumber });
+        setUser({ name, email, position, phoneNumber, emailVerified });
       },
       onFailure: (err) => {
         setError(convertCognitoErrorToMessage(err.code));

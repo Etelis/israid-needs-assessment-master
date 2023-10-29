@@ -7,6 +7,7 @@ import { CognitoUserAttribute } from "amazon-cognito-identity-js";
 import userPool from "../../../../cognito-config";
 import convertCognitoErrorToMessage from "../../../utils/aws-cognito/cognito-error-converter";
 import authValidationSchema from "../utils/authValidationSchema";
+import { toast } from 'react-toastify';
 import { useUser } from "../../../contexts/UserContext/UserContext";
 import { Form, FormInputText } from "../../../components/Form";
 import { IsraaidLogo } from "../components/IsraaidLogo";
@@ -50,7 +51,8 @@ const Register = () => {
 
       setError(null);
       setUser({ name, email, position, phoneNumber });
-      navigate("/RNAs");
+      toast.success("Registration successful! Please verify your email.");
+      navigate("/login"); 
     });
   };
 

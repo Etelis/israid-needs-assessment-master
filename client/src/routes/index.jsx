@@ -10,7 +10,7 @@ const AppRoutes = () => {
     <Routes>
       <Route
         path="/*"
-        element={user ? <AuthenticatedRoutes /> : <UnauthenticatedRoutes />}
+        element={user?.emailVerified ? <AuthenticatedRoutes /> : <UnauthenticatedRoutes />}
       />
     </Routes>
   );

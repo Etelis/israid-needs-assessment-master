@@ -66,7 +66,7 @@ const UpdatePersonalDetails = () => {
           return;
         }
 
-        setUser(data);
+        setUser({ ...data, emailVerified: true });
         toast.success("Details were update succefully!", {
           toastId: "updateAttributesSuccess",
         });

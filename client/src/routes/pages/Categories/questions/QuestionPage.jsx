@@ -141,12 +141,6 @@ const QuestionPage = () => {
 				createdOn: new Date(),
 			});
 			await fetchRnaAnswers();
-
-			console.log('newAnswer', {
-				...newAnswer,
-				rnaId,
-				createdOn: new Date(),
-			});
 		}
 	};
 
@@ -160,7 +154,7 @@ const QuestionPage = () => {
 
 	return (
 		<form onSubmit={handleSubmit}>
-			<Stack minHeight='80vh' p={2} spacing={3} justifyContent='space-around'>
+			<Stack minHeight='90vh' p={2} spacing={3} justifyContent='space-around'>
 				<Question question={currentQuestion.title} />
 
 				<AnswerInput

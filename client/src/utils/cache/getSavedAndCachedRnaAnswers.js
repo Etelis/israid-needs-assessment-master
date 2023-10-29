@@ -41,4 +41,10 @@ const getSavedAndCachedRnaAnswers = async (rnaId, queryClient) => {
 	}
 };
 
+export const getSavedAndCachedAnswersForState = async (rnaId, queryClient, setState) => {
+	const answers = await getSavedAndCachedRnaAnswers(rnaId, queryClient);
+
+	setState(answers);
+};
+
 export default getSavedAndCachedRnaAnswers;

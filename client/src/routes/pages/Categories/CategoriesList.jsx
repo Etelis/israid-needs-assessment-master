@@ -1,12 +1,13 @@
-import { Box } from '@mui/material';
+import PoolIcon from '@mui/icons-material/Pool';
+import { Card, IconButton, Paper, Stack, Typography } from '@mui/material';
+import { useEffect } from 'react';
+import { DownloadRnaFileMenuButton } from '../../../components/DownloadRnaFileMenuButton';
+import { useNavbarButtonsContext } from '../../../components/Navbar/useNavbarButtonsContext';
 import ProgressOverview from '../../../components/ProgressOverview';
+import categories from '../../../static-data/categories.json';
 import QuestionCategory from '../Categories/QuestionCategory';
 import { useCategoriesContext } from './context/useCategoriesContext';
-import categories from '../../../static-data/categories.json';
-import { useNavbarButtonsContext } from '../../../components/Navbar/useNavbarButtonsContext';
-import { useEffect, useState } from 'react';
-import getQuestions from '../../../utils/cache/getQuestions';
-import { DownloadRnaFileMenuButton } from '../../../components/DownloadRnaFileMenuButton';
+import styles from './styles';
 
 const getViewCategories = (subCategories) =>
 	categories.map((x) => {
@@ -29,55 +30,62 @@ const getViewCategories = (subCategories) =>
 	});
 
 const CategoriesList = () => {
-	const { subCategories, rnaAnswers } = useCategoriesContext();
-	const [questions, setQuestions] = useState([]);
+	const { subCategories, rnaAnswers, questions, rna } =
+		useCategoriesContext();
 	const { setNavbarButtons } = useNavbarButtonsContext();
 
 	useEffect(() => {
 		setNavbarButtons([<DownloadRnaFileMenuButton key='downloadRna' />]);
-
-		const fetchQuestions = async () => {
-			const allQuestions = await getQuestions();
-
-			setQuestions(allQuestions);
-		};
-
-		fetchQuestions();
 
 		return () => {
 			setNavbarButtons([]);
 		};
 	}, []);
 
-	if (!subCategories.length) {
+	if (!rna) {
 		return null;
 	}
 
 	const viewCategories = getViewCategories(subCategories);
 
 	return (
-		<Box>
-			<ProgressOverview
-				leftColumnAmount={Math.floor(
-					(rnaAnswers.length / questions.length) * 100
-				)}
-				leftColumnCaption={'Form Completed'}
-				rightColumnAmount={rnaAnswers.length}
-				rightColumnCaption={'Questions Answered'}
-			/>
-			{viewCategories?.map((x, index) => (
-				<QuestionCategory
-					key={index}
-					title={x.name}
-					preview={x.description}
-					id={x.id}
-					iconSrc={x.iconSrc}
-					totalQuestions={x.totalQuestionAmount}
-					answeredQusetion={x.answeredQuestionAmount}
-					subCategories={x.subCategories}
-				></QuestionCategory>
-			))}
-		</Box>
+		<Stack height='90vh'>
+			<Stack mb={1} spacing={1} alignItems='center'>
+				<Typography variant='h3'>{rna.communityName}</Typography>
+				<Typography variant='h4'>Flood</Typography>
+			</Stack>
+			<Paper elevation={5} sx={styles.rnaCard}>
+				<Stack direction='row'>
+					<IconButton disabled>
+						<PoolIcon />
+					</IconButton>
+					<Card sx={styles.rnaOverview}>
+						<ProgressOverview
+							leftColumnAmount={Math.floor(
+								(rnaAnswers.length / questions.length) * 100
+							)}
+							leftColumnCaption={'Form Completed'}
+							rightColumnAmount={rnaAnswers.length}
+							rightColumnCaption={'Questions Answered'}
+						/>
+					</Card>
+				</Stack>
+			</Paper>
+			<Stack p={3} pb={5}>
+				{viewCategories?.map((x, index) => (
+					<QuestionCategory
+						key={index}
+						title={x.name}
+						preview={x.description}
+						id={x.id}
+						iconSrc={x.iconSrc}
+						totalQuestions={x.totalQuestionAmount}
+						answeredQusetion={x.answeredQuestionAmount}
+						subCategories={x.subCategories}
+					></QuestionCategory>
+				))}
+			</Stack>
+		</Stack>
 	);
 };
 

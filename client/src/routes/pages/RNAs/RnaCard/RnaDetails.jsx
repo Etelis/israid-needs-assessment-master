@@ -8,10 +8,10 @@ import {
 } from '@mui/material';
 import { useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { CircularProgressLabel } from '../../../../components/CircularProgressLabel/CircularProgressLabel';
-import getQuestions from '../../../../utils/cache/getQuestions';
-import getSavedAndCachedRnaAnswers from '../../../../utils/cache/getSavedAndCachedRnaAnswers';
+import { getQuestionsForState } from '../../../../utils/cache/getQuestions';
+import { getSavedAndCachedAnswersForState } from '../../../../utils/cache/getSavedAndCachedRnaAnswers';
 import formatDate from '../../../../utils/formatDate';
 import styles from './styles';
 
@@ -19,29 +19,16 @@ const RnaDetails = ({ rna }) => {
 	const queryClient = useQueryClient();
 	const [rnaAnswers, setRnaAnswers] = useState([]);
 	const [questions, setQuestions] = useState([]);
+	const navigate = useNavigate();
 
 	useEffect(() => {
-		const getAnswers = async () => {
-			const answers = await getSavedAndCachedRnaAnswers(
-				rna.id,
-				queryClient
-			);
-
-			setRnaAnswers(answers);
-		};
-		const fetchQuestions = async () => {
-			const allQuestions = await getQuestions();
-
-			setQuestions(allQuestions);
-		};
-
-		fetchQuestions();
-		getAnswers();
+		getQuestionsForState(setQuestions);
+		getSavedAndCachedAnswersForState(rna.id, queryClient, setRnaAnswers);
 	}, []);
 
 	return (
-		<Card sx={styles.defaultProgressCard}>
-			<CardActionArea component={Link} to={rna.id}>
+		<Card onClick={() => navigate(rna.id)} sx={styles.rnaDetails}>
+			<CardActionArea>
 				<CardContent sx={styles.progressCardContent}>
 					<Stack direction='row' justifyContent='space-between'>
 						<Stack spacing={1}>

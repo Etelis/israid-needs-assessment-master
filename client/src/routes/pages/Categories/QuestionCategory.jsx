@@ -8,8 +8,8 @@ import {
 	Typography,
 } from '@mui/material';
 import { useState } from 'react';
-import ProgressBar from '../../../components/ProgressBar';
 import SubQuestionCategory from './SubQuestionCategory';
+import ProgressSummary from '../../../components/ProgressSummary';
 
 const QuestionCategory = ({
 	id,
@@ -27,33 +27,34 @@ const QuestionCategory = ({
 	};
 
 	return (
-		<Card sx={{ margin: '6px' }}>
+		<Card sx={{ margin: '6px', borderRadius: '10px' }}>
 			<Accordion expanded={isExpanded} onChange={toggleExpand}>
 				<AccordionSummary>
 					<Stack
 						padding='6px'
 						direction='row'
 						alignItems='center'
-						width='100%'
-						justifyContent='space-between'
-						spacing={4}
+						flexGrow={1}
+						spacing={2}
 					>
-						<Stack direction='row' alignItems='center' spacing={1}>
-							<Avatar alt='John Doe' src={iconSrc} />
-							<Stack>
-								<Typography variant='h6'>{title}</Typography>
-								<Typography sx={{ color: 'Grey' }} variant='caption'>
-									{preview}
-								</Typography>
-								<ProgressBar
-									answeredQusetion={answeredQusetion}
-									totalQuestions={totalQuestions}
-								/>
-							</Stack>
-						</Stack>
-						<Typography variant='button' sx={{ color: '#2AA63C' }}>
-							{answeredQusetion}/{totalQuestions}
-						</Typography>
+						<Avatar alt='John Doe' src={iconSrc} />
+						<ProgressSummary
+							ProgressDetails={
+								<>
+									<Typography variant='h6'>
+										{title}
+									</Typography>
+									<Typography
+										sx={{ color: 'Grey', mb: '5px' }}
+										variant='caption'
+									>
+										{preview}
+									</Typography>
+								</>
+							}
+							currentProgress={answeredQusetion}
+							maxProgress={totalQuestions}
+						/>
 					</Stack>
 				</AccordionSummary>
 				<AccordionDetails>

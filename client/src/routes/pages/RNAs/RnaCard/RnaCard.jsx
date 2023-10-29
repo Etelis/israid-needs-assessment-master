@@ -15,8 +15,8 @@ const RnaCard = ({ rna, downloadHandler }) => {
 		await downloadHandler();
 		setIsLoading(false);
 
-		const downloadedMessage =
-			'This RNA Will Now Stay Updated With Synchronizations';
+		const downloadedMessage = 'This RNA will now update on Synchronization';
+
 		toast.info(downloadedMessage, {
 			toastId: downloadedMessage,
 			autoClose: 4000,

@@ -5,7 +5,7 @@ export const CircularProgressLabel = ({ value, fontSize, ...props }) => {
 		<Box sx={{ position: 'relative', display: 'inline-flex' }}>
 			<CircularProgress
 				variant='determinate'
-				thickness='5'
+				thickness={5}
 				value={value}
 				{...props}
 			/>

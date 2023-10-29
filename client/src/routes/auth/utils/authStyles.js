@@ -25,9 +25,8 @@ export const alert = {
 };
 
 export const link = {
-  textDecoration: "none",
-  marginTop: "16px",
-  color: 'inherit'
+  textDecoration: "underline",
+  marginTop: "16px"
 };
 
 const authStyles = {

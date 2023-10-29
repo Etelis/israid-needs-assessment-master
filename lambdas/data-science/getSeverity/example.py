@@ -72,3 +72,8 @@ example_event_categories = {
         }
     }
 }
+
+example_event_allrna_RETURN = {
+                                'fb91fdc7-46ba-47f8-bc3c-d1e480ad71be': 100,
+                                'fb91fdc7-46ba-47f8-bc3c-d1e480ad71bf': 100
+                            }

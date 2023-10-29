@@ -1,10 +1,9 @@
 import json
 import logging
-import boto3
 from botocore.exceptions import ClientError
 from textblob import TextBlob
 import math
-import os
+import os, sys
 
 # Configure logging
 logger = logging.getLogger()
@@ -81,14 +80,14 @@ def get_severity(answers):
             total_grade += calaculate_answer(answers[item][answer])
         severity_dict[item] = total_grade/len(item)
     severity_dict = normalize(severity_dict)
+
     return severity_dict
 
 
 def lambda_handler(event, context):
     try:
-        all_answers = json.loads(event['body']) # list of dicts like example above
-
-        sev_dict = get_severity(all_answers)   # UPDATE THIS FUNCTION TO RETURN A DICT OF ['id','severity']
+        all_answers = json.loads(event['body'])
+        sev_dict = get_severity(all_answers)
 
         return {
             'statusCode': 200,
@@ -120,17 +119,5 @@ def lambda_handler(event, context):
         }
 
 
-print(get_severity(example_event_allrna))
+# print(get_severity(example_event_allrna))
 
-# Expected Input Format ######
-#event = { 
-#           'answer.id': {
-#                     'value': answer.value,
-#                     'notes': answer.notes
-#                     }, 
-#           'answer.id': {
-#                     'value': answer.value,
-#                     'notes': answer.notes
-#                     }
-#       }
-#lambda_handler(event, {})

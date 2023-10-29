@@ -1,4 +1,4 @@
-import { Stack, TextField } from '@mui/material';
+import { Card, Stack, TextField, Typography } from '@mui/material';
 import { isEqual } from 'lodash';
 import { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
@@ -9,6 +9,7 @@ import AnswerInput from './Answers/AnswerInput';
 import PhotoManager from './Answers/PhotoManager';
 import Controls from './Controls/Controls';
 import Question from './Question';
+import ProgressSummary from '../../../../components/ProgressSummary';
 import styles from './styles';
 
 const isAnswerAsExpected = (answer, question) => {
@@ -70,7 +71,9 @@ const QuestionPage = () => {
 	}, [subCategoryId]);
 
 	useEffect(() => {
-		setCurrentSubCategory(getCurrentSubCategory(subCategoryId, subCategories));
+		setCurrentSubCategory(
+			getCurrentSubCategory(subCategoryId, subCategories)
+		);
 	}, [subCategories, subCategoryId]);
 
 	const viableQuestions = currentSubCategory.questions.filter((x) =>
@@ -154,8 +157,31 @@ const QuestionPage = () => {
 
 	return (
 		<form onSubmit={handleSubmit}>
-			<Stack minHeight='90vh' p={2} spacing={3} justifyContent='space-around'>
-				<Question question={currentQuestion.title} />
+			<Stack
+				minHeight='90vh'
+				p={2}
+				spacing={3}
+				justifyContent='space-around'
+			>
+				<Stack spacing={4}>
+					<Card sx={styles.progressSummary}>
+						<ProgressSummary
+							ProgressDetails={
+								<Typography
+									variant='h5'
+									mb={1}
+									fontWeight='bold'
+								>
+									{currentSubCategory.name}
+								</Typography>
+							}
+							currentProgress={currentQuestionIndex + 1}
+							maxProgress={currentSubCategory.questions.length}
+						/>
+					</Card>
+
+					<Question question={currentQuestion.title} />
+				</Stack>
 
 				<AnswerInput
 					question={currentQuestion}

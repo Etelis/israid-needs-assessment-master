@@ -14,6 +14,7 @@ import { getQuestionsForState } from '../../../../utils/cache/getQuestions';
 import { getSavedAndCachedAnswersForState } from '../../../../utils/cache/getSavedAndCachedRnaAnswers';
 import formatDate from '../../../../utils/formatDate';
 import styles from './styles';
+import Emergency from '../../../../enums/Emergency';
 
 const RnaDetails = ({ rna }) => {
 	const queryClient = useQueryClient();
@@ -26,6 +27,10 @@ const RnaDetails = ({ rna }) => {
 		getSavedAndCachedAnswersForState(rna.id, queryClient, setRnaAnswers);
 	}, []);
 
+	if (!questions.length) {
+		return null;
+	}
+
 	return (
 		<Card onClick={() => navigate(rna.id)} sx={styles.rnaDetails}>
 			<CardActionArea>
@@ -36,18 +41,20 @@ const RnaDetails = ({ rna }) => {
 								{rna.location && `${rna.location} | `}
 								{rna.communityName}
 							</Typography>
-							{/* <Typography>{`${rna.emergency} | ${rna.affectedHouseholds}`}</Typography> */}
 							<Stack
 								direction='row'
 								spacing={1}
 								alignItems='center'
 							>
-								<Typography variant='subtitle2'>{`${'Earthquake'} | ${'300'}`}</Typography>
+								<Typography variant='subtitle2'>{`${rna.emergencies
+									.map((x) => Emergency[x])
+									.join(', ')} | ${
+									rna.affectedHouseholds
+								}`}</Typography>
 								<GroupsIcon sx={{ fontSize: '24px' }} />
 							</Stack>
-							{/* TODO: get rna creator details in order to print name */}
 							<Typography variant='caption' color='grey'>
-								{`Created by ${rna.creatorId} on ${formatDate(
+								{`Created by ${rna.creatorName} on ${formatDate(
 									rna.createdOn
 								)}`}
 							</Typography>

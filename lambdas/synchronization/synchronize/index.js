@@ -1,6 +1,23 @@
 const { RNA } = require('/opt/schema-layer/rna-schema.js');
 const { Answer } = require('/opt/schema-layer/answer-schema.js');
 
+const areArraysEqual = (arr1, arr2) => {
+	if (arr1.length !== arr2.length) {
+		return false;
+	}
+
+	const sortedArr1 = arr1.slice().sort();
+	const sortedArr2 = arr2.slice().sort();
+
+	for (let i = 0; i < sortedArr1.length; i++) {
+		if (sortedArr1[i] !== sortedArr2[i]) {
+			return false;
+		}
+	}
+
+	return true;
+};
+
 const hasRnaChanged = (oldRna, newRna) => {
 	if (!newRna) {
 		return false;
@@ -11,6 +28,7 @@ const hasRnaChanged = (oldRna, newRna) => {
 		newRna.location !== oldRna.location ||
 		newRna.isCompleted !== oldRna.isCompleted ||
 		newRna.communityType !== oldRna.communityType ||
+		!areArraysEqual(newRna.emergencies, oldRna.emergencies) ||
 		newRna.affectedHouseholds !== oldRna.affectedHouseholds
 	);
 };
@@ -34,6 +52,7 @@ const getUpdatedRnasModels = (oldRnas, newRnas) =>
 				location,
 				affectedHouseholds,
 				isCompleted,
+				emergencies,
 			} = newRna;
 
 			const lastUpdatedOn = new Date().toISOString();
@@ -46,6 +65,7 @@ const getUpdatedRnasModels = (oldRnas, newRnas) =>
 				location,
 				affectedHouseholds,
 				isCompleted,
+				emergencies,
 			});
 		})
 		.filter((x) => x);
@@ -98,39 +118,14 @@ exports.handler = async (event) => {
 	try {
 		const { updatedRnas, updatedAnswers } = event;
 
-		/*
-	const formattedUpdatedRnas = updatedRnas.map((rna) => {
-      const formattedRna = {
-        ...rna,
-        lastUpdatedOn: rna.lastUpdatedOn
-          ? rna.lastUpdatedOn.toISOString()
-          : null,
-      };
-
-      if (rna.createdOn !== null) {
-        formattedRna.createdOn = rna.createdOn.toISOString();
-      }
-
-      return formattedRna;
-    });
-
-    const formattedUpdatedAnswers = updatedAnswers.map((answer) => ({
-      ...answer,
-      createdOn: answer.createdOn.toISOString(),
-    }));
-	*/
-
-		const formattedUpdatedAnswers = updatedAnswers;
-		const formattedUpdatedRnas = updatedRnas;
-
 		const updatedRnasModels = getUpdatedRnasModels(
 			(await RNA.scan()).Items,
-			formattedUpdatedRnas
+			updatedRnas
 		);
 
 		const updatedAnswersModels = getUpdatedAnswersModels(
 			(await Answer.scan()).Items,
-			formattedUpdatedAnswers
+			updatedAnswers
 		);
 
 		await Promise.all(updatedRnasModels, updatedAnswersModels);
@@ -139,8 +134,8 @@ exports.handler = async (event) => {
 			statusCode: 200,
 			headers: {
 				'Content-Type': 'application/json',
-				'Access-Control-Allow-Origin': process.env.CORS
-			}
+				'Access-Control-Allow-Origin': process.env.CORS,
+			},
 		};
 	} catch (error) {
 		console.error(error);
@@ -149,7 +144,7 @@ exports.handler = async (event) => {
 			statusCode: 500,
 			headers: {
 				'Content-Type': 'application/json',
-				'Access-Control-Allow-Origin': process.env.CORS
+				'Access-Control-Allow-Origin': process.env.CORS,
 			},
 			body: JSON.stringify({ message: 'Internal Server Error' }),
 		};

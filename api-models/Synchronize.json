@@ -9,7 +9,10 @@
                     "id": {
                         "type": "string"
                     },
-                    "creatorId": {
+                    "creatorMail": {
+                        "type": "string"
+                    },
+                    "creatorName": {
                         "type": "string"
                     },
                     "communityName": {
@@ -18,7 +21,7 @@
                     "communityType": {
                         "type": "string"
                     },
-                    "emergency": {
+                    "emergencies": {
                         "type": "array"
                     },
                     "affectedHouseholds": {
@@ -38,10 +41,11 @@
                     }
                 },
                 "required": [
-                    "creatorId",
+                    "creatorMail",
+                    "creatorName",
                     "communityName",
                     "communityType",
-                    "emergency",
+                    "emergencies",
                     "affectedHouseholds"
                 ]
             }

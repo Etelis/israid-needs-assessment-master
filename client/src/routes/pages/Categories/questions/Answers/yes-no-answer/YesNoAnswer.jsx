@@ -3,7 +3,7 @@ import AnswerButton from './AnswerButton';
 
 const YesNoAnswer = ({ answer, setAnswer }) => {
   return (
-    <Stack direction='row' justifyContent='space-around' padding='20px'>
+    <Stack direction='row' justifyContent='space-around'>
       <AnswerButton
         answer='No'
         isSelected={answer === false}

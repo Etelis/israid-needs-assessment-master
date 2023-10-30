@@ -4,14 +4,7 @@ const rnaDetails = {
 	boxShadow: '0 0 2px 1px white',
 };
 
-const progressCardContent = {
-	'&:last-child': {
-		paddingBottom: '16px',
-	},
-};
-
 const rnaCard = (isDownloaded) => ({
-	marginTop: '16px',
 	marginBottom: '16px',
 	borderRadius: '16px',
 	background: isDownloaded
@@ -31,7 +24,6 @@ const cardButtons = {
 const styles = {
 	rnaCard,
 	rnaDetails,
-	progressCardContent,
 	cardButtons,
 };
 

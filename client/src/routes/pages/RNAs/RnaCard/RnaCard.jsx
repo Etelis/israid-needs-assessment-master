@@ -24,7 +24,7 @@ const RnaCard = ({ rna, downloadHandler }) => {
 	};
 
 	return (
-		<Paper elevation={5} sx={styles.rnaCard(rna.isDownloaded)}>
+		<Paper elevation={2} sx={styles.rnaCard(rna.isDownloaded)}>
 			<Stack direction='row'>
 				<IconButton disabled sx={styles.cardButtons}>
 					<PoolIcon />

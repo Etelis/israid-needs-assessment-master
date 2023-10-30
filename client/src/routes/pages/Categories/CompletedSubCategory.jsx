@@ -22,20 +22,21 @@ const CompletedSubCategory = () => {
 
 	return (
 		<Stack
-			height='90vh'
+			height='85vh'
 			spacing={2}
+			paddingBottom={2}
 			alignItems='center'
-			justifyContent='space-around'
+			justifyContent='space-between'
 		>
-			<Stack spacing={6} alignItems='center'>
-				<Typography
-					variant='h4'
-					textAlign='center'
-					fontSize='48px'
-					fontWeight='bold'
-				>
-					{subCategory.name} - Completed
-				</Typography>
+			<Stack spacing={3} alignItems='center'>
+				<Stack spacing={0.2}>
+					<Typography fontSize='34px' fontWeight='bold'>
+						{subCategory.name}
+					</Typography>
+					<Typography fontSize='34px' fontWeight='bold'>
+						- Completed -
+					</Typography>
+				</Stack>
 				<CircularProgressLabel
 					value={100}
 					size={250}
@@ -43,7 +44,7 @@ const CompletedSubCategory = () => {
 					sx={(theme) => ({ color: theme.colors.utility })}
 				/>
 			</Stack>
-			<Typography variant='h4' fontWeight='bold' textAlign='center'>
+			<Typography fontSize='32px' fontWeight='bold'>
 				Good job! You have completed this section.
 			</Typography>
 			<Stack width='80%' spacing={2}>

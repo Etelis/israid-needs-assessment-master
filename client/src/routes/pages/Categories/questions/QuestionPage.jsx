@@ -160,15 +160,16 @@ const QuestionPage = () => {
 			<Stack
 				minHeight='90vh'
 				p={2}
-				spacing={3}
+				spacing={2}
 				justifyContent='space-around'
 			>
-				<Stack spacing={4}>
+				<Stack spacing={3}>
 					<Card sx={styles.progressSummary}>
 						<ProgressSummary
 							ProgressDetails={
 								<Typography
 									variant='h5'
+									fontSize='22px'
 									mb={1}
 									fontWeight='bold'
 								>

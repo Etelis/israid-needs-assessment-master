@@ -50,10 +50,12 @@ const CategoriesList = () => {
 	const viewCategories = getViewCategories(subCategories);
 
 	return (
-		<Stack height='90vh'>
+		<Stack height='90vh' spacing={2} p={1}>
 			<Stack mb={1} spacing={1} alignItems='center'>
-				<Typography variant='h3'>{rna.communityName}</Typography>
-				<Typography variant='h4'>
+				<Typography variant='h3' fontSize='46px'>
+					{rna.communityName}
+				</Typography>
+				<Typography variant='h4' fontSize='24px'>
 					{rna.emergencies.map((x) => Emergency[x]).join(', ')}
 				</Typography>
 			</Stack>
@@ -74,7 +76,7 @@ const CategoriesList = () => {
 					</Card>
 				</Stack>
 			</Paper>
-			<Stack p={3} pb={5}>
+			<Stack pb={3}>
 				{viewCategories?.map((x, index) => (
 					<QuestionCategory
 						key={index}

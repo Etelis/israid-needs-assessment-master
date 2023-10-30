@@ -6,64 +6,49 @@ import {
 	Stack,
 	Typography,
 } from '@mui/material';
-import { useQueryClient } from '@tanstack/react-query';
-import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { CircularProgressLabel } from '../../../../components/CircularProgressLabel/CircularProgressLabel';
-import { getQuestionsForState } from '../../../../utils/cache/getQuestions';
-import { getSavedAndCachedAnswersForState } from '../../../../utils/cache/getSavedAndCachedRnaAnswers';
+import Emergency from '../../../../enums/Emergency';
 import formatDate from '../../../../utils/formatDate';
 import styles from './styles';
-import Emergency from '../../../../enums/Emergency';
 
 const RnaDetails = ({ rna }) => {
-	const queryClient = useQueryClient();
-	const [rnaAnswers, setRnaAnswers] = useState([]);
-	const [questions, setQuestions] = useState([]);
 	const navigate = useNavigate();
-
-	useEffect(() => {
-		getQuestionsForState(setQuestions);
-		getSavedAndCachedAnswersForState(rna.id, queryClient, setRnaAnswers);
-	}, []);
-
-	if (!questions.length) {
-		return null;
-	}
 
 	return (
 		<Card onClick={() => navigate(rna.id)} sx={styles.rnaDetails}>
 			<CardActionArea>
-				<CardContent sx={styles.progressCardContent}>
-					<Stack direction='row' justifyContent='space-between'>
-						<Stack spacing={1}>
-							<Typography fontSize='x-large' fontWeight='bold'>
-								{rna.location && `${rna.location} | `}
-								{rna.communityName}
+				<CardContent>
+					<Stack spacing={0.1}>
+						<Typography fontSize='22px' fontWeight='bold'>
+							{`${rna.communityName} ${rna.communityType}`}
+						</Typography>
+						{rna.location && (
+							<Typography fontSize='22px' fontWeight='bold'>
+								{rna.location}
 							</Typography>
-							<Stack
-								direction='row'
-								spacing={1}
-								alignItems='center'
-							>
-								<Typography variant='subtitle2'>{`${rna.emergencies
-									.map((x) => Emergency[x])
-									.join(', ')} | ${
-									rna.affectedHouseholds
-								}`}</Typography>
-								<GroupsIcon sx={{ fontSize: '24px' }} />
-							</Stack>
-							<Typography variant='caption' color='grey'>
-								{`Created by ${rna.creatorName} on ${formatDate(
-									rna.createdOn
-								)}`}
+						)}
+						<Typography variant='subtitle2'>
+							{rna.emergencies
+								.map((x) => Emergency[x])
+								.join(', ')}
+						</Typography>
+						<Stack
+							direction='row'
+							spacing={1}
+							alignItems='center'
+							justifyContent='center'
+						>
+							<Typography variant='subtitle2'>
+								{rna.affectedHouseholds}
 							</Typography>
+							<GroupsIcon sx={{ fontSize: '28px' }} />
 						</Stack>
-						<CircularProgressLabel
-							value={(rnaAnswers.length / questions.length) * 100}
-							fontSize='small'
-							size={60}
-						/>
+						<Typography variant='caption' color='grey'>
+							Author: {rna.creatorName}
+						</Typography>
+						<Typography variant='caption' color='grey'>
+							Created: {formatDate(rna.createdOn)}
+						</Typography>
 					</Stack>
 				</CardContent>
 			</CardActionArea>

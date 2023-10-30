@@ -2,7 +2,7 @@ import { Box, CircularProgress, Typography } from '@mui/material';
 
 export const CircularProgressLabel = ({ value, fontSize, ...props }) => {
 	return (
-		<Box sx={{ position: 'relative', display: 'inline-flex' }}>
+		<Box sx={{ position: 'relative', display: 'inline-flex', alignSelf: 'center' }}>
 			<CircularProgress
 				variant='determinate'
 				thickness={5}

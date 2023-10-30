@@ -2,7 +2,7 @@ import { Stack, Typography } from '@mui/material';
 import ProgressBar from './ProgressBar';
 
 const ProgressSummary = ({ ProgressDetails, currentProgress, maxProgress }) => (
-	<Stack direction='row' alignItems='center' flexGrow={1} spacing={1}>
+	<Stack direction='row' alignItems='center' flexGrow={1} spacing={2}>
 		<Stack flexGrow={1}>
 			{ProgressDetails}
 			<ProgressBar

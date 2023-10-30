@@ -3,7 +3,9 @@ import styles from './styles';
 
 const Question = ({ question }) => (
 	<Box sx={styles.questionBox}>
-		<Typography variant='h4' fontWeight='bold' sx={{}}>{question}</Typography>
+		<Typography fontSize='32px' fontWeight='bold'>
+			{question}
+		</Typography>
 	</Box>
 );
 

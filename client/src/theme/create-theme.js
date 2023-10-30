@@ -52,5 +52,12 @@ export default () =>
           },
         },
       },
+      MuiTypography: {
+        styleOverrides: {
+          root: {
+            textAlign: 'center'
+          }
+        }
+      }
     },
   });

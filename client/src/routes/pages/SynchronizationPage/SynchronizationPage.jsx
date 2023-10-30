@@ -61,23 +61,15 @@ const SynchronizationPage = () => {
 				alignItems='center'
 			>
 				<Stack spacing={1}>
-					<Typography
-						variant='h4'
-						textAlign='center'
-						fontWeight='bold'
-					>
+					<Typography variant='h4' fontWeight='bold'>
 						Synchronize The Data
 					</Typography>
-					<Typography
-						variant='h6'
-						textAlign='center'
-						fontWeight='bold'
-					>
+					<Typography variant='h6' fontWeight='bold'>
 						Last Synced: {formatDate(lastSynced)}
 					</Typography>
 				</Stack>
 				{cacheChanges.length > 0 && (
-					<Typography variant='h6' textAlign='center'>
+					<Typography variant='h6'>
 						{`You have ${cacheChanges.length} local changes to upload`}
 					</Typography>
 				)}
@@ -100,7 +92,7 @@ const SynchronizationPage = () => {
 				{isLoading && (
 					<Stack spacing={2} sx={{ width: '70%' }}>
 						<LinearProgress sx={styles.progressBar} />
-						<Typography variant='h6' textAlign='center'>
+						<Typography variant='h6'>
 							{cacheChanges.length > 0
 								? 'Uploading Local Files...'
 								: 'Getting All Changes...'}

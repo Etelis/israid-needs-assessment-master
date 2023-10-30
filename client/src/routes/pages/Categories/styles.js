@@ -1,10 +1,8 @@
 const rnaCard = {
-	marginTop: '16px',
-	marginBottom: '16px',
 	borderRadius: '16px',
 	background: '#A8FEA6',
 	border: '1px solid rgba(0, 0, 0, 0.4)',
-	width: '80%',
+	width: '90%',
 	alignSelf: 'center',
 };
 

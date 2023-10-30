@@ -1,6 +1,6 @@
 const searchFilter = {
 	flexBasis: '480px',
-	height: '60px',
+	height: '45px',
 	borderRadius: '10px',
 };
 

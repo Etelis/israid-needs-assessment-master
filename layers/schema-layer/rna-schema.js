@@ -43,10 +43,11 @@ const RNA = new Entity({
 	table: RnaTable,
 	attributes: {
 		id: { type: 'string', partitionKey: true, default: () => uuidv4() },
-		creatorId: 'string',
+		creatorMail: 'string',
+		creatorName: 'string',
 		communityName: 'string',
 		communityType: 'string',
-		emergency: 'list',
+		emergencies: 'list',
 		affectedHouseholds: 'number',
 		location: { type: 'string', required: false },
 		createdOn: { type: 'string', default: () => new Date().toISOString() },

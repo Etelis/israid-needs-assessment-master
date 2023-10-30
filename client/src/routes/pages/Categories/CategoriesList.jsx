@@ -8,6 +8,7 @@ import categories from '../../../static-data/categories.json';
 import QuestionCategory from '../Categories/QuestionCategory';
 import { useCategoriesContext } from './context/useCategoriesContext';
 import styles from './styles';
+import Emergency from '../../../enums/Emergency';
 
 const getViewCategories = (subCategories) =>
 	categories.map((x) => {
@@ -52,7 +53,9 @@ const CategoriesList = () => {
 		<Stack height='90vh'>
 			<Stack mb={1} spacing={1} alignItems='center'>
 				<Typography variant='h3'>{rna.communityName}</Typography>
-				<Typography variant='h4'>Flood</Typography>
+				<Typography variant='h4'>
+					{rna.emergencies.map((x) => Emergency[x]).join(', ')}
+				</Typography>
 			</Stack>
 			<Paper elevation={5} sx={styles.rnaCard}>
 				<Stack direction='row'>

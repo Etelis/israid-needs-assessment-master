@@ -1,15 +1,22 @@
 event = {
-    'group.id': {
-          'answer.id': {
-                    'value': answer.value,
-                    'notes': answer.notes
-                    }, 
-          'answer.id': {
-                    'value': answer.value,
-                    'notes': answer.notes
-                    }
-            }
-      }
+        'table_name': 'rnas', # same as Scheme table name
+        'items_id': ['fb91fdc7-46ba-47f8-bc3c-d1e480ad71be', 'fb91fdc7-46ba-47f8-bc3c-d1e480ad71be'], # specific
+        }
+
+event = {
+        'table_name': 'rnas',
+        'items_id': ['*'], # ALL
+        }
+
+event = {
+        'table_name': 'subcategories', # same as Scheme table name
+        'items_id': ['fb91fdc7-46ba-47f8-bc3c-d1e480ad71be', 'fb91fdc7-46ba-47f8-bc3c-d1e480ad71be'], # specific
+        }
+
+event = {
+        'table_name': 'categories', # same as Scheme table name
+        'items_id': ['*'], # ALL
+        }
 
 example_event_allrna = {
     'fb91fdc7-46ba-47f8-bc3c-d1e480ad71be': {   # first RNA ID - can be the ONLY ONE
@@ -73,10 +80,13 @@ example_event_categories = {
     }
 }
 
-example_event_allrna_RETURN = [{
-                                'rna_id': 'fb91fdc7-46ba-47f8-bc3c-d1e480ad71be',
-                                'score': 100,
-                                }
-                                'rna_id': 'fb91fdc7-46ba-47f8-bc3c-d1e480ad71bf',
-                                 'score': 100
-                                ]
+RETURN = [
+            {
+                "id":"fb91fdc7-46ba-47f8-bc3c-d1e480ad71be",
+                "score":100
+            },
+            {
+                "id":"fb91fdc7-46ba-47f8-bc3c-d1e480ad71bf",
+                "score": 100
+            }
+        ]

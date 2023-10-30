@@ -1,9 +1,15 @@
 import json
 import logging
+import boto3 
 from botocore.exceptions import ClientError
+from boto3.dynamodb.conditions import Key
 from textblob import TextBlob
 import math
-import os, sys
+import os
+
+REGION = 'eu-north-1' # Change this according to your AWS region
+ANSWERS_TABLE_NAME = 'Answers'
+RNAS_TABLE_NAME = 'Rnas'
 
 # Configure logging
 logger = logging.getLogger()
@@ -72,7 +78,7 @@ def normalize(severity_dict):
         severity_dict[item] = math.ceil((severity_dict[item]/max_value)*100)
     return severity_dict
 
-def get_severity(answers):
+def get_severity(answers) -> dict:
     severity_dict = {}
     for item in answers:
         total_grade = 0.0
@@ -83,15 +89,60 @@ def get_severity(answers):
 
     return severity_dict
 
+def get_answers(table: str, items: list) -> dict:
+
+    # connect to an existing dynamodb
+    dynamodb=boto3.resource('dynamodb',region_name=REGION)
+    
+    # connect to dynamodb tables
+    temp_table = dynamodb.Table(table) # decide between rnas, categories, subcategories
+    answers_table = dynamodb.Table(ANSWERS_TABLE_NAME)  # depends on the Answers Table name 
+    
+    try:
+        if items == ['*']: # take all
+            response = temp_table.scan()
+            response_data = response['Items']
+
+            # Since scan can only retrieve 1MB of data at a time, we need to paginate to retrieve all data
+            while 'LastEvaluatedKey' in response:
+                response = temp_table.scan(ExclusiveStartKey=response['LastEvaluatedKey'])
+                response_data.extend(response['Items'])
+        
+        else:
+            data = {}
+            for rna_id in items:
+                response = answers_table.query(KeyConditionExpression=Key('rnaId').eq(rna_id))
+                data[rna_id].append(
+                                    {response['id']: 
+                                        {
+                                            'value': response['value'], 
+                                            'notes' : response['notes']
+                                        }
+                                    })
+                for item in response['Item']:
+                    pass
+
+        print(type(response_data))
+        print(response_data)
+        
+        return 
+
+    except ClientError as e:
+            print(e.response['No item found'])
+    else:
+            return response['Item']
 
 def lambda_handler(event, context):
     try:
-        all_answers = json.loads(event['body'])
-        sev_dict = get_severity(all_answers)
+        table = json.loads(event['body']['table_name'])
+        items = json.loads(event['body']['items_id'])
+        
+        answers = get_answers(table, items)
+        scores = get_severity(answers)
 
         return {
             'statusCode': 200,
-            'body': json.dumps({'severity': str(sev_dict)}),
+            'body': json.dumps(scores),
             'headers': {
 				'Content-Type': 'application/json',
 				'Access-Control-Allow-Origin': os.getenv("CORS")
@@ -119,5 +170,5 @@ def lambda_handler(event, context):
         }
 
 
-# print(get_severity(example_event_allrna))
-
+answers = get_answers(table = RNAS_TABLE_NAME, items = ['*'])
+# scores = get_severity(answers)

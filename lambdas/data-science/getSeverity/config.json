@@ -9,7 +9,7 @@
     "Api_Settings": {
         "Method": "GET",
         "Api_Name": "IsraAID app",
-        "Path": "/getAllrnaSeverity",
-        "Model": "getAllrnaSeverity"
+        "Path": "/getSeverity",
+        "Model": "getSeverity"
     }
 }

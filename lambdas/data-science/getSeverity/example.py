@@ -4,8 +4,8 @@ event = {
         }
 
 event = {
-        'table_name': 'rnas',
-        'items_id': ['*'], # ALL
+        "table_name": "Rnas",
+        "items_id": ["*"] # all
         }
 
 event = {

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Button, Alert } from "@mui/material";
+import { Button, Alert, Stack } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CognitoUserAttribute } from "amazon-cognito-identity-js";
@@ -57,7 +57,7 @@ const Register = () => {
   };
 
   return (
-    <>
+    <Stack height='100vh' py='10vh'>
       <IsraaidLogo />
       <Form onSubmit={handleSubmit(onSubmit)} sx={styles.form}>
         {error && <Alert severity="error">{error}</Alert>}
@@ -112,7 +112,7 @@ const Register = () => {
           Already registered? Sign in here
         </Link>
       </Form>
-    </>
+    </Stack>
   );
 };
 

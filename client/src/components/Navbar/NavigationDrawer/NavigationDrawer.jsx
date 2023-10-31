@@ -30,6 +30,7 @@ const NavigationDrawer = ({ isOpen, setOpen }) => {
 		if (user) {
 			userPool.getCurrentUser().signOut();
 			setUser(null);
+			setOpen(false);
 			navigate('/login');
 		}
 	};
@@ -39,6 +40,7 @@ const NavigationDrawer = ({ isOpen, setOpen }) => {
 			<Toolbar />
 			<List sx={styles.navList}>
 				<ListItemLink
+					onClick={() => setOpen(false)}
 					to='/RNAs'
 					primary='View RNAs'
 					icon={<RNAList />}
@@ -58,6 +60,7 @@ const NavigationDrawer = ({ isOpen, setOpen }) => {
 				<Divider /> */}
 				{user && (
 					<ListItemLink
+						onClick={() => setOpen(false)}
 						to='/update-personal-details'
 						primary='Personal Details'
 						icon={<InfoIcon />}
@@ -77,6 +80,7 @@ const NavigationDrawer = ({ isOpen, setOpen }) => {
 				/> */}
 				{/* <Divider /> */}
 				<ListItemLink
+					onClick={() => setOpen(false)}
 					to='/Synchronization'
 					primary='Synchronize My Data'
 					icon={<CloudSync />}

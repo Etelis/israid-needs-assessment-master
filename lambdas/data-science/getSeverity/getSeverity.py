@@ -103,11 +103,12 @@ def get_answers(table: str, items: list) -> dict:
             return response['Item']
 
 def lambda_handler(event, context):
+
     try:
-        print(event)
-        return
-        table = json.loads(event['body']['table_name'])
-        items = json.loads(event['body']['items_id'])
+        
+        table = event['table_name']
+        items = event['items_id']
+        print(table, items)
         
         answers = get_answers(table, items)
         return

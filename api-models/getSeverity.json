@@ -1,0 +1,25 @@
+{
+"type": "object",
+"items":
+        {
+        "properties":
+                    {
+                    "table_name": 
+                        {
+                        "type": "string",
+                        "description": "This is the table to fetch from: rnas, categories or subcategories"
+                        },
+                    "items_id": 
+                        {
+                        "type": "array",
+                        "description": "array of strings, specific Partition ID's ['123','345'] or array of ['*'] for all items"
+                        }
+                    },
+        "description": "An object which includes the table name and the Partition IDs to fetch from the table",
+        "required": 
+                [
+                "table_name",
+                "items_id"
+                ]
+        }
+}

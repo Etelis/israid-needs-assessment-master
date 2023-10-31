@@ -2,6 +2,7 @@
 "type": "object",
 "items":
         {
+        "type": "object",
         "properties":
                     {
                     "table_name": 

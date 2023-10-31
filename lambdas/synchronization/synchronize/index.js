@@ -116,7 +116,7 @@ const getUpdatedAnswersModels = (oldAnswers, newAnswers) =>
 
 exports.handler = async (event) => {
 	try {
-		const { updatedRnas, updatedAnswers } = event;
+		const { updatedRnas, updatedAnswers } = JSON.parse(event.body);
 
 		const updatedRnasModels = getUpdatedRnasModels(
 			(await RNA.scan()).Items,

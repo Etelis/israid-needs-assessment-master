@@ -11,7 +11,7 @@
                 "items_id": 
                     {
                     "type": "array",
-                    "description": "array of strings, use specific Partition ID's or ['*'] for all items",
+                    "description": "array of strings, use specific Partition IDs or [*] for all items",
                     "example": 
                             [
                             "fb91fdc7-46ba-47f8-bc3c-d1e480ad71be", 

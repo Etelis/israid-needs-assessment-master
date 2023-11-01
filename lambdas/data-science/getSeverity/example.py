@@ -1,21 +1,19 @@
 event = {
-        'table_name': 'rnas', # same as Scheme table name
-        'items_id': ['fb91fdc7-46ba-47f8-bc3c-d1e480ad71be', 'fb91fdc7-46ba-47f8-bc3c-d1e480ad71be'], # specific
+        'table': 'rnas', # same as Scheme table name
+        'items_field': 'rnaId',
+        'items': ['fb91fdc7-46ba-47f8-bc3c-d1e480ad71be', 'fb91fdc7-46ba-47f8-bc3c-d1e480ad71be'], # specific
         }
 
 event = {
-        "table_name": "Rnas",
-        "items_id": ["*"] # all
+        "table": "Rnas",
+        'items_field': 'rnaId',
+        "items": ["*"] # all
         }
 
 event = {
-        'table_name': 'subcategories', # same as Scheme table name
-        'items_id': ['fb91fdc7-46ba-47f8-bc3c-d1e480ad71be', 'fb91fdc7-46ba-47f8-bc3c-d1e480ad71be'], # specific
-        }
-
-event = {
-        'table_name': 'categories', # same as Scheme table name
-        'items_id': ['*'], # ALL
+        'table': 'categories', # same as Scheme table name
+        'items_field': 'categoryId',
+        'items': ['*'], # ALL
         }
 
 example_event_allrna = {

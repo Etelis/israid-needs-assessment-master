@@ -59,7 +59,7 @@ def get_severity(answers) -> dict:
 
     return severity_dict
 
-def get_answers(table: str, items: list) -> dict:
+def get_answers(table: str, items_field: str, items: list) -> dict:
 
     # connect to an existing dynamodb
     dynamodb=boto3.resource('dynamodb',region_name=REGION)
@@ -80,24 +80,23 @@ def get_answers(table: str, items: list) -> dict:
         
         items = []
         for resp in response_data:
-            print(resp.id)
-            items.append(resp.id)
+            items.append(resp['id'])
  
-    print(f'Request to fetch answers from {len(items)} items')
+    print(f'{len(items)} items requested')
      
     data = {}
     for item_id in items:
-        print(f'Fetching answers from {item_id}')
-        responses = answers_table.query(KeyConditionExpression=Key('rnaId').eq(item_id)) #get list of all answers of rnaId
-        print(f'    - Found {len(responses)} answers')
+        print(f'    - Fetching answers from {item_id}')
+        responses = answers_table.query(KeyConditionExpression=Key(items_field).eq(item_id)) #get list of all answers of rnaId
+        print(f'        - Found {len(responses)} answers')
         answers = {}
         for ans in responses:
-            answers[ans.id] = {
-                                'value': ans.value,
-                                'notes': ans.notes
+            answers[ans['id']] = {
+                                'value': ans['value'],
+                                'notes': ans['notes']
                             }
         data[item_id] = answers
-        print(f'    - {item_id} Done')
+        print(f'        - {item_id} Done')
 
     return data
 
@@ -106,12 +105,14 @@ def lambda_handler(event, context):
 
     try:
         
-        table = event['table_name']
-        items = event['items_id']
+        table = event['table']
+        items_field = event['items_field']
+        items = event['items']
         print(table)
+        print(items_field)
         print(items)
         
-        data = get_answers(table, items)
+        data = get_answers(table, items_field, items)
         scores = get_severity(data)
 
         return {

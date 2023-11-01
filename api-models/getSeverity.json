@@ -1,29 +1,35 @@
 {
     "type": "object",
-    "title": "Fetch Items and calculate severities",
+    "title": "Calculate Severities by Items",
     "properties":
                 {
-                "table_name": 
+                "table": 
                     {
                     "type": "string",
-                    "title": "Table to fetch from",
-                    "description": "rnas, categories or subcategories"
+                    "title": "Table Name",
+                    "description": "Table to filter by: rnas, categories or subcategories"
                     },
-                "items_id": 
+                "items_field": 
+                    {
+                    "type": "string",
+                    "title": "Unique field name",
+                    "description": "field in Answers table to filter by: rnaId, categoryId or subCategoryId"
+                    },
+                "items": 
                     {
                     "type": "array",
-                    "title": "fetch items by Partition ID (main key)",
+                    "title": "Items Partition ID",
                     "items": 
                         {
                         "type": "string"
                         },  
-                    "description": "specific items: [fb91fdc7-46ba-47f8-bc3c-d1e480ad71be, ...]. Use [*] for all items"
+                    "description": "For specific items: [fb91fdc7-46ba-47f8-bc3c-d1e480ad71be, ...] OR [*] for all items"
                     }
                 },
-    "description": "Supply the target items to fetch answers from and return severities for each item",
     "required": 
             [
-            "table_name",
-            "items_id"
+            "table",
+            "items_field",
+            "items"
             ]
 }

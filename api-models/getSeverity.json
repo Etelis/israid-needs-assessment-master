@@ -6,13 +6,13 @@
                     {
                     "type": "string",
                     "description": "This is the table to fetch from: rnas, categories or subcategories",
-                    "example": "rnas"
+                    "examples": "rnas"
                     },
                 "items_id": 
                     {
                     "type": "array",
                     "description": "array of strings, use specific Partition IDs or [*] for all items",
-                    "example": 
+                    "examples": 
                             [
                             "fb91fdc7-46ba-47f8-bc3c-d1e480ad71be", 
                             "fb91fdc7-46ba-47f8-bc3c-d1e480ad71be"
@@ -25,7 +25,7 @@
             "table_name",
             "items_id"
             ],
-    "responses": 
+    "response": 
             {
                 "200": 
                     {

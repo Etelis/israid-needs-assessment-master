@@ -5,7 +5,8 @@
                 "table_name": 
                     {
                     "type": "string",
-                    "description": "This is the table to fetch from: rnas, categories or subcategories"
+                    "description": "This is the table to fetch from: rnas, categories or subcategories",
+                    "url": "http://swagger.io"
                     },
                 "items_id": 
                     {
@@ -13,7 +14,7 @@
                     "items": 
                         {
                         "type": "string"
-                        },
+                        },  
                     "description": "array of strings, use specific Partition IDs: [fb91fdc7-46ba-47f8-bc3c-d1e480ad71be, ...] or [*] for all items"
                     }
                 },
@@ -22,5 +23,12 @@
             [
             "table_name",
             "items_id"
-            ]
+            ],
+    "responses": 
+            {
+            "200": 
+                {
+                "description": "Successful operation",
+                }
+            }
 }

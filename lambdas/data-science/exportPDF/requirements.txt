@@ -1,4 +1,2 @@
 Requests
-plotly
-fpdf
 botocore

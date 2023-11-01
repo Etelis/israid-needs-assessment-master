@@ -10,6 +10,10 @@
                 "items_id": 
                     {
                     "type": "array",
+                    "items": 
+                        {
+                        "type": "string"
+                        },
                     "description": "array of strings, use specific Partition IDs: [fb91fdc7-46ba-47f8-bc3c-d1e480ad71be, ...] or [*] for all items"
                     }
                 },

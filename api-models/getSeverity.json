@@ -5,12 +5,13 @@
                 "table_name": 
                     {
                     "type": "string",
-                    "description": "This is the table to fetch from: rnas, categories or subcategories",
-                    "url": "http://swagger.io"
+                    "title": "Table Name",
+                    "description": "This is the table to fetch from: rnas, categories or subcategories"
                     },
                 "items_id": 
                     {
                     "type": "array",
+                    "title": "Items ID",
                     "items": 
                         {
                         "type": "string"
@@ -23,12 +24,5 @@
             [
             "table_name",
             "items_id"
-            ],
-    "responses": 
-            {
-            "200": 
-                {
-                "description": "Successful operation"
-                }
-            }
+            ]
 }

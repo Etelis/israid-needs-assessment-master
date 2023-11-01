@@ -68,39 +68,38 @@ def get_answers(table: str, items: list) -> dict:
     temp_table = dynamodb.Table(table) # decide between rnas, categories, subcategories
     answers_table = dynamodb.Table(ANSWERS_TABLE_NAME)  # depends on the Answers Table name 
     
-    try:
-        if items == ['*']: # take all
-            response = temp_table.scan()
-            response_data = response['Items']
+    if items == ['*']: # take all
+        response = temp_table.scan()
+        response_data = response['Items']
 
-            # Since scan can only retrieve 1MB of data at a time, we need to paginate to retrieve all data
-            while 'LastEvaluatedKey' in response:
-                response = temp_table.scan(ExclusiveStartKey=response['LastEvaluatedKey'])
-                response_data.extend(response['Items'])
-        
-        else:
-            data = {}
-            for rna_id in items:
-                response = answers_table.query(KeyConditionExpression=Key('rnaId').eq(rna_id))
-                data[rna_id].append(
-                                    {response['id']: 
-                                        {
-                                            'value': response['value'], 
-                                            'notes' : response['notes']
-                                        }
-                                    })
-                for item in response['Item']:
-                    pass
-
-        print(type(response_data))
-        print(response_data)
-        
-        return 
-
-    except ClientError as e:
-            print(e.response['No item found'])
+        # Since scan can only retrieve 1MB of data at a time, we need to paginate to retrieve all data
+        while 'LastEvaluatedKey' in response:
+            response = temp_table.scan(ExclusiveStartKey=response['LastEvaluatedKey'])
+            response_data.extend(response['Items'])
+    
     else:
-            return response['Item']
+        data = {}
+        for rna_id in items:
+            response = answers_table.query(KeyConditionExpression=Key('rnaId').eq(rna_id))
+            data[rna_id].append(
+                                {response['id']: 
+                                    {
+                                        'value': response['value'], 
+                                        'notes' : response['notes']
+                                    }
+                                })
+            for item in response['Item']:
+                pass
+
+    print(type(response_data), len(response_data))
+    print(response_data)
+        
+    return 
+
+    # except ClientError as e:
+    #         print(e.response['No item found'])
+    # else:
+    #         return response['Item']
 
 def lambda_handler(event, context):
 
@@ -108,7 +107,8 @@ def lambda_handler(event, context):
         
         table = event['table_name']
         items = event['items_id']
-        print(table, items)
+        print(table)
+        print(items)
         
         answers = get_answers(table, items)
         return

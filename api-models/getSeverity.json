@@ -5,18 +5,12 @@
                 "table_name": 
                     {
                     "type": "string",
-                    "description": "This is the table to fetch from: rnas, categories or subcategories",
-                    "examples": "rnas"
+                    "description": "This is the table to fetch from: rnas, categories or subcategories"
                     },
                 "items_id": 
                     {
                     "type": "array",
-                    "description": "array of strings, use specific Partition IDs or [*] for all items",
-                    "examples": 
-                            [
-                            "fb91fdc7-46ba-47f8-bc3c-d1e480ad71be", 
-                            "fb91fdc7-46ba-47f8-bc3c-d1e480ad71be"
-                            ]
+                    "description": "array of strings, use specific Partition IDs: [fb91fdc7-46ba-47f8-bc3c-d1e480ad71be, ...] or [*] for all items"
                     }
                 },
     "description": "An object which includes the table name and the Partition IDs to fetch from the table",
@@ -24,33 +18,5 @@
             [
             "table_name",
             "items_id"
-            ],
-    "response": 
-            {
-                "200": 
-                    {
-                    "type": "array",
-                    "description": "Request was successful, returns a JSON object with the requested data",
-                    "items": 
-                        {
-                            "type": "object",
-                            "properties":
-                                        {
-                                        "id": 
-                                            {
-                                            "type": "string",
-                                            "description": "ID of the item",
-                                            "example": "fb91fdc7-46ba-47f8-bc3c-d1e480ad71be"
-                                            },
-                                        "score": 
-                                            {
-                                            "type": "number",
-                                            "description": "Severity score of the item, between 0-100",
-                                            "example": 70
-                                            }
-                                        },
-                            "description": "array of objects, each object is a score with its corresponding ID"
-                        }
-                    }
-            }
+            ]
 }

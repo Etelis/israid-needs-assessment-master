@@ -90,3 +90,33 @@ RETURN = [
                 "score": 100
             }
         ]
+
+# "response": 
+#         {
+#             "200": 
+#                 {
+#                 "type": "array",
+#                 "description": "Request was successful, returns a JSON object with the requested data",
+#                 "items": 
+#                     {
+#                         "type": "object",
+#                         "properties":
+#                                     {
+#                                     "id": 
+#                                         {
+#                                         "type": "string",
+#                                         "description": "ID of the item",
+#                                         "example": "fb91fdc7-46ba-47f8-bc3c-d1e480ad71be"
+#                                         },
+#                                     "score": 
+#                                         {
+#                                         "type": "number",
+#                                         "description": "Severity score of the item, between 0-100",
+#                                         "example": 70
+#                                         }
+#                                     },
+#                         "description": "array of objects, each object is a score with its corresponding ID"
+#                     }
+#                 }
+#         }
+# }

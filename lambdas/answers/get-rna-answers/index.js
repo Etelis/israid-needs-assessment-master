@@ -1,4 +1,8 @@
 const { Answer } = require('/opt/schema-layer/answer-schema.js');
+const {
+	getSuccessResponse,
+	getErrorResponse,
+} = require('/opt/utils/http-objects.js');
 
 exports.handler = async (event) => {
 	try {
@@ -13,24 +17,10 @@ exports.handler = async (event) => {
 			createdOn: new Date(answer.createdOn),
 		}));
 
-		return {
-			statusCode: 200,
-			headers: {
-				'Content-Type': 'application/json',
-				'Access-Control-Allow-Origin': process.env.CORS
-			},
-			body: JSON.stringify(formattedAnswers),
-		};
+		return getSuccessResponse(formattedAnswers);
 	} catch (error) {
 		console.error(error);
 
-		return {
-			statusCode: 500,
-			headers: {
-				'Content-Type': 'application/json',
-				'Access-Control-Allow-Origin': process.env.CORS
-			},
-			body: JSON.stringify({ message: 'Internal Server Error' }),
-		};
+		return getErrorResponse();
 	}
 };

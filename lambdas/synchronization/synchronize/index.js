@@ -1,5 +1,9 @@
 const { RNA } = require('/opt/schema-layer/rna-schema.js');
 const { Answer } = require('/opt/schema-layer/answer-schema.js');
+const {
+	getSuccessResponse,
+	getErrorResponse,
+} = require('/opt/utils/http-objects.js');
 
 const areArraysEqual = (arr1, arr2) => {
 	if (arr1.length !== arr2.length) {
@@ -116,7 +120,7 @@ const getUpdatedAnswersModels = (oldAnswers, newAnswers) =>
 
 exports.handler = async (event) => {
 	try {
-		const { updatedRnas, updatedAnswers } = event;
+		const { updatedRnas, updatedAnswers } = JSON.parse(event.body);
 
 		const updatedRnasModels = getUpdatedRnasModels(
 			(await RNA.scan()).Items,
@@ -130,23 +134,10 @@ exports.handler = async (event) => {
 
 		await Promise.all(updatedRnasModels, updatedAnswersModels);
 
-		return {
-			statusCode: 200,
-			headers: {
-				'Content-Type': 'application/json',
-				'Access-Control-Allow-Origin': process.env.CORS,
-			},
-		};
+		return getSuccessResponse();
 	} catch (error) {
 		console.error(error);
 
-		return {
-			statusCode: 500,
-			headers: {
-				'Content-Type': 'application/json',
-				'Access-Control-Allow-Origin': process.env.CORS,
-			},
-			body: JSON.stringify({ message: 'Internal Server Error' }),
-		};
+		return getErrorResponse();
 	}
 };

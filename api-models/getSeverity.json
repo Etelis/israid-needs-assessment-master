@@ -1,25 +1,26 @@
 {
     "type": "object",
+    "title": "Fetch Items and calculate severities",
     "properties":
                 {
                 "table_name": 
                     {
                     "type": "string",
-                    "title": "Table Name",
-                    "description": "This is the table to fetch from: rnas, categories or subcategories"
+                    "title": "Table to fetch from",
+                    "description": "rnas, categories or subcategories"
                     },
                 "items_id": 
                     {
                     "type": "array",
-                    "title": "Items ID",
+                    "title": "fetch items by Partition ID (main key)",
                     "items": 
                         {
                         "type": "string"
                         },  
-                    "description": "array of strings, use specific Partition IDs: [fb91fdc7-46ba-47f8-bc3c-d1e480ad71be, ...] or [*] for all items"
+                    "description": "specific items: [fb91fdc7-46ba-47f8-bc3c-d1e480ad71be, ...]. Use [*] for all items"
                     }
                 },
-    "description": "An object which includes the table name and the Partition IDs to fetch from the table",
+    "description": "Supply the target items to fetch answers from and return severities for each item",
     "required": 
             [
             "table_name",

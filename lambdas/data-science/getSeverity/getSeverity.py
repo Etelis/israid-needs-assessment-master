@@ -69,6 +69,7 @@ def get_answers(table: str, items: list) -> dict:
     answers_table = dynamodb.Table(ANSWERS_TABLE_NAME)  # depends on the Answers Table name 
     
     if items == ['*']: # take all
+        print(f'Getting all items from table: {table}')
         response = temp_table.scan()
         response_data = response['Items']
 
@@ -76,30 +77,30 @@ def get_answers(table: str, items: list) -> dict:
         while 'LastEvaluatedKey' in response:
             response = temp_table.scan(ExclusiveStartKey=response['LastEvaluatedKey'])
             response_data.extend(response['Items'])
-    
-    else:
-        data = {}
-        for rna_id in items:
-            response = answers_table.query(KeyConditionExpression=Key('rnaId').eq(rna_id))
-            data[rna_id].append(
-                                {response['id']: 
-                                    {
-                                        'value': response['value'], 
-                                        'notes' : response['notes']
-                                    }
-                                })
-            for item in response['Item']:
-                pass
-
-    print(type(response_data), len(response_data))
-    print(response_data)
         
-    return 
+        items = []
+        for resp in response_data:
+            print(resp.id)
+            items.append(resp.id)
+ 
+    print(f'Request to fetch answers from {len(items)} items')
+     
+    data = {}
+    for item_id in items:
+        print(f'Fetching answers from {item_id}')
+        responses = answers_table.query(KeyConditionExpression=Key('rnaId').eq(item_id)) #get list of all answers of rnaId
+        print(f'    - Found {len(responses)} answers')
+        answers = {}
+        for ans in responses:
+            answers[ans.id] = {
+                                'value': ans.value,
+                                'notes': ans.notes
+                            }
+        data[item_id] = answers
+        print(f'    - {item_id} Done')
 
-    # except ClientError as e:
-    #         print(e.response['No item found'])
-    # else:
-    #         return response['Item']
+    return data
+
 
 def lambda_handler(event, context):
 
@@ -110,9 +111,8 @@ def lambda_handler(event, context):
         print(table)
         print(items)
         
-        answers = get_answers(table, items)
-        return
-        scores = get_severity(answers)
+        data = get_answers(table, items)
+        scores = get_severity(data)
 
         return {
             'statusCode': 200,

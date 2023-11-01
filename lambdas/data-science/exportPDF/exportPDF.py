@@ -7,16 +7,20 @@ import base64
 import os
 import boto3
 from botocore.exceptions import ClientError
+from boto3.dynamodb.conditions import Key
 
+## IsraAID logo
+LOGO_URL = 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/Logo-Israaid.svg/2560px-Logo-Israaid.svg.png'
 
-TITLE_TEMPLATE = 'IsraAid PDF Report'
+# AWS DynamoDB configuration
+REGION = 'eu-north-1' # Change this according to your AWS region
+RNAS_TABLE_NAME = 'Rnas'
+ANSWERS_TABLE_NAME = 'Answers'
+
+TITLE_TEMPLATE = 'IsraAid Report'
 MAIN_TITLE = 'About RNA'
 SECOND_TITLE = 'Insights from the findings'
 THIRD_TITLE = 'Questions & Answers'
-
-## logo in Base64
-LOGO = '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'
-
 
 example_JSON = [{
         "category": {
@@ -268,10 +272,17 @@ example_JSON = [{
             }
         }]
 
+# get the logo from the www and convert it to base64
+def get_as_base64(url):
+
+    img = base64.b64encode(requests.get(url).content)
+    # return img.decode('utf-8') # if we want to return a string
+    return img
+
 #convert the base64 string of the logo to png, in order to not keep the photo on the server
 def convert_logo():
     with open(r"logo_image.png", "wb") as decodeit:
-        decodeit.write(base64.b64decode(LOGO))
+        decodeit.write(base64.b64decode(get_as_base64(LOGO_URL)))
 
 class PDF(FPDF):
     def header(self):
@@ -344,10 +355,10 @@ class PDF(FPDF):
         self.chapter_title(chap_title)
         self.chapter_body(file_name)
 
-    def general_details(self, json):
-        last_date = json['rna']['lastUpdatedOn']
-        creation_date = json['rna']['createdOn']
-        location = json['rna']['location']
+    def general_details(self, rna_details):
+        last_date = rna_details['lastUpdatedOn']
+        creation_date = rna_details['createdOn']
+        location = rna_details['location']
         self.set_font('helvetica', '', 10)
         # background color
         self.set_fill_color(200, 220, 255)
@@ -452,7 +463,7 @@ def generate_txt(json):
                     file.write(images_string)
 
 #finds the worst subcategories in the emergency, uses getSeverity
-def find_worst_subcat(json):
+def find_worst_subcat(answers: list):
     subcat_severity = '''call for get severity, paramter = subcategory'''
     max_subcats = [key for key, value in subcat_severity.items() if value == max(subcat_severity.values())]
     categories_to_subcats = generate_subcats_ids(json)
@@ -472,13 +483,6 @@ def find_worst_subcat(json):
             max_string += f"{subcategory_name} in the {category_name}, "
     return max_string
 
-#finds the severity of the RNA, uses getSeverity
-def find_rna_severity(json):
-    rna_severity = '''call for get severity, paramter = rna'''
-    severity_index = rna_severity[json['rna']['id']]
-    severity_txt = f"The severity index of {json['rna']['Emergency']} is {severity_index}."
-    return severity_txt
-
 #creates the image of the priorities based on the severity of the categories, uses getSeverity
 def plot_categories_priorities():
     categories_severity = '''call for get severity, parameter = categories'''
@@ -494,22 +498,43 @@ def plot_categories_priorities():
                     labels={'x': '', 'y': ''})
     fig.write_image('categories.png')
 
+#finds the severity of the RNA, uses getSeverity
+def find_rna_severity(json):
+
+    rna_severity = '''call for get severity, paramter = rna'''
+    severity_index = rna_severity[json['rna']['id']]
+    severity_txt = f"The severity index of {json['rna']['Emergency']} is {severity_index}."
+    return severity_txt
+
+def get_answers(rna_id) -> list:
+
+    # connect to an existing dynamodb
+    dynamodb=boto3.resource('dynamodb',region_name=REGION)
+    
+    # connect to dynamodb Answers table
+    table = dynamodb.Table(ANSWERS_TABLE_NAME)  # depends on the Answers Table name 
+    
+    responses = table.query(KeyConditionExpression=Key('rnaID').eq(rna_id)) #get list of all answers of rnaId
+    print(f'Found {len(responses)} answers')
+
+    return responses
+
 #creates the pdf file
-def create_PDF_File(json):
-    pdf = PDF('P', 'mm', 'Letter')
+def create_PDF_File(rna_details):
+    pdf = PDF("P", "mm", "A4")
 
     # get total page numbers
     pdf.alias_nb_pages()
-
     pdf.set_auto_page_break(auto=True, margin=15)
     pdf.add_page()
-
-    pdf.general_details(json)
-
-    pdf.set_font('helvetica', '', 16)
-
+    pdf.general_details(rna_details)
     pdf.set_title(SECOND_TITLE)
-    worst_subcat = find_worst_subcat(json)
+    
+    # get all answers for the RNA
+    answers = get_answers(rna_details['id'])
+    
+    # EYAL STOPPED HERE
+    worst_subcat = find_worst_subcat(answers) # SEND ALL ANSWERS OF RNA
     rna_index = find_rna_severity(json)
     rna_txt = f'\n {rna_index} \n'
     plot_categories_priorities()
@@ -557,11 +582,24 @@ def create_PDF_File(json):
     pdf.output(save_path)
     return save_path
 
+# Get all information about the RNA
+def get_rna_details(rna_id):
+
+    # connect to an existing dynamodb
+    dynamodb=boto3.resource('dynamodb',region_name=REGION)
+    
+    # connect to dynamodb tables
+    table = dynamodb.Table(RNAS_TABLE_NAME)
+    responses = table.query(KeyConditionExpression=Key('id').eq(rna_id))
+    print(responses)
+
+    return responses[0]
+
 def lambda_handler(event, context):
     try:
-        information = json.loads(event['body'])
+        payload = json.loads(event['body'])
         
-        pdf_file_path = create_PDF_File(information)   # UPDATE THIS FUNCTION TO RETURN A PATH TO THE PDF FILE
+        pdf_file_path = create_PDF_File(payload)   # UPDATE THIS FUNCTION TO RETURN A PATH TO THE PDF FILE
         # THE RETURNED PATH SHOULD BE: os.path.join(os.getcwd(),'filename.pdf')
 
         return {
@@ -581,6 +619,15 @@ def lambda_handler(event, context):
             'body': json.dumps({'error_message': 'Internal server error'})
         }
 
+payload = {
+        'rna': 
+            {
+            'id': 'fb91fdc7-46ba-47f8-bc3c-d1e480ad71be'
+            },
+}
+
+rna_details = get_rna_details(payload)
+pdf_file_path = create_PDF_File(rna_details)
 
 # Expected Input Format ######
 # event = 

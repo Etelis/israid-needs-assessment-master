@@ -1,0 +1,21 @@
+{
+    "type": "object",
+    "title": "Calculate Severities by Items",
+    "properties":
+                {
+                "items_id": 
+                    {
+                    "type": "array",
+                    "title": "Items Partition ID",
+                    "items": 
+                        {
+                        "type": "string"
+                        },  
+                    "description": "For specific items: [fb91fdc7-46ba-47f8-bc3c-d1e480ad71be, ...] OR [*] for all items"
+                    }
+                },
+    "required": 
+            [
+            "items_id"
+            ]
+}

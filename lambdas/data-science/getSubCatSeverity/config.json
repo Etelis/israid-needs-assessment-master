@@ -10,6 +10,6 @@
         "Method": "GET",
         "Api_Name": "IsraAID app",
         "Path": "/getSubCatSeverity",
-        "Model": "getSubCatSeverity"
+        "Model": ""
     }
 }

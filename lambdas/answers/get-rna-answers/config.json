@@ -6,7 +6,8 @@
     "Layers": [
         "schema-layer",
         "aws-dynamo-connector",
-        "dynamoSdkToToolbox"
+        "dynamoSdkToToolbox",
+        "utils"
     ],
     "Api_Settings": {
         "Method": "GET",

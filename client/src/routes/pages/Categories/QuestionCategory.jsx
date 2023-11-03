@@ -37,7 +37,10 @@ const QuestionCategory = ({
 						flexGrow={1}
 						spacing={2}
 					>
-						<Avatar alt='John Doe' src={iconSrc} />
+						<Avatar
+							alt='John Doe'
+							src={`data:image/png;base64,${iconSrc}`}
+						/>
 						<ProgressSummary
 							ProgressDetails={
 								<>

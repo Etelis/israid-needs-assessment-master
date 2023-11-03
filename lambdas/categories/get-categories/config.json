@@ -1,0 +1,18 @@
+{
+    "Handler": "index.handler",
+    "Runtime": "nodejs18.x",
+    "MemorySize": 128,
+    "Timeout": 15,
+    "Layers": [
+        "schema-layer",
+        "aws-dynamo-connector",
+        "dynamoSdkToToolbox",
+        "utils"
+    ],
+    "Api_Settings": {
+        "Method": "GET",
+        "Api_Name": "IsraAID app",
+        "Path": "/categories",
+        "Model": ""
+    }
+}

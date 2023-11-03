@@ -4,34 +4,13 @@ import { useEffect } from 'react';
 import { DownloadRnaFileMenuButton } from '../../../components/DownloadRnaFileMenuButton';
 import { useNavbarButtonsContext } from '../../../components/Navbar/useNavbarButtonsContext';
 import ProgressOverview from '../../../components/ProgressOverview';
-import categories from '../../../static-data/categories.json';
 import QuestionCategory from '../Categories/QuestionCategory';
 import { useCategoriesContext } from './context/useCategoriesContext';
 import styles from './styles';
 import Emergency from '../../../enums/Emergency';
 
-const getViewCategories = (subCategories) =>
-	categories.map((x) => {
-		const categorySubCategories = subCategories.filter(
-			(y) => y.categoryId === x.id
-		);
-
-		return {
-			...x,
-			subCategories: categorySubCategories,
-			totalQuestionAmount: categorySubCategories.reduce(
-				(amount, x) => amount + x.questions.length,
-				0
-			),
-			answeredQuestionAmount: categorySubCategories.reduce(
-				(amount, x) => amount + x.answers.length,
-				0
-			),
-		};
-	});
-
 const CategoriesList = () => {
-	const { subCategories, rnaAnswers, questions, rna } =
+	const { getViewCategories, rnaAnswers, questions, rna } =
 		useCategoriesContext();
 	const { setNavbarButtons } = useNavbarButtonsContext();
 
@@ -43,11 +22,7 @@ const CategoriesList = () => {
 		};
 	}, []);
 
-	if (!rna) {
-		return null;
-	}
-
-	const viewCategories = getViewCategories(subCategories);
+	const viewCategories = getViewCategories();
 
 	return (
 		<Stack height='90vh' spacing={2} p={1}>

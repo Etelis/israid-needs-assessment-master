@@ -10,6 +10,7 @@ export const cacheUsageKeyTypes = {
 	reactQueryCache: import.meta.env.VITE_REACT_QUERY_KEY,
 	downloadedRnas: 'downloadedRnas',
 	questions: 'questions',
+	categories: 'categories'
 };
 
 export const createUpdatedAnswerCacheKey = (answer) =>

@@ -39,8 +39,10 @@ const isQuestionViable = (question, answers) => {
 	return dependencyAnswer && isAnswerAsExpected(dependencyAnswer, question);
 };
 
-const getCurrentSubCategory = (subCategoryId, subCategories) =>
-	subCategories.find((x) => x.id === subCategoryId);
+const getCurrentSubCategory = (categories, categoryId, subCategoryId) =>
+	categories
+		.find((category) => category.id === categoryId)
+		.subCategories.find((subCategory) => subCategory.id === subCategoryId);
 
 const isCurrentAnswerValid = (answer) => {
 	if (typeof answer === 'string') {
@@ -55,14 +57,15 @@ const isCurrentAnswerValid = (answer) => {
 };
 
 const QuestionPage = () => {
-	const { subCategoryId, rnaId } = useParams();
+	const { subCategoryId, categoryId, rnaId } = useParams();
 	const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
 	const [attachedPhotos, setAttachedPhotos] = useState([]);
 	const [currentNotes, setCurrentNotes] = useState('');
 	const [currentValue, setCurrentValue] = useState();
-	const { subCategories, fetchRnaAnswers } = useCategoriesContext();
+	const { getViewCategories, fetchRnaAnswers, rnaAnswers } =
+		useCategoriesContext();
 	const [currentSubCategory, setCurrentSubCategory] = useState(
-		getCurrentSubCategory(subCategoryId, subCategories)
+		getCurrentSubCategory(getViewCategories(), categoryId, subCategoryId)
 	);
 	const oldAnswerRef = useRef();
 
@@ -72,9 +75,13 @@ const QuestionPage = () => {
 
 	useEffect(() => {
 		setCurrentSubCategory(
-			getCurrentSubCategory(subCategoryId, subCategories)
+			getCurrentSubCategory(
+				getViewCategories(),
+				categoryId,
+				subCategoryId
+			)
 		);
-	}, [subCategories, subCategoryId]);
+	}, [subCategoryId, rnaAnswers]);
 
 	const viableQuestions = currentSubCategory.questions.filter((x) =>
 		isQuestionViable(x, currentSubCategory.answers)

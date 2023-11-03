@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import useOnlineStatus from '../useOnlineStatus';
 import fetchDownloadedRnaAnswersQueries from './fetchDownloadedRnaAnswersQueries';
 import rnasQuery from './rnaQuery';
+import categoriesQuery from './categoriesQuery';
 
 const useLoadApplicationData = () => {
 	const [isLoading, setIsLoading] = useState(true);
@@ -12,7 +13,10 @@ const useLoadApplicationData = () => {
 	useEffect(() => {
 		const fetchApplicationData = async () => {
 			if (isOnline) {
-				await queryClient.ensureQueryData(rnasQuery);
+				await Promise.all([
+					queryClient.ensureQueryData(rnasQuery),
+					queryClient.ensureQueryData(categoriesQuery),
+				]);
 
 				await fetchDownloadedRnaAnswersQueries(queryClient);
 			}

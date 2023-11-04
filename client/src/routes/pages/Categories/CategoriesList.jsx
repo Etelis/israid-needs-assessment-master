@@ -1,6 +1,6 @@
 import PoolIcon from '@mui/icons-material/Pool';
 import { Card, IconButton, Paper, Stack, Typography } from '@mui/material';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { DownloadRnaFileMenuButton } from '../../../components/DownloadRnaFileMenuButton';
 import { useNavbarButtonsContext } from '../../../components/Navbar/useNavbarButtonsContext';
 import ProgressOverview from '../../../components/ProgressOverview';
@@ -8,14 +8,21 @@ import QuestionCategory from '../Categories/QuestionCategory';
 import { useCategoriesContext } from './context/useCategoriesContext';
 import styles from './styles';
 import Emergency from '../../../enums/Emergency';
+import { useBreadcrumbsContext } from './context/useBreadcrumbsContext';
 
 const CategoriesList = () => {
 	const { getViewCategories, rnaAnswers, questions, rna } =
 		useCategoriesContext();
 	const { setNavbarButtons } = useNavbarButtonsContext();
+	const { setBreadcrumbs } = useBreadcrumbsContext();
+	const [expanded, setExpaned] = useState('');
 
 	useEffect(() => {
 		setNavbarButtons([<DownloadRnaFileMenuButton key='downloadRna' />]);
+		setBreadcrumbs([
+			{ text: "RNA's", routeTo: '/RNAs' },
+			{ text: rna.communityName, routeTo: `/RNAs/${rna.id}` },
+		]);
 
 		return () => {
 			setNavbarButtons([]);
@@ -55,13 +62,9 @@ const CategoriesList = () => {
 				{viewCategories?.map((x, index) => (
 					<QuestionCategory
 						key={index}
-						title={x.name}
-						preview={x.description}
-						id={x.id}
-						iconSrc={x.iconSrc}
-						totalQuestions={x.totalQuestionAmount}
-						answeredQusetion={x.answeredQuestionAmount}
-						subCategories={x.subCategories}
+						category={x}
+						isExpanded={expanded === x.name}
+						setExpanded={setExpaned}
 					></QuestionCategory>
 				))}
 			</Stack>

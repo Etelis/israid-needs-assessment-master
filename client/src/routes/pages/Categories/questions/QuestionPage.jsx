@@ -1,7 +1,7 @@
 import { Card, Stack, TextField, Typography } from '@mui/material';
 import { isEqual } from 'lodash';
 import { useEffect, useRef, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { useCategoriesContext } from '../context/useCategoriesContext';
 import CompletedSubCategory from '../CompletedSubCategory';
 import cacheAnswer from '../../../../utils/cache/cacheAnswer';
@@ -11,6 +11,7 @@ import Controls from './Controls/Controls';
 import Question from './Question';
 import ProgressSummary from '../../../../components/ProgressSummary';
 import styles from './styles';
+import { useBreadcrumbsContext } from '../context/useBreadcrumbsContext';
 
 const isAnswerAsExpected = (answer, question) => {
 	const expectedAnswer = question.dependencies.expectedAnswer;
@@ -68,9 +69,19 @@ const QuestionPage = () => {
 		getCurrentSubCategory(getViewCategories(), categoryId, subCategoryId)
 	);
 	const oldAnswerRef = useRef();
+	const { addBreadcrumb, removeBreadcrumb } = useBreadcrumbsContext();
+	const { pathname } = useLocation();
 
 	useEffect(() => {
 		setCurrentQuestionIndex(0);
+		addBreadcrumb({
+			text: currentSubCategory.name,
+			routeTo: pathname,
+		});
+
+		return () => {
+			removeBreadcrumb(currentSubCategory.name);
+		};
 	}, [subCategoryId]);
 
 	useEffect(() => {

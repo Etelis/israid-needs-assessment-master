@@ -1,8 +1,8 @@
 const rnasPage = {
 	width: '100%',
-	height: '90vh',
+	height: '93vh',
 	padding: '14px',
-	paddingBottom: 3,
+	paddingBottom: 2,
 	paddingTop: 0,
 	alignItems: 'center',
 	flexGrow: 1,
@@ -33,6 +33,7 @@ const rnasList = {
 
 const newRnaButton = {
 	width: '75%',
+	marginTop: '12px !important',
 	height: '50px',
 };
 

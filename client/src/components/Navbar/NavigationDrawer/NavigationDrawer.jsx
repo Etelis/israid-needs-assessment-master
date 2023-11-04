@@ -21,10 +21,12 @@ import styles from './styles';
 import userPool from '../../../../cognito-config';
 import { useUser } from '../../../contexts/UserContext';
 import { useNavigate } from 'react-router';
+import useOnlineStatus from '../../../utils/useOnlineStatus';
 
 const NavigationDrawer = ({ isOpen, setOpen }) => {
 	const navigate = useNavigate();
 	const { user, setUser } = useUser();
+	const isOnline = useOnlineStatus();
 
 	const handleLogout = () => {
 		if (user) {
@@ -58,7 +60,7 @@ const NavigationDrawer = ({ isOpen, setOpen }) => {
 					icon={<QuestionMarkIcon />}
 				/>
 				<Divider /> */}
-				{user && (
+				{isOnline && (
 					<ListItemLink
 						onClick={() => setOpen(false)}
 						to='/update-personal-details'
@@ -79,14 +81,16 @@ const NavigationDrawer = ({ isOpen, setOpen }) => {
 					icon={<ManageAccountsIcon />}
 				/> */}
 				{/* <Divider /> */}
-				<ListItemLink
-					onClick={() => setOpen(false)}
-					to='/Synchronization'
-					primary='Synchronize My Data'
-					icon={<CloudSync />}
-				/>
+				{isOnline && (
+					<ListItemLink
+						onClick={() => setOpen(false)}
+						to='/Synchronization'
+						primary='Synchronize My Data'
+						icon={<CloudSync />}
+					/>
+				)}
 				<Divider />
-				{user && (
+				{isOnline && (
 					<ListItem key='logout' onClick={handleLogout}>
 						<ListItemIcon sx={styles.navigationIcon}>
 							<LogoutIcon />

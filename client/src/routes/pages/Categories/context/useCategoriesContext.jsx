@@ -6,6 +6,8 @@ import { getSavedAndCachedAnswersForState } from '../../../../utils/cache/getSav
 import { getRnaForState } from '../../../../utils/cache/getSavedAndCachedRnas';
 import { getCategoriesForState } from '../../../../utils/cache/getCategories';
 import LoadingSpinner from '../../../../components/LoadingSpinner';
+import { BreadcrumbsProvider } from './useBreadcrumbsContext';
+import BreadcrumbsTrail from '../Breadcrumbs';
 
 // Initial data for questions, answers, and rnas
 // Can Eventually populate the questions from the DB instead of static data
@@ -108,7 +110,10 @@ export const CategoriesProvider = ({ children }) => {
 
 	return (
 		<CategoriesContext.Provider value={value}>
-			{children}
+			<BreadcrumbsProvider>
+				<BreadcrumbsTrail />
+				{children}
+			</BreadcrumbsProvider>
 		</CategoriesContext.Provider>
 	);
 };

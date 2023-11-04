@@ -7,23 +7,30 @@ import {
 	Stack,
 	Typography,
 } from '@mui/material';
-import { useState } from 'react';
-import SubQuestionCategory from './SubQuestionCategory';
+import { useLocation } from 'react-router-dom';
 import ProgressSummary from '../../../components/ProgressSummary';
+import SubQuestionCategory from './SubQuestionCategory';
+import { useBreadcrumbsContext } from './context/useBreadcrumbsContext';
+import { useEffect } from 'react';
 
-const QuestionCategory = ({
-	id,
-	title,
-	preview,
-	totalQuestions,
-	answeredQusetion,
-	subCategories,
-	iconSrc,
-}) => {
-	const [isExpanded, setIsExpanded] = useState(false);
+const QuestionCategory = ({ category, isExpanded, setExpanded }) => {
+	const { addBreadcrumb, removeBreadcrumb } = useBreadcrumbsContext();
+	const { pathname } = useLocation();
 
-	const toggleExpand = () => {
-		setIsExpanded(!isExpanded);
+	useEffect(() => {
+		if (isExpanded) {
+			addBreadcrumb({ text: category.name, routeTo: pathname });
+		} else {
+			removeBreadcrumb(category.name);
+		}
+	}, [isExpanded]);
+
+	const toggleExpand = (_, isCurrentlyExpanded) => {
+		if (isCurrentlyExpanded) {
+			setExpanded(category.name);
+		} else {
+			setExpanded('');
+		}
 	};
 
 	return (
@@ -39,32 +46,32 @@ const QuestionCategory = ({
 					>
 						<Avatar
 							alt='John Doe'
-							src={`data:image/png;base64,${iconSrc}`}
+							src={`data:image/png;base64,${category.iconSrc}`}
 						/>
 						<ProgressSummary
 							ProgressDetails={
 								<>
 									<Typography variant='h6'>
-										{title}
+										{category.name}
 									</Typography>
 									<Typography
 										sx={{ color: 'Grey', mb: '5px' }}
 										variant='caption'
 									>
-										{preview}
+										{category.description}
 									</Typography>
 								</>
 							}
-							currentProgress={answeredQusetion}
-							maxProgress={totalQuestions}
+							currentProgress={category.answeredQuestionAmount}
+							maxProgress={category.totalQuestionAmount}
 						/>
 					</Stack>
 				</AccordionSummary>
 				<AccordionDetails>
-					{subCategories.map((x) => (
+					{category.subCategories.map((x) => (
 						<SubQuestionCategory
 							title={x.name}
-							categoryId={id}
+							categoryId={category.id}
 							id={x.id}
 							questions={x.questions}
 							answers={x.answers}

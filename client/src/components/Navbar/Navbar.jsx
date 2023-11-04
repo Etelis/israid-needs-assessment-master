@@ -1,7 +1,6 @@
 import MenuIcon from '@mui/icons-material/Menu';
 import { AppBar, Container, IconButton, Stack, Toolbar } from '@mui/material';
 import { useState } from 'react';
-import BreadcrumbsComponent from '../Breadcrumb';
 import { NavigationDrawer } from './NavigationDrawer';
 import styles from './styles';
 import { useNavbarButtonsContext } from './useNavbarButtonsContext';
@@ -35,7 +34,6 @@ export const Navbar = () => {
 			</AppBar>
 			<Toolbar />
 			<NavigationDrawer isOpen={isMenuOpen} setOpen={setIsMenuOpen} />
-			<BreadcrumbsComponent />
 		</>
 	);
 };

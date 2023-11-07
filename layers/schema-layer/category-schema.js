@@ -47,12 +47,7 @@ const Category = new Entity({
 		description: 'string',
 		iconSrc: 'string',
 		subCategories: {
-			type: 'list',
-			itemType: 'map',
-			schema: {
-				id: { type: 'string', default: () => uuidv4() },
-				name: 'string',
-			},
+			type: 'list'
 		},
 	},
 });

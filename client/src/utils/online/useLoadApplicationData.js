@@ -15,7 +15,7 @@ const useLoadApplicationData = () => {
 			if (isOnline) {
 				await Promise.all([
 					queryClient.ensureQueryData(rnasQuery),
-					queryClient.ensureQueryData(categoriesQuery),
+					// TODO categories: queryClient.ensureQueryData(categoriesQuery),
 				]);
 
 				await fetchDownloadedRnaAnswersQueries(queryClient);

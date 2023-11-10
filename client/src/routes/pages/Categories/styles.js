@@ -1,6 +1,5 @@
 const rnaCard = {
 	borderRadius: '16px',
-	background: '#A8FEA6',
 	border: '1px solid rgba(0, 0, 0, 0.4)',
 	width: '90%',
 	alignSelf: 'center',
@@ -24,4 +23,11 @@ const nextButton = (theme) => ({
 	},
 });
 
-export default { rnaCard, rnaOverview, nextButton };
+const prevButton = {
+	height: '60px',
+	'& svg': {
+		fontSize: '22px !important',
+	},
+};
+
+export default { rnaCard, rnaOverview, nextButton, prevButton };

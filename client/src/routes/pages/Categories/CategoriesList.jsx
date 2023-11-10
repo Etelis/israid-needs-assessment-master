@@ -11,8 +11,7 @@ import Emergency from '../../../enums/Emergency';
 import { useBreadcrumbsContext } from './context/useBreadcrumbsContext';
 
 const CategoriesList = () => {
-	const { getViewCategories, rnaAnswers, questions, rna } =
-		useCategoriesContext();
+	const { categories, rnaAnswers, questions, rna } = useCategoriesContext();
 	const { setNavbarButtons } = useNavbarButtonsContext();
 	const { setBreadcrumbs } = useBreadcrumbsContext();
 	const [expanded, setExpaned] = useState('');
@@ -29,8 +28,6 @@ const CategoriesList = () => {
 		};
 	}, []);
 
-	const viewCategories = getViewCategories();
-
 	return (
 		<Stack height='90vh' spacing={2} p={1}>
 			<Stack mb={1} spacing={1} alignItems='center'>
@@ -42,24 +39,19 @@ const CategoriesList = () => {
 				</Typography>
 			</Stack>
 			<Paper elevation={5} sx={styles.rnaCard}>
-				<Stack direction='row'>
-					<IconButton disabled>
-						<PoolIcon />
-					</IconButton>
-					<Card sx={styles.rnaOverview}>
-						<ProgressOverview
-							leftColumnAmount={Math.floor(
-								(rnaAnswers.length / questions.length) * 100
-							)}
-							leftColumnCaption={'Form Completed'}
-							rightColumnAmount={rnaAnswers.length}
-							rightColumnCaption={'Questions Answered'}
-						/>
-					</Card>
-				</Stack>
+				<Card sx={styles.rnaOverview}>
+					<ProgressOverview
+						leftColumnAmount={Math.floor(
+							(rnaAnswers.length / questions.length) * 100
+						)}
+						leftColumnCaption={'Form Completed'}
+						rightColumnAmount={rnaAnswers.length}
+						rightColumnCaption={'Questions Answered'}
+					/>
+				</Card>
 			</Paper>
 			<Stack pb={3}>
-				{viewCategories?.map((x, index) => (
+				{categories?.map((x, index) => (
 					<QuestionCategory
 						key={index}
 						category={x}

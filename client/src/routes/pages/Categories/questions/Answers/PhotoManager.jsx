@@ -19,7 +19,7 @@ const PhotoManager = ({ attachedPhotos, setAttachedPhotos }) => {
 				data: URL.createObjectURL(file),
 			}));
 
-			setAttachedPhotos((prevPhotos) => [...prevPhotos, ...newPhotos]);
+			setAttachedPhotos([...attachedPhotos, ...newPhotos]);
 		}
 	};
 

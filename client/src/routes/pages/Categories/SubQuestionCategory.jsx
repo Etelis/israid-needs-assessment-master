@@ -16,6 +16,7 @@ const SubQuestionCategory = ({ id, categoryId, title, questions, answers }) => {
 				padding: '16px',
 				margin: '8px',
 				borderRadius: '10px',
+				border: '1px solid rgba(0, 0, 0, 0.4)',
 			}}
 		>
 			<ProgressSummary

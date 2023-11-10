@@ -34,7 +34,13 @@ const QuestionCategory = ({ category, isExpanded, setExpanded }) => {
 	};
 
 	return (
-		<Card sx={{ margin: '6px', borderRadius: '10px' }}>
+		<Card
+			sx={{
+				margin: '6px',
+				borderRadius: '10px',
+				border: '1px solid rgba(0, 0, 0, 0.4)',
+			}}
+		>
 			<Accordion expanded={isExpanded} onChange={toggleExpand}>
 				<AccordionSummary>
 					<Stack

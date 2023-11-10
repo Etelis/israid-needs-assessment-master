@@ -4,12 +4,6 @@ import { toast } from 'react-toastify';
 import categories from '../../static-data/categories.json';
 import subCategories from '../../static-data/sub-categories.json';
 
-export const getCategoriesForState = (setState, queryClient) => {
-	const allCategories = getCategories(queryClient);
-
-	setState(allCategories);
-};
-
 const getCategories = (queryClient) => {
 	try {
 		// TODO categories:

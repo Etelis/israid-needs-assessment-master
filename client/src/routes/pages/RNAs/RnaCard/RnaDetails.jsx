@@ -9,13 +9,28 @@ import {
 import { useNavigate } from 'react-router-dom';
 import Emergency from '../../../../enums/Emergency';
 import formatDate from '../../../../utils/formatDate';
+import { toast } from 'react-toastify';
 import styles from './styles';
 
 const RnaDetails = ({ rna }) => {
 	const navigate = useNavigate();
 
+	const notifyEditUnavailable = () => {
+		const editUnavailableMessage = "Can't edit an unsaved RNA";
+
+		toast.info(editUnavailableMessage, {
+			toastId: editUnavailableMessage,
+			autoClose: 1500,
+		});
+	};
+
 	return (
-		<Card onClick={() => navigate(rna.id)} sx={styles.rnaDetails}>
+		<Card
+			onClick={() =>
+				rna.isDownloaded ? navigate(rna.id) : notifyEditUnavailable()
+			}
+			sx={styles.rnaDetails}
+		>
 			<CardActionArea>
 				<CardContent>
 					<Stack spacing={0.1}>

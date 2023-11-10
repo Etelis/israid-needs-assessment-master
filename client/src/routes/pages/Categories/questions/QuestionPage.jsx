@@ -1,17 +1,17 @@
 import { Card, Stack, TextField, Typography } from '@mui/material';
 import { isEqual } from 'lodash';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
-import { useCategoriesContext } from '../context/useCategoriesContext';
-import CompletedSubCategory from '../CompletedSubCategory';
+import ProgressSummary from '../../../../components/ProgressSummary';
 import cacheAnswer from '../../../../utils/cache/cacheAnswer';
+import CompletedSubCategory from '../CompletedSubCategory';
+import { useBreadcrumbsContext } from '../context/useBreadcrumbsContext';
+import { useCategoriesContext } from '../context/useCategoriesContext';
 import AnswerInput from './Answers/AnswerInput';
 import PhotoManager from './Answers/PhotoManager';
 import Controls from './Controls/Controls';
 import Question from './Question';
-import ProgressSummary from '../../../../components/ProgressSummary';
 import styles from './styles';
-import { useBreadcrumbsContext } from '../context/useBreadcrumbsContext';
 
 const isAnswerAsExpected = (answer, question) => {
 	const expectedAnswer = question.dependencies.expectedAnswer;
@@ -40,16 +40,16 @@ const isQuestionViable = (question, answers) => {
 	return dependencyAnswer && isAnswerAsExpected(dependencyAnswer, question);
 };
 
-const getCurrentSubCategory = (categories, categoryId, subCategoryId) =>
+const getSubCategory = (categories, categoryId, subCategoryId) =>
 	categories
 		.find((category) => category.id === categoryId)
 		.subCategories.find((subCategory) => subCategory.id === subCategoryId);
 
-const isCurrentAnswerValid = (answer) => {
+const isCurrentAnswerValid = (oldAnswer, answer) => {
 	if (typeof answer === 'string') {
 		return answer !== '';
 	} else if (Array.isArray(answer)) {
-		return answer.length > 0;
+		return oldAnswer?.length > 0 || answer.length > 0;
 	} else if (typeof answer === 'boolean') {
 		return true;
 	} else {
@@ -57,42 +57,25 @@ const isCurrentAnswerValid = (answer) => {
 	}
 };
 
+const defaultAnswer = {
+	value: undefined,
+	photos: [],
+	notes: '',
+};
+
 const QuestionPage = () => {
 	const { subCategoryId, categoryId, rnaId } = useParams();
-	const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-	const [attachedPhotos, setAttachedPhotos] = useState([]);
-	const [currentNotes, setCurrentNotes] = useState('');
-	const [currentValue, setCurrentValue] = useState();
-	const { getViewCategories, fetchRnaAnswers, rnaAnswers } =
-		useCategoriesContext();
-	const [currentSubCategory, setCurrentSubCategory] = useState(
-		getCurrentSubCategory(getViewCategories(), categoryId, subCategoryId)
-	);
-	const oldAnswerRef = useRef();
-	const { addBreadcrumb, removeBreadcrumb } = useBreadcrumbsContext();
 	const { pathname } = useLocation();
+	const { addBreadcrumb, removeBreadcrumb } = useBreadcrumbsContext();
+	const { categories, fetchRnaAnswers } = useCategoriesContext();
+	const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+	const [currentAnswer, setCurrentAnswer] = useState(defaultAnswer);
 
-	useEffect(() => {
-		setCurrentQuestionIndex(0);
-		addBreadcrumb({
-			text: currentSubCategory.name,
-			routeTo: pathname,
-		});
-
-		return () => {
-			removeBreadcrumb(currentSubCategory.name);
-		};
-	}, [subCategoryId]);
-
-	useEffect(() => {
-		setCurrentSubCategory(
-			getCurrentSubCategory(
-				getViewCategories(),
-				categoryId,
-				subCategoryId
-			)
-		);
-	}, [subCategoryId, rnaAnswers]);
+	const currentSubCategory = getSubCategory(
+		categories,
+		categoryId,
+		subCategoryId
+	);
 
 	const viableQuestions = currentSubCategory.questions.filter((x) =>
 		isQuestionViable(x, currentSubCategory.answers)
@@ -100,33 +83,22 @@ const QuestionPage = () => {
 
 	const currentQuestion = viableQuestions[currentQuestionIndex];
 
+	const oldAnswer = currentSubCategory.answers.find(
+		(x) => x.questionId === currentQuestion?.id
+	);
+
 	const setAnswerFields = () => {
-		oldAnswerRef.current = currentSubCategory.answers.find(
-			(x) => x.questionId === currentQuestion.id
-		);
-
-		if (oldAnswerRef.current) {
-			setCurrentNotes(oldAnswerRef.current.notes);
-			setCurrentValue(oldAnswerRef.current.value);
-			setAttachedPhotos(oldAnswerRef.current.photos);
+		if (oldAnswer) {
+			setCurrentAnswer(() => ({
+				...oldAnswer,
+			}));
 		}
 	};
 
-	useEffect(() => {
-		if (currentQuestion) {
-			setAnswerFields();
-		}
-	}, [currentQuestionIndex, currentSubCategory.answers]);
-
-	if (currentQuestionIndex >= viableQuestions.length) {
-		return <CompletedSubCategory />;
-	}
-
-	const resetAnswerFields = () => {
-		setCurrentNotes('');
-		setCurrentValue(undefined);
-		setAttachedPhotos([]);
-	};
+	const resetAnswerFields = () =>
+		setCurrentAnswer(() => ({
+			...defaultAnswer,
+		}));
 
 	const skip = () => {
 		setCurrentQuestionIndex(currentQuestionIndex + 1);
@@ -140,28 +112,35 @@ const QuestionPage = () => {
 		resetAnswerFields();
 	};
 
+	useEffect(() => {
+		if (currentQuestion) {
+			setAnswerFields();
+		}
+	}, [currentQuestionIndex, categories]);
+
+	useEffect(() => {
+		setCurrentQuestionIndex(0);
+
+		addBreadcrumb({
+			text: currentSubCategory.name,
+			routeTo: pathname,
+		});
+
+		return () => {
+			removeBreadcrumb(currentSubCategory.name);
+		};
+	}, [subCategoryId]);
+
 	const saveUpdatedAnswer = async () => {
-		const newAnswer = {
-			questionId: currentQuestion.id,
-			value: currentValue,
-			photos: attachedPhotos,
-			notes: currentNotes,
-		};
-
-		const oldAnswer = {
-			questionId: oldAnswerRef.current?.questionId,
-			value: oldAnswerRef.current?.value,
-			photos: oldAnswerRef.current?.photos,
-			notes: oldAnswerRef.current?.notes,
-		};
-
-		if (!isEqual(oldAnswer, newAnswer)) {
+		if (!isEqual(oldAnswer, currentAnswer)) {
 			await cacheAnswer({
-				...newAnswer,
+				...currentAnswer,
+				questionId: currentQuestion.id,
 				rnaId,
 				createdOn: new Date(),
 			});
-			await fetchRnaAnswers();
+
+			fetchRnaAnswers();
 		}
 	};
 
@@ -173,7 +152,25 @@ const QuestionPage = () => {
 		skip();
 	};
 
-	return (
+	const getNextSubCategory = () => {
+		const currentSubCategories = categories.find(
+			(x) => x.id === categoryId
+		).subCategories;
+
+		const currentSubCategoryIndex = currentSubCategories.findIndex(
+			(x) => x.id === subCategoryId
+		);
+
+		return currentSubCategories[currentSubCategoryIndex + 1];
+	};
+
+	return currentQuestionIndex >= viableQuestions.length ? (
+		<CompletedSubCategory
+			returnToQuestions={prev}
+			completedSubCategory={currentSubCategory}
+			nextSubCategory={getNextSubCategory()}
+		/>
+	) : (
 		<form onSubmit={handleSubmit}>
 			<Stack
 				minHeight='90vh'
@@ -204,8 +201,13 @@ const QuestionPage = () => {
 
 				<AnswerInput
 					question={currentQuestion}
-					answer={currentValue}
-					setAnswer={setCurrentValue}
+					answer={currentAnswer.value}
+					setAnswer={(newValue) =>
+						setCurrentAnswer((answer) => ({
+							...answer,
+							value: newValue,
+						}))
+					}
 				/>
 
 				<TextField
@@ -214,19 +216,32 @@ const QuestionPage = () => {
 					multiline
 					rows='3'
 					sx={styles.notesBox}
-					value={currentNotes}
-					onChange={(e) => setCurrentNotes(e.target.value)}
+					value={currentAnswer.notes}
+					onChange={(e) =>
+						setCurrentAnswer((answer) => ({
+							...answer,
+							notes: e.target.value,
+						}))
+					}
 				/>
 
 				<PhotoManager
-					attachedPhotos={attachedPhotos}
-					setAttachedPhotos={setAttachedPhotos}
+					attachedPhotos={currentAnswer.photos}
+					setAttachedPhotos={(newPhotos) =>
+						setCurrentAnswer((answer) => ({
+							...answer,
+							photos: newPhotos,
+						}))
+					}
 				/>
 
 				<Controls
 					onPrev={prev}
 					canGoPrev={currentQuestionIndex !== 0}
-					canGoNext={isCurrentAnswerValid(currentValue)}
+					canGoNext={isCurrentAnswerValid(
+						oldAnswer?.value,
+						currentAnswer.value
+					)}
 					onSkip={skip}
 				/>
 			</Stack>

@@ -6,7 +6,7 @@ import cacheRna from '../../../utils/cache/cacheRna';
 import { useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import { useState } from 'react';
-import addRnaToDownloaded from '../../../utils/cache/addRnaToDownloaded';
+import { addRnaToDownloaded } from '../../../utils/cache/manageRnaDownloads';
 import SelectInputField from '../../../components/input-field/SelectInputField';
 import { getEmergencyOptions } from '../../../enums/Emergency';
 import { useUser } from '../../../contexts/UserContext';
@@ -72,6 +72,15 @@ const AddRNA = () => {
 					/>
 
 					<InputField
+						name='location'
+						register={register}
+						type='text'
+						errors={errors}
+						label='Location (optional)'
+						placeholder='Precise coordination'
+					/>
+
+					<InputField
 						name='communityName'
 						register={register}
 						validationSchema={{
@@ -93,15 +102,6 @@ const AddRNA = () => {
 						label='Community Type'
 						errors={errors}
 						placeholder='School, Hospital, Community Center, etc...'
-					/>
-
-					<InputField
-						name='location'
-						register={register}
-						type='text'
-						errors={errors}
-						label='Location (optional)'
-						placeholder='Precise coordination'
 					/>
 				</Stack>
 

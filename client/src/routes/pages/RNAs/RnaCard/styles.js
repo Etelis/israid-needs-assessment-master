@@ -1,7 +1,6 @@
 const rnaDetails = {
 	borderRadius: '16px',
 	flexGrow: '1',
-	boxShadow: '0 0 2px 1px white',
 };
 
 const rnaCard = (isDownloaded) => ({

@@ -4,7 +4,10 @@ import { useEffect, useState } from 'react';
 import { ContinueButton } from '../../../components/ContinueButton';
 import ProgressOverview from '../../../components/ProgressOverview';
 import RNAFilterOptions from '../../../enums/RNAFilterOptions';
-import addRnaToDownloaded from '../../../utils/cache/addRnaToDownloaded';
+import {
+	addRnaToDownloaded,
+	removeRnaFromDownloaded,
+} from '../../../utils/cache/manageRnaDownloads';
 import getSavedAndCachedRnas from '../../../utils/cache/getSavedAndCachedRnas';
 import useOnlineStatus from '../../../utils/useOnlineStatus';
 import { FilterActionButtons } from './FilterActionButtons';
@@ -12,6 +15,7 @@ import { RnaCard } from './RnaCard';
 import { SearchFilter } from './SearchFilter';
 import { Sort, SortingOptionsEnum } from './Sort';
 import styles from './styles';
+import { toast } from 'react-toastify';
 
 export const RNAs = () => {
 	const queryClient = useQueryClient();
@@ -33,10 +37,18 @@ export const RNAs = () => {
 		getRnas();
 	}, []);
 
-	const downloadRna = async (rnaId) => {
+	const downloadHandler = async (rna) => {
 		if (isOnline) {
-			await addRnaToDownloaded(rnaId);
+			if (!rna.isDownloaded) {
+				await addRnaToDownloaded(rna.id);
+			} else {
+				await removeRnaFromDownloaded(rna.id);
+			}
 			await getRnas();
+		} else {
+			const errorMessage = "Can't do that while offline";
+
+			toast.error(errorMessage, { toastId: errorMessage });
 		}
 	};
 
@@ -84,39 +96,41 @@ export const RNAs = () => {
 		allRnas.reduce((sum, rna) => (rna.isDownloaded ? sum + 1 : sum), 0);
 
 	return (
-		<Stack spacing={3} sx={styles.rnasPage}>
-			<ProgressOverview
-				rightColumnAmount={allRnas.length}
-				rightColumnCaption='Total RNAs'
-				leftColumnAmount={downloadedRnasAmount()}
-				leftColumnCaption='RNAs Downloaded'
-				isLeftColumnInPercentage={false}
-			/>
-			<FilterActionButtons
-				activeFilter={activeFilter}
-				setActiveFilter={setActiveFilter}
-			/>
-			<Box sx={styles.filterControlsContainer}>
-				<SearchFilter
-					placeholder='Search by name'
-					onChange={handleNameFilterChange}
-					sx={styles.searchFilter}
+		<Stack sx={styles.rnasPage}>
+			<Stack spacing={3} sx={styles.rnasListContainer}>
+				<ProgressOverview
+					rightColumnAmount={allRnas.length}
+					rightColumnCaption='Total RNAs'
+					leftColumnAmount={downloadedRnasAmount()}
+					leftColumnCaption='RNAs Downloaded'
+					isLeftColumnInPercentage={false}
 				/>
-				<Sort
-					currentSort={sortOption}
-					onSortChange={setSortOption}
-					sx={styles.sort}
+				<FilterActionButtons
+					activeFilter={activeFilter}
+					setActiveFilter={setActiveFilter}
 				/>
-			</Box>
-			<List sx={styles.rnasList}>
-				{sortedRnas.map((rna) => (
-					<RnaCard
-						rna={rna}
-						downloadHandler={() => downloadRna(rna.id)}
-						key={rna.id}
+				<Box sx={styles.filterControlsContainer}>
+					<SearchFilter
+						placeholder='Search by name'
+						onChange={handleNameFilterChange}
+						sx={styles.searchFilter}
 					/>
-				))}
-			</List>
+					<Sort
+						currentSort={sortOption}
+						onSortChange={setSortOption}
+						sx={styles.sort}
+					/>
+				</Box>
+				<List sx={styles.rnasList}>
+					{sortedRnas.map((rna) => (
+						<RnaCard
+							rna={rna}
+							downloadHandler={() => downloadHandler(rna)}
+							key={rna.id}
+						/>
+					))}
+				</List>
+			</Stack>
 			<ContinueButton link='add' sx={styles.newRnaButton}>
 				<Typography>New RNA</Typography>
 			</ContinueButton>

@@ -1,11 +1,17 @@
 const rnasPage = {
 	width: '100%',
 	height: '93vh',
-	padding: '14px',
 	paddingBottom: 2,
 	paddingTop: 0,
 	alignItems: 'center',
+	justifyContent: 'space-between',
 	flexGrow: 1,
+};
+
+const rnasListContainer = {
+	width: '100%',
+	overflow: 'auto',
+	px: '14px',
 };
 
 const filterControlsContainer = {
@@ -26,7 +32,6 @@ const sort = {
 
 const rnasList = {
 	flexGrow: 1,
-	overflow: 'auto',
 	width: '100%',
 	paddingTop: 0,
 };
@@ -44,6 +49,7 @@ const styles = {
 	sort,
 	rnasList,
 	newRnaButton,
+	rnasListContainer,
 };
 
 export default styles;

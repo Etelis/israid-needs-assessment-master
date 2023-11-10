@@ -47,7 +47,11 @@ const { dynamoSdkToToolbox } = require('/opt/dynamoSdkToToolbox/index.js');
 // 		description: 'string',
 // 		iconSrc: 'string',
 // 		subCategories: {
-// 			type: 'list'
+// 			type: 'list',
+//			schema: {
+//				id: { type: 'string', default: () => uuidv4() },
+//				name: 'string',
+//			},
 // 		},
 // 	},
 // });

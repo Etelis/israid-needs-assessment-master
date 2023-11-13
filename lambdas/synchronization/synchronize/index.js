@@ -80,7 +80,7 @@ const hasAnswerChanged = (oldAnswer, newAnswer) => {
 	}
 
 	return (
-		newAnswer.value !== oldAnswer.value ||
+		JSON.stringify(newAnswer.value) !== JSON.stringify(oldAnswer.value) ||
 		JSON.stringify(newAnswer.photos) !== JSON.stringify(oldAnswer.photos) ||
 		newAnswer.notes !== oldAnswer.notes
 	);
@@ -127,9 +127,16 @@ exports.handler = async (event) => {
 			updatedRnas
 		);
 
+		const formattedAnswers = updatedAnswers.map((answer) => ({
+			...answer,
+			value: {
+				storedValue: answer.value,
+			},
+		}));
+
 		const updatedAnswersModels = getUpdatedAnswersModels(
 			(await Answer.scan()).Items,
-			updatedAnswers
+			formattedAnswers
 		);
 
 		await Promise.all(updatedRnasModels, updatedAnswersModels);

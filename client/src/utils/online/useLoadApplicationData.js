@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import useOnlineStatus from '../useOnlineStatus';
 import fetchDownloadedRnaAnswersQueries from './fetchDownloadedRnaAnswersQueries';
 import rnasQuery from './rnaQuery';
-import categoriesQuery from './categoriesQuery';
+// import categoriesQuery from './categoriesQuery';
 
 const useLoadApplicationData = () => {
 	const [isLoading, setIsLoading] = useState(true);
@@ -19,6 +19,8 @@ const useLoadApplicationData = () => {
 				]);
 
 				await fetchDownloadedRnaAnswersQueries(queryClient);
+
+				await queryClient.refetchQueries();
 			}
 
 			setIsLoading(false);

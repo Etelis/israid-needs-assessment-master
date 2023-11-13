@@ -15,6 +15,7 @@ exports.handler = async (event) => {
 		const formattedAnswers = answers.map((answer) => ({
 			...answer,
 			createdOn: new Date(answer.createdOn),
+			value: answer.value.storedValue,
 		}));
 
 		return getSuccessResponse(formattedAnswers);

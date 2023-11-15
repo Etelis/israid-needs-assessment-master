@@ -2,10 +2,10 @@ import json
 import logging
 import boto3 
 from botocore.exceptions import ClientError
-from boto3.dynamodb.conditions import Key
+from boto3.dynamodb.conditions import Key, Attr
 from textblob import TextBlob
 import math
-import os
+import os, sys
 import pprint
 
 REGION = 'eu-north-1' # Change this according to your AWS region
@@ -86,18 +86,19 @@ def get_answers(items_field: str, items: list) -> dict:
     print(f'Found {len(items)} items:\n{items}')
      
     data = {}
-    for item_id in items:
-        print(f'    - Fetching answers from {item_id}')
-        responses = answers_table.query(KeyConditionExpression=Key(items_field).eq(item_id)) #get list of all answers of rnaId
-        print(f'        - Found {len(responses)} answers')
+    for rna_id in items:
+        print(f'[-] Fetching answers from {rna_id}')
+        response = answers_table.scan(FilterExpression=Attr(items_field).eq(rna_id)) #get list of all answers of rnaId
+        print(f'responses: {response}')
+        
         answers = {}
-        for ans in responses:
+        for ans in response['Items']:
             answers[ans['id']] = {
                                 'value': ans['value'],
                                 'notes': ans['notes']
                             }
-        data[item_id] = answers
-        print(f'        - {item_id} Done')
+        data[rna_id] = answers
+        print(f'[-] {rna_id} Done')
 
     return data
 

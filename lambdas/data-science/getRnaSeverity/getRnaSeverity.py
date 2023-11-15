@@ -6,6 +6,7 @@ from boto3.dynamodb.conditions import Key
 from textblob import TextBlob
 import math
 import os
+import pprint
 
 REGION = 'eu-north-1' # Change this according to your AWS region
 ANSWERS_TABLE_NAME = 'Answers'
@@ -59,30 +60,30 @@ def get_severity(answers) -> dict:
 
     return severity_dict
 
-def get_answers(table: str, items_field: str, items: list) -> dict:
+def get_answers(items_field: str, items: list) -> dict:
 
     # connect to an existing dynamodb
     dynamodb=boto3.resource('dynamodb',region_name=REGION)
     
     # connect to dynamodb tables
-    temp_table = dynamodb.Table(table) # decide between rnas, categories, subcategories
+    rnas_table = dynamodb.Table(RNAS_TABLE_NAME) # decide between rnas, categories, subcategories
     answers_table = dynamodb.Table(ANSWERS_TABLE_NAME)  # depends on the Answers Table name 
     
     if items == ['*']: # take all
-        print(f'Getting all items from table: {table}')
-        response = temp_table.scan()
+        print(f'Getting all items from table: {RNAS_TABLE_NAME}')
+        response = rnas_table.scan()
         response_data = response['Items']
 
         # Since scan can only retrieve 1MB of data at a time, we need to paginate to retrieve all data
         while 'LastEvaluatedKey' in response:
-            response = temp_table.scan(ExclusiveStartKey=response['LastEvaluatedKey'])
+            response = rnas_table.scan(ExclusiveStartKey=response['LastEvaluatedKey'])
             response_data.extend(response['Items'])
         
         items = []
         for resp in response_data:
             items.append(resp['id'])
  
-    print(f'{len(items)} items requested')
+    print(f'Found {len(items)} items:\n{items}')
      
     data = {}
     for item_id in items:
@@ -103,16 +104,14 @@ def get_answers(table: str, items_field: str, items: list) -> dict:
 
 def lambda_handler(event, context):
 
-    try:
-        
-        table = event['table']
+    try:   
         items_field = event['items_field']
         items = event['items']
-        print(table)
-        print(items_field)
-        print(items)
+        print(f'items_field: {items_field}')
+        print(f'items: {items}')
         
-        data = get_answers(table, items_field, items)
+        data = get_answers(items_field, items)
+        pprint.pprint(data)
         scores = get_severity(data)
 
         return {

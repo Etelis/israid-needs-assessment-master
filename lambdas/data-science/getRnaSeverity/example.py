@@ -1,19 +1,11 @@
 event = {
-        'table': 'rnas', # same as Scheme table name
         'items_field': 'rnaId',
         'items': ['fb91fdc7-46ba-47f8-bc3c-d1e480ad71be', 'fb91fdc7-46ba-47f8-bc3c-d1e480ad71be'], # specific
         }
 
 event = {
-        "table": "Rnas",
         'items_field': 'rnaId',
         "items": ["*"] # all
-        }
-
-event = {
-        'table': 'categories', # same as Scheme table name
-        'items_field': 'categoryId',
-        'items': ['*'], # ALL
         }
 
 example_event_allrna = {

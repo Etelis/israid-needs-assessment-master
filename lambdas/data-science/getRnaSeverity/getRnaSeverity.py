@@ -40,7 +40,6 @@ def calaculate_answer(answer):
     if type(answer['value']) == bool and (answer['value'] == True):
         total_grade = 1
         if answer['notes'] != None:
-            print(answer['notes'])
             total_grade = severity(answer['notes'])
     
     return total_grade
@@ -57,7 +56,6 @@ def get_severity(data) -> dict:
         rna_score = 0.0
         for ans_key in data[rna_key]:
             rna_score += calaculate_answer(data[rna_key][ans_key])
-        print(rna_score)
         severity_dict[rna_key] = rna_score/len(data[rna_key])
 
     severity_dict = normalize(severity_dict)
@@ -74,7 +72,6 @@ def get_answers(items: list) -> dict:
     answers_table = dynamodb.Table(ANSWERS_TABLE_NAME)  # depends on the Answers Table name 
     
     if items == ['*']: # take all
-        print(f'Getting all items from table: {RNAS_TABLE_NAME}')
         response = rnas_table.scan()
         response_data = response['Items']
 
@@ -87,14 +84,9 @@ def get_answers(items: list) -> dict:
         for resp in response_data:
             items.append(resp['id'])
  
-    print(f'Found {len(items)} items:\n{items}')
-     
     data = {}
     for rna_id in items:
-        print(f'[-] Fetching answers from {rna_id}')
         response = answers_table.scan(FilterExpression=Attr(RNA_TABLE_KEY).eq(rna_id)) #get list of all answers of rnaId
-        print(f'responses:\n{response}')
-        
         answers = {}
         for ans in response['Items']:
             answers[ans['questionId']] = {
@@ -102,7 +94,6 @@ def get_answers(items: list) -> dict:
                                 'notes': ans['notes']
                                 }
         data[rna_id] = answers
-        print(f'[-] {rna_id} Done')
 
     return data
 
@@ -110,7 +101,6 @@ def get_answers(items: list) -> dict:
 def lambda_handler(event, context):
 
     try:   
-        print(event)
         data = get_answers(event['RNA_items'])
         scores = get_severity(data)
 

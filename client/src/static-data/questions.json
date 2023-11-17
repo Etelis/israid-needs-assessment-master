@@ -15,7 +15,7 @@
   },
   {
     "id": "1",
-    "title": "What are the cause- specific mortality rates?",
+    "title": "What are the cause-specific mortality rates?",
     "subCategoryId": "1",
     "type": "text"
   },
@@ -42,7 +42,7 @@
   },
   {
     "id": "4",
-    "title": "Is there a designated burial area? How are they happening?",
+    "title": "Is there a designated burial area? If so, How are they happening?",
     "subCategoryId": "1",
     "type": "yes-no"
   },
@@ -463,7 +463,7 @@
   },
   {
     "id": "94",
-    "title": "What vulnerable populations in your community?",
+    "title": "State the vulnerable populations in your community",
     "subCategoryId": "5",
     "type": "multi-select",
     "options": [
@@ -2234,7 +2234,7 @@
   },
   {
     "id": "200",
-    "title": "Are there other organizations in the area?",
+    "title": "Are there any other organizations in the area?",
     "subCategoryId": "18",
     "type": "yes-no"
   },

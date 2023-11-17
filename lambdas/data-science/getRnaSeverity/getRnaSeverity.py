@@ -5,10 +5,10 @@ from botocore.exceptions import ClientError
 from boto3.dynamodb.conditions import Key, Attr
 from textblob import TextBlob
 import math
-import os, sys
-import pprint
+import os
 
-REGION = 'eu-north-1' # Change this according to your AWS region
+## Change this global settings if necessary
+REGION = 'eu-north-1'
 ANSWERS_TABLE_NAME = 'Answers'
 RNAS_TABLE_NAME = 'Rnas'
 
@@ -49,13 +49,13 @@ def normalize(severity_dict):
         severity_dict[item] = math.ceil((severity_dict[item]/max_value)*100)
     return severity_dict
 
-def get_severity(answers) -> dict:
+def get_severity(ans_dict) -> dict:
     severity_dict = {}
-    for item in answers:
+    for rna in ans_dict:
         total_grade = 0.0
-        for answer in answers[item]:
-            total_grade += calaculate_answer(answers[item][answer])
-        severity_dict[item] = total_grade/len(item)
+        for answer in rna:
+            total_grade += calaculate_answer(answer)
+        severity_dict[rna] = total_grade/len(rna)
     severity_dict = normalize(severity_dict)
 
     return severity_dict
@@ -89,12 +89,12 @@ def get_answers(items_field: str, items: list) -> dict:
     for rna_id in items:
         print(f'[-] Fetching answers from {rna_id}')
         response = answers_table.scan(FilterExpression=Attr(items_field).eq(rna_id)) #get list of all answers of rnaId
-        print(f'responses: {response}')
+        print(f'responses:\n{response}')
         
         answers = {}
         for ans in response['Items']:
-            answers[ans['id']] = {
-                                'value': ans['value'],
+            answers[ans['questionId']] = {
+                                'value': ans['value']['storedValue'],
                                 'notes': ans['notes']
                             }
         data[rna_id] = answers
@@ -106,13 +106,8 @@ def get_answers(items_field: str, items: list) -> dict:
 def lambda_handler(event, context):
 
     try:   
-        items_field = event['items_field']
-        items = event['items']
-        print(f'items_field: {items_field}')
-        print(f'items: {items}')
-        
-        data = get_answers(items_field, items)
-        pprint.pprint(data)
+        print(event)
+        data = get_answers(event['items_field'], event['items'])
         scores = get_severity(data)
 
         return {

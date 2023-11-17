@@ -16,14 +16,14 @@ const queryClient = new QueryClient({
 			cacheTime: Infinity,
 			staleTime: Infinity,
 			onError: () => {
-				const errorMessage = 'Woops Somethings Went Wrong';
+				const errorMessage = 'Whoops something went wrong';
 
 				toast.error(errorMessage, { toastId: errorMessage });
 			},
 		},
 		mutations: {
 			onError: () => {
-				const errorMessage = 'Woops Somethings Went Wrong';
+				const errorMessage = 'Whoops something went wrong';
 
 				toast.error(errorMessage, { toastId: errorMessage });
 			},

@@ -35,7 +35,7 @@ const getSavedAndCachedRnaAnswers = async (rnaId, queryClient) => {
 
 		return mergeAnswers(savedAnswers, updatedAnswers);
 	} catch (error) {
-		const errorMessage = 'Something Went Wrong Getting Saved Answers';
+		const errorMessage = 'Something went wrong while getting saved answers';
 
 		toast.error(errorMessage, { toastId: errorMessage });
 	}

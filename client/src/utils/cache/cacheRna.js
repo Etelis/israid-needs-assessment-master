@@ -6,7 +6,7 @@ const cacheRna = async (newRna) => {
 	try {
 		await set(createUpdatedRnaCacheKey(newRna), newRna);
 	} catch (error) {
-		const errorMessage = 'Something Went Wrong Saving Rna';
+		const errorMessage = 'Something went wrong while saving the RNA';
 
 		toast.error(errorMessage, { toastId: errorMessage });
 	}

@@ -21,7 +21,7 @@ const getCategories = (queryClient) => {
 		return combinedCategories;
 	} catch (error) {
 		console.log(error);
-		const errorMessage = 'Something Went Wrong Getting Categories';
+		const errorMessage = 'Something went wrong while getting the categories';
 
 		toast.error(errorMessage, { toastId: errorMessage });
 	}

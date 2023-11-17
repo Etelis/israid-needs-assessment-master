@@ -45,7 +45,7 @@ const getSavedAndCachedRnas = async (queryClient) => {
 
 		return setIsDownloadedRnaFields(allRnas);
 	} catch (error) {
-		const errorMessage = 'Something Went Wrong Getting Saved Rnas';
+		const errorMessage = 'Something went wrong while getting saved RNAs';
 
 		toast.error(errorMessage, { toastId: errorMessage });
 	}

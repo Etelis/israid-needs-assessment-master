@@ -1,0 +1,16 @@
+{
+    "type": "object",
+    "title": "Export Excel file",
+    "properties":
+                {
+                "RNA_id": 
+                        {
+                        "type": "string",
+                        "description": "The RNA ID to retrieve all data from"
+                        }
+                },
+    "required": 
+            [
+            "RNA_id"
+            ]
+}

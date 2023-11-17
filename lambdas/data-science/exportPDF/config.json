@@ -4,8 +4,7 @@
   "MemorySize": 128,
   "Timeout": 250,
   "Layers": [
-    "PYTHON-DEP-exportPDF",
-    "sample-docs"
+    "PYTHON-DEP-exportPDF"
   ],
   "Api_Settings": {
     "Method": "GET",

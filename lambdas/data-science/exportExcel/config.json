@@ -4,11 +4,10 @@
   "MemorySize": 128,
   "Timeout": 250,
   "Layers": [
-    "PYTHON-DEP-exportExcel",
-    "sample-docs"
+    "PYTHON-DEP-exportExcel"
   ],
   "Api_Settings": {
-      "Method": "POST",
+      "Method": "GET",
       "Api_Name": "IsraAID app",
       "Path": "/exportExcel",
       "Model": "exportExcel"

@@ -1,16 +1,16 @@
 {
-  "Handler": "createExcel.lambda_handler",
+  "Handler": "exportExcel.lambda_handler",
   "Runtime": "python3.11",
   "MemorySize": 128,
   "Timeout": 250,
   "Layers": [
-      "PYTHON-DEP-createExcel",
-      "sample-docs"
+    "PYTHON-DEP-exportExcel",
+    "sample-docs"
   ],
   "Api_Settings": {
       "Method": "POST",
       "Api_Name": "IsraAID app",
-      "Path": "/createExcel",
-      "Model": ""
+      "Path": "/exportExcel",
+      "Model": "exportExcel"
   }
 }

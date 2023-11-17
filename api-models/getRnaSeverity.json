@@ -1,21 +1,20 @@
 {
     "type": "object",
-    "title": "Calculate Severities by Items",
+    "title": "get RNA Severity score",
     "properties":
                 {
-                "items_id": 
-                    {
-                    "type": "array",
-                    "title": "Items Partition ID",
-                    "items": 
+                "RNA_items": 
                         {
-                        "type": "string"
-                        },  
-                    "description": "For specific items: [fb91fdc7-46ba-47f8-bc3c-d1e480ad71be, ...] OR [*] for all items"
-                    }
+                        "type": "array",
+                        "items": 
+                            {
+                            "type": "string"
+                            },  
+                        "description": "All RNAs: [*], Specific RNAs: [fb91fdc7-46ba-47f8-bc3c-d1e480ad71be, ...]"
+                        }
                 },
     "required": 
             [
-            "items_id"
+            "RNA_items"
             ]
 }

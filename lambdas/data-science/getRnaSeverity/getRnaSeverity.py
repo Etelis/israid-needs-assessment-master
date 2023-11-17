@@ -11,6 +11,7 @@ import os
 REGION = 'eu-north-1'
 ANSWERS_TABLE_NAME = 'Answers'
 RNAS_TABLE_NAME = 'Rnas'
+RNA_TABLE_KEY = 'rnaId'
 
 # Configure logging
 logger = logging.getLogger()
@@ -63,7 +64,7 @@ def get_severity(data) -> dict:
 
     return severity_dict
 
-def get_answers(items_field: str, items: list) -> dict:
+def get_answers(items: list) -> dict:
 
     # connect to an existing dynamodb
     dynamodb=boto3.resource('dynamodb',region_name=REGION)
@@ -91,7 +92,7 @@ def get_answers(items_field: str, items: list) -> dict:
     data = {}
     for rna_id in items:
         print(f'[-] Fetching answers from {rna_id}')
-        response = answers_table.scan(FilterExpression=Attr(items_field).eq(rna_id)) #get list of all answers of rnaId
+        response = answers_table.scan(FilterExpression=Attr(RNA_TABLE_KEY).eq(rna_id)) #get list of all answers of rnaId
         print(f'responses:\n{response}')
         
         answers = {}
@@ -110,7 +111,7 @@ def lambda_handler(event, context):
 
     try:   
         print(event)
-        data = get_answers(event['items_field'], event['items'])
+        data = get_answers(event['RNA_items'])
         scores = get_severity(data)
 
         return {

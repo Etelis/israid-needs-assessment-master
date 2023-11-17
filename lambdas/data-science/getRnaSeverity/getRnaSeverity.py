@@ -32,15 +32,16 @@ def severity(text):
     return sev
 
 def calaculate_answer(answer):
-    total_grade = 0.0
-    if type(answer['value']) == bool:
-        if answer['value'] == True:
-            if answer['notes'] != '':
-                total_grade = severity(answer['notes'])
-            else:
-                total_grade = 1
+    total_grade = 0.0  # stays 0 if answer is False
     if type(answer['value']) == str:
-         total_grade = severity(answer['value'])
+        total_grade = severity(answer['value'])
+
+    if type(answer['value']) == bool and (answer['value'] == True):
+        total_grade = 1
+        if answer['notes'] != None:
+            print(answer['notes'])
+            total_grade = severity(answer['notes'])
+    
     return total_grade
 
 def normalize(severity_dict):
@@ -49,13 +50,15 @@ def normalize(severity_dict):
         severity_dict[item] = math.ceil((severity_dict[item]/max_value)*100)
     return severity_dict
 
-def get_severity(ans_dict) -> dict:
+def get_severity(data) -> dict:
     severity_dict = {}
-    for rna in ans_dict:
-        total_grade = 0.0
-        for answer in rna:
-            total_grade += calaculate_answer(answer)
-        severity_dict[rna] = total_grade/len(rna)
+    for rna_key in data:
+        rna_score = 0.0
+        for ans_key in data[rna_key]:
+            rna_score += calaculate_answer(data[rna_key][ans_key])
+        print(rna_score)
+        severity_dict[rna_key] = rna_score/len(data[rna_key])
+
     severity_dict = normalize(severity_dict)
 
     return severity_dict
@@ -96,7 +99,7 @@ def get_answers(items_field: str, items: list) -> dict:
             answers[ans['questionId']] = {
                                 'value': ans['value']['storedValue'],
                                 'notes': ans['notes']
-                            }
+                                }
         data[rna_id] = answers
         print(f'[-] {rna_id} Done')
 

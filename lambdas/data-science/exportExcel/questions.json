@@ -1,0 +1,2589 @@
+[
+  {
+    "id": "2",
+    "title": "What is the main cause of death?",
+    "subCategoryId": "1",
+    "type": "multi-select",
+    "options": [
+      "phyisical injury",
+      "drowning",
+      "malnutrition",
+      "violence",
+      "poor hygiene",
+      "diseases"
+    ]
+  },
+  {
+    "id": "1",
+    "title": "What are the cause-specific mortality rates?",
+    "subCategoryId": "1",
+    "type": "text"
+  },
+  {
+    "id": "3",
+    "title": "Which age group is most affected?",
+    "subCategoryId": "1",
+    "type": "multi-select",
+    "options": [
+      "Infants (0-1 year)",
+      "Children (1-14 years)",
+      "Adolescents (15-19 years)",
+      "Young adults (20-39 years)\n",
+      "Adults (40-59 years)",
+      "Older adults (60+ years)",
+      "All age groups are equally affected"
+    ]
+  },
+  {
+    "id": "59",
+    "title": "Is there any specific problem regarding the mortality rates?",
+    "subCategoryId": "1",
+    "type": "yes-no"
+  },
+  {
+    "id": "4",
+    "title": "Is there a designated burial area? If so, How are they happening?",
+    "subCategoryId": "1",
+    "type": "yes-no"
+  },
+  {
+    "id": "64",
+    "title": "Is there any specific problem regarding nutrition?",
+    "subCategoryId": "2",
+    "type": "yes-no"
+  },
+  {
+    "id": "5",
+    "title": "Do you have staff trained/specialized on nutrition? ",
+    "subCategoryId": "2",
+    "type": "yes-no",
+    "dependencies": {
+      "questionId": "64",
+      "expectedAnswer": true
+    }
+  },
+  {
+    "id": "6",
+    "title": "Where do you refer to severe cases of malnutrition?",
+    "subCategoryId": "2",
+    "type": "multi-select",
+    "options": [
+      "hospital",
+      "local medical center",
+      "local doctor"
+    ],
+    "dependencies": {
+      "questionId": "64",
+      "expectedAnswer": true
+    }
+  },
+  {
+    "id": "7",
+    "title": "Is there any education given to mothers on healthy nutrition?",
+    "subCategoryId": "2",
+    "type": "yes-no",
+    "dependencies": {
+      "questionId": "64",
+      "expectedAnswer": true
+    }
+  },
+  {
+    "id": "8",
+    "title": "Are there any populations/groups with higher rates of malnutrition than others?",
+    "subCategoryId": "2",
+    "type": "yes-no",
+    "dependencies": {
+      "questionId": "64",
+      "expectedAnswer": true
+    }
+  },
+  {
+    "id": "9",
+    "title": "How many cases of acute malnutrition are known at the moment?",
+    "subCategoryId": "2",
+    "type": "text",
+    "dependencies": {
+      "questionId": "64",
+      "expectedAnswer": true
+    }
+  },
+  {
+    "id": "10",
+    "title": "How many cases of acute malnutrition are referred to the patient feeding programme?",
+    "subCategoryId": "2",
+    "type": "text",
+    "dependencies": {
+      "questionId": "64",
+      "expectedAnswer": true
+    }
+  },
+  {
+    "id": "11",
+    "title": "Are the schools operating?",
+    "subCategoryId": "3",
+    "type": "yes-no"
+  },
+  {
+    "id": "13",
+    "title": "Is there any alternative education available?",
+    "subCategoryId": "3",
+    "type": "yes-no",
+    "options": [
+      "informal education programs",
+      "afternoon activities"
+    ],
+    "dependencies": {
+      "questionId": "11",
+      "expectedAnswer": false
+    }
+  },
+  {
+    "id": "16",
+    "title": "Are the schools physically accessible?",
+    "subCategoryId": "3",
+    "type": "yes-no",
+    "dependencies": {
+      "questionId": "11",
+      "expectedAnswer": false
+    }
+  },
+  {
+    "id": "17",
+    "title": "What do local authorities do about the education status?",
+    "subCategoryId": "3",
+    "type": "multi-select",
+    "options": [
+      "Establish temporary learning centers",
+      "Provide educational materials and supplies",
+      "Arrange for remote/virtual learning options",
+      "Collaborate with NGOs for education support",
+      "Lack significant intervention for education",
+      "Implement teacher training programs"
+    ],
+    "dependencies": {
+      "questionId": "11",
+      "expectedAnswer": false
+    }
+  },
+  {
+    "id": "27",
+    "title": "Who are the actors working in education in the area?",
+    "subCategoryId": "3",
+    "type": "multi-select",
+    "options": [
+      "NGOs",
+      "community groups",
+      "religious groups",
+      "private tutors"
+    ],
+    "dependencies": {
+      "questionId": "11",
+      "expectedAnswer": false
+    }
+  },
+  {
+    "id": "24",
+    "title": "Is there any existing support accessible for the community?",
+    "subCategoryId": "3",
+    "type": "yes-no",
+    "dependencies": {
+      "questionId": "11",
+      "expectedAnswer": false
+    }
+  },
+  {
+    "id": "18",
+    "title": "What specific services is the organization providing and in what setting? ",
+    "subCategoryId": "3",
+    "type": "multi-select",
+    "options": [
+      "Formal education in schools",
+      "Non-formal education in community centers",
+      "Vocational training in specialized training centers",
+      "Online courses and digital learning platforms",
+      "Adult education programs in local facilities",
+      "Early childhood education in preschools or kindergartens",
+      "Literacy programs for disadvantaged groups\nh",
+      "Tutoring and academic support services",
+      "Educational workshops and seminars"
+    ],
+    "dependencies": {
+      "questionId": "11",
+      "expectedAnswer": false
+    }
+  },
+  {
+    "id": "25",
+    "title": "What existing support is accessible for the community?",
+    "subCategoryId": "3",
+    "type": "multi-select",
+    "options": [
+      "volunteer teachers",
+      "afternoon educational activities",
+      "informal education programmes"
+    ],
+    "dependencies": {
+      "questionId": "24",
+      "expectedAnswer": true
+    }
+  },
+  {
+    "id": "19",
+    "title": "Who provides non-formal educational activities?",
+    "subCategoryId": "3",
+    "type": "multi-select",
+    "options": [
+      "Local community organizations",
+      "International NGOs",
+      "Local government agencies",
+      "Religious institutions",
+      "Informal volunteer groups",
+      "No organized non-formal education available"
+    ],
+    "dependencies": {
+      "questionId": "28",
+      "expectedAnswer": true
+    }
+  },
+  {
+    "id": "20",
+    "title": "Are learning materials available?",
+    "subCategoryId": "3",
+    "type": "yes-no"
+  },
+  {
+    "id": "28",
+    "title": "Does non-formal education exist?",
+    "subCategoryId": "3",
+    "type": "yes-no"
+  },
+  {
+    "id": "29",
+    "title": "Is online learning offered? ",
+    "subCategoryId": "3",
+    "type": "yes-no",
+    "dependencies": {
+      "questionId": "11",
+      "expectedAnswer": false
+    }
+  },
+  {
+    "id": "21",
+    "title": "How is the quality of the online education?",
+    "subCategoryId": "3",
+    "type": "multi-select",
+    "options": [
+      "poor",
+      "average",
+      "great"
+    ],
+    "dependencies": {
+      "questionId": "29",
+      "expectedAnswer": true
+    }
+  },
+  {
+    "id": "30",
+    "title": "How is the quality of in person education?",
+    "subCategoryId": "3",
+    "type": "multi-select",
+    "options": [
+      "poor",
+      "average",
+      "great"
+    ],
+    "dependencies": {
+      "questionId": "16",
+      "expectedAnswer": true
+    }
+  },
+  {
+    "id": "22",
+    "title": "What condition are the schools in?",
+    "subCategoryId": "3",
+    "type": "multi-select",
+    "options": [
+      "Destroyed",
+      "partialy accessible",
+      "mostly accessible",
+      "unchanged"
+    ]
+  },
+  {
+    "id": "31",
+    "title": "Are the schools being used as shelters?",
+    "subCategoryId": "3",
+    "type": "yes-no",
+    "dependencies": {
+      "questionId": "11",
+      "expectedAnswer": false
+    }
+  },
+  {
+    "id": "12",
+    "title": "Are students attending school?",
+    "subCategoryId": "3",
+    "type": "yes-no"
+  },
+  {
+    "id": "14",
+    "title": "Is participation at school dependent on Age?",
+    "subCategoryId": "3",
+    "type": "yes-no",
+    "dependencies": {
+      "questionId": "11",
+      "expectedAnswer": true
+    }
+  },
+  {
+    "id": "15",
+    "title": "Is participation at school dependent on Gender?",
+    "subCategoryId": "3",
+    "type": "yes-no",
+    "dependencies": {
+      "questionId": "11",
+      "expectedAnswer": true
+    }
+  },
+  {
+    "id": "23",
+    "title": "What are the reasons why children don’t attend schools/learning centers?",
+    "subCategoryId": "3",
+    "type": "multi-select",
+    "options": [
+      "Unreachable",
+      "discrimination",
+      "safety rules",
+      "joining the work force"
+    ],
+    "dependencies": {
+      "questionId": "12",
+      "expectedAnswer": false
+    }
+  },
+  {
+    "id": "26",
+    "title": "Are there high risk populations among the students?",
+    "subCategoryId": "3",
+    "type": "yes-no"
+  },
+  {
+    "id": "32",
+    "title": "Are there language barriers? ",
+    "subCategoryId": "4",
+    "type": "yes-no",
+    "dependencies": {
+      "questionId": "207",
+      "expectedAnswer": true
+    }
+  },
+  {
+    "id": "33",
+    "title": "Is there a need for translation?",
+    "subCategoryId": "4",
+    "type": "yes-no",
+    "dependencies": {
+      "questionId": "32",
+      "expectedAnswer": true
+    }
+  },
+  {
+    "id": "34",
+    "title": "How can we identify partners for dealing with language barriers? ",
+    "subCategoryId": "4",
+    "type": "multi-select",
+    "options": [
+      "Limited vocabulary",
+      "different languages",
+      "language complexity",
+      "regional accents and pronunciation challenges"
+    ],
+    "dependencies": {
+      "questionId": "32",
+      "expectedAnswer": true
+    }
+  },
+  {
+    "id": "35",
+    "title": "Are there refugees that were teachers before?",
+    "subCategoryId": "4",
+    "type": "yes-no",
+    "dependencies": {
+      "questionId": "207",
+      "expectedAnswer": true
+    }
+  },
+  {
+    "id": "36",
+    "title": "How can they be supported and integrated? Are there specific training requirements? ",
+    "subCategoryId": "4",
+    "type": "multi-select",
+    "options": [
+      "Financial support for resources and infrastructure",
+      "Technical assistance and expertise\n",
+      "Strengthening community engagement and participation",
+      "Integration into existing programs and initiatives",
+      "Collaboration with relevant stakeholders and organizations",
+      "Training in specific skills and knowledge",
+      "Capacity-building workshops for community members",
+      "Customized training based on identified needs",
+      "Ongoing monitoring and evaluation"
+    ],
+    "dependencies": {
+      "questionId": "35",
+      "expectedAnswer": true
+    }
+  },
+  {
+    "id": "37",
+    "title": "What possible collaborations exist for dealing education for Refugees/IDPs/Migrants?",
+    "subCategoryId": "4",
+    "type": "multi-select",
+    "options": [
+      "Partnerships with international NGOs",
+      "coordination with UN agencies",
+      "Collaboration with local schools and universities",
+      "Involvement of community-based organizations",
+      "Joint efforts with host country's education authorities",
+      "Engagement of private sector for funding and resources",
+      "Limited collaborative efforts for education provision"
+    ]
+  },
+  {
+    "id": "38",
+    "title": "Are any extracurricular activities offered? (refer to MHPSS)",
+    "subCategoryId": "4",
+    "type": "yes-no"
+  },
+  {
+    "id": "39",
+    "title": "Are there any vulnerable populations in your community?",
+    "subCategoryId": "5",
+    "type": "yes-no"
+  },
+  {
+    "id": "94",
+    "title": "State the vulnerable populations in your community",
+    "subCategoryId": "5",
+    "type": "multi-select",
+    "options": [
+      "women and girls",
+      "children",
+      "lactating mothers",
+      "unaccompanied minors",
+      "elderly",
+      "PWD",
+      "none",
+      "other:"
+    ],
+    "dependencies": {
+      "questionId": "39",
+      "expectedAnswer": true
+    }
+  },
+  {
+    "id": "43",
+    "title": "Are you aware of any risks to vulnerable populations in your community? (e.g. CP risks, GBV)",
+    "subCategoryId": "5",
+    "type": "yes-no",
+    "dependencies": {
+      "questionId": "39",
+      "expectedAnswer": true
+    }
+  },
+  {
+    "id": "42",
+    "title": "Do vulnerable populations have access to shelters or safe spaces?",
+    "subCategoryId": "5",
+    "type": "yes-no",
+    "dependencies": {
+      "questionId": "39",
+      "expectedAnswer": true
+    }
+  },
+  {
+    "id": "44",
+    "title": "Since the emergency what changes have you noticed in yourself?",
+    "subCategoryId": "6",
+    "type": "multi-select",
+    "options": [
+      "different stress responses: emotional behavior",
+      "appetite",
+      "physical responses"
+    ]
+  },
+  {
+    "id": "41",
+    "title": "What do community members normally do to overcome difficulties/deal with distress? ",
+    "subCategoryId": "6",
+    "type": "multi-select",
+    "options": [
+      "Mutual support and solidarity. Seeking help from local leaders",
+      "Relying on traditional healing practices",
+      "Forming self-help groups",
+      "Engaging in religious or spiritual practices",
+      "Collaborating with external aid organizations",
+      "No distinct strategies observed"
+    ]
+  },
+  {
+    "id": "40",
+    "title": "What are the existing support services in your community?",
+    "subCategoryId": "6",
+    "type": "multi-select",
+    "options": [
+      "NGOs",
+      "CBOs",
+      "shelters",
+      "government services",
+      "education institutions",
+      "spiritual institutions",
+      "health services"
+    ]
+  },
+  {
+    "id": "45",
+    "title": "What are the existing referral pathways (local and national)",
+    "subCategoryId": "6",
+    "type": "multi-select",
+    "options": [
+      "Referral to local health clinics or hospitals",
+      "Direct communication with local community leaders",
+      "Coordination with regional government agencies",
+      "Collaboration with national humanitarian organizations",
+      "Referral to specialized mental health services",
+      "Utilization of local community networks",
+      "No clearly established referral pathways"
+    ]
+  },
+  {
+    "id": "47",
+    "title": "Are there specific locations within the community that are unsafe?",
+    "subCategoryId": "6",
+    "type": "yes-no"
+  },
+  {
+    "id": "48",
+    "title": "What organizations are currently involved within the community?",
+    "subCategoryId": "6",
+    "type": "text"
+  },
+  {
+    "id": "49",
+    "title": "What gaps are there within the community in terms of access to information and services (including referral pathways)",
+    "subCategoryId": "6",
+    "type": "multi-select",
+    "options": [
+      "Limited access to healthcare information\r",
+      "Insufficient awareness of available services\r",
+      "Lack of access to clean water and sanitation information\r",
+      "Inadequate knowledge of referral options\r",
+      "Challenges in reaching medical facilities\r",
+      "Limited access to emergency response information\r",
+      "Incomplete understanding of hygiene practices\r",
+      "No specific gaps in access identified"
+    ]
+  },
+  {
+    "id": "46",
+    "title": "If it’s a host community - what is the relationship between the host community and the IDP community",
+    "subCategoryId": "6",
+    "type": "multi-select",
+    "options": [
+      "Supportive and collaborative relationship",
+      "Strained due to resource competition",
+      "Limited interaction or isolation",
+      "Mutually beneficial cooperation",
+      "Hostility and tension",
+      "Positive exchange of cultural practices",
+      "Varies depending on the specific context"
+    ],
+    "dependencies": {
+      "questionId": "207",
+      "expectedAnswer": true
+    }
+  },
+  {
+    "id": "50",
+    "title": "What water, sanitation and hygiene practices were the population accustomed to before the crisis?",
+    "subCategoryId": "7",
+    "type": "multi-select",
+    "options": [
+      "Limited awareness of available services",
+      "Inadequate communication channels",
+      "Lack of knowledge about referral options",
+      "Absence of translated materials for diverse groups",
+      "Insufficient engagement with local authorities",
+      "Challenges in accessing health-related information",
+      "No significant gaps observed"
+    ]
+  },
+  {
+    "id": "107",
+    "title": "Are there any existing practices harmful to health?",
+    "subCategoryId": "7",
+    "type": "yes-no"
+  },
+  {
+    "id": "51",
+    "title": "What existing practices are harmful to health?",
+    "subCategoryId": "7",
+    "type": "multi-select",
+    "options": [
+      "Improper waste disposal",
+      "Open defecation. Unsafe cooking methods",
+      "Limited hand hygiene. Overconsumption of sugary foods. Lack of vaccination awareness",
+      "No significantly harmful practices observed"
+    ],
+    "dependencies": {
+      "questionId": "107",
+      "expectedAnswer": true
+    }
+  },
+  {
+    "id": "52",
+    "title": "Who practices these and why?",
+    "subCategoryId": "7",
+    "type": "text",
+    "dependencies": {
+      "questionId": "107",
+      "expectedAnswer": true
+    }
+  },
+  {
+    "id": "54",
+    "title": "Is there an understanding of the relationship between water/sanitation/shelter and disease?",
+    "subCategoryId": "7",
+    "type": "yes-no"
+  },
+  {
+    "id": "55",
+    "title": "What are the common hygiene practices among the affected population. ?",
+    "subCategoryId": "7",
+    "type": "multi-select",
+    "options": [
+      "Washing hands after defecation",
+      "disposal of children's faeces",
+      "use of soap",
+      "storage and covering of water",
+      "cooked food)"
+    ]
+  },
+  {
+    "id": "53",
+    "title": "Is there a need for any type of hygiene items or other NFIs?",
+    "subCategoryId": "7",
+    "type": "yes-no"
+  },
+  {
+    "id": "56",
+    "title": "Does the community have access to facilities important for maintaining hygiene?",
+    "hintText": "covered water containers /cooking utensils/ mosquito nets/soap/sanitary protection",
+    "subCategoryId": "7",
+    "type": "yes-no"
+  },
+  {
+    "id": "58",
+    "title": "What would motivate the community to practice positive hygiene behavior?",
+    "subCategoryId": "7",
+    "type": "multi-select",
+    "options": [
+      "Access to clean water and sanitation facilities",
+      "Health education and awareness campaigns. Incentives or rewards for practicing hygiene",
+      "Local community leaders' endorsement",
+      "Availability of hygiene supplies and products",
+      "Reduction in illness and disease transmission",
+      "Cultural and religious beliefs promoting hygiene",
+      "No clear motivating factors identified"
+    ]
+  },
+  {
+    "id": "57",
+    "title": "Are there any hygiene promotion activities linked with water and sanitation and/or health services?",
+    "subCategoryId": "7",
+    "type": "yes-no"
+  },
+  {
+    "id": "62",
+    "title": "What are the learning needs of hygiene promotion staff and community outreach workers?",
+    "subCategoryId": "7",
+    "type": "multi-select",
+    "options": [
+      "Effective communication techniques",
+      "Disease transmission and prevention knowledge",
+      "Cultural sensitivity and understanding",
+      "Behavior change communication strategies",
+      "Training in using hygiene promotion materials",
+      "Monitoring and evaluation skills",
+      "Crisis response and emergency preparedness",
+      "No specific learning needs identified"
+    ],
+    "dependencies": {
+      "questionId": "57",
+      "expectedAnswer": true
+    }
+  },
+  {
+    "id": "61",
+    "title": "What type of outreach system would work in this context for both immediate and medium-term mobilization?",
+    "subCategoryId": "7",
+    "type": "multi-select",
+    "options": [
+      "community hygiene volunteers",
+      "workers or promoters",
+      "school health clubs",
+      "WASH committees"
+    ]
+  },
+  {
+    "id": "60",
+    "title": "What are the advantages and disadvantages of any proposed changes in practice?",
+    "subCategoryId": "7",
+    "type": "text"
+  },
+  {
+    "id": "63",
+    "title": "What non-food items are available?",
+    "subCategoryId": "7",
+    "type": "multi-select",
+    "options": [
+      "Shelter materials (tents",
+      "tarps",
+      "etc.) ",
+      "Clothing and blankets ",
+      "Hygiene kits (soap",
+      "toothbrushes",
+      "etc.) ",
+      "Cooking utensils and stoves ",
+      "Bedding and sleeping mats ",
+      "Basic medical supplies ",
+      "Educational materials and books ",
+      "No non-food items available"
+    ]
+  },
+  {
+    "id": "65",
+    "title": "What are the most urgently needed based on preferences and needs?",
+    "subCategoryId": "7",
+    "type": "multi-select",
+    "options": [
+      "Shelter materials (tents",
+      "tarps",
+      "etc.) ",
+      "Clothing and blankets ",
+      "Hygiene kits (soap",
+      "toothbrushes",
+      "etc.) ",
+      "Cooking utensils and stoves ",
+      "Bedding and sleeping mats ",
+      "Basic medical supplies ",
+      "Educational materials and books ",
+      "None are needed"
+    ]
+  },
+  {
+    "id": "66",
+    "title": "Has the place where people access markets to buy their essential hygiene items (cost, diversity, quality) changed since the crisis? Where is it now?",
+    "subCategoryId": "7",
+    "type": "yes-no"
+  },
+  {
+    "id": "67",
+    "title": "How do households access their essential hygiene items?",
+    "subCategoryId": "7",
+    "type": "multi-select",
+    "options": [
+      "Distribution points by aid agencies ",
+      "Purchasing from local markets ",
+      "Donations from community members ",
+      "Provided by local government authorities ",
+      "Shared resources within the community ",
+      "No clear method for accessing items"
+    ]
+  },
+  {
+    "id": "68",
+    "title": "Who makes the decisions regarding which items to buy and prioritize?",
+    "subCategoryId": "7",
+    "type": "multi-select",
+    "options": [
+      "Local community leaders or elders ",
+      "Household heads or caregivers ",
+      "Community-based organizations ",
+      "Humanitarian aid agencies ",
+      "Local government authorities ",
+      "External relief organizations ",
+      "Decisions are not clearly defined"
+    ]
+  },
+  {
+    "id": "69",
+    "title": "How effective are hygiene practices in healthcare settings (particularly important in epidemic situations)?",
+    "subCategoryId": "7",
+    "type": "multi-select",
+    "options": [
+      "Not effective",
+      "partly effective",
+      "effective",
+      "highly effective"
+    ]
+  },
+  {
+    "id": "70",
+    "title": "What are the needs and preferences of women and girls for menstrual hygiene practices?",
+    "subCategoryId": "7",
+    "type": "multi-select",
+    "options": [
+      "Access to sanitary pads or menstrual products ",
+      "Availability of clean and private sanitation facilities ",
+      "Disposal options for used menstrual materials ",
+      "Access to pain relief and hygiene education ",
+      "Cultural and religious sensitivities ",
+      "Supportive community networks for menstruation ",
+      "No specific needs or preferences identified"
+    ]
+  },
+  {
+    "id": "71",
+    "title": "What are the needs and preferences of people living with incontinence?",
+    "subCategoryId": "7",
+    "type": "multi-select",
+    "options": [
+      "Access to incontinence products (adult diapers",
+      "pads",
+      "etc.) ",
+      "Availability of clean and accessible restroom facilities ",
+      "Disposal options for used incontinence products ",
+      "Access to medical advice and assistance ",
+      "Privacy and dignity in managing incontinence ",
+      "Supportive understanding from their community ",
+      "No specific needs or preferences identified"
+    ]
+  },
+  {
+    "id": "73",
+    "title": "Is the water clean and portable?",
+    "subCategoryId": "8",
+    "type": "yes-no"
+  },
+  {
+    "id": "82",
+    "title": "What treatment is necessary? ",
+    "subCategoryId": "8",
+    "type": "multi-select",
+    "options": [
+      "Filtration",
+      "Disnfecting",
+      "Boiling"
+    ],
+    "dependencies": {
+      "questionId": "73",
+      "expectedAnswer": false
+    }
+  },
+  {
+    "id": "83",
+    "title": "Are there alternative water sources nearby? ",
+    "subCategoryId": "8",
+    "type": "yes-no"
+  },
+  {
+    "id": "84",
+    "title": "Is it possible to tanker water if water sources are inadequate? ",
+    "subCategoryId": "8",
+    "type": "yes-no"
+  },
+  {
+    "id": "85",
+    "title": "What are the key hygiene issues related to water supply? ",
+    "subCategoryId": "8",
+    "type": "multi-select",
+    "options": [
+      "Contamination of water sources ",
+      "Insufficient water quantity for hygiene ",
+      "Lack of proper water treatment ",
+      "Inadequate sanitation facilities ",
+      "Difficulty in water access for hygiene ",
+      "Limited awareness about water hygiene ",
+      "No significant hygiene issues identified"
+    ],
+    "dependencies": {
+      "questionId": "73",
+      "expectedAnswer": false
+    }
+  },
+  {
+    "id": "72",
+    "title": "Is water accessible to all community members?",
+    "subCategoryId": "8",
+    "type": "yes-no"
+  },
+  {
+    "id": "76",
+    "title": " How was the drinking water affected by the situation? ?",
+    "subCategoryId": "8",
+    "type": "multi-select",
+    "options": [
+      "Contaminated water sources ",
+      "Damage to water treatment facilities ",
+      "Disruption of water distribution systems ",
+      "Reduced availability of clean water ",
+      "No significant impact on drinking water"
+    ],
+    "dependencies": {
+      "questionId": "75",
+      "expectedAnswer": true
+    }
+  },
+  {
+    "id": "74",
+    "title": "What is the main water source?",
+    "subCategoryId": "8",
+    "type": "multi-select",
+    "options": [
+      "",
+      "Protected well or borehole\r",
+      "Unprotected well or spring\r",
+      "Rainwater harvesting\r",
+      "River or stream\r",
+      "Tanker truck delivery\r",
+      "No specific main water source identified"
+    ]
+  },
+  {
+    "id": "75",
+    "title": "Was the drinking water affected by the situation? ",
+    "subCategoryId": "8",
+    "type": "yes-no"
+  },
+  {
+    "id": "86",
+    "title": "Do people have the means to use water hygienically in this situation?",
+    "subCategoryId": "8",
+    "type": "yes-no"
+  },
+  {
+    "id": "77",
+    "title": "How much water is available per person per day?",
+    "subCategoryId": "8",
+    "type": "multi-select",
+    "options": [
+      "Less than 5 liters ",
+      "5 to 10 liters ",
+      "10 to 20 liters ",
+      "20 to 30 liters ",
+      "More than 30 liters ",
+      "Water availability varies widely ",
+      "Not enough data to determine"
+    ]
+  },
+  {
+    "id": "87",
+    "title": "What is the daily and weekly frequency of the water supply availability?",
+    "subCategoryId": "8",
+    "type": "multi-select",
+    "options": [
+      "Daily supply (24/7) ",
+      "Daily supply with interruptions ",
+      "Every other day ",
+      "Few times a week ",
+      "Once a week ",
+      "Irregular schedule ",
+      "No consistent water supply"
+    ]
+  },
+  {
+    "id": "79",
+    "title": "Is the water available at the source enough for short term and longer term needs?",
+    "subCategoryId": "8",
+    "type": "yes-no"
+  },
+  {
+    "id": "80",
+    "title": "Do people have enough water containers of the right size and type? ",
+    "subCategoryId": "8",
+    "type": "yes-no"
+  },
+  {
+    "id": "78",
+    "title": "do all groups (e.g. men, women, caste’s, etc.) have equitable access to water?",
+    "subCategoryId": "8",
+    "type": "yes-no"
+  },
+  {
+    "id": "88",
+    "title": "Are water collection points close enough (less than 500m away) to where people live?",
+    "subCategoryId": "8",
+    "type": "yes-no"
+  },
+  {
+    "id": "89",
+    "title": "Are the collection points safe and secure?",
+    "subCategoryId": "8",
+    "type": "yes-no"
+  },
+  {
+    "id": "91",
+    "title": "Does the community have problems with water palatability and acceptance associated with chlorine taste and smell?",
+    "subCategoryId": "8",
+    "type": "yes-no",
+    "dependencies": {
+      "questionId": "73",
+      "expectedAnswer": false
+    }
+  },
+  {
+    "id": "92",
+    "title": "What traditional beliefs and practices relate to the collection, storage and use of water?",
+    "subCategoryId": "8",
+    "type": "multi-select",
+    "options": [
+      "Rituals before drawing water ",
+      "Water conservation taboos ",
+      "Spiritual purification of water sources ",
+      "Offering water to ancestors or deities ",
+      "Seasonal water use patterns ",
+      "Folklore about water quality ",
+      "No distinct traditional beliefs or practices"
+    ]
+  },
+  {
+    "id": "93",
+    "title": "Has this access (the cost, quality, regularity of delivery) changed?",
+    "subCategoryId": "8",
+    "type": "yes-no"
+  },
+  {
+    "id": "95",
+    "title": "Are waterpoints and laundry and bathing areas well drained?",
+    "subCategoryId": "8",
+    "type": "yes-no"
+  },
+  {
+    "id": "96",
+    "title": "Are soil conditions suitable for on-site or off-site management of problem water from water points and laundry and bathing areas?",
+    "subCategoryId": "8",
+    "type": "yes-no"
+  },
+  {
+    "id": "97",
+    "title": "Has a soil percolation test been carried out?",
+    "subCategoryId": "8",
+    "type": "yes-no"
+  },
+  {
+    "id": "98",
+    "title": "What is the usual source of water for livestock?",
+    "subCategoryId": "8",
+    "type": "multi-select",
+    "options": [
+      "Natural water bodies (rivers",
+      "ponds",
+      "lakes) ",
+      "Wells or boreholes ",
+      "Community water supply systems ",
+      "Rainwater harvesting ",
+      "Irrigation channels ",
+      "No specific water source for livestock"
+    ]
+  },
+  {
+    "id": "99",
+    "title": "Will there be any environmental effects due to possible water supply intervention, abstraction and use of water sources?",
+    "subCategoryId": "8",
+    "type": "yes-no"
+  },
+  {
+    "id": "100",
+    "title": "Is there a risk of conflict if the sources are utilised for new populations? If so, what other users are currently using the water sources for?",
+    "subCategoryId": "8",
+    "type": "yes-no"
+  },
+  {
+    "id": "101",
+    "title": "Are the users involved in the management and maintenance of water sources and latrines? If not, are there other people/organizations?",
+    "subCategoryId": "8",
+    "type": "yes-no"
+  },
+  {
+    "id": "102",
+    "title": "What opportunities are there to collaborate with the private and/or public sector in water provision?",
+    "subCategoryId": "8",
+    "type": "multi-select",
+    "options": [
+      "Public-private partnerships for water infrastructure ",
+      "Private sector investment in water treatment ",
+      "Government funding for community water projects ",
+      "Private sector sponsorship of water supply initiatives ",
+      "Public health agencies' involvement in water quality testing ",
+      "Collaboration with local water utilities ",
+      "No significant opportunities identified"
+    ]
+  },
+  {
+    "id": "103",
+    "title": "What bottlenecks exist that could inform the response analysis and recommendations?",
+    "subCategoryId": "8",
+    "type": "multi-select",
+    "options": [
+      "Limited funding for water infrastructure ",
+      "Insufficient local workforce for water projects ",
+      "Community's willingness to adopt new practices ",
+      "Availability of technical expertise for water solutions ",
+      "Potential for technology-driven water solutions ",
+      "Legal and regulatory hurdles for water projects ",
+      "Political support for water provision initiatives ",
+      "No significant bottlenecks"
+    ]
+  },
+  {
+    "id": "104",
+    "title": "What opportunities exist that could inform the response analysis and recommendations?",
+    "subCategoryId": "8",
+    "type": "multi-select",
+    "options": [
+      "Limited funding for water infrastructure ",
+      "Insufficient local workforce for water projects ",
+      "Community's willingness to adopt new practices ",
+      "Availability of technical expertise for water solutions ",
+      "Potential for technology-driven water solutions ",
+      "Legal and regulatory hurdles for water projects ",
+      "Political support for water provision initiatives ",
+      "No significant opportunities identified"
+    ]
+  },
+  {
+    "id": "105",
+    "title": "What operation and maintenance duties are necessary?",
+    "subCategoryId": "8",
+    "type": "multi-select",
+    "options": [
+      "Regular cleaning of water storage tanks ",
+      "Routine inspection of water distribution systems ",
+      "Repairing damaged water infrastructure ",
+      "Monitoring water quality and treatment ",
+      "Preventing contamination of water sources ",
+      "Educating the community about water conservation ",
+      "Training local staff for system maintenance ",
+      "No specific operation or maintenance duties identified"
+    ]
+  },
+  {
+    "id": "106",
+    "title": "Who shall be accountable for them?",
+    "subCategoryId": "8",
+    "type": "text",
+    "dependencies": {
+      "questionId": "105",
+      "expectedAnswer": true
+    }
+  },
+  {
+    "id": "108",
+    "title": "What capacity is there to fulfill them in the short and long term?",
+    "subCategoryId": "8",
+    "type": "multi-select",
+    "options": [
+      "Strong capacity with adequate resources and expertise",
+      "Limited capacity due to resource constraints",
+      "High capacity in the short term",
+      "but challenges in the long term",
+      "Adequate capacity",
+      "but requires external support",
+      "Capacity varies based on specific factors",
+      "Capacity has been improving steadily",
+      "Capacity has been declining steadily"
+    ]
+  },
+  {
+    "id": "109",
+    "title": "Is there an existing or potential finance mechanism or system that can recover the operation and maintenance costs?",
+    "subCategoryId": "8",
+    "type": "yes-no"
+  },
+  {
+    "id": "110",
+    "title": "How does the host population access water and ensure that its water is safe at the point of use?",
+    "subCategoryId": "8",
+    "type": "multi-select",
+    "options": [
+      "Drawing water from communal wells ",
+      "Using household water filters or purifiers ",
+      "Boiling water before consumption ",
+      "Purchasing bottled water ",
+      "Collecting rainwater for consumption ",
+      "Treating water with chlorine or other disinfectants ",
+      "No specific practices observed for water safety"
+    ]
+  },
+  {
+    "id": "111",
+    "title": "Is there access to local markets?",
+    "subCategoryId": "8",
+    "type": "yes-no"
+  },
+  {
+    "id": "112",
+    "title": "What key WASH goods and services were accessible in the market before the crisis and are accessible during the crisis?",
+    "subCategoryId": "8",
+    "type": "multi-select",
+    "options": [
+      "Soap and hygiene products ",
+      "Water storage containers ",
+      "Water purification tablets ",
+      "Sanitary pads and menstrual products ",
+      "Hygiene promotion materials ",
+      "Portable toilets and sanitation facilities ",
+      "Water treatment equipment ",
+      "No significant WASH goods or services available"
+    ]
+  },
+  {
+    "id": "113",
+    "title": "Who are the local partners in the geographical area, such as civil society groups that have similar capacity in WASH and community engagement?",
+    "subCategoryId": "8",
+    "type": "text"
+  },
+  {
+    "id": "147",
+    "title": "Where do they buy water?",
+    "subCategoryId": "8",
+    "type": "multi-select",
+    "options": [
+      "Local water vendors\r",
+      "Water distribution points\r",
+      "Water kiosks or stations\r",
+      "Nearby towns or markets\r",
+      "No specific water purchasing locations identified"
+    ],
+    "dependencies": {
+      "questionId": "210",
+      "expectedAnswer": true
+    }
+  },
+  {
+    "id": "148",
+    "title": "Why are they buying water?",
+    "subCategoryId": "8",
+    "type": "multi-select",
+    "options": [
+      "Insufficient or unreliable water supply\r",
+      "Lack of access to clean water sources\r",
+      "Contaminated local water sources\r",
+      "Convenience and time-saving\r",
+      "Improved water quality\r",
+      "Meeting higher water demand"
+    ],
+    "dependencies": {
+      "questionId": "210",
+      "expectedAnswer": true
+    }
+  },
+  {
+    "id": "150",
+    "title": "What is the ratio of average water price to average income?",
+    "subCategoryId": "8",
+    "type": "text",
+    "dependencies": {
+      "questionId": "93",
+      "expectedAnswer": true
+    }
+  },
+  {
+    "id": "114",
+    "title": "What is the current defecation practice?",
+    "subCategoryId": "9",
+    "type": "multi-select",
+    "options": [
+      "Open defecation in fields or open areas ",
+      "Use of communal or shared latrines ",
+      "Use of household pit latrines ",
+      "Utilization of public restroom facilities ",
+      "No specific defecation practice identified"
+    ]
+  },
+  {
+    "id": "115",
+    "title": "Are there any existing facilities which operates successfully? If so, are they used? are they sufficient? Can they be extended or adapted? ",
+    "subCategoryId": "9",
+    "type": "yes-no"
+  },
+  {
+    "id": "125",
+    "title": "Are the facilities safe and dignified: lighted, equipped with locks, privacy screens?",
+    "subCategoryId": "9",
+    "type": "yes-no",
+    "dependencies": {
+      "questionId": "116",
+      "expectedAnswer": true
+    }
+  },
+  {
+    "id": "116",
+    "title": "Are people familiar with the design, construction and use of toilets?",
+    "subCategoryId": "9",
+    "type": "yes-no"
+  },
+  {
+    "id": "126",
+    "title": "Can people access the toilet facilities during the day and night? If not at night, what are the alternatives?",
+    "subCategoryId": "9",
+    "type": "yes-no",
+    "dependencies": {
+      "questionId": "116",
+      "expectedAnswer": true
+    }
+  },
+  {
+    "id": "127",
+    "title": "Are the latrines or toilets cleaned and maintained so that they are hygienic and safe for all users?",
+    "subCategoryId": "9",
+    "type": "yes-no",
+    "dependencies": {
+      "questionId": "116",
+      "expectedAnswer": true
+    }
+  },
+  {
+    "id": "117",
+    "title": "Are people prepared to use latrines, defecation fields, trenches etc? (e.g. is it safe for women after dark, and are they safe/user friendly for children) ",
+    "subCategoryId": "9",
+    "type": "yes-no"
+  },
+  {
+    "id": "128",
+    "title": "Are the users involved in the management and maintenance of latrines?",
+    "subCategoryId": "9",
+    "type": "yes-no",
+    "dependencies": {
+      "questionId": "116",
+      "expectedAnswer": true
+    }
+  },
+  {
+    "id": "132",
+    "title": "Are there any social – cultural norms to consider in the design of the toilet?",
+    "subCategoryId": "9",
+    "type": "yes-no",
+    "dependencies": {
+      "questionId": "115",
+      "expectedAnswer": true
+    }
+  },
+  {
+    "id": "133",
+    "title": "What are the cultural norms to consider in the design of the toilet?",
+    "subCategoryId": "9",
+    "type": "multi-select",
+    "options": [
+      "Gender-segregated facilities ",
+      "Privacy and modesty features ",
+      "Separate facilities for different age groups ",
+      "Accessibility for people with disabilities ",
+      "Availability of water for cleansing ",
+      "Religious considerations for hygiene practices ",
+      "No distinct cultural norms identified"
+    ],
+    "dependencies": {
+      "questionId": "132",
+      "expectedAnswer": true
+    }
+  },
+  {
+    "id": "118",
+    "title": "Is there a designated area for public defecation?",
+    "subCategoryId": "9",
+    "type": "yes-no",
+    "dependencies": {
+      "questionId": "114",
+      "expectedAnswer": "open defication"
+    }
+  },
+  {
+    "id": "120",
+    "title": "Is there sufficient space for defecation fields, pit latrines etc? ",
+    "subCategoryId": "9",
+    "type": "yes-no"
+  },
+  {
+    "id": "122",
+    "title": "Do current excreta disposal arrangements encourage vectors? ",
+    "subCategoryId": "9",
+    "type": "yes-no"
+  },
+  {
+    "id": "123",
+    "title": "Do people have access to water and soap for washing hands after defecation? ",
+    "subCategoryId": "9",
+    "type": "yes-no"
+  },
+  {
+    "id": "124",
+    "title": "Are there materials or water available for anal cleansing?",
+    "subCategoryId": "9",
+    "type": "yes-no"
+  },
+  {
+    "id": "137",
+    "title": "Are there any specific facilities or equipment available for making sanitation accessible for persons with disabilities, people living with HIV, people living with incontinence or people immobile in medical facilities?",
+    "subCategoryId": "9",
+    "type": "yes-no"
+  },
+  {
+    "id": "141",
+    "title": "What is the appropriate strategy for management of excreta?",
+    "subCategoryId": "9",
+    "type": "multi-select",
+    "options": [
+      "containment",
+      "emptying",
+      "treatment and disposal"
+    ]
+  },
+  {
+    "id": "129",
+    "title": "What excreta management practices does the community practice?",
+    "subCategoryId": "9",
+    "type": "multi-select",
+    "options": [
+      "Open defecation",
+      "Flush toilets",
+      "Pit latrines",
+      "Composting toilets",
+      "Sewage systems",
+      "None of the above"
+    ]
+  },
+  {
+    "id": "136",
+    "title": "How do women and girls manage menstruation? Are there appropriate materials or facilities available for this?",
+    "subCategoryId": "9",
+    "type": "multi-select",
+    "options": [
+      "Using commercial sanitary pads",
+      "Using reusable cloth pads\r",
+      "Menstrual cups",
+      "Improvised materials",
+      "Access to clean water and soap for washing",
+      "Adequate restroom facilities with proper disposal options",
+      "\rLack of appropriate materials and facilitie"
+    ]
+  },
+  {
+    "id": "135",
+    "title": "From what age do children start to use the toilet?",
+    "subCategoryId": "9",
+    "type": "multi-select",
+    "options": [
+      "0-1",
+      "2-3",
+      "3-5",
+      "later"
+    ],
+    "dependencies": {
+      "questionId": "116",
+      "expectedAnswer": true
+    }
+  },
+  {
+    "id": "121",
+    "title": "What local materials are available for constructing toilets? ",
+    "subCategoryId": "9",
+    "type": "multi-select",
+    "options": [
+      "glazed cast iron",
+      "steel",
+      "stainless steel",
+      "porcelain",
+      "vitreous"
+    ]
+  },
+  {
+    "id": "119",
+    "title": "What are current beliefs and practices concerning excreta disposal?",
+    "subCategoryId": "9",
+    "type": "multi-select",
+    "options": [
+      "Men and women use the same latrine ",
+      "Different family members use separate latrines ",
+      "Children's excreta is considered harmless ",
+      "Children's excreta is treated as hazardous ",
+      "Cultural norms influence latrine usage ",
+      "No specific beliefs or practices identified"
+    ]
+  },
+  {
+    "id": "131",
+    "title": "Are soil conditions suitable for on-site excreta disposal? ",
+    "subCategoryId": "9",
+    "type": "yes-no"
+  },
+  {
+    "id": "130",
+    "title": "What is the level of the groundwater table? ",
+    "subCategoryId": "9",
+    "type": "multi-select",
+    "options": [
+      "High",
+      "close to the surface ",
+      "Moderately high ",
+      "Moderate",
+      "at a reasonable depth ",
+      "Moderately low ",
+      "Low",
+      "significantly below the surface ",
+      "Not known or measured"
+    ]
+  },
+  {
+    "id": "138",
+    "title": "Have environmental considerations been assessed? (for example, the extraction of raw materials such as sand and gravel for construction purposes, and the protection of the environment from fecal matter)",
+    "subCategoryId": "9",
+    "type": "yes-no"
+  },
+  {
+    "id": "139",
+    "title": "Are there skilled workers in the community, such as masons or carpenters and unskilled laborers?",
+    "subCategoryId": "9",
+    "type": "yes-no"
+  },
+  {
+    "id": "140",
+    "title": "Are there available pit emptiers or desludging trucks? If so, is the collected fecal waste disposed of appropriately and safely?",
+    "subCategoryId": "9",
+    "type": "yes-no"
+  },
+  {
+    "id": "134",
+    "title": "Is there an existing acceptance of and practice for composting?",
+    "subCategoryId": "9",
+    "type": "yes-no"
+  },
+  {
+    "id": "81",
+    "title": "What is the slope of the terrain?",
+    "subCategoryId": "9",
+    "type": "multi-select",
+    "options": [
+      "steep",
+      "moderate",
+      "gentle",
+      "flat",
+      "rolling hills"
+    ]
+  },
+  {
+    "id": "142",
+    "title": "Are there any diseases/symptoms that are WASH-related?",
+    "subCategoryId": "10",
+    "type": "yes-no"
+  },
+  {
+    "id": "143",
+    "title": "Is there a high risk for vector-borne disease? How serious are they? (i.e. Any obvious problems with flies, mosquitoes, rodents, cockroaches, fleas, lice or bed bugs?) ",
+    "subCategoryId": "10",
+    "type": "yes-no"
+  },
+  {
+    "id": "90",
+    "title": "If vector borne risks are high, do people have access to individual protection? ",
+    "subCategoryId": "10",
+    "type": "yes-no",
+    "dependencies": {
+      "questionId": "143",
+      "expectedAnswer": true
+    }
+  },
+  {
+    "id": "144",
+    "title": "Is the affected population used to dealing with these risks? If so, how do they normally protect themselves? ",
+    "subCategoryId": "10",
+    "type": "yes-no",
+    "dependencies": {
+      "questionId": "142",
+      "expectedAnswer": true
+    }
+  },
+  {
+    "id": "145",
+    "title": "Has the affected population traveled through an area infected with certain insect vectors?",
+    "subCategoryId": "10",
+    "type": "yes-no",
+    "dependencies": {
+      "questionId": "142",
+      "expectedAnswer": true
+    }
+  },
+  {
+    "id": "146",
+    "title": "Any evidence of overcrowding? ( Do people have previous experience of communal living?)",
+    "subCategoryId": "10",
+    "type": "yes-no"
+  },
+  {
+    "id": "149",
+    "title": "Do people have any livestock? If so, where do they live / defecate and what are the types?",
+    "subCategoryId": "10",
+    "type": "yes-no"
+  },
+  {
+    "id": "151",
+    "title": "Is there any evidence of vector breeding sites – stagnant water/ uncovered pit latrines/water containers etc.",
+    "subCategoryId": "10",
+    "type": "yes-no"
+  },
+  {
+    "id": "152",
+    "title": "What is known about the characteristics of the vector?",
+    "hintText": " mosquito species, breeding, biting, resting habits",
+    "subCategoryId": "10",
+    "type": "text",
+    "dependencies": {
+      "questionId": "151",
+      "expectedAnswer": true
+    }
+  },
+  {
+    "id": "153",
+    "title": "Is it possible to make changes to the local environment (by drainage/ scrub clearance/excreta disposal/refuse disposal) to discourage vector breeding?",
+    "subCategoryId": "10",
+    "type": "yes-no"
+  },
+  {
+    "id": "154",
+    "title": "Is it necessary to control vectors by chemical means? If so, What programmes, regulations and resources for vector control and use of chemicals are there?",
+    "subCategoryId": "10",
+    "type": "yes-no",
+    "dependencies": {
+      "questionId": "151",
+      "expectedAnswer": true
+    }
+  },
+  {
+    "id": "155",
+    "title": "Is there a National Public Health/Roll Back Malaria/Vector Control Programme?",
+    "subCategoryId": "10",
+    "type": "yes-no"
+  },
+  {
+    "id": "156",
+    "title": "Are people familiar with using ITN’s or bednets? In general, what are their sleeping practices?",
+    "subCategoryId": "10",
+    "type": "multi-select",
+    "options": [
+      "Sleeping indoors\n",
+      "Sleeping outdoors\n",
+      "Sleeping on mattresses or beds\n",
+      "Sleeping on the ground or floor\n",
+      "Using mosquito nets while sleeping\n",
+      "No specific sleeping practices identified"
+    ]
+  },
+  {
+    "id": "157",
+    "title": "What daily or seasonal patterns do local vectors follow in relation to reproduction, resting and feeding?",
+    "subCategoryId": "10",
+    "type": "multi-select",
+    "options": [
+      "Nighttime feeding habits ",
+      "Daytime resting in shaded areas ",
+      "Breeding during rainy seasons ",
+      "Resting in indoor spaces during daylight ",
+      "Increased activity after sunset ",
+      "Feeding on humans during outdoor activities ",
+      "Reproduction in stagnant water sources ",
+      "No clear patterns identified"
+    ]
+  },
+  {
+    "id": "158",
+    "title": "Are there traditional beliefs and practices (for example, the belief that dirty water causes malarithat relate to vectors and vector-borne disease? Are any of these beliefs or practices either useful or harmful?",
+    "subCategoryId": "10",
+    "type": "yes-no",
+    "options": [
+      "Belief that dirty water causes malaria\r",
+      "Hanging certain herbs to repel mosquitoes\r",
+      "Using specific amulets for protection\r",
+      "Avoiding certain foods to prevent disease\r",
+      "Belief in local remedies for mosquito bites\r",
+      "Traditional practices for preventing mosquito breeding\r",
+      "No specific traditional beliefs or practices identified"
+    ]
+  },
+  {
+    "id": "159",
+    "title": "What information and safety precautions need to be provided to households?",
+    "subCategoryId": "10",
+    "type": "multi-select",
+    "options": [
+      "Proper use of insecticide-treated bed nets ",
+      "Emptying and covering stagnant water sources ",
+      "Recognizing vector-borne disease symptoms ",
+      "Use of insect repellents ",
+      "Avoiding outdoor activities during peak vector activity times ",
+      "Seeking medical attention for suspected vector diseases ",
+      "Clearing vegetation around living areas ",
+      "No specific information or precautions identified"
+    ]
+  },
+  {
+    "id": "160",
+    "title": "Is solid waste a problem?",
+    "subCategoryId": "11",
+    "type": "yes-no"
+  },
+  {
+    "id": "162",
+    "title": "What type of solid waste is produced?",
+    "subCategoryId": "11",
+    "type": "multi-select",
+    "options": [
+      "Organic waste (food scraps",
+      "plant material) ",
+      "Non-recyclable plastics and packaging ",
+      "Glass and metal waste ",
+      "Hazardous waste (batteries",
+      "chemicals) ",
+      "Textile and clothing waste ",
+      "E-waste (electronic devices) ",
+      "Minimal solid waste production ",
+      "No specific waste type or quantity identified"
+    ],
+    "dependencies": {
+      "questionId": "160",
+      "expectedAnswer": true
+    }
+  },
+  {
+    "id": "163",
+    "title": "In what quantity?",
+    "subCategoryId": "11",
+    "type": "text",
+    "dependencies": {
+      "questionId": "160",
+      "expectedAnswer": true
+    }
+  },
+  {
+    "id": "161",
+    "title": "How do people dispose of their waste?",
+    "subCategoryId": "11",
+    "type": "multi-select",
+    "options": [
+      "Preventing or Reducing Waste",
+      "Generation",
+      "\nRecycling",
+      "\nIncineration",
+      "\nComposting",
+      "\nSanitary Landfill",
+      "\nDisposal in Ocean/Sea",
+      "\nPlasma Gasification"
+    ],
+    "dependencies": {
+      "questionId": "160",
+      "expectedAnswer": true
+    }
+  },
+  {
+    "id": "164",
+    "title": "Can solid waste be disposed of on site?",
+    "subCategoryId": "11",
+    "type": "yes-no"
+  },
+  {
+    "id": "165",
+    "title": "What is the normal solid waste disposal practice for affected people ?",
+    "subCategoryId": "11",
+    "type": "multi-select",
+    "options": [
+      "Open dumping or burning of waste ",
+      "Use of communal waste collection points ",
+      "Utilization of local waste disposal services ",
+      "Household waste separation for recycling ",
+      "compost ",
+      "No specific solid waste disposal practice identified"
+    ]
+  },
+  {
+    "id": "166",
+    "title": "Are there medical facilities and activities producing waste? How is it disposed of? Who is responsible?",
+    "subCategoryId": "11",
+    "type": "yes-no"
+  },
+  {
+    "id": "167",
+    "title": "Where are disposable sanitary materials disposed of ?",
+    "hintText": "children’s nappies, menstruation hygiene materials and incontinence materials)?",
+    "subCategoryId": "11",
+    "type": "multi-select",
+    "options": [
+      "Household waste bins ",
+      "Communal waste disposal sites ",
+      "Public restroom trash bins ",
+      "Dedicated sanitary waste bins ",
+      "Buried in open areas ",
+      "Flushed down toilets ",
+      "No specific disposal method identified"
+    ]
+  },
+  {
+    "id": "168",
+    "title": "Is their disposal discreet and effective?",
+    "subCategoryId": "11",
+    "type": "yes-no"
+  },
+  {
+    "id": "169",
+    "title": "What is the effect of the current solid waste disposal on the environment?",
+    "subCategoryId": "11",
+    "type": "multi-select",
+    "options": [
+      "Soil contamination from improper disposal ",
+      "Air pollution due to burning of waste ",
+      "Water pollution from leachate runoff ",
+      "Habitat disruption and wildlife impact ",
+      "Spread of vector-borne diseases ",
+      "Negative impact on local ecosystems ",
+      "No significant environmental effects observed"
+    ],
+    "dependencies": {
+      "questionId": "160",
+      "expectedAnswer": true
+    }
+  },
+  {
+    "id": "170",
+    "title": "What solid waste management capacity do the private and public sectors have?",
+    "subCategoryId": "11",
+    "type": "multi-select",
+    "options": [
+      "Adequate waste collection services ",
+      "Proper waste disposal facilities ",
+      "Efficient waste transportation systems ",
+      "Effective recycling and separation programs ",
+      "Public awareness campaigns on waste management ",
+      "Collaboration with local communities for waste reduction ",
+      "Limited capacity for solid waste management ",
+      "No specific solid waste management capacity identified"
+    ]
+  },
+  {
+    "id": "171",
+    "title": "Is there a drainage problem? (flooding shelters and latrines, vector breeding sites, polluted water contaminating living areas or water supplies)",
+    "subCategoryId": "12",
+    "type": "yes-no"
+  },
+  {
+    "id": "172",
+    "title": "Do people have the means to protect their shelters and latrines from local flooding?",
+    "subCategoryId": "12",
+    "type": "yes-no"
+  },
+  {
+    "id": "173",
+    "title": "What health care provision is available to the population and who is providing it?",
+    "subCategoryId": "13",
+    "type": "multi-select",
+    "options": [
+      "Government-run health clinics ",
+      "Local non-governmental organizations (NGOs) ",
+      "International humanitarian agencies ",
+      "Mobile medical units ",
+      "Community health workers ",
+      "Private medical practitioners ",
+      "No significant health care provision identified"
+    ]
+  },
+  {
+    "id": "174",
+    "title": "Do people have access to essential medicines? If yes, how? If not, why?",
+    "subCategoryId": "13",
+    "type": "yes-no"
+  },
+  {
+    "id": "175",
+    "title": "Are medical services available?",
+    "subCategoryId": "13",
+    "type": "yes-no"
+  },
+  {
+    "id": "176",
+    "title": "Are medical services physically accessible?",
+    "subCategoryId": "13",
+    "type": "yes-no"
+  },
+  {
+    "id": "177",
+    "title": "Are medical services functioning on the same level as before the emergency? (lacking basic medicine, medical equipment, staff, basic infrastructure etc.)",
+    "subCategoryId": "13",
+    "type": "yes-no"
+  },
+  {
+    "id": "207",
+    "title": "Are there any refugees or internally displaced people?",
+    "subCategoryId": "4",
+    "type": "yes-no"
+  },
+  {
+    "id": "217",
+    "title": "Are people experiencing stress symptoms?",
+    "hintText": "You can follow the resilience kit pamphlet for examples",
+    "subCategoryId": "6",
+    "type": "yes-no"
+  },
+  {
+    "id": "210",
+    "title": "Do people buy water?",
+    "subCategoryId": "8",
+    "type": "yes-no"
+  },
+  {
+    "id": "206",
+    "title": "Which groups of the population are most affected?",
+    "subCategoryId": "10",
+    "type": "multi-select",
+    "options": [
+      "Children",
+      "older people",
+      "disabled",
+      "adults"
+    ],
+    "dependencies": {
+      "questionId": "142",
+      "expectedAnswer": true
+    }
+  },
+  {
+    "id": "179",
+    "title": "What services are available (curative, MCH, private, immunization ETC)",
+    "subCategoryId": "14",
+    "type": "multi-select",
+    "options": [
+      "Curative health services\r",
+      "Maternal and Child Health (MC",
+      "services\r",
+      "Private medical clinics\r",
+      "Immunization services\r",
+      "Preventive health services\r",
+      "Mental health and psychosocial support\r",
+      "Dental services\r",
+      "No specific services identified"
+    ]
+  },
+  {
+    "id": "180",
+    "title": "Are the services accessible to and sufficient for the target population?",
+    "subCategoryId": "14",
+    "type": "yes-no"
+  },
+  {
+    "id": "181",
+    "title": "Is the access to health services gender-dependent? ",
+    "subCategoryId": "14",
+    "type": "yes-no"
+  },
+  {
+    "id": "178",
+    "title": "Where are the clinics located?",
+    "subCategoryId": "14",
+    "type": "text"
+  },
+  {
+    "id": "182",
+    "title": "What is the situation in terms of health care personnel- level of training, ratio to health facility, outreach or volunteer workers?",
+    "subCategoryId": "14",
+    "type": "multi-select",
+    "options": [
+      "Well-trained medical professionals ",
+      "Shortage of trained health personnel ",
+      "Adequate ratio of personnel to health facilities ",
+      "Insufficient health personnel per facility ",
+      "Active community outreach workers ",
+      "Utilization of volunteer health workers ",
+      "No specific health care personnel situation identified"
+    ]
+  },
+  {
+    "id": "183",
+    "title": "What is the status of the existing health information system?",
+    "subCategoryId": "15",
+    "type": "multi-select",
+    "options": [
+      "Well-functioning health information system ",
+      "Limited functionality of health information system ",
+      "Non-existent electronic health system ",
+      "Existing electronic health system ",
+      "Electronic system partially destroyed ",
+      "Complete destruction of electronic system ",
+      "No specific status of health information system identified"
+    ],
+    "dependencies": {
+      "questionId": "183",
+      "expectedAnswer": true
+    }
+  },
+  {
+    "id": "184",
+    "title": "Is there a standardized health information system for collecting data?",
+    "subCategoryId": "15",
+    "type": "yes-no"
+  },
+  {
+    "id": "185",
+    "title": "How is data collected and analyzed?",
+    "subCategoryId": "15",
+    "type": "multi-select",
+    "options": [
+      "Paper-based data collection forms ",
+      "Mobile data collection applications ",
+      "Interviews with community members ",
+      "Surveys and questionnaires ",
+      "Health facility records ",
+      "Data entered into electronic databases ",
+      "Data analysis through software tools ",
+      "No specific data collection and analysis methods identified"
+    ],
+    "dependencies": {
+      "questionId": "184",
+      "expectedAnswer": false
+    }
+  },
+  {
+    "id": "186",
+    "title": "Is there a need to replace the former health information system? ",
+    "subCategoryId": "15",
+    "type": "yes-no"
+  },
+  {
+    "id": "187",
+    "title": "Is there a need for a temporary paper system until an electronic system is restored/sponsored?",
+    "subCategoryId": "15",
+    "type": "yes-no"
+  },
+  {
+    "id": "188",
+    "title": "What medical support is needed?",
+    "subCategoryId": "16",
+    "type": "multi-select",
+    "options": [
+      "Medical supplies (medications",
+      "equipment) ",
+      "Skilled medical professionals (doctors",
+      "nurses) ",
+      "Emergency medical services ",
+      "Specialist medical care (surgery",
+      "obstetrics) ",
+      "Diagnostic equipment (X-ray",
+      "la",
+      "",
+      "Mental health and psychosocial support ",
+      "Disease prevention and vaccination campaigns ",
+      "No specific medical support needs identified"
+    ]
+  },
+  {
+    "id": "189",
+    "title": "What are the current or likely water and sanitation and vector borne diseases? (see WASH section)",
+    "subCategoryId": "16",
+    "type": "multi-select",
+    "options": [
+      "Diarrheal diseases (cholera",
+      "gastroenteritis) ",
+      "Malaria ",
+      "Dengue fever ",
+      "Typhoid ",
+      "Zika virus ",
+      "Chikungunya ",
+      "Leptospirosis ",
+      "No specific water",
+      "sanitation",
+      "or vector-borne diseases identified"
+    ]
+  },
+  {
+    "id": "190",
+    "title": "What are the primary health problems in the area affected by the emergency?",
+    "subCategoryId": "16",
+    "type": "multi-select",
+    "options": [
+      "Acute respiratory infections ",
+      "Diarrheal diseases ",
+      "Malnutrition ",
+      "Vector-borne diseases ",
+      "Maternal and child health concerns ",
+      "Mental health and psychosocial issues ",
+      "Limited access to medical care ",
+      "No specific primary health problems identified"
+    ]
+  },
+  {
+    "id": "191",
+    "title": "What are the most frequent communicable diseases?",
+    "subCategoryId": "16",
+    "type": "multi-select",
+    "options": [
+      "Influenza ",
+      "Diarrheal diseases ",
+      "Respiratory infections ",
+      "Skin infections ",
+      "Waterborne diseases ",
+      "Vector-borne diseases ",
+      "Sexually transmitted infections ",
+      "No specific frequent communicable diseases identified"
+    ]
+  },
+  {
+    "id": "192",
+    "title": "What are the primary health problems in the country of origin (if displaced people are involved)?",
+    "subCategoryId": "16",
+    "type": "multi-select",
+    "options": [
+      "Infectious diseases ",
+      "Chronic diseases ",
+      "Maternal and child health concerns ",
+      "Malnutrition ",
+      "Lack of access to medical care ",
+      "Limited sanitation and hygiene facilities ",
+      "Mental health challenges ",
+      "No specific primary health problems identified"
+    ],
+    "dependencies": {
+      "questionId": "207",
+      "expectedAnswer": true
+    }
+  },
+  {
+    "id": "193",
+    "title": "Any evidence of acute malnutrition? How is this monitored? (Please refer to the Food and Nutrition Section)",
+    "subCategoryId": "16",
+    "type": "yes-no"
+  },
+  {
+    "id": "194",
+    "title": "Are there specific health problems for women?",
+    "subCategoryId": "16",
+    "type": "multi-select",
+    "options": [
+      "high birth rate",
+      "anaemia",
+      "sexually transmitted diseases",
+      "sexual violence/rape",
+      "abortion"
+    ]
+  },
+  {
+    "id": "199",
+    "title": "are there victims of trauma, injury, or shot wounds (see MHPSS section).",
+    "subCategoryId": "16",
+    "type": "yes-no"
+  },
+  {
+    "id": "195",
+    "title": "What is immunization coverage?",
+    "subCategoryId": "17",
+    "type": "multi-select",
+    "options": [
+      "High immunization coverage ",
+      "Moderate immunization coverage ",
+      "Low immunization coverage ",
+      "Immunization coverage data not available ",
+      "No specific immunization coverage identified"
+    ]
+  },
+  {
+    "id": "196",
+    "title": "When did the last immunization occur?",
+    "subCategoryId": "17",
+    "type": "multi-select",
+    "options": [
+      "Within the last 6 months ",
+      "Within the last year ",
+      "Within the last 2 years ",
+      "Within the last 5 years"
+    ]
+  },
+  {
+    "id": "198",
+    "title": "Where did the last immunization occur?",
+    "subCategoryId": "17",
+    "type": "multi-select",
+    "options": [
+      "",
+      "Immunization location: Government health facility ",
+      "Immunization location: NGO-operated clinic ",
+      "Immunization location: Mobile health unit ",
+      "Immunization location: School-based program ",
+      "Immunization location: Not sure or not received"
+    ]
+  },
+  {
+    "id": "197",
+    "title": "Which vaccines given?",
+    "subCategoryId": "17",
+    "type": "multi-select",
+    "options": [
+      "Measles vaccine ",
+      "Polio vaccine ",
+      "Diphtheria-tetanus-pertussis (DTP) vaccine ",
+      "Hepatitis B vaccine ",
+      "Influenza vaccine ",
+      "Pneumococcal vaccine ",
+      "Meningococcal vaccine ",
+      "No specific vaccines identified"
+    ]
+  },
+  {
+    "id": "200",
+    "title": "Are there any other organizations in the area?",
+    "subCategoryId": "18",
+    "type": "yes-no"
+  },
+  {
+    "id": "201",
+    "title": "What support/services do they offer?",
+    "subCategoryId": "18",
+    "type": "multi-select",
+    "options": [
+      "Providing health education and awareness\n",
+      "Distributing relief supplies\n",
+      "Facilitating community meetings and discussions\n",
+      "Offering psychosocial support and counseling\n",
+      "Advocating for community needs to external organizations\n",
+      "Organizing vocational training and workshops\n",
+      "Mobilizing resources for emergency response\n",
+      "No specific support or services identified"
+    ],
+    "dependencies": {
+      "questionId": "200",
+      "expectedAnswer": true
+    }
+  },
+  {
+    "id": "202",
+    "title": "volunteer-based or hired",
+    "subCategoryId": "18",
+    "type": "yes-no",
+    "dependencies": {
+      "questionId": "200",
+      "expectedAnswer": true
+    }
+  },
+  {
+    "id": "203",
+    "title": "Is there a manager",
+    "subCategoryId": "18",
+    "type": "yes-no",
+    "dependencies": {
+      "questionId": "200",
+      "expectedAnswer": true
+    }
+  },
+  {
+    "id": "204",
+    "title": "What methodologies do they use to implement their interventions? ",
+    "subCategoryId": "18",
+    "type": "multi-select",
+    "options": [
+      "Participatory workshops and training ",
+      "Information campaigns and awareness raising ",
+      "Mobile clinics and medical camps ",
+      "Door-to-door surveys and assessments ",
+      "Collaborative community meetings ",
+      "Skill-building sessions and demonstrations ",
+      "Capacity-building through education ",
+      "No specific methodologies identified"
+    ],
+    "dependencies": {
+      "questionId": "200",
+      "expectedAnswer": true
+    }
+  },
+  {
+    "id": "205",
+    "title": "What is the vision and mission of the organization in “normal” times and now?",
+    "subCategoryId": "18",
+    "type": "text",
+    "dependencies": {
+      "questionId": "200",
+      "expectedAnswer": true
+    }
+  },
+  {
+    "id": "208",
+    "title": "Does the community have safe access to electricity?",
+    "subCategoryId": "19",
+    "type": "yes-no"
+  },
+  {
+    "id": "209",
+    "title": "Is there  access to the Internet in the community?",
+    "subCategoryId": "19",
+    "type": "yes-no"
+  },
+  {
+    "id": "211",
+    "title": "What immediate emergency relief is currently provided?",
+    "subCategoryId": "19",
+    "type": "multi-select",
+    "options": [
+      "Emergency healthcare services ",
+      "Food and non-food item distributions ",
+      "Child-Friendly Spaces (CFS) ",
+      "Water and sanitation interventions ",
+      "Shelter and housing support ",
+      "Psychological and psychosocial support ",
+      "Education and school support ",
+      "No specific immediate emergency relief identified"
+    ]
+  },
+  {
+    "id": "212",
+    "title": "Do vulnerable populations (children, women, people with disabilities, etc.) have access to shelters or safe spaces and other services?",
+    "subCategoryId": "19",
+    "type": "yes-no",
+    "dependencies": {
+      "questionId": "39",
+      "expectedAnswer": true
+    }
+  },
+  {
+    "id": "223",
+    "title": "Is there equal access for all to existing facilities, including at public places, health centers and schools?",
+    "subCategoryId": "19",
+    "type": "yes-no"
+  },
+  {
+    "id": "215",
+    "title": "Are people experiencing stress symptoms (cognitive, behavioral, physical, emotional)? (e.g. different behavior, social withdrawal, grief, anxiety, deteriorating health, headaches, etc.)",
+    "subCategoryId": "20",
+    "type": "yes-no"
+  },
+  {
+    "id": "213",
+    "title": "What tools does the community usually use to cope with crises/How does the community usually cope? ",
+    "subCategoryId": "20",
+    "type": "multi-select",
+    "options": [
+      "Social support networks among community members ",
+      "Relying on traditional healing practices ",
+      "Community-based organizations and committees ",
+      "Accessing local religious or spiritual resources ",
+      "Self-help groups for mutual assistance ",
+      "Engaging in income-generating activities ",
+      "Sharing resources within extended families ",
+      "No specific coping tools or strategies identified"
+    ]
+  },
+  {
+    "id": "214",
+    "title": "Are you aware of any increased risks to vulnerable populations in the community as a result of the emergency? (e.g. CP risks, GBV)",
+    "hintText": "For Example: CP risks, GBV",
+    "subCategoryId": "21",
+    "type": "yes-no"
+  },
+  {
+    "id": "218",
+    "title": "How many people are affected by the emergency and where are they? Disaggregate the data by sex, age, disability and so on",
+    "subCategoryId": "21",
+    "type": "text"
+  },
+  {
+    "id": "219",
+    "title": "General information regarding the entire local population - number of families, number of children/elderly/PWD?",
+    "subCategoryId": "21",
+    "type": "text"
+  },
+  {
+    "id": "221",
+    "title": "What are people’s likely movements? What are the security factors for the affected people and for potential relief responses?",
+    "subCategoryId": "21",
+    "type": "multi-select",
+    "options": [
+      "Internal displacement within the region",
+      "Migration to neighboring areas or countries\n",
+      "Seeking refuge in temporary shelters or camps",
+      "",
+      "Relocating to urban centers\n",
+      "Returning to their homes after the situation stabilizes",
+      "Staying with relatives or host families\n",
+      "Evacuating to designated safe zones",
+      "Unpredictable movements due to changing circumstances",
+      "Security concerns for affected people due to conflict or violence",
+      "Security concerns for relief efforts due to logistical challenges",
+      "Security concerns for relief efforts due to lack of access",
+      "Coordination challenges among relief organizations"
+    ]
+  },
+  {
+    "id": "216",
+    "title": "What are your general impressions of the community?",
+    "subCategoryId": "21",
+    "type": "multi-select",
+    "options": [
+      "Strong sense of community unity and cooperation",
+      "Limited access to basic services and amenities",
+      "Rich cultural diversity and traditions",
+      "Well-developed infrastructure and facilities\r",
+      "High level of social engagement and activism ",
+      "Economic challenges and disparities",
+      "Safe and secure environment",
+      "Environmental consciousness and sustainability practices"
+    ]
+  },
+  {
+    "id": "220",
+    "title": "What are the main community social structures?",
+    "subCategoryId": "21",
+    "type": "multi-select",
+    "options": [
+      "Volunteer groups\r",
+      "Self-care groups or committees\r",
+      "Community educators or trainers\r",
+      "Women's empowerment groups\r",
+      "Youth associations\r",
+      "Religious organizations\r",
+      "Health promoters or advocates\r",
+      "No specific main community social structures identified"
+    ]
+  },
+  {
+    "id": "224",
+    "title": "What are the formal and informal power structures (for example, community leaders, elders, women’s groups)?",
+    "subCategoryId": "21",
+    "type": "multi-select",
+    "options": [
+      "Community leaders and elders ",
+      "Local government officials ",
+      "Religious leaders ",
+      "Women's groups or organizations ",
+      "Youth groups or associations ",
+      "Traditional councils or bodies ",
+      "Non-governmental organizations (NGOs) ",
+      "No specific power structures identified"
+    ]
+  },
+  {
+    "id": "222",
+    "title": "Who are the key people to consult or contact in the community?",
+    "subCategoryId": "21",
+    "type": "text"
+  },
+  {
+    "id": "227",
+    "title": "How are decisions made in households and in the community?",
+    "subCategoryId": "22",
+    "type": "multi-select",
+    "options": [
+      "Patriarchal structure with male head making most decisions",
+      "Matriarchal structure with female head making most decisions",
+      "Joint decision-making involving multiple family members",
+      "Decision-making based on age and seniority",
+      "Democratic process involving all family/community members",
+      "Influence of community leaders and elders",
+      "Decisions made by elected representatives or councils",
+      "Decisions based on traditional or cultural norms"
+    ]
+  },
+  {
+    "id": "225",
+    "title": "What are the accepted beliefs and practices among the affected population?",
+    "subCategoryId": "22",
+    "type": "multi-select",
+    "options": [
+      "Religious beliefs and rituals\r",
+      "Cultural traditions and ceremonies\r",
+      "Social norms and customs\r",
+      "Traditional healing and medical practices\r",
+      "Dietary and food-related practices\r",
+      "Community governance and decision-making processes\r",
+      "Environmental conservation practices\r",
+      "Gender roles and responsibilities\r",
+      "Education and learning traditions\rj) Communication and information-sharing methods"
+    ]
+  },
+  {
+    "id": "226",
+    "title": "Are there cultural sensitivities or taboo subjects?",
+    "subCategoryId": "22",
+    "type": "yes-no"
+  },
+  {
+    "id": "234",
+    "title": "What are the accepted beliefs and practices or taboos among the affected population towards water, sanitation and hygiene?",
+    "subCategoryId": "22",
+    "type": "multi-select",
+    "options": [
+      "Using running water for baptisms ",
+      "Avoiding certain foods during menstruation ",
+      "Bathing at specific times of the day ",
+      "Using traditional cleansing practices ",
+      "Wearing specific clothing for hygiene purposes ",
+      "Avoiding water conservation efforts ",
+      "No specific beliefs or practices identified"
+    ]
+  },
+  {
+    "id": "228",
+    "title": "Do people have access to cash and/or credit?",
+    "subCategoryId": "23",
+    "type": "yes-no"
+  },
+  {
+    "id": "229",
+    "title": "Are there seasonal variations to be aware of that may restrict access or increase demands on labor? (for example, during harvesting time)",
+    "subCategoryId": "23",
+    "type": "yes-no"
+  },
+  {
+    "id": "235",
+    "title": "What are the existing formal and informal channels of communication and outreach? For both immediate and medium-term mobilization",
+    "subCategoryId": "24",
+    "type": "multi-select",
+    "options": [
+      "Government-run information centers",
+      "community health workers",
+      "community hygiene volunteers",
+      "traditional birth attendants or healers",
+      "workers or promoters",
+      "school health clubs",
+      "WASH committees",
+      "cooperatives",
+      "churches and mosques",
+      "local radio"
+    ]
+  },
+  {
+    "id": "233",
+    "title": "Which segments of the population can and should be targeted (for example, mothers, children, community leaders, religious leaders)?",
+    "subCategoryId": "24",
+    "type": "text"
+  },
+  {
+    "id": "230",
+    "title": "Who are the key authorities to liaise and collaborate with?",
+    "subCategoryId": "24",
+    "type": "multi-select",
+    "options": [
+      "Local government officials ",
+      "National government agencies ",
+      "Non-governmental organizations (NGOs) ",
+      "International humanitarian organizations ",
+      "Religious leaders or institutions ",
+      "Community leaders or elders ",
+      "Health professionals and facilities ",
+      "No specific key authorities identified"
+    ]
+  },
+  {
+    "id": "231",
+    "title": "What access to the mass media is there in the area (for example, radio, television, video, newspapers)?",
+    "subCategoryId": "24",
+    "type": "text"
+  },
+  {
+    "id": "232",
+    "title": "What local media organizations and/or non-governmental organisations (NGOs) are there?",
+    "subCategoryId": "24",
+    "type": "text"
+  }
+]

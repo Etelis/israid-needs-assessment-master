@@ -1,15 +1,15 @@
 {
-  "Handler": "exportExcel.lambda_handler",
+  "Handler": "reportExcel.lambda_handler",
   "Runtime": "python3.11",
   "MemorySize": 128,
   "Timeout": 250,
   "Layers": [
-    "PYTHON-DEP-exportExcel"
+    "PYTHON-DEP-reportExcel"
   ],
   "Api_Settings": {
       "Method": "GET",
       "Api_Name": "IsraAID app",
-      "Path": "/exportExcel",
-      "Model": "exportExcel"
+      "Path": "/reportExcel",
+      "Model": "reportExcel"
   }
 }

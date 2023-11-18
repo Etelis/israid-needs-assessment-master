@@ -1,6 +1,6 @@
 {
     "type": "object",
-    "title": "Export Excel file",
+    "title": "Export Excel report file",
     "properties":
                 {
                 "RNA_id": 

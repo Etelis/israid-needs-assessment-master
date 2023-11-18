@@ -41,36 +41,35 @@ def preprocess_doc(uploaded_doc_path):
         raise ValueError('File type is not supported')
 
 
-def preprocess_docs(docs_paths):
-    docs_contents = [preprocess_doc(doc_path) for doc_path in docs_paths]
-    return docs_contents, docs_paths
+def preprocess_docs(files):
+    docs_contents = [preprocess_doc(doc) for doc in files]
+    return docs_contents, files
 
 
-def process_context(context):
+def process_input(files):
     """
     Preprocess documents for question-answering purposes
 
-    :param context: a list of PATHS to .docx/.txt/.pdf documents
+    :param context: a list of local PATHS to .docx/.txt/.pdf documents
 
     :returns: Test from each doc alongside their name for reliability measures.
     """
-    # gpu = 1 if torch.cuda.is_available() else 0
     try:
-        contents, paths = preprocess_docs(context)
-        result = {'context': contents, 'names': paths}
-        return result
+        content, paths = preprocess_docs(files)
+        result = {'content': content, 'paths': paths}
+    
     except Exception as e:
         logger.error(f"Failed to process text")
         raise
 
+    return result
 
 def lambda_handler(event, context):
     try:
-        event = json.loads(event['body'])
-        context = event['context']
-
-        contents = process_context(context)
-
+        input_files = event['input_files']
+        contents = process_input(input_files)
+        print(contents)
+        
         return {
             'statusCode': 200,
             'body': json.dumps({'answer': contents}),
@@ -100,9 +99,14 @@ def lambda_handler(event, context):
 			}
         }
 
+
+event = {'input_files': ['ROSEA_20230404_Malawi_CycloneFreddy_FlashUpdate.pdf']},
+lambda_handler(event, {})
+
+
 # Expected Input Format ######
 # event = {
-#   "context": [
+#   "input_files": [
 #     "Bertpaper.pdf",
 #     "doctest.docx"
 #   ]

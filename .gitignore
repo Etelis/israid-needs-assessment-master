@@ -7,3 +7,6 @@ package-lock.json
 desktop.ini
 
 .env
+venv
+
+*test*

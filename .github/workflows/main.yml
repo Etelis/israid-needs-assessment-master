@@ -378,7 +378,8 @@ jobs:
           runtime: ${{steps.json_properties.outputs.runtime}}
           memorysize: ${{steps.json_properties.outputs.memorysize}}
           timeout: ${{steps.json_properties.outputs.timeout}}
-          environment: "Variables={CORS=${{ needs.setup_amplify.outputs.url }}}"
+          environment: "Variables={CORS=*}"
+          #environment: "Variables={CORS=${{ needs.setup_amplify.outputs.url }}}"
 
   deploy_gateway_routes:
     name: Create aws api gateway routes

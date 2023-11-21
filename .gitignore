@@ -10,3 +10,5 @@ desktop.ini
 venv
 
 *test*
+
+DynamoDB

@@ -1,4 +1,5 @@
 import os
+import glob
 import json
 from json import load
 import logging
@@ -17,9 +18,9 @@ ANSWERS_TABLE_NAME = 'Answers'
 ANSWERS_RNAS_TABLE_KEY = 'rnaId'
 RNAS_TABLE_NAME = 'Rnas'
 RNAS_PARTITION_KEY = 'id'
-CATEGORIES_JSON_PATH = "lambdas\\data-science\\exportExcel\\categories.json"
-SUBCATEGORIES_JSON_PATH = "lambdas\\data-science\\exportExcel\\sub-categories.json"
-QUESTIONS_JSON_PATH = "lambdas\\data-science\\exportExcel\\questions.json"
+CATEGORIES_JSON_PATH = "categories.json"
+SUBCATEGORIES_JSON_PATH = "sub-categories.json"
+QUESTIONS_JSON_PATH = "questions.json"
 
 ## IsraAID logo link
 LOGO_URL = 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/Logo-Israaid.svg/2560px-Logo-Israaid.svg.png'
@@ -223,7 +224,7 @@ def download_image() -> str:
         str: The local path of the downloaded image
     '''
     try:
-        local_path = "logo.png"
+        local_path = os.path.join("/tmp/","logo.png")
         urllib.request.urlretrieve(LOGO_URL, local_path)
     except Exception as e:
         print(f"An error occurred: {e}")
@@ -246,9 +247,6 @@ def get_all_categories() -> dict:
     return categories
 
 def get_rna(RNA_id) -> dict:
-    
-    rna_response = rna_example
-    return rna_response
 
     # connect to an existing dynamodb
     dynamodb=boto3.resource('dynamodb',region_name=REGION)
@@ -260,10 +258,9 @@ def get_rna(RNA_id) -> dict:
     rna_response = rnas_table.get_item(Key={'id':RNA_id})['Item']
     #rna_response = rnas_table.scan(FilterExpression=Attr(RNAS_PARTITION_KEY).eq(RNA_id))
 
+    return rna_response
+    
 def get_rna_answers(RNA_id) -> dict:
-
-    answers = answers_example
-    return answers
 
     # connect to an existing dynamodb
     dynamodb=boto3.resource('dynamodb',region_name=REGION)
@@ -281,7 +278,7 @@ def get_rna_answers(RNA_id) -> dict:
                                       ExclusiveStartKey=ans_response['LastEvaluatedKey'])
         answers.extend(ans_response['Items'])
       
-    return
+    return answers
 
 def generate_excel_report(RNA_id):
 
@@ -363,23 +360,23 @@ def generate_excel_report(RNA_id):
             cell = ws.cell(row=row, column=column)
             cell.style = entry
     
-    wb_name = f'report_{rna["communityName"]}_{datetime.datetime.now().strftime("%d_%m_%Y-%H_%M_%S")}.xlsx'
-    wb.save(wb_name)
+    wb_name = f'report_{rna["communityName"]}_{datetime.datetime.now().strftime("%d_%m_%Y")}.xlsx'
+    wb_path = os.path.join("/tmp/", wb_name)
+    wb.save(wb_path)
 
-    return wb_name
+    return wb_path
 
 def lambda_handler(event, context):
 
-    try:   
-        wb_name = generate_excel_report(event['RNA_id'])
-
+    try:
+        wb_path = generate_excel_report(event['RNA_id'])
         return {
             'statusCode': 200,
             'body': 'Successfully created excel report',
             'headers': {
 				'Content-type' : "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
 				'Access-Control-Allow-Origin': os.getenv("CORS"),
-                'Content-Disposition': f"attachment; filename={wb_name}"
+                'Content-Disposition': f"attachment; filename={wb_path}"
 			            }
         }
     except ClientError as e:

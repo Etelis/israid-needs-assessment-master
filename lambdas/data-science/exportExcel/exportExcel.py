@@ -22,6 +22,8 @@ CATEGORIES_JSON_PATH = "categories.json"
 SUBCATEGORIES_JSON_PATH = "sub-categories.json"
 QUESTIONS_JSON_PATH = "questions.json"
 
+ISRAAID_BUCKET = 'israaidbucket'
+
 ## IsraAID logo link
 LOGO_URL = 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/Logo-Israaid.svg/2560px-Logo-Israaid.svg.png'
 
@@ -364,19 +366,31 @@ def generate_excel_report(RNA_id):
     wb_path = os.path.join("/tmp/", wb_name)
     wb.save(wb_path)
 
-    return wb_path
+    return wb_name, wb_path
 
 def lambda_handler(event, context):
 
     try:
-        wb_path = generate_excel_report(event['RNA_id'])
+        (wb_name, wb_path) = generate_excel_report(event['RNA_id'])
+        
+        # Return the file as response
+        s3 = boto3.client('s3')
+        bucket_name = ISRAAID_BUCKET
+        s3.upload_file(wb_path, bucket_name, wb_name)
+
+        # Get the URL of the uploaded file
+        file_url = s3.generate_presigned_url(
+                    'get_object',
+                    Params={'Bucket': bucket_name, 'Key': wb_name},
+                    ExpiresIn=3600  # Link expiration time in seconds
+                    )
+
         return {
             'statusCode': 200,
-            'body': 'Successfully created excel report',
+            'body': file_url,
             'headers': {
 				'Content-type' : "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-				'Access-Control-Allow-Origin': os.getenv("CORS"),
-                'Content-Disposition': f"attachment; filename={wb_path}"
+				'Access-Control-Allow-Origin': os.getenv("CORS")
 			            }
         }
     except ClientError as e:

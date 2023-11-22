@@ -19,7 +19,7 @@ const fetchDownloadedRnaAnswersQueries = async (queryClient) => {
 		queryClient.ensureQueryData(query)
 	);
 
-	return Promise.all(queriesCalls);
+	return Promise.all([...queriesCalls]);
 };
 
 export default fetchDownloadedRnaAnswersQueries;

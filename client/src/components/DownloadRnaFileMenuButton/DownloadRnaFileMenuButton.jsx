@@ -1,37 +1,31 @@
 import ExcelIcon from '@mui/icons-material/BackupTable';
-import PdfIcon from '@mui/icons-material/PictureAsPdf';
-import DownloadIcon from '@mui/icons-material/Description';import {
-	Box,
-	Button,
-	Divider,
-	IconButton,
-	Menu,
-	MenuItem,
-} from '@mui/material';
+import DownloadIcon from '@mui/icons-material/Description';
+import { Box, Button, IconButton, Menu, MenuItem } from '@mui/material';
 import PopupState, { bindMenu, bindTrigger } from 'material-ui-popup-state';
-import { useParams } from 'react-router-dom';
+import { useState } from 'react';
+import { toast } from 'react-toastify';
+import getRnaExcel from '../../utils/online/exportExcelQuery';
 import useOnlineStatus from '../../utils/useOnlineStatus';
 import styles from './styles';
-import { useState } from 'react';
 
-const DownloadRnaFileMenuButton = () => {
+const DownloadRnaFileMenuButton = ({ rnaId }) => {
 	const isOnline = useOnlineStatus();
 	const [isLoading, setIsLoading] = useState(false);
-	const { rnaId } = useParams();
-
-	//TODO: call download api for each button with the given rnaId
-	const downloadAsPdf = async (popupState) => {
-		setIsLoading(true);
-
-		setIsLoading(false);
-		popupState.close();
-	};
 
 	const downloadAsExcel = async (popupState) => {
-		setIsLoading(true);
+		try {
+			setIsLoading(true);
 
-		setIsLoading(false);
-		popupState.close();
+			await getRnaExcel(rnaId);
+
+			popupState.close();
+		} catch (e) {
+			const errorMessage = 'Something went wrong exporting excel';
+
+			toast.error(errorMessage, { toastId: errorMessage });
+		} finally {
+			setIsLoading(false);
+		}
 	};
 
 	return !isOnline ? null : (
@@ -45,17 +39,6 @@ const DownloadRnaFileMenuButton = () => {
 						<DownloadIcon />
 					</IconButton>
 					<Menu {...bindMenu(popupState)}>
-						<MenuItem>
-							<Button
-								disabled={isLoading}
-								sx={styles.menuButton}
-								onClick={() => downloadAsPdf(popupState)}
-								startIcon={<PdfIcon fontSize='small' />}
-							>
-								Download As Pdf
-							</Button>
-						</MenuItem>
-						<Divider />
 						<MenuItem>
 							<Button
 								disabled={isLoading}

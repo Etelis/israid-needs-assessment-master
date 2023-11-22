@@ -7,16 +7,16 @@ import {
 	Typography,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import Emergency from '../../../../enums/Emergency';
 import formatDate from '../../../../utils/formatDate';
-import { toast } from 'react-toastify';
 import styles from './styles';
 
 const RnaDetails = ({ rna }) => {
 	const navigate = useNavigate();
 
 	const notifyEditUnavailable = () => {
-		const editUnavailableMessage = "Can't edit an unsaved RNA";
+		const editUnavailableMessage = "Download locally to edit this RNA";
 
 		toast.info(editUnavailableMessage, {
 			toastId: editUnavailableMessage,

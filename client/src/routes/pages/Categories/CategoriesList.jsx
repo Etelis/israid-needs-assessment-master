@@ -17,7 +17,7 @@ const CategoriesList = () => {
 	const [expanded, setExpaned] = useState('');
 
 	useEffect(() => {
-		setNavbarButtons([<DownloadRnaFileMenuButton key='downloadRna' />]);
+		setNavbarButtons([<DownloadRnaFileMenuButton rnaId={rna.id} key='downloadRna' />]);
 		setBreadcrumbs([
 			{ text: "RNA's", routeTo: '/RNAs' },
 			{ text: rna.communityName, routeTo: `/RNAs/${rna.id}` },

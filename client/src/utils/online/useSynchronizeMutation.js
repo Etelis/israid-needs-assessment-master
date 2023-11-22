@@ -19,13 +19,13 @@ const useSynchronizeMutation = () => {
 
 	const onSuccess = async () => {
 		try {
-			await queryClient.refetchQueries();
-
 			await set(cacheUsageKeyTypes.lastSync, formatDate(new Date()));
-
+			
 			await clearCachedChanges();
-
+			
 			await fetchDownloadedRnaAnswersQueries(queryClient);
+			
+			await queryClient.refetchQueries();
 
 			const successMessage = 'All Up To Date!';
 

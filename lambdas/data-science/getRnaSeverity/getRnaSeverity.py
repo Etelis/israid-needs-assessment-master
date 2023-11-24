@@ -91,7 +91,7 @@ def get_answers(items: list) -> dict:
         for ans in response['Items']:
             answers[ans['questionId']] = {
                                 'value': ans['value']['storedValue'],
-                                'notes': ans['notes']
+                                'notes': ans.get('notes')
                                 }
         data[rna_id] = answers
 
@@ -100,7 +100,10 @@ def get_answers(items: list) -> dict:
 
 def lambda_handler(event, context):
 
-    try:   
+    try:
+        print(event)
+        print(context)
+        print(event['pathParameters'])
         data = get_answers(event['RNA_items'])
         scores = get_severity(data)
 

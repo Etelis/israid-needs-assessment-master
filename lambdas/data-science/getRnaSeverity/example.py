@@ -1,11 +1,9 @@
 event = {
-        'items_field': 'rnaId',
-        'items': ['fb91fdc7-46ba-47f8-bc3c-d1e480ad71be', 'fb91fdc7-46ba-47f8-bc3c-d1e480ad71be'], # specific
+        'RNA_items': ['fb91fdc7-46ba-47f8-bc3c-d1e480ad71be', 'fb91fdc7-46ba-47f8-bc3c-d1e480ad71be'], # specific
         }
 
 event = {
-        'items_field': 'rnaId',
-        "items": ["*"] # all
+        "RNA_items": ["*"] # all
         }
 
 example_event_allrna = {

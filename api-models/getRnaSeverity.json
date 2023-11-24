@@ -1,20 +1,4 @@
 {
     "type": "object",
-    "title": "get RNA Severity score",
-    "properties":
-                {
-                "RNA_items": 
-                        {
-                        "type": "array",
-                        "items": 
-                            {
-                            "type": "string"
-                            },  
-                        "description": "All RNAs: [*], Specific RNAs: [fb91fdc7-46ba-47f8-bc3c-d1e480ad71be, ...]"
-                        }
-                },
-    "required": 
-            [
-            "RNA_items"
-            ]
+    "title": "get RNA Severity score"
 }

@@ -1,6 +1,5 @@
 import CheckIcon from '@mui/icons-material/Check';
 import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
-import PoolIcon from '@mui/icons-material/Pool';
 import { IconButton, Paper, Stack } from '@mui/material';
 import { useState } from 'react';
 import RnaDetails from './RnaDetails';

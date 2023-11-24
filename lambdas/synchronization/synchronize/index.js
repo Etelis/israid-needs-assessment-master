@@ -116,30 +116,51 @@ const getUpdatedAnswersModels = (oldAnswers, newAnswers) =>
 				notes,
 			});
 		})
-		.filter((x) => x);
+		.filter((x) => x !== null);
+
+const formatAnswer = (answer) => ({
+	value: {
+		storedValue: answer.value,
+	},
+	questionId: answer.questionId,
+	rnaId: answer.rnaId,
+	notes: answer.notes ? answer.notes : '',
+	photos: answer.photos ? answer.photos : [],
+	createdOn: answer.createdOn,
+});
+
+const formatRna = (rna) => ({
+	id: rna.id,
+	communityName: rna.communityName,
+	communityType: rna.communityType,
+	location: rna.location ? rna.location : '',
+	affectedHouseholds: rna.affectedHouseholds,
+	emergencies: rna.emergencies ? rna.emergencies : [],
+	createdOn: rna.createdOn,
+	creatorMail: rna.creatorMail,
+	creatorName: rna.creatorName,
+	isCompleted: rna.isCompleted,
+});
 
 exports.handler = async (event) => {
 	try {
 		const { updatedRnas, updatedAnswers } = JSON.parse(event.body);
 
+		const formattedRnas = updatedRnas.map(formatRna);
+
 		const updatedRnasModels = getUpdatedRnasModels(
 			(await RNA.scan()).Items,
-			updatedRnas
+			formattedRnas
 		);
 
-		const formattedAnswers = updatedAnswers.map((answer) => ({
-			...answer,
-			value: {
-				storedValue: answer.value,
-			},
-		}));
+		const formattedAnswers = updatedAnswers.map(formatAnswer);
 
 		const updatedAnswersModels = getUpdatedAnswersModels(
 			(await Answer.scan()).Items,
 			formattedAnswers
 		);
 
-		await Promise.all(updatedRnasModels, updatedAnswersModels);
+		await Promise.all([...updatedRnasModels, ...updatedAnswersModels]);
 
 		return getSuccessResponse();
 	} catch (error) {

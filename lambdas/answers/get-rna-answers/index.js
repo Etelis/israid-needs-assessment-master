@@ -4,6 +4,16 @@ const {
 	getErrorResponse,
 } = require('/opt/utils/http-objects.js');
 
+const formatAnswer = (answer) => ({
+	id: answer.id,
+	photos: answer.photos ? answer.photos : [],
+	notes: answer.notes ? answer.notes : '',
+	questionId: answer.questionId,
+	rnaId: answer.rnaId,
+	createdOn: answer.createdOn,
+	value: answer.value.storedValue,
+});
+
 exports.handler = async (event) => {
 	try {
 		const { rnaId } = event.pathParameters;
@@ -12,11 +22,7 @@ exports.handler = async (event) => {
 			filters: { attr: 'rnaId', eq: rnaId },
 		});
 
-		const formattedAnswers = answers.map((answer) => ({
-			...answer,
-			createdOn: new Date(answer.createdOn),
-			value: answer.value.storedValue,
-		}));
+		const formattedAnswers = answers.map(formatAnswer);
 
 		return getSuccessResponse(formattedAnswers);
 	} catch (error) {

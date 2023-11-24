@@ -103,6 +103,7 @@ def lambda_handler(event, context):
     try:
         print(event)
         print(context)
+        print(event['body'])
         print(event['pathParameters'])
         data = get_answers(event['RNA_items'])
         scores = get_severity(data)

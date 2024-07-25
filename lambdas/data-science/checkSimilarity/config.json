@@ -1,0 +1,15 @@
+{
+    "Handler": "checkSimilarity.lambda_handler",
+    "Runtime": "python3.11",
+    "MemorySize": 128,
+    "Timeout": 250,
+    "Layers": [
+        "PYTHON-DEP-checkSimilarity"
+    ],
+    "Api_Settings": {
+        "Method": "POST",
+        "Api_Name": "IsraAID app",
+        "Path": "/checkSimilarity",
+        "Model": "checkSimilarity"
+    }
+}

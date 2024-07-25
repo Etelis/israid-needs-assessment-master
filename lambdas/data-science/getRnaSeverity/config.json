@@ -1,0 +1,15 @@
+{
+    "Handler": "getRnaSeverity.lambda_handler",
+    "Runtime": "python3.11",
+    "MemorySize": 128,
+    "Timeout": 250,
+    "Layers": [
+        "PYTHON-DEP-getRnaSeverity"
+    ],
+    "Api_Settings": {
+        "Method": "GET",
+        "Api_Name": "IsraAID app",
+        "Path": "/getRnaSeverity/{RNA_id}",
+        "Model": "getRnaSeverity"
+    }
+}
